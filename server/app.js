@@ -1,7 +1,11 @@
 import express from 'express'
 import bodyParser  from 'body-parser'
 
+import routes from './app/routes'
+
 let app = express()
+
+routes(app)
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
