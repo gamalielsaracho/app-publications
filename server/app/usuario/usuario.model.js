@@ -1,43 +1,22 @@
-import mysql from 'mysql'
+// import mysql from 'mysql'
+
+import connection from '../../config/connection'
 
 exports.crear = (data, callback) => {
-	var connection = mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'mercado'
-	})
 
-	connection.connect(function(err) {
-		if(err) {
-			console.log('Error connecting '+err.stack)
-			return
-		}
+	return connection.query('INSERT INTO usuario SET ?', data, callback)
 
-		console.log('conectado a la base de datos.')
-	})
+	connection.end()
+}
 
-	return connection.query('INSERT INTO usuario SET ?', [data],callback)
+exports.verificarCorreo = (correo, callback) => {
+
+	return connection.query('select * from usuario where correo = ?', [correo], callback)
 
 	connection.end()
 }
 
 exports.listar = (callback) => {
-	var connection = mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'mercado'
-	})
-
-	connection.connect(function(err) {
-		if(err) {
-			console.log('Error connecting '+err.stack)
-			return
-		}
-
-		console.log('conectado a la base de datos.')
-	})
 
 	return connection.query('SELECT * FROM usuario', callback)
 

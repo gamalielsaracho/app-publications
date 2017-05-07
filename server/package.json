@@ -12,6 +12,7 @@
     "babel": "^5.8.23",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.0",
     "mysql": "^2.13.0"
   }
 }
