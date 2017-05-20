@@ -15,7 +15,14 @@ export default mysql.createConnection(dataBase, function(err, connection) {
 		return
 	}
 
-	return connection
+	connection.connect((err, success) => {
+		if(err) {
+			console.log('Error connecting '+err.stack)
+			return
+		}
+
+		return success
+	})
 })
 
 
