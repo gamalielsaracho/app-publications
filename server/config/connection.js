@@ -3,7 +3,7 @@ import mysql from 'mysql'
 // console.log('hola desde connection.json')
 
 var dataBase = {
-	host: 'localhost',
+	host: '127.0.0.1',
 	user: 'root',
 	password: '',
 	database: 'mercado'
