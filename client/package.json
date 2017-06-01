@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-modal": "^1.7.7",

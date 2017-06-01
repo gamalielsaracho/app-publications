@@ -5,16 +5,28 @@ export const OBTENER_DATOS_TOKEN_FALLO = 'obtener_datos_token_fallo'
 export const ABRIR_FORMULARIO_REGISTRO = 'abrir_formulario_registro',
 CERRAR_FORMULARIO_REGISTRO = 'cerrar_formulario_registro',
 
-RESET_REGISTER_FORM = 'reset_register_form',
+RESET_REGISTER_FORM = 'reset_register_form'
+	
+	// Registro de usuario.
+export const REGISTRAR_USUARIO_REQUEST = 'registrar_usuario_request'
+export const REGISTRAR_USUARIO_EXITO = 'registrar_usuario_exito'
+export const REGISTRAR_USUARIO_FALLO = 'registrar_usuario_fallo'
 
-REGISTRAR_USUARIO_REQUEST = 'registrar_usuario_request',
-REGISTRAR_USUARIO_EXITO = 'registrar_usuario_exito',
-REGISTRAR_USUARIO_FALLO = 'registrar_usuario_fallo',
+	// Autenticación de usuario.
+export const AUTENTICAR_USUARIO_REQUEST = 'autenticar_usuario_request'
+export const AUTENTICAR_USUARIO_EXITO = 'autenticar_usuario_exito'
+export const AUTENTICAR_USUARIO_FALLO = 'autenticar_usuario_fallo'
+
+export const VERIFICAR_TOKEN_USUARIO_REQUEST = 'verificar_token_usuario_request'
+export const VERIFICAR_TOKEN_USUARIO_EXITO = 'verificar_token_usuario_exito'
+export const VERIFICAR_TOKEN_USUARIO_FALLO = 'verificar_token_usuario_fallo'
+
+export const SALIR_USUARIO = 'salir_usuario'
 
 
 // VerificaciÃ³n del correo.
 // VERIFY_EMAIL = 'verify_email',
-VERIFY_EMAIL_FAILURE = 'verify_email_failure',
+export const VERIFY_EMAIL_FAILURE = 'verify_email_failure',
 // VERIFICAR_CORREO_CARGANDO = 'verificar_correo_cargando',
 
 // AutenticaciÃ³n de usuario.

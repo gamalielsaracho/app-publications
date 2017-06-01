@@ -60,8 +60,11 @@ exports.autenticacion = (req, res, next) => {
 		}
 
 		if(usuario[0]) {
+			console.log("contrasena server: "+usuario[0].contrasena)
+			console.log("contrasena cliente: "+contrasena)
+
 			if(usuario[0].contrasena != contrasena) {
-				return res.status(422).json({ error: 'Lo sentimos, ocurrió un error, intente nuevamente .' })
+				return res.status(422).json({ error: 'La contraseña es incorrecta.' })
 			}
 
 			let datosToken = {
@@ -94,5 +97,25 @@ exports.mostrar = (req, res, next) => {
 		}
 
 		return res.json(usuario[0])
+	})
+}
+
+exports.verificarToken = (req, res, next) => {
+	const token = req.params.tokenFromLocalStorage
+
+	if(!token) {
+		return res.status(401).json({ error: 'Tú no tienes Token, Inicia sessión nuevamente.' })
+	}
+
+	jwt.verify(token, privateKey, (err, usuario) => {
+		if(err) {
+			throw error
+		}
+
+		Usuario.verificarCorreo(usuario.correo, (err, userFromServer) => {
+			res.json(userFromServer[0])
+
+			console.log(userFromServer)
+		})
 	})
 }

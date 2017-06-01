@@ -1,16 +1,29 @@
 import {
 	REGISTRAR_USUARIO_REQUEST,
 	REGISTRAR_USUARIO_EXITO,
-	REGISTRAR_USUARIO_FALLO
+	REGISTRAR_USUARIO_FALLO,
+
+	AUTENTICAR_USUARIO_REQUEST,
+	AUTENTICAR_USUARIO_EXITO,
+	AUTENTICAR_USUARIO_FALLO,
+
+	VERIFICAR_TOKEN_USUARIO_REQUEST,
+	VERIFICAR_TOKEN_USUARIO_EXITO,
+	VERIFICAR_TOKEN_USUARIO_FALLO,
+
+	SALIR_USUARIO
 } from '../actions/types'
 
 const INITIAL_STATE = {
 	registro:{ mensaje:'', error:'', cargando:false },
-	mostrar: { mensaje:'', error:'', cargando:false },
+	autenticacion: { mensaje: '', error: '', cargando: false },
+	mostrar: { mensaje:'', error:'', cargando:false, usuario: {} },
 	actualizar:{ mensaje:'', error:'', cargando:false },
-	usuario: {
-		autenticado:false,
-		datosToken:{}
+	usuarioEstado: {
+		cargando: false,
+		error: '',
+		datosToken: {},
+		autenticado: false
 	}
 }
 
@@ -28,7 +41,61 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, { 
 				registro:{ cargando:false, error: action.payload.error, mensaje:'' }
 			})
-	
+
+			// Autenticación de Usuario.
+		case AUTENTICAR_USUARIO_REQUEST:
+			return Object.assign({}, state, { 
+				autenticacion:{ cargando:true }
+			})
+		case AUTENTICAR_USUARIO_EXITO:
+			return Object.assign({}, state, { 
+				autenticacion:{ 
+					cargando:false,
+					mensaje: action.payload.mensaje ? action.payload.mensaje : '',  
+					error: '' }
+			})
+
+		case AUTENTICAR_USUARIO_FALLO:
+			return Object.assign({}, state, { 
+				autenticacion:{ cargando:false, error: action.payload.error, mensaje:'' }
+			})
+
+		case VERIFICAR_TOKEN_USUARIO_REQUEST:
+			return Object.assign({}, state, { 
+				usuarioEstado:{ cargando: true }
+			})
+
+		case VERIFICAR_TOKEN_USUARIO_EXITO:
+			// console.log("VERIFICAR_TOKEN_USUARIO_EXITO")
+			return Object.assign({}, state, { 
+				usuarioEstado:{
+					cargando: false,
+					error: '',
+					datosToken: action.payload,
+					autenticado: true 
+				} 
+			}) 
+
+		case VERIFICAR_TOKEN_USUARIO_FALLO:
+			return Object.assign({}, state, { 
+				usuarioEstado:{
+					cargando: false,
+					datosToken: {},
+					autenticado: false, 
+					error: action.payload.error
+				}
+			})
+
+		case SALIR_USUARIO:
+			return Object.assign({}, state, { 
+				usuarioEstado:{ 
+					cargando:false,
+					datosToken: {},
+					error: '', 
+					autenticado: false 
+				}
+			})
+
 		default:
 			return state
 	}

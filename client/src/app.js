@@ -1,6 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import {
+	verificarTokenUsuario
+} from '././usuario/actions'
+
 import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
 
@@ -10,6 +14,15 @@ import reducers from './reducers'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
+
+const token = localStorage.getItem('token')
+
+if(token) {
+	store.dispatch(verificarTokenUsuario(token))
+	console.log("hola de el punto de entrada.")
+}else {
+	console.log("no hay token..")
+}
 
 import routes from './routes'
 

@@ -1,7 +1,17 @@
 import {
 	REGISTRAR_USUARIO_REQUEST,
 	REGISTRAR_USUARIO_EXITO,
-	REGISTRAR_USUARIO_FALLO
+	REGISTRAR_USUARIO_FALLO,
+
+	AUTENTICAR_USUARIO_REQUEST,
+	AUTENTICAR_USUARIO_EXITO,
+	AUTENTICAR_USUARIO_FALLO,
+
+	VERIFICAR_TOKEN_USUARIO_REQUEST,
+	VERIFICAR_TOKEN_USUARIO_EXITO,
+	VERIFICAR_TOKEN_USUARIO_FALLO,
+
+	SALIR_USUARIO
 } from './types'
 
 import {
@@ -39,5 +49,70 @@ export function registrarUsuario(datosFormulario) {
 			errorHandler(dispatch, error.response, REGISTRAR_USUARIO_FALLO)
 		})
 
+	}
+}
+
+export function autenticarUsuario(datosFormulario) {
+
+	return (dispatch) => {
+		dispatch({ type: AUTENTICAR_USUARIO_REQUEST })
+
+		axios.post(`${API_URL}/usuarios/autenticacion`, datosFormulario)
+		.then((response) => {
+
+			dispatch({ type: AUTENTICAR_USUARIO_EXITO, payload: response.data })
+			
+			console.log(response.data)
+
+			localStorage.setItem('token', response.data.token)
+			
+			const token = localStorage.getItem('token')
+
+			dispatch(verificarTokenUsuario(token))
+
+			// enviar al perfil del usuario. cool.!
+			browserHistory.push(`/`)
+		})
+		.catch((error) => {
+			errorHandler(dispatch, error.response, AUTENTICAR_USUARIO_FALLO)
+		})
+
+	}
+}
+
+export function verificarTokenUsuario(token) {
+
+	return (dispatch) => {
+		dispatch({ type: VERIFICAR_TOKEN_USUARIO_REQUEST })
+
+		axios.get(`${API_URL}/usuarios/verifivartoken/${token}`)
+		.then((response) => {
+
+			dispatch({ type: VERIFICAR_TOKEN_USUARIO_EXITO, payload: response.data })
+			
+			console.log(response.data)
+
+			 // location.reload()
+
+			// localStorage.setItem('token', response.data.token)
+
+			// enviar al perfil del usuario. cool.!
+			// browserHistory.push(`/`)
+		})
+		.catch((error) => {
+			errorHandler(dispatch, error.response, VERIFICAR_TOKEN_USUARIO_FALLO)
+		})
+
+	}
+}
+
+export function salirUsuario() {
+
+	return (dispatch) => {
+		dispatch({ type: SALIR_USUARIO })
+
+		localStorage.removeItem('token')
+
+		browserHistory.push(`/`)
 	}
 }
