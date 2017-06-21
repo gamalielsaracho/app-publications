@@ -15,8 +15,9 @@ import {
 
 	LISTAR_USUARIOS_REQUEST,
 	LISTAR_USUARIOS_EXITO,
-	LISTAR_USUARIOS_FALLO
+	LISTAR_USUARIOS_FALLO,
 
+	ACTUALIZAR_FORMULARIO_FILTRO
 } from './types'
 
 import {
@@ -129,5 +130,12 @@ export function listarUsuarios() {
 		dispatch({ type: LISTAR_USUARIOS_REQUEST })
 
 		getData(LISTAR_USUARIOS_EXITO, LISTAR_USUARIOS_FALLO, true, url, dispatch)
+	}
+}
+
+export function actualizarFormularioFiltro(valoresInput) {
+	return (dispatch) => {
+		console.log(valoresInput)
+		dispatch({ type: ACTUALIZAR_FORMULARIO_FILTRO, valores: valoresInput  })
 	}
 }

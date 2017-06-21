@@ -28,6 +28,9 @@ export const LISTAR_USUARIOS_REQUEST = 'listar_usuarios_request'
 export const LISTAR_USUARIOS_EXITO = 'listar_usuarios_exito'
 export const LISTAR_USUARIOS_FALLO = 'listar_usuarios_fallo'
 
+	// Actualizar la popiedad value de los inputs para filtrar usuarios.
+export const ACTUALIZAR_FORMULARIO_FILTRO = 'actualizar_formulario_filtro'
+
 
 // VerificaciÃ³n del correo.
 // VERIFY_EMAIL = 'verify_email',

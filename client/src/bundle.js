@@ -21552,6 +21552,7 @@
 	exports.verificarTokenUsuario = verificarTokenUsuario;
 	exports.salirUsuario = salirUsuario;
 	exports.listarUsuarios = listarUsuarios;
+	exports.actualizarFormularioFiltro = actualizarFormularioFiltro;
 
 	var _types = __webpack_require__(179);
 
@@ -21656,6 +21657,13 @@
 		};
 	}
 
+	function actualizarFormularioFiltro(valoresInput) {
+		return function (dispatch) {
+			console.log(valoresInput);
+			dispatch({ type: _types.ACTUALIZAR_FORMULARIO_FILTRO, valores: valoresInput });
+		};
+	}
+
 /***/ }),
 /* 179 */
 /***/ (function(module, exports) {
@@ -21694,6 +21702,9 @@
 	var LISTAR_USUARIOS_REQUEST = exports.LISTAR_USUARIOS_REQUEST = 'listar_usuarios_request';
 	var LISTAR_USUARIOS_EXITO = exports.LISTAR_USUARIOS_EXITO = 'listar_usuarios_exito';
 	var LISTAR_USUARIOS_FALLO = exports.LISTAR_USUARIOS_FALLO = 'listar_usuarios_fallo';
+
+	// Actualizar la popiedad value de los inputs para filtrar usuarios.
+	var ACTUALIZAR_FORMULARIO_FILTRO = exports.ACTUALIZAR_FORMULARIO_FILTRO = 'actualizar_formulario_filtro';
 
 	// VerificaciÃ³n del correo.
 	// VERIFY_EMAIL = 'verify_email',
@@ -43446,6 +43457,18 @@
 					}
 				});
 
+			case _types.ACTUALIZAR_FORMULARIO_FILTRO:
+				var valores = action.valores;
+
+
+				return state = Object.assign({}, state, {
+					filtro: {
+						nombre: valores.nombre,
+						apellido: valores.apellido,
+						correo: valores.correo
+					}
+				});
+
 			default:
 				return state;
 		}
@@ -43454,7 +43477,9 @@
 	var _types = __webpack_require__(179);
 
 	var INITIAL_STATE = {
-		filtro: { nombre: '', apellido: '' },
+		filtro: {
+			nombre: '', apellido: '', correo: ''
+		},
 		listar: { usuarios: [], cargando: false, error: '' },
 		registro: { mensaje: '', error: '', cargando: false },
 		autenticacion: { mensaje: '', error: '', cargando: false },
@@ -43488,6 +43513,10 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
+	var _DashBoard = __webpack_require__(530);
+
+	var _DashBoard2 = _interopRequireDefault(_DashBoard);
+
 	var _RegistrarPage = __webpack_require__(513);
 
 	var _RegistrarPage2 = _interopRequireDefault(_RegistrarPage);
@@ -43507,7 +43536,12 @@
 		{ path: '/', component: _App2.default },
 		_react2.default.createElement(_reactRouter.Route, { path: '/registrarse', component: _RegistrarPage2.default }),
 		_react2.default.createElement(_reactRouter.Route, { path: '/usuarios', component: _ListarPage2.default }),
-		_react2.default.createElement(_reactRouter.Route, { path: '/entrar', component: _AutenticarPage2.default })
+		_react2.default.createElement(_reactRouter.Route, { path: '/entrar', component: _AutenticarPage2.default }),
+		_react2.default.createElement(
+			_reactRouter.Route,
+			{ path: '/dashboard', component: _DashBoard2.default },
+			_react2.default.createElement(_reactRouter.Route, { path: '/registrarse', component: _RegistrarPage2.default })
+		)
 	);
 
 	// USUARIO.
@@ -43646,6 +43680,15 @@
 							null,
 							_react2.default.createElement(
 								_reactRouter.Link,
+								{ to: '/dashboard' },
+								'Panel'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
 								{ to: '/usuarios' },
 								'Usuarios'
 							)
@@ -43713,7 +43756,7 @@
 					null,
 					_react2.default.createElement(
 						'nav',
-						{ className: 'light-blue lighten-2' },
+						{ className: '#00b0ff light-blue accent-3' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'nav-wrapper container' },
@@ -44433,30 +44476,26 @@
 	function mapStateToProps(state) {
 		return {
 			listar: state.usuario.listar,
-			usuarios: state.usuario.listar.usuarios
+			filtro: state.usuario.filtro
 		};
 	}
-
-	// function filtrarUsuarios(usuarios) {
-	// 	var usuariosFiltrados = usuarios.filter((u) => {
-	// 		return u.apellido == 'perez'
-	// 	})
-
-	// 	return usuariosFiltrados
-	// }
 
 	function mapDispatchToProps(dispatch) {
 		return {
 			listarUsuarios: function listarUsuarios() {
 				dispatch((0, _actions.listarUsuarios)());
 			},
-			filtrarUsuarios: function filtrarUsuarios(usuarios, apellido) {
-				console.log("el apellido es: " + apellido);
+			actualizarFormularioFiltro: function actualizarFormularioFiltro(valores) {
+				dispatch((0, _actions.actualizarFormularioFiltro)(valores));
+			},
+			filtrarUsuarios: function filtrarUsuarios(usuarios, valores) {
+				console.log("el apellido es: " + valores.apellido);
+
 				usuarios = usuarios.filter(function (u) {
-					return u.apellido.toLowerCase().match(apellido);
+					return u.apellido.toLowerCase().match(valores.apellido) && u.nombre.toLowerCase().match(valores.nombre) && u.correo.toLowerCase().match(valores.correo);
 				});
 
-				console.log(usuarios);
+				// console.log(usuarios)
 
 				return usuarios;
 			}
@@ -44511,9 +44550,6 @@
 
 			_this.renderUsuarios = _this.renderUsuarios.bind(_this);
 			_this.handleChange = _this.handleChange.bind(_this);
-			_this.enviarFormulario = _this.enviarFormulario.bind(_this);
-
-			_this.state = { nombre: '', apellido: '' };
 			return _this;
 		}
 
@@ -44523,14 +44559,15 @@
 				this.props.listarUsuarios();
 			}
 		}, {
-			key: 'enviarFormulario',
-			value: function enviarFormulario(formProps) {
-				// this.props.registrarUsuario(formProps)
-			}
-		}, {
 			key: 'handleChange',
 			value: function handleChange(e) {
-				this.setState({ nombre: e.target.value, apellido: e.target.value });
+				var valoresInputActualizando = {
+					nombre: _reactDom2.default.findDOMNode(this.refs.nombre).value,
+					apellido: _reactDom2.default.findDOMNode(this.refs.apellido).value,
+					correo: _reactDom2.default.findDOMNode(this.refs.correo).value
+				};
+
+				this.props.actualizarFormularioFiltro(valoresInputActualizando);
 			}
 			// shouldComponentUpdate(nextProps, nextState) {
 			// 	// console.log(nextState)
@@ -44540,41 +44577,56 @@
 		}, {
 			key: 'renderUsuarios',
 			value: function renderUsuarios(usuarios) {
+				var filtro = this.props.filtro;
 
-				var apellido = this.state.apellido.trim().toLowerCase();
+				var con = { // Condiciones.
+					nombre: filtro.nombre.trim().toLowerCase(),
+					apellido: filtro.apellido.trim().toLowerCase(),
+					correo: filtro.correo.trim().toLowerCase()
+				};
 
-				if (apellido.length > 0) {
-					usuarios = this.props.filtrarUsuarios(usuarios, apellido);
+				if (con.nombre.length > 0 || con.apellido.length > 0 || con.correo.length > 0) {
+					usuarios = this.props.filtrarUsuarios(usuarios, con);
 				}
 
 				return _react2.default.createElement(
-					'div',
-					{ className: 'container' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'row' },
-						usuarios.map(function (usuario) {
-							return _react2.default.createElement(
-								'div',
-								{ key: usuario.id, className: 'col-xs-12 col-sm-8 col-md-6 col-lg-4' },
+					'tbody',
+					null,
+					usuarios.map(function (usuario) {
+						return _react2.default.createElement(
+							'tr',
+							{ key: usuario.id },
+							_react2.default.createElement(
+								'td',
+								{ className: 'center' },
+								usuario.nombre
+							),
+							_react2.default.createElement(
+								'td',
+								{ className: 'center' },
+								usuario.apellido
+							),
+							_react2.default.createElement(
+								'td',
+								{ className: 'center' },
+								usuario.correo
+							),
+							_react2.default.createElement(
+								'td',
+								{ className: 'center' },
 								_react2.default.createElement(
-									'h4',
-									null,
-									usuario.nombre
+									'a',
+									{ className: '#e53935 red darken-1 btn' },
+									'Editar'
 								),
 								_react2.default.createElement(
-									'h4',
-									null,
-									usuario.apellido
-								),
-								_react2.default.createElement(
-									'strong',
-									null,
-									usuario.correo
+									'a',
+									{ className: '#0288d1 light-blue darken-2 btn' },
+									'Eliminar'
 								)
-							);
-						})
-					)
+							)
+						);
+					})
 				);
 			}
 		}, {
@@ -44585,6 +44637,7 @@
 				    cargando = _props$listar.cargando,
 				    error = _props$listar.error;
 
+				var filtro = this.props.filtro;
 
 				console.log(this.props.listar);
 
@@ -44593,11 +44646,65 @@
 				} else {
 					return _react2.default.createElement(
 						'div',
-						null,
-						_react2.default.createElement('input', { type: 'text',
-							value: this.state.apellido,
-							onChange: this.handleChange }),
-						this.renderUsuarios(usuarios)
+						{ className: 'container' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'row center-lg center-md center-sm center-xs' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
+								_react2.default.createElement('input', { type: 'text', placeholder: 'Nombre',
+									value: filtro.nombre, ref: 'nombre',
+									onChange: this.handleChange })
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
+								_react2.default.createElement('input', { type: 'text', placeholder: 'Apellido',
+									value: filtro.apellido, ref: 'apellido',
+									onChange: this.handleChange })
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
+								_react2.default.createElement('input', { type: 'text', placeholder: 'Correo',
+									value: filtro.correo, ref: 'correo',
+									onChange: this.handleChange })
+							)
+						),
+						_react2.default.createElement(
+							'table',
+							null,
+							_react2.default.createElement(
+								'thead',
+								null,
+								_react2.default.createElement(
+									'tr',
+									null,
+									_react2.default.createElement(
+										'th',
+										{ className: 'center' },
+										'Nombre'
+									),
+									_react2.default.createElement(
+										'th',
+										{ className: 'center' },
+										'Apellido'
+									),
+									_react2.default.createElement(
+										'th',
+										{ className: 'center' },
+										'Correo'
+									),
+									_react2.default.createElement(
+										'th',
+										{ className: 'center' },
+										'Opciones'
+									)
+								)
+							),
+							this.renderUsuarios(usuarios)
+						)
 					);
 				}
 			}
@@ -44842,6 +44949,128 @@
 	}(_react.Component);
 
 	exports.default = Filtro;
+
+/***/ }),
+/* 530 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _container = __webpack_require__(531);
+
+	var _container2 = _interopRequireDefault(_container);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _container2.default;
+
+/***/ }),
+/* 531 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _reactRedux = __webpack_require__(265);
+
+	var _DashBoard = __webpack_require__(532);
+
+	var _DashBoard2 = _interopRequireDefault(_DashBoard);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function mapStateToProps(state) {
+		return {};
+	}
+
+	function mapDispatchToProps(dispatch) {
+		return {};
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_DashBoard2.default);
+
+/***/ }),
+/* 532 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Listar = __webpack_require__(522);
+
+	var _Listar2 = _interopRequireDefault(_Listar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DashBoard = function (_Component) {
+		_inherits(DashBoard, _Component);
+
+		function DashBoard() {
+			_classCallCheck(this, DashBoard);
+
+			return _possibleConstructorReturn(this, (DashBoard.__proto__ || Object.getPrototypeOf(DashBoard)).apply(this, arguments));
+		}
+
+		_createClass(DashBoard, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'container-fruit' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(
+							'div',
+							{ className: '#00b0ff light-blue accent-3 col-sm-8 col-md-6 col-lg-2' },
+							_react2.default.createElement(
+								'h5',
+								{ className: 'center' },
+								'Menu'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-sm-8 col-md-6 col-lg-10' },
+							_react2.default.createElement(
+								'h3',
+								{ className: 'center' },
+								'Bienvenido al Dashboard.'
+							),
+							_react2.default.createElement(_Listar2.default, null),
+							this.props.children
+						)
+					)
+				);
+			}
+		}]);
+
+		return DashBoard;
+	}(_react.Component);
+
+	exports.default = DashBoard;
 
 /***/ })
 /******/ ]);

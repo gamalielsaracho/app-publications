@@ -32,6 +32,7 @@ class App extends Component {
 		console.log(usuario)
 		if(autenticado) {
 			return <div>
+				<li><Link to='/dashboard'>Panel</Link></li>
 				<li><Link to='/usuarios'>Usuarios</Link></li>
 				<li><Link to='/perfil'>{ usuario.correo }</Link></li>
 				<li onClick={() => { this.props.salirUsuario() }}><a>Salir</a></li>
@@ -50,7 +51,7 @@ class App extends Component {
 		console.log(this.props.usuarioEstado)
 
 		return <div>
-			<nav className='light-blue lighten-2'>
+			<nav className='#00b0ff light-blue accent-3'>
 			    <div className="nav-wrapper container">
 				    <div className='row'>
 					    <div className='col-xs-12 col-sm-8 col-md-6 col-lg-6'>

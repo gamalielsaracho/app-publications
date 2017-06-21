@@ -15,12 +15,16 @@ import {
 
 	LISTAR_USUARIOS_REQUEST,
 	LISTAR_USUARIOS_EXITO,
-	LISTAR_USUARIOS_FALLO
+	LISTAR_USUARIOS_FALLO,
+
+	ACTUALIZAR_FORMULARIO_FILTRO
 
 } from '../actions/types'
 
 const INITIAL_STATE = {
-	filtro: { nombre: '', apellido: '' },
+	filtro: { 
+		nombre: '', apellido: '', correo: ''  
+	},
 	listar: { usuarios:[], cargando: false, error: '' },
 	registro:{ mensaje:'', error:'', cargando:false },
 	autenticacion: { mensaje: '', error: '', cargando: false },
@@ -123,6 +127,17 @@ export default function (state = INITIAL_STATE, action) {
 					usuarios: [],
 					cargando: false,
 					error: action.payload.error					
+				}
+			})
+
+		case ACTUALIZAR_FORMULARIO_FILTRO:
+			const { valores } = action
+
+			return state = Object.assign({}, state, {
+				filtro: {
+					nombre: valores.nombre,
+					apellido: valores.apellido,
+					correo: valores.correo 
 				}
 			})
 
