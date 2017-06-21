@@ -1,11 +1,9 @@
-export const OBTENER_DATOS_TOKEN = 'obtener_datos_token'
-export const OBTENER_DATOS_TOKEN_FALLO = 'obtener_datos_token_fallo'
 
 // Registro de usuario.
-export const ABRIR_FORMULARIO_REGISTRO = 'abrir_formulario_registro',
-CERRAR_FORMULARIO_REGISTRO = 'cerrar_formulario_registro',
+// export const ABRIR_FORMULARIO_REGISTRO = 'abrir_formulario_registro',
+// CERRAR_FORMULARIO_REGISTRO = 'cerrar_formulario_registro',
 
-RESET_REGISTER_FORM = 'reset_register_form'
+// RESET_REGISTER_FORM = 'reset_register_form'
 	
 	// Registro de usuario.
 export const REGISTRAR_USUARIO_REQUEST = 'registrar_usuario_request'
@@ -17,17 +15,24 @@ export const AUTENTICAR_USUARIO_REQUEST = 'autenticar_usuario_request'
 export const AUTENTICAR_USUARIO_EXITO = 'autenticar_usuario_exito'
 export const AUTENTICAR_USUARIO_FALLO = 'autenticar_usuario_fallo'
 
+	// Obtiene los datos del usuario desde el servidor.
 export const VERIFICAR_TOKEN_USUARIO_REQUEST = 'verificar_token_usuario_request'
 export const VERIFICAR_TOKEN_USUARIO_EXITO = 'verificar_token_usuario_exito'
 export const VERIFICAR_TOKEN_USUARIO_FALLO = 'verificar_token_usuario_fallo'
 
+	// Para cuando el usuario cierra sesión.
 export const SALIR_USUARIO = 'salir_usuario'
+
+	// Listar todos los usuarios registrados.
+export const LISTAR_USUARIOS_REQUEST = 'listar_usuarios_request'
+export const LISTAR_USUARIOS_EXITO = 'listar_usuarios_exito'
+export const LISTAR_USUARIOS_FALLO = 'listar_usuarios_fallo'
 
 
 // VerificaciÃ³n del correo.
 // VERIFY_EMAIL = 'verify_email',
 export const VERIFY_EMAIL_FAILURE = 'verify_email_failure',
-// VERIFICAR_CORREO_CARGANDO = 'verificar_correo_cargando',
+VERIFICAR_CORREO_CARGANDO = 'verificar_correo_cargando',
 
 // AutenticaciÃ³n de usuario.
 // ABRIR_FORMULARIO_AUT = 'abrir_formulario_aut',

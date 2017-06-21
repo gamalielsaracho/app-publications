@@ -32,6 +32,7 @@ class App extends Component {
 		console.log(usuario)
 		if(autenticado) {
 			return <div>
+				<li><Link to='/usuarios'>Usuarios</Link></li>
 				<li><Link to='/perfil'>{ usuario.correo }</Link></li>
 				<li onClick={() => { this.props.salirUsuario() }}><a>Salir</a></li>
 			</div>

@@ -11,10 +11,17 @@ import {
 	VERIFICAR_TOKEN_USUARIO_EXITO,
 	VERIFICAR_TOKEN_USUARIO_FALLO,
 
-	SALIR_USUARIO
+	SALIR_USUARIO,
+
+	LISTAR_USUARIOS_REQUEST,
+	LISTAR_USUARIOS_EXITO,
+	LISTAR_USUARIOS_FALLO
+
 } from '../actions/types'
 
 const INITIAL_STATE = {
+	filtro: { nombre: '', apellido: '' },
+	listar: { usuarios:[], cargando: false, error: '' },
 	registro:{ mensaje:'', error:'', cargando:false },
 	autenticacion: { mensaje: '', error: '', cargando: false },
 	mostrar: { mensaje:'', error:'', cargando:false, usuario: {} },
@@ -93,6 +100,29 @@ export default function (state = INITIAL_STATE, action) {
 					datosToken: {},
 					error: '', 
 					autenticado: false 
+				}
+			})
+
+		case LISTAR_USUARIOS_REQUEST:
+			return state = Object.assign({}, state, {
+				listar: { cargando: true }
+			})
+
+		case LISTAR_USUARIOS_EXITO:
+			return state = Object.assign({}, state, {
+				listar: {
+					usuarios: action.payload, 
+					cargando:false, 
+					error: ''
+				}
+			})
+
+		case LISTAR_USUARIOS_FALLO:
+			return state = Object.assign({}, state, {
+				listar: {
+					usuarios: [],
+					cargando: false,
+					error: action.payload.error					
 				}
 			})
 

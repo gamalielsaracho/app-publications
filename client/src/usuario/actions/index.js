@@ -11,7 +11,12 @@ import {
 	VERIFICAR_TOKEN_USUARIO_EXITO,
 	VERIFICAR_TOKEN_USUARIO_FALLO,
 
-	SALIR_USUARIO
+	SALIR_USUARIO,
+
+	LISTAR_USUARIOS_REQUEST,
+	LISTAR_USUARIOS_EXITO,
+	LISTAR_USUARIOS_FALLO
+
 } from './types'
 
 import {
@@ -114,5 +119,15 @@ export function salirUsuario() {
 		localStorage.removeItem('token')
 
 		browserHistory.push(`/`)
+	}
+}
+
+export function listarUsuarios() {
+	return (dispatch) => {
+		const url = `/usuarios`
+
+		dispatch({ type: LISTAR_USUARIOS_REQUEST })
+
+		getData(LISTAR_USUARIOS_EXITO, LISTAR_USUARIOS_FALLO, true, url, dispatch)
 	}
 }
