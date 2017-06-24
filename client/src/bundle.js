@@ -70,7 +70,7 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _routes = __webpack_require__(509);
+	var _routes = __webpack_require__(511);
 
 	var _routes2 = _interopRequireDefault(_routes);
 
@@ -33308,11 +33308,16 @@
 
 	var _reducer2 = _interopRequireDefault(_reducer);
 
+	var _reducer3 = __webpack_require__(509);
+
+	var _reducer4 = _interopRequireDefault(_reducer3);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var rootReducer = (0, _redux.combineReducers)({
 		form: _reduxForm.reducer,
-		usuario: _reducer2.default
+		usuario: _reducer2.default,
+		rol: _reducer4.default
 	});
 
 	exports.default = rootReducer;
@@ -43503,69 +43508,92 @@
 		value: true
 	});
 
-	var _react = __webpack_require__(1);
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+		var action = arguments[1];
 
-	var _react2 = _interopRequireDefault(_react);
+		switch (action.type) {
+			case _types.ABRIR_FORMULARIO_CREAR_ROL:
+				return Object.assign({}, state, {
+					formulario: { mostrar: true }
+				});
 
-	var _reactRouter = __webpack_require__(210);
+			case _types.CERRAR_FORMULARIO_CREAR_ROL:
+				return Object.assign({}, state, {
+					formulario: { mostrar: false },
+					crear: { mensaje: '', error: '' }
+				});
 
-	var _App = __webpack_require__(510);
+			case _types.CREAR_ROL_REQUEST:
+				return state = Object.assign({}, state, {
+					crear: { cargando: true }
+				});
 
-	var _App2 = _interopRequireDefault(_App);
+			case _types.CREAR_ROL_EXITO:
+				return state = Object.assign({}, state, {
+					crear: { mensaje: action.payload.mensaje }
+				});
 
-	var _DashBoard = __webpack_require__(530);
+			case _types.CREAR_ROL_FALLO:
+				return state = Object.assign({}, state, {
+					crear: { error: action.payload.error }
+				});
 
-	var _DashBoard2 = _interopRequireDefault(_DashBoard);
+			// LISTAR.
+			case _types.LISTAR_ROLES_REQUEST:
+				state = Object.assign({}, state, {
+					listar: { cargando: true, error: '' }
+				});
 
-	var _RegistrarPage = __webpack_require__(513);
+				return state;
 
-	var _RegistrarPage2 = _interopRequireDefault(_RegistrarPage);
+			case _types.LISTAR_ROLES_EXITO:
+				state = Object.assign({}, state, {
+					listar: { roles: action.payload, cargando: false, error: '' }
+				});
 
-	var _AutenticarPage = __webpack_require__(517);
+				return state;
 
-	var _AutenticarPage2 = _interopRequireDefault(_AutenticarPage);
+			case _types.LISTAR_ROLES_FALLO:
+				return state = Object.assign({}, state, {
+					listar: { error: action.payload.error, roles: [], cargando: false }
+				});
 
-	var _ListarPage = __webpack_require__(521);
+			default:
+				return state;
+		}
+	};
 
-	var _ListarPage2 = _interopRequireDefault(_ListarPage);
+	var _types = __webpack_require__(510);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createElement(
-		_reactRouter.Route,
-		{ path: '/', component: _App2.default },
-		_react2.default.createElement(_reactRouter.Route, { path: '/registrarse', component: _RegistrarPage2.default }),
-		_react2.default.createElement(_reactRouter.Route, { path: '/usuarios', component: _ListarPage2.default }),
-		_react2.default.createElement(_reactRouter.Route, { path: '/entrar', component: _AutenticarPage2.default }),
-		_react2.default.createElement(
-			_reactRouter.Route,
-			{ path: '/dashboard', component: _DashBoard2.default },
-			_react2.default.createElement(_reactRouter.Route, { path: '/registrarse', component: _RegistrarPage2.default })
-		)
-	);
-
-	// USUARIO.
+	var INITIAL_STATE = {
+		formulario: {
+			mostrar: false,
+			nombre: ''
+		},
+		crear: { mensaje: '', cargando: false, error: '' },
+		listar: { roles: [], cargando: false, error: '' }
+	};
 
 /***/ }),
 /* 510 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	var ABRIR_FORMULARIO_CREAR_ROL = exports.ABRIR_FORMULARIO_CREAR_ROL = 'abrir_formulario_crear_rol';
+	var CERRAR_FORMULARIO_CREAR_ROL = exports.CERRAR_FORMULARIO_CREAR_ROL = 'cerrar_formulario_crear_rol';
 
-	var _container = __webpack_require__(511);
+	var CREAR_ROL_REQUEST = exports.CREAR_ROL_REQUEST = 'crear_rol_request';
+	var CREAR_ROL_EXITO = exports.CREAR_ROL_EXITO = 'crear_rol_exito';
+	var CREAR_ROL_FALLO = exports.CREAR_ROL_FALLO = 'crear_rol_fallo';
 
-	var _container2 = _interopRequireDefault(_container);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _container2.default;
-
-	// import App from './App'
-	// export default App
+	var LISTAR_ROLES_REQUEST = exports.LISTAR_ROLES_REQUEST = 'listar_roles_request';
+	var LISTAR_ROLES_EXITO = exports.LISTAR_ROLES_EXITO = 'listar_roles_exito';
+	var LISTAR_ROLES_FALLO = exports.LISTAR_ROLES_FALLO = 'listar_roles_fallo';
 
 /***/ }),
 /* 511 */
@@ -43577,9 +43605,94 @@
 		value: true
 	});
 
-	var _reactRedux = __webpack_require__(265);
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(210);
 
 	var _App = __webpack_require__(512);
+
+	var _App2 = _interopRequireDefault(_App);
+
+	var _DashBoard = __webpack_require__(515);
+
+	var _DashBoard2 = _interopRequireDefault(_DashBoard);
+
+	var _RegistrarPage = __webpack_require__(518);
+
+	var _RegistrarPage2 = _interopRequireDefault(_RegistrarPage);
+
+	var _AutenticarPage = __webpack_require__(522);
+
+	var _AutenticarPage2 = _interopRequireDefault(_AutenticarPage);
+
+	var _ListarPage = __webpack_require__(526);
+
+	var _ListarPage2 = _interopRequireDefault(_ListarPage);
+
+	var _ListarRolesPage = __webpack_require__(535);
+
+	var _ListarRolesPage2 = _interopRequireDefault(_ListarRolesPage);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// USUARIO.
+
+
+	// App Principal de la aplicación.
+	exports.default = _react2.default.createElement(
+		_reactRouter.Route,
+		{ path: '/', component: _App2.default },
+		_react2.default.createElement(_reactRouter.Route, { path: '/registrarse', component: _RegistrarPage2.default }),
+		_react2.default.createElement(_reactRouter.Route, { path: '/entrar', component: _AutenticarPage2.default }),
+		_react2.default.createElement(
+			_reactRouter.Route,
+			{ path: '/dashboard', component: _DashBoard2.default },
+			_react2.default.createElement(_reactRouter.Route, { path: '/usuarios', component: _ListarPage2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/roles', component: _ListarRolesPage2.default })
+		)
+	);
+
+	// ROL.
+
+
+	// DashBoard App.
+
+/***/ }),
+/* 512 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _container = __webpack_require__(513);
+
+	var _container2 = _interopRequireDefault(_container);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _container2.default;
+
+	// import App from './App'
+	// export default App
+
+/***/ }),
+/* 513 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _reactRedux = __webpack_require__(265);
+
+	var _App = __webpack_require__(514);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -43607,7 +43720,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_App2.default);
 
 /***/ }),
-/* 512 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43795,7 +43908,53 @@
 	exports.default = App;
 
 /***/ }),
-/* 513 */
+/* 515 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _container = __webpack_require__(516);
+
+	var _container2 = _interopRequireDefault(_container);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _container2.default;
+
+/***/ }),
+/* 516 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _reactRedux = __webpack_require__(265);
+
+	var _DashBoard = __webpack_require__(517);
+
+	var _DashBoard2 = _interopRequireDefault(_DashBoard);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function mapStateToProps(state) {
+		return {};
+	}
+
+	function mapDispatchToProps(dispatch) {
+		return {};
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_DashBoard2.default);
+
+/***/ }),
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43810,7 +43969,104 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Registrar = __webpack_require__(514);
+	var _reactRouter = __webpack_require__(210);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DashBoard = function (_Component) {
+		_inherits(DashBoard, _Component);
+
+		function DashBoard() {
+			_classCallCheck(this, DashBoard);
+
+			return _possibleConstructorReturn(this, (DashBoard.__proto__ || Object.getPrototypeOf(DashBoard)).apply(this, arguments));
+		}
+
+		_createClass(DashBoard, [{
+			key: 'render',
+			value: function render() {
+				var style = {
+					color: "#fff",
+					textAling: "center"
+				};
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'container-fruit' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(
+							'div',
+							{ className: '#00b0ff light-blue accent-3 col-sm-8 col-md-6 col-lg-2' },
+							_react2.default.createElement(
+								'h5',
+								{ className: 'center' },
+								'Menu'
+							),
+							_react2.default.createElement('br', null),
+							_react2.default.createElement(
+								'ul',
+								null,
+								_react2.default.createElement(
+									'li',
+									{ className: 'center' },
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ style: style, to: '/roles' },
+										'Roles'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									{ className: 'center' },
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ style: style, to: '/usuarios' },
+										'Usuarios'
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-sm-8 col-md-6 col-lg-10' },
+							_react2.default.createElement('br', null),
+							this.props.children
+						)
+					)
+				);
+			}
+		}]);
+
+		return DashBoard;
+	}(_react.Component);
+
+	exports.default = DashBoard;
+
+/***/ }),
+/* 518 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Registrar = __webpack_require__(519);
 
 	var _Registrar2 = _interopRequireDefault(_Registrar);
 
@@ -43844,7 +44100,7 @@
 	exports.default = RegistrarPage;
 
 /***/ }),
-/* 514 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43853,7 +44109,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(515);
+	var _container = __webpack_require__(520);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -43862,7 +44118,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 515 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43877,7 +44133,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Registrar = __webpack_require__(516);
+	var _Registrar = __webpack_require__(521);
 
 	var _Registrar2 = _interopRequireDefault(_Registrar);
 
@@ -43940,7 +44196,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Registrar2.default));
 
 /***/ }),
-/* 516 */
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44100,7 +44356,7 @@
 	exports.default = Registrar;
 
 /***/ }),
-/* 517 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44115,7 +44371,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Autenticar = __webpack_require__(518);
+	var _Autenticar = __webpack_require__(523);
 
 	var _Autenticar2 = _interopRequireDefault(_Autenticar);
 
@@ -44149,7 +44405,7 @@
 	exports.default = AutenticarPage;
 
 /***/ }),
-/* 518 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44158,7 +44414,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(519);
+	var _container = __webpack_require__(524);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -44167,7 +44423,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 519 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44182,7 +44438,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Autenticar = __webpack_require__(520);
+	var _Autenticar = __webpack_require__(525);
 
 	var _Autenticar2 = _interopRequireDefault(_Autenticar);
 
@@ -44227,7 +44483,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Autenticar2.default));
 
 /***/ }),
-/* 520 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44385,7 +44641,7 @@
 	exports.default = Autenticar;
 
 /***/ }),
-/* 521 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44400,7 +44656,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Listar = __webpack_require__(522);
+	var _Listar = __webpack_require__(527);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -44434,7 +44690,7 @@
 	exports.default = ListarPage;
 
 /***/ }),
-/* 522 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44443,7 +44699,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(523);
+	var _container = __webpack_require__(528);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -44452,7 +44708,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 523 */
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44467,7 +44723,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Listar = __webpack_require__(524);
+	var _Listar = __webpack_require__(529);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -44505,7 +44761,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Listar2.default);
 
 /***/ }),
-/* 524 */
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44524,11 +44780,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Cargando = __webpack_require__(525);
+	var _Cargando = __webpack_require__(530);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
-	var _Filtro = __webpack_require__(527);
+	var _Filtro = __webpack_require__(532);
 
 	var _Filtro2 = _interopRequireDefault(_Filtro);
 
@@ -44577,6 +44833,14 @@
 		}, {
 			key: 'renderUsuarios',
 			value: function renderUsuarios(usuarios) {
+				var style = {
+					btn: {
+						"marginLeft": "10px"
+					}
+				};
+
+				console.log(style.btn);
+
 				var filtro = this.props.filtro;
 
 				var con = { // Condiciones.
@@ -44621,7 +44885,7 @@
 								),
 								_react2.default.createElement(
 									'a',
-									{ className: '#0288d1 light-blue darken-2 btn' },
+									{ style: style.btn, className: '#0288d1 light-blue darken-2 btn' },
 									'Eliminar'
 								)
 							)
@@ -44716,7 +44980,7 @@
 	exports.default = Listar;
 
 /***/ }),
-/* 525 */
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44725,7 +44989,7 @@
 	  value: true
 	});
 
-	var _Cargando = __webpack_require__(526);
+	var _Cargando = __webpack_require__(531);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
@@ -44734,7 +44998,7 @@
 	exports.default = _Cargando2.default;
 
 /***/ }),
-/* 526 */
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44760,10 +45024,10 @@
 	var Cargando = function (_Component) {
 		_inherits(Cargando, _Component);
 
-		function Cargando() {
+		function Cargando(props) {
 			_classCallCheck(this, Cargando);
 
-			return _possibleConstructorReturn(this, (Cargando.__proto__ || Object.getPrototypeOf(Cargando)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (Cargando.__proto__ || Object.getPrototypeOf(Cargando)).call(this, props));
 		}
 
 		_createClass(Cargando, [{
@@ -44771,54 +45035,49 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'container' },
-					_react2.default.createElement('br', null),
+					{ className: 'row center-lg center-md center-sm center-xs' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'row center-lg center-md center-sm center-xs' },
+						{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-6' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-4' },
+							{ className: 'preloader-wrapper big active' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'preloader-wrapper big active' },
+								{ className: 'spinner-layer spinner-blue' },
 								_react2.default.createElement(
 									'div',
-									{ className: 'spinner-layer spinner-blue' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'circle-clipper left' },
-										_react2.default.createElement('div', { className: 'circle' })
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'gap-patch' },
-										_react2.default.createElement('div', { className: 'circle' })
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'circle-clipper right' },
-										_react2.default.createElement('div', { className: 'circle' })
-									)
+									{ className: 'circle-clipper left' },
+									_react2.default.createElement('div', { className: 'circle' })
 								),
 								_react2.default.createElement(
 									'div',
-									{ className: 'spinner-layer spinner-red' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'circle-clipper left' },
-										_react2.default.createElement('div', { className: 'circle' })
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'gap-patch' },
-										_react2.default.createElement('div', { className: 'circle' })
-									),
-									_react2.default.createElement(
-										'div',
-										{ className: 'circle-clipper right' },
-										_react2.default.createElement('div', { className: 'circle' })
-									)
+									{ className: 'gap-patch' },
+									_react2.default.createElement('div', { className: 'circle' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'circle-clipper right' },
+									_react2.default.createElement('div', { className: 'circle' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'spinner-layer spinner-red' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'circle-clipper left' },
+									_react2.default.createElement('div', { className: 'circle' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'gap-patch' },
+									_react2.default.createElement('div', { className: 'circle' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'circle-clipper right' },
+									_react2.default.createElement('div', { className: 'circle' })
 								)
 							)
 						)
@@ -44833,7 +45092,7 @@
 	exports.default = Cargando;
 
 /***/ }),
-/* 527 */
+/* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44842,7 +45101,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(528);
+	var _container = __webpack_require__(533);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -44851,7 +45110,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 528 */
+/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44864,7 +45123,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Filtro = __webpack_require__(529);
+	var _Filtro = __webpack_require__(534);
 
 	var _Filtro2 = _interopRequireDefault(_Filtro);
 
@@ -44887,7 +45146,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Filtro2.default);
 
 /***/ }),
-/* 529 */
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44951,53 +45210,7 @@
 	exports.default = Filtro;
 
 /***/ }),
-/* 530 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _container = __webpack_require__(531);
-
-	var _container2 = _interopRequireDefault(_container);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _container2.default;
-
-/***/ }),
-/* 531 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _reactRedux = __webpack_require__(265);
-
-	var _DashBoard = __webpack_require__(532);
-
-	var _DashBoard2 = _interopRequireDefault(_DashBoard);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function mapStateToProps(state) {
-		return {};
-	}
-
-	function mapDispatchToProps(dispatch) {
-		return {};
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_DashBoard2.default);
-
-/***/ }),
-/* 532 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45012,7 +45225,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Listar = __webpack_require__(522);
+	var _Listar = __webpack_require__(536);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -45024,53 +45237,683 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var DashBoard = function (_Component) {
-		_inherits(DashBoard, _Component);
+	var ListarRolesPage = function (_Component) {
+		_inherits(ListarRolesPage, _Component);
 
-		function DashBoard() {
-			_classCallCheck(this, DashBoard);
+		function ListarRolesPage() {
+			_classCallCheck(this, ListarRolesPage);
 
-			return _possibleConstructorReturn(this, (DashBoard.__proto__ || Object.getPrototypeOf(DashBoard)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (ListarRolesPage.__proto__ || Object.getPrototypeOf(ListarRolesPage)).apply(this, arguments));
 		}
 
-		_createClass(DashBoard, [{
+		_createClass(ListarRolesPage, [{
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'container-fruit' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'row' },
-						_react2.default.createElement(
-							'div',
-							{ className: '#00b0ff light-blue accent-3 col-sm-8 col-md-6 col-lg-2' },
-							_react2.default.createElement(
-								'h5',
-								{ className: 'center' },
-								'Menu'
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'col-sm-8 col-md-6 col-lg-10' },
-							_react2.default.createElement(
-								'h3',
-								{ className: 'center' },
-								'Bienvenido al Dashboard.'
-							),
-							_react2.default.createElement(_Listar2.default, null),
-							this.props.children
-						)
-					)
-				);
+				return _react2.default.createElement(_Listar2.default, null);
 			}
 		}]);
 
-		return DashBoard;
+		return ListarRolesPage;
 	}(_react.Component);
 
-	exports.default = DashBoard;
+	exports.default = ListarRolesPage;
+
+/***/ }),
+/* 536 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _container = __webpack_require__(537);
+
+	var _container2 = _interopRequireDefault(_container);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _container2.default;
+
+/***/ }),
+/* 537 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _reactRedux = __webpack_require__(265);
+
+	var _actions = __webpack_require__(538);
+
+	var _Listar = __webpack_require__(539);
+
+	var _Listar2 = _interopRequireDefault(_Listar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function mapStateToProps(state) {
+		return {
+			crear: state.rol.crear,
+			listar: state.rol.listar
+		};
+	}
+
+	function mapDispatchToProps(dispatch) {
+		return {
+			listarRoles: function listarRoles() {
+				dispatch((0, _actions.listarRoles)());
+			}
+		};
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Listar2.default);
+
+/***/ }),
+/* 538 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.abrirFormularioRol = abrirFormularioRol;
+	exports.cerrarFormularioRol = cerrarFormularioRol;
+	exports.crearRol = crearRol;
+	exports.listarRoles = listarRoles;
+
+	var _types = __webpack_require__(510);
+
+	var _globalActions = __webpack_require__(180);
+
+	var _reactRouter = __webpack_require__(210);
+
+	var _reduxForm = __webpack_require__(308);
+
+	function abrirFormularioRol() {
+		return function (dispatch) {
+			dispatch({ type: _types.ABRIR_FORMULARIO_CREAR_ROL });
+		};
+	}
+
+	function cerrarFormularioRol() {
+		return function (dispatch) {
+			dispatch({ type: _types.CERRAR_FORMULARIO_CREAR_ROL });
+		};
+	}
+
+	function crearRol(datosFormulario) {
+		return function (dispatch) {
+			var url = '/roles/crear';
+
+			dispatch({ type: _types.CREAR_ROL_REQUEST });
+
+			(0, _globalActions.postData)(_types.CREAR_ROL_EXITO, _types.CREAR_ROL_FALLO, true, url, dispatch, datosFormulario);
+
+			dispatch((0, _reduxForm.reset)('Crear'));
+		};
+	}
+
+	function listarRoles() {
+		return function (dispatch) {
+			var url = '/roles';
+
+			dispatch({ type: _types.LISTAR_ROLES_REQUEST });
+
+			(0, _globalActions.getData)(_types.LISTAR_ROLES_EXITO, _types.LISTAR_ROLES_FALLO, true, url, dispatch);
+		};
+	}
+
+/***/ }),
+/* 539 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Crear = __webpack_require__(540);
+
+	var _Crear2 = _interopRequireDefault(_Crear);
+
+	var _Cargando = __webpack_require__(530);
+
+	var _Cargando2 = _interopRequireDefault(_Cargando);
+
+	var _MensajeOerror = __webpack_require__(543);
+
+	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var isArrayEqual = function isArrayEqual() {
+		var array1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var array2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+		if (array1 === array2) {
+			return true;
+		}
+
+		// check one level deep
+		// return array1.length === array2.length &&
+		//     array1.every((item, index) => item === array2[index]);
+	};
+
+	var Listar = function (_Component) {
+		_inherits(Listar, _Component);
+
+		function Listar(props) {
+			_classCallCheck(this, Listar);
+
+			var _this = _possibleConstructorReturn(this, (Listar.__proto__ || Object.getPrototypeOf(Listar)).call(this, props));
+
+			_this.renderRoles = _this.renderRoles.bind(_this);
+			return _this;
+		}
+
+		_createClass(Listar, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.props.listarRoles();
+			}
+		}, {
+			key: 'shouldComponentUpdate',
+			value: function shouldComponentUpdate(nextProps, nextState) {
+				console.log("actual:");
+				console.log(this.props.listar.roles);
+
+				console.log("el que sigue:");
+				console.log(nextProps.listar.roles);
+
+				if (this.props.listar.roles != nextProps.listar.roles) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}, {
+			key: 'renderRoles',
+			value: function renderRoles(roles) {
+				var style = {
+					btn: {
+						"marginLeft": "10px"
+					}
+				};
+
+				return _react2.default.createElement(
+					'tbody',
+					null,
+					roles.map(function (rol) {
+						return _react2.default.createElement(
+							'tr',
+							{ key: rol.id_rol },
+							_react2.default.createElement(
+								'td',
+								{ className: 'center' },
+								rol.id_rol
+							),
+							_react2.default.createElement(
+								'td',
+								{ className: 'center' },
+								rol.nombre
+							),
+							_react2.default.createElement(
+								'td',
+								{ className: 'center' },
+								_react2.default.createElement(
+									'a',
+									{ className: '#e53935 red darken-1 btn' },
+									'Editar'
+								),
+								_react2.default.createElement(
+									'a',
+									{ style: style.btn, className: '#0288d1 light-blue darken-2 btn' },
+									'Eliminar'
+								)
+							)
+						);
+					})
+				);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				console.log(this.props.mostrar);
+
+				var _props$listar = this.props.listar,
+				    roles = _props$listar.roles,
+				    cargando = _props$listar.cargando,
+				    error = _props$listar.error;
+
+
+				if (cargando) {
+					return _react2.default.createElement(_Cargando2.default, null);
+				} else {
+					return _react2.default.createElement(
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-4' },
+								_react2.default.createElement(_Crear2.default, null)
+							)
+						),
+						_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-12' },
+								_react2.default.createElement(
+									'h4',
+									{ className: 'center' },
+									'Roles'
+								),
+								_react2.default.createElement(
+									'table',
+									null,
+									_react2.default.createElement(
+										'thead',
+										null,
+										_react2.default.createElement(
+											'tr',
+											null,
+											_react2.default.createElement(
+												'th',
+												{ className: 'center' },
+												'Id'
+											),
+											_react2.default.createElement(
+												'th',
+												{ className: 'center' },
+												'Nombre'
+											),
+											_react2.default.createElement(
+												'th',
+												{ className: 'center' },
+												'Opciones'
+											)
+										)
+									),
+									this.renderRoles(roles)
+								)
+							)
+						)
+					);
+				}
+			}
+		}]);
+
+		return Listar;
+	}(_react.Component);
+
+	exports.default = Listar;
+
+/***/ }),
+/* 540 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _container = __webpack_require__(541);
+
+	var _container2 = _interopRequireDefault(_container);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _container2.default;
+
+/***/ }),
+/* 541 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _reactRedux = __webpack_require__(265);
+
+	var _reduxForm = __webpack_require__(308);
+
+	var _actions = __webpack_require__(538);
+
+	var _Crear = __webpack_require__(542);
+
+	var _Crear2 = _interopRequireDefault(_Crear);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var validate = function validate(values) {
+		var errors = {};
+
+		if (!values.nombre) {
+			errors.nombre = 'Tienes que introducir un nombre.';
+		} else if (values.nombre.length < 5) {
+			errors.nombre = 'Tiene que ser por lo menos 5 characteres.';
+		}
+
+		return errors;
+	};
+
+	function mapStateToProps(state) {
+		return {
+			mostrar: state.rol.formulario.mostrar,
+			crear: state.rol.crear
+		};
+	}
+
+	function mapDispatchToProps(dispatch) {
+		return {
+			crearRol: function crearRol(datosFormulario) {
+				dispatch((0, _actions.crearRol)(datosFormulario));
+			},
+			abrirFormularioRol: function abrirFormularioRol() {
+				dispatch((0, _actions.abrirFormularioRol)());
+			},
+			cerrarFormularioRol: function cerrarFormularioRol() {
+				dispatch((0, _actions.cerrarFormularioRol)());
+			}
+		};
+	}
+
+	var form = (0, _reduxForm.reduxForm)({
+		form: 'Crear',
+		validate: validate
+	});
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Crear2.default));
+
+/***/ }),
+/* 542 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reduxForm = __webpack_require__(308);
+
+	var _Cargando = __webpack_require__(530);
+
+	var _Cargando2 = _interopRequireDefault(_Cargando);
+
+	var _MensajeOerror = __webpack_require__(543);
+
+	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var renderField = function renderField(_ref) {
+		var input = _ref.input,
+		    label = _ref.label,
+		    type = _ref.type,
+		    _ref$meta = _ref.meta,
+		    touched = _ref$meta.touched,
+		    error = _ref$meta.error,
+		    warning = _ref$meta.warning;
+		return _react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement('input', _extends({}, input, { placeholder: label, type: type })),
+				touched && error && _react2.default.createElement(
+					'span',
+					null,
+					error
+				)
+			),
+			_react2.default.createElement('br', null)
+		);
+	};
+
+	var Crear = function (_Component) {
+		_inherits(Crear, _Component);
+
+		function Crear(props) {
+			_classCallCheck(this, Crear);
+
+			var _this = _possibleConstructorReturn(this, (Crear.__proto__ || Object.getPrototypeOf(Crear)).call(this, props));
+
+			_this.enviarFormulario = _this.enviarFormulario.bind(_this);
+			_this.renderCargando = _this.renderCargando.bind(_this);
+			return _this;
+		}
+
+		_createClass(Crear, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.props.cerrarFormularioRol();
+			}
+		}, {
+			key: 'enviarFormulario',
+			value: function enviarFormulario(formProps) {
+				this.props.crearRol(formProps);
+			}
+		}, {
+			key: 'renderCargando',
+			value: function renderCargando(cargando) {
+				if (cargando) {
+					return _react2.default.createElement(_Cargando2.default, null);
+				} else {
+					return _react2.default.createElement('span', null);
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var styles = {
+					btn: {
+						marginLeft: "10px"
+					},
+					contenedorCrear: {
+						"margin": "10px"
+					}
+				};
+
+				var _props = this.props,
+				    handleSubmit = _props.handleSubmit,
+				    pristine = _props.pristine,
+				    reset = _props.reset,
+				    submitting = _props.submitting;
+				var _props$crear = this.props.crear,
+				    cargando = _props$crear.cargando,
+				    mensaje = _props$crear.mensaje,
+				    error = _props$crear.error;
+
+
+				if (this.props.mostrar) {
+					return _react2.default.createElement(
+						'div',
+						{ style: styles.contenedorCrear },
+						this.renderCargando(cargando),
+						_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: mensaje }),
+						_react2.default.createElement(
+							'form',
+							{ onSubmit: handleSubmit(this.enviarFormulario) },
+							_react2.default.createElement(_reduxForm.Field, { name: 'nombre', type: 'text', component: renderField, label: 'Nombre' }),
+							_react2.default.createElement(
+								'button',
+								{ className: '#0288d1 light-blue darken-2 btn', type: 'submit', disabled: submitting },
+								'Guardar'
+							),
+							_react2.default.createElement(
+								'button',
+								{ style: styles.btn, onClick: this.props.cerrarFormularioRol, className: '#0288d1 light-blue darken-2 btn' },
+								'Cancelar'
+							)
+						)
+					);
+				} else {
+					return _react2.default.createElement(
+						'div',
+						{ style: styles.contenedorCrear },
+						_react2.default.createElement(
+							'button',
+							{ onClick: this.props.abrirFormularioRol, className: '#0288d1 light-blue darken-2 btn' },
+							'Agregar'
+						)
+					);
+				}
+			}
+		}]);
+
+		return Crear;
+	}(_react.Component);
+
+	exports.default = Crear;
+
+/***/ }),
+/* 543 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _MensajeOerror = __webpack_require__(544);
+
+	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _MensajeOerror2.default;
+
+/***/ }),
+/* 544 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MensajeOerror = function (_Component) {
+		_inherits(MensajeOerror, _Component);
+
+		function MensajeOerror() {
+			_classCallCheck(this, MensajeOerror);
+
+			return _possibleConstructorReturn(this, (MensajeOerror.__proto__ || Object.getPrototypeOf(MensajeOerror)).apply(this, arguments));
+		}
+
+		_createClass(MensajeOerror, [{
+			key: 'render',
+			value: function render() {
+				var contenido = this.props.mensaje ? this.props.mensaje : this.props.error;
+
+				var colorContenedor;
+
+				if (this.props.mensaje) {
+					colorContenedor = '8bc34a';
+				} else {
+					colorContenedor = 'f44336';
+				}
+
+				var styles = {
+					contenedor: {
+						boxShadow: 'none',
+						border: '1px solid #' + colorContenedor,
+						color: '#' + colorContenedor,
+						padding: '16px'
+					}
+				};
+
+				if (contenido) {
+					return _react2.default.createElement(
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'row center-lg' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-6' },
+								_react2.default.createElement(
+									'div',
+									{ style: styles.contenedor, className: 'card-panel' },
+									_react2.default.createElement(
+										'span',
+										null,
+										contenido
+									)
+								)
+							)
+						)
+					);
+				} else {
+					return _react2.default.createElement('span', null);
+				}
+			}
+		}]);
+
+		return MensajeOerror;
+	}(_react.Component);
+
+	exports.default = MensajeOerror;
 
 /***/ })
 /******/ ]);

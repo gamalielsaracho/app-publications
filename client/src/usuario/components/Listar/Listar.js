@@ -32,6 +32,14 @@ class Listar extends Component {
 	// }
 
 	renderUsuarios(usuarios) {
+		let style = {
+			btn: {
+				"marginLeft":"10px"
+			}
+		}
+
+		console.log(style.btn)
+
 		let filtro = this.props.filtro
 
 		let con = { // Condiciones.
@@ -54,7 +62,7 @@ class Listar extends Component {
 			            <td className='center'>{ usuario.correo }</td>
 			            <td className='center'>
 			            	<a className="#e53935 red darken-1 btn">Editar</a>
-			            	<a className="#0288d1 light-blue darken-2 btn">Eliminar</a>
+			            	<a style={style.btn} className="#0288d1 light-blue darken-2 btn">Eliminar</a>
 			            </td>
 			          </tr>		
 				  })
