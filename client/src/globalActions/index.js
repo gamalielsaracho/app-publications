@@ -17,7 +17,7 @@ export function errorHandler(dispatch, error, type) {
 // ....
 
 
-export function postData(action, errorType, isAuthReq, url, dispatch, data) {
+export function postData(action, errorType, isAuthReq, url, dispatch, datos) {
 	const requestUrl = API_URL + url
 
 	let headers = {}
@@ -28,10 +28,18 @@ export function postData(action, errorType, isAuthReq, url, dispatch, data) {
 		}
 	}
 
-	axios.post(requestUrl, data, headers)
+	axios.post(requestUrl, datos, headers)
 	.then((response) => {
-		console.log(response.data)
-		dispatch({ type: action, payload: response.data })
+		var contenido = response.data
+
+		datos.id_rol = contenido.id_rol 
+
+		contenido.datoInsertado = datos
+		// contenido.datoInsertado.id_rol = contenido.id_rol
+
+		console.log(contenido)
+
+		dispatch({ type: action, payload: contenido })
 	})
 	.catch((error) => {
 		errorHandler(dispatch, error.response, errorType)
@@ -52,7 +60,7 @@ export function getData(action, errorType, isAuthReq, url, dispatch) {
 
 	axios.get(requestUrl, headers)
 	.then((response) => {
-		console.log(response.data)
+		
 
 		dispatch({ type: action, payload: response.data })
 	})

@@ -21805,7 +21805,7 @@
 	// ....
 
 
-	function postData(action, errorType, isAuthReq, url, dispatch, data) {
+	function postData(action, errorType, isAuthReq, url, dispatch, datos) {
 		var requestUrl = API_URL + url;
 
 		var headers = {};
@@ -21816,9 +21816,17 @@
 			};
 		}
 
-		_axios2.default.post(requestUrl, data, headers).then(function (response) {
-			console.log(response.data);
-			dispatch({ type: action, payload: response.data });
+		_axios2.default.post(requestUrl, datos, headers).then(function (response) {
+			var contenido = response.data;
+
+			datos.id_rol = contenido.id_rol;
+
+			contenido.datoInsertado = datos;
+			// contenido.datoInsertado.id_rol = contenido.id_rol
+
+			console.log(contenido);
+
+			dispatch({ type: action, payload: contenido });
 		}).catch(function (error) {
 			errorHandler(dispatch, error.response, errorType);
 		});
@@ -21836,7 +21844,6 @@
 		}
 
 		_axios2.default.get(requestUrl, headers).then(function (response) {
-			console.log(response.data);
 
 			dispatch({ type: action, payload: response.data });
 		}).catch(function (error) {
@@ -43530,9 +43537,21 @@
 				});
 
 			case _types.CREAR_ROL_EXITO:
-				return state = Object.assign({}, state, {
-					crear: { mensaje: action.payload.mensaje }
+				console.log(action.payload.datoInsertado);
+
+				return Object.assign({}, state, {
+					crear: {
+						mensaje: action.payload.mensaje
+					},
+					listar: {
+						roles: [].concat(_toConsumableArray(state.listar.roles), [action.payload.datoInsertado])
+					}
 				});
+
+			// Object.assign({}, state, {
+			// })
+
+			// return state
 
 			case _types.CREAR_ROL_FALLO:
 				return state = Object.assign({}, state, {
@@ -43565,6 +43584,8 @@
 	};
 
 	var _types = __webpack_require__(510);
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var INITIAL_STATE = {
 		formulario: {
@@ -45299,7 +45320,8 @@
 	function mapStateToProps(state) {
 		return {
 			crear: state.rol.crear,
-			listar: state.rol.listar
+			listar: state.rol.listar,
+			roles: state.rol.listar.roles
 		};
 	}
 
@@ -45431,24 +45453,27 @@
 		}
 
 		_createClass(Listar, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				// setTimeout(() => this.props.listarRoles(), 1000)
 				this.props.listarRoles();
 			}
 		}, {
 			key: 'shouldComponentUpdate',
-			value: function shouldComponentUpdate(nextProps, nextState) {
+			value: function shouldComponentUpdate(nextProps) {
 				console.log("actual:");
-				console.log(this.props.listar.roles);
+				console.log(this.props.roles);
 
 				console.log("el que sigue:");
-				console.log(nextProps.listar.roles);
+				console.log(nextProps.roles);
 
-				if (this.props.listar.roles != nextProps.listar.roles) {
-					return true;
-				} else {
-					return false;
-				}
+				return nextProps.roles !== this.props.roles;
+
+				// if(this.props.listar.roles != nextProps.listar.roles) {
+				// 	return true
+				// }else {
+				// 	return false
+				// }
 			}
 		}, {
 			key: 'renderRoles',
@@ -45734,6 +45759,7 @@
 		}, {
 			key: 'enviarFormulario',
 			value: function enviarFormulario(formProps) {
+				console.log(formProps);
 				this.props.crearRol(formProps);
 			}
 		}, {

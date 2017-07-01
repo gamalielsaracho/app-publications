@@ -11,3 +11,11 @@ exports.listar = (callback) => {
 
 	connection.end()
 }
+
+exports.mostrar = (id, callback) => {
+	console.log("el ide que encontre es: "+id)
+
+	return connection.query('select * from roles where id_rol = ?', [id], callback)
+
+	connection.end()
+}

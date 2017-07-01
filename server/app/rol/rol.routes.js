@@ -6,4 +6,5 @@ export default (app) => {
 
 	app.route('/api/roles')
 	   .get(rolCtrl.roles)
+
 }

@@ -9,7 +9,8 @@ import Listar from './Listar'
 function mapStateToProps(state) {
 	return {
 		crear: state.rol.crear,
-		listar: state.rol.listar
+		listar: state.rol.listar,
+		roles: state.rol.listar.roles
 	}
 }
 

@@ -40,9 +40,21 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_ROL_EXITO:
-			return state = Object.assign({}, state, {
-				crear: { mensaje: action.payload.mensaje }
+			console.log(action.payload.datoInsertado)
+
+			return Object.assign({}, state, {
+				crear: { 
+					mensaje: action.payload.mensaje,
+				},
+				listar: { 
+					roles: [ ...state.listar.roles, action.payload.datoInsertado ]
+				}
 			})
+
+			// Object.assign({}, state, {
+			// })
+
+			// return state
 
 		case CREAR_ROL_FALLO:
 			return state = Object.assign({}, state, {

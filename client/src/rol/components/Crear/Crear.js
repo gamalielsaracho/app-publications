@@ -27,6 +27,7 @@ class Crear extends Component {
 	}
 
 	enviarFormulario(formProps) {
+		console.log(formProps)
 		this.props.crearRol(formProps)
 	}
 

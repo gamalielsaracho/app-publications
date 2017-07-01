@@ -20,22 +20,26 @@ class Listar extends Component {
 		this.renderRoles = this.renderRoles.bind(this)
 	}
 
-	componentWillMount() {
+	componentDidMount() {
+		// setTimeout(() => this.props.listarRoles(), 1000)
 		this.props.listarRoles()
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate(nextProps) {
 		console.log("actual:")
-		console.log(this.props.listar.roles)
+		console.log(this.props.roles)
 
 		console.log("el que sigue:")
-		console.log(nextProps.listar.roles)
+		console.log(nextProps.roles)
 
-		if(this.props.listar.roles != nextProps.listar.roles) {
-			return true
-		}else {
-			return false
-		}
+		return nextProps.roles !== this.props.roles
+
+
+		// if(this.props.listar.roles != nextProps.listar.roles) {
+		// 	return true
+		// }else {
+		// 	return false
+		// }
 
 	}	
 
