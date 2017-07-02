@@ -51,11 +51,6 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
-			// Object.assign({}, state, {
-			// })
-
-			// return state
-
 		case CREAR_ROL_FALLO:
 			return state = Object.assign({}, state, {
 				crear: { error: action.payload.error }
