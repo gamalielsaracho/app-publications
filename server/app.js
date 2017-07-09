@@ -1,10 +1,13 @@
 import express from 'express'
+
 import bodyParser from 'body-parser'
 
 import routes from './app/routes'
 
 let app = express()
+let http = require('http').Server(app)
 
+let io = require('socket.io')(http)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -18,7 +21,33 @@ app.use((req, res, next) => {
 })
 
 routes(app)
-app.listen(3000, (err) => {
+
+app.get('/', (req, res) => {
+	res.sendfile('index.html')
+})
+
+
+io.on('connection', function (socket) {
+	console.log('Un usuario Conectado.')
+
+	let usuario = socket.usuario = 'Rie'
+
+	// todos los sockets por cada modulo.
+	// algo(socket, io)
+	if(usuario == 'Toro') {
+		require('././app/rol/rol.sockets')(socket, io)
+	}else {
+		console.log('No puedes ver esto.')
+	}
+
+	socket.on('disconnect', function () {
+		console.log('El usuario se Desconecto.')
+	})
+})
+
+
+
+http.listen(3000, (err) => {
 	if(err) {
 		console.log(`Error al correr el servidor 3000`)
 	}

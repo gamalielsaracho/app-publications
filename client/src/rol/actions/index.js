@@ -19,10 +19,10 @@ import {
 	deleteData
 } from '../../globalActions'
 
-import {API_URL} from '../../globalActions'
+import { API_URL } from '../../globalActions'
 
 import { browserHistory } from 'react-router'
-import {reset} from 'redux-form'
+import { reset } from 'redux-form'
 
 export function abrirFormularioRol() {
 	return (dispatch) => {

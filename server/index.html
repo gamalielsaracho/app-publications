@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+	<script>
+    	var socket = io();
+
+    	socket.on('listar_roles', function(data) {
+    		if(data.error) {
+    			console.log(data.error)
+    		}
+
+    		console.log(data.roles)
+    	})
+
+    </script>
+</head>
+<body>
+	<h1>Hello View.!</h1>
+</body>
+</html>    
