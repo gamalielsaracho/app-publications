@@ -11,6 +11,10 @@ import {
 	LISTAR_ROLES_FALLO
 } from './types'
 
+import io from 'socket.io-client'
+
+let socket = io('http://localhost:3000')
+
 import {
 	errorHandler,
 	postData,
@@ -50,11 +54,22 @@ export function crearRol(datosFormulario) {
 
 export function listarRoles() {
 	return (dispatch) => {
-		const url = `/roles`
+		// const url = `/roles`
 
 		dispatch({ type: LISTAR_ROLES_REQUEST })
 
-		getData(LISTAR_ROLES_EXITO, LISTAR_ROLES_FALLO, true, url, dispatch)
+		socket.on('listar_roles', (data) => {
+			console.log(data)
+
+			if(data.error) {
+				dispatch({ type: LISTAR_ROLES_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: LISTAR_ROLES_EXITO, payload: data })
+			}
+		})
+
+
+		// getData(LISTAR_ROLES_EXITO, LISTAR_ROLES_FALLO, true, url, dispatch)
 	}
 }
 

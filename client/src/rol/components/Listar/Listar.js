@@ -20,7 +20,7 @@ class Listar extends Component {
 		this.renderRoles = this.renderRoles.bind(this)
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		// setTimeout(() => this.props.listarRoles(), 1000)
 		this.props.listarRoles()
 	}
@@ -70,6 +70,8 @@ class Listar extends Component {
 		console.log(this.props.mostrar)
 
 		const { roles, cargando, error } = this.props.listar
+
+		console.log(this.props.listar)
 
 		if(cargando) {
 			return <Cargando/>

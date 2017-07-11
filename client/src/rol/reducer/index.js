@@ -58,22 +58,20 @@ export default function (state = INITIAL_STATE, action) {
 
 		// LISTAR.
 		case LISTAR_ROLES_REQUEST:
-			state = Object.assign({}, state, {
+			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' }
 			})
 
-			return state
 
 		case LISTAR_ROLES_EXITO:
-			state = Object.assign({}, state, {
-				listar: { roles: action.payload, cargando: false, error: '' }
+			return Object.assign({}, state, {
+				listar: { roles: action.payload.roles, cargando: false, error: '' }
 			})
 
-			return state
 
 		case LISTAR_ROLES_FALLO:
-			return state = Object.assign({}, state, {
-				listar: { error: action.payload.error, roles:[], cargando: false }
+			return Object.assign({}, state, {
+				listar: { error: action.payload, roles:[], cargando: false }
 			})
 
 		default: 

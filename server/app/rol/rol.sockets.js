@@ -18,9 +18,7 @@ export default (socket, io) => {
 			io.sockets.emit('listar_roles', { roles: roles })
 		})
 	}
+	
 	roles()
 
-	function crear() {
-		
-	}
 }

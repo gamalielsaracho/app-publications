@@ -32,13 +32,13 @@ io.on('connection', function (socket) {
 
 	let usuario = socket.usuario = 'Rie'
 
+	require('././app/rol/rol.sockets')(socket, io)
 	// todos los sockets por cada modulo.
 	// algo(socket, io)
-	if(usuario == 'Toro') {
-		require('././app/rol/rol.sockets')(socket, io)
-	}else {
-		console.log('No puedes ver esto.')
-	}
+	// if(usuario == 'Toro') {
+	// }else {
+		// console.log('No puedes ver esto.')
+	// }
 
 	socket.on('disconnect', function () {
 		console.log('El usuario se Desconecto.')
