@@ -21,4 +21,45 @@ export default (socket, io) => {
 	
 	roles()
 
+	socket.emit('hello', { contenido: 'hola mundo' })
+
+	socket.on('crear_rol', function(data) {
+		Rol.crear(data, (err, rol) => {
+			if(err) {
+				socket.emit('crear_rol', { error: 'Ocurrió un error, intente nuevamente' })
+				return
+			}
+
+			socket.emit('crear_rol', { mensaje: 'Se agregó exitósamente.' })
+		
+			roles()
+		})
+	})
+
+
+	socket.on('mostrar_rol', (data) => {
+		Rol.mostrar(data.id_rol, (err, rol) => {
+			if(err) {
+				socket.emit('mostrar_rol', { error: 'Ocurrió un error, intente nuevamente' })
+				return
+			}
+
+			socket.emit('mostrar_rol', rol[0])
+		})
+	})
+
+
+	socket.on('eliminar_rol', (data) => {
+		Rol.eliminar(data.id_rol, (err) => {
+			if(err) {
+				socket.emit('eliminar_rol', { error: 'Ocurrió un error, intente nuevamente' })
+				return
+			}
+
+			socket.emit('eliminar_rol', { mensaje: 'Se Eliminó exitósamente.' })
+
+			roles()
+		})
+	})
+
 }

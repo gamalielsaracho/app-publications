@@ -115,7 +115,7 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_USUARIOS_EXITO:
 			return state = Object.assign({}, state, {
 				listar: {
-					usuarios: action.payload, 
+					usuarios: action.payload.usuarios, 
 					cargando:false, 
 					error: ''
 				}

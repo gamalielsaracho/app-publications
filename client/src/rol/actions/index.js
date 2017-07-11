@@ -12,18 +12,7 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
-
-let socket = io('http://localhost:3000')
-
-import {
-	errorHandler,
-	postData,
-	getData,
-	putData,
-	deleteData
-} from '../../globalActions'
-
-import { API_URL } from '../../globalActions'
+import { socket } from '../../globalActions'
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
@@ -40,26 +29,14 @@ export function cerrarFormularioRol() {
 	}
 }
 
-export function crearRol(datosFormulario) {
-	return (dispatch) => {
-		const url = `/roles/crear`
-
-		dispatch({ type: CREAR_ROL_REQUEST })
-
-		postData(CREAR_ROL_EXITO, CREAR_ROL_FALLO, true, url, dispatch, datosFormulario)
-	
-		dispatch(reset('Crear'))
-	}
-}
-
 export function listarRoles() {
 	return (dispatch) => {
-		// const url = `/roles`
 
 		dispatch({ type: LISTAR_ROLES_REQUEST })
 
+		var socket = io('http://localhost:3000')
+
 		socket.on('listar_roles', (data) => {
-			console.log(data)
 
 			if(data.error) {
 				dispatch({ type: LISTAR_ROLES_FALLO, payload: data.error })
@@ -67,11 +44,27 @@ export function listarRoles() {
 				dispatch({ type: LISTAR_ROLES_EXITO, payload: data })
 			}
 		})
-
-
-		// getData(LISTAR_ROLES_EXITO, LISTAR_ROLES_FALLO, true, url, dispatch)
 	}
 }
+
+export function crearRol(datosFormulario) {
+	return (dispatch) => {
+
+		dispatch({ type: CREAR_ROL_REQUEST })
+
+		socket.emit('crear_rol', datosFormulario)
+		socket.on('crear_rol', (data) => {
+			if(data.err) {
+				dispatch({ type: CREAR_ROL_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: CREAR_ROL_EXITO, payload: data })
+			}
+		})
+	
+		dispatch(reset('Crear'))
+	}
+}
+
 
 
 

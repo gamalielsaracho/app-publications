@@ -20,41 +20,38 @@ import {
 	ACTUALIZAR_FORMULARIO_FILTRO
 } from './types'
 
-import {
-	errorHandler,
-	postData,
-	getData,
-	putData,
-	deleteData
-} from '../../globalActions'
+// import {
+// 	errorHandler,
+// 	postData,
+// 	getData,
+// 	putData,
+// 	deleteData
+// } from '../../globalActions'
 
-import {API_URL} from '../../globalActions'
+// import {API_URL} from '../../globalActions'
+
+import { socket } from '../../globalActions'
+import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
-import axios from 'axios'
+// import axios from 'axios'
 
-// export function registrarUsuarioRequest() {
-// 	return (dispatch) => {
-// 		dispatch({ type: REGISTRAR_USUARIO_REQUEST })
-// 	}
-// }
 
 export function registrarUsuario(datosFormulario) {
 
 	return (dispatch) => {
 		dispatch({ type: REGISTRAR_USUARIO_REQUEST })
 
-		axios.post(`${API_URL}/usuarios/crear`, datosFormulario)
-		.then((response) => {
+		socket.emit('registrar_usuario', datosFormulario)
 
-			dispatch({ type: REGISTRAR_USUARIO_EXITO, payload: response.data })
-			console.log(response.data)
-			browserHistory.push(`/`)
+		socket.on('registrar_usuario', (data) => {
+			if(data.error) {
+				dispatch({ type: REGISTRAR_USUARIO_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: REGISTRAR_USUARIO_EXITO, payload: data })
+				browserHistory.push('entrar')
+			}
 		})
-		.catch((error) => {
-			errorHandler(dispatch, error.response, REGISTRAR_USUARIO_FALLO)
-		})
-
 	}
 }
 
@@ -63,26 +60,24 @@ export function autenticarUsuario(datosFormulario) {
 	return (dispatch) => {
 		dispatch({ type: AUTENTICAR_USUARIO_REQUEST })
 
-		axios.post(`${API_URL}/usuarios/autenticacion`, datosFormulario)
-		.then((response) => {
+		socket.emit('autenticar_usuario', datosFormulario)
 
-			dispatch({ type: AUTENTICAR_USUARIO_EXITO, payload: response.data })
-			
-			console.log(response.data)
+		socket.on('autenticar_usuario', (data) => {
+			if(data.error) {
+				dispatch({ type: AUTENTICAR_USUARIO_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: AUTENTICAR_USUARIO_EXITO, payload: data })
+				
+				localStorage.setItem('token', data.token)
 
-			localStorage.setItem('token', response.data.token)
-			
-			const token = localStorage.getItem('token')
+				const token = localStorage.getItem('token')
 
-			dispatch(verificarTokenUsuario(token))
+				dispatch(verificarTokenUsuario(token))
 
-			// enviar al perfil del usuario. cool.!
-			browserHistory.push(`/`)
+				// enviar al perfil del usuario. cool.!
+				browserHistory.push(`/`)
+			}
 		})
-		.catch((error) => {
-			errorHandler(dispatch, error.response, AUTENTICAR_USUARIO_FALLO)
-		})
-
 	}
 }
 
@@ -91,24 +86,14 @@ export function verificarTokenUsuario(token) {
 	return (dispatch) => {
 		dispatch({ type: VERIFICAR_TOKEN_USUARIO_REQUEST })
 
-		axios.get(`${API_URL}/usuarios/verifivartoken/${token}`)
-		.then((response) => {
-
-			dispatch({ type: VERIFICAR_TOKEN_USUARIO_EXITO, payload: response.data })
-			
-			console.log(response.data)
-
-			 // location.reload()
-
-			// localStorage.setItem('token', response.data.token)
-
-			// enviar al perfil del usuario. cool.!
-			// browserHistory.push(`/`)
+		socket.emit('verificar_token', { token: token })
+		socket.on('verificar_token', (data) => {
+			if(data.error) {
+				dispatch({ type: VERIFICAR_TOKEN_USUARIO_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: VERIFICAR_TOKEN_USUARIO_EXITO, payload: data })
+			}
 		})
-		.catch((error) => {
-			errorHandler(dispatch, error.response, VERIFICAR_TOKEN_USUARIO_FALLO)
-		})
-
 	}
 }
 
@@ -125,11 +110,19 @@ export function salirUsuario() {
 
 export function listarUsuarios() {
 	return (dispatch) => {
-		const url = `/usuarios`
 
 		dispatch({ type: LISTAR_USUARIOS_REQUEST })
 
-		getData(LISTAR_USUARIOS_EXITO, LISTAR_USUARIOS_FALLO, true, url, dispatch)
+		var socket = io('http://localhost:3000')
+
+		socket.on('listar_usuarios', function(data) {
+			if(data.error) {
+				dispatch({ type: LISTAR_USUARIOS_FALLO, payload: data.error })
+			} else {	
+				dispatch({ type: LISTAR_USUARIOS_EXITO, payload: data })
+			}
+		})
+
 	}
 }
 

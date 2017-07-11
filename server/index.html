@@ -3,16 +3,27 @@
 <head>
 	<title>Hello</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
 	<script>
-    	var socket = io();
+    	// var socket = io();
 
-    	socket.on('listar_roles', function(data) {
-    		if(data.error) {
-    			console.log(data.error)
-    		}
+        // $.get('http://localhost:3000/api/usuarios')
+        // .then((datos) => {
+        //     console.log(datos)
+        // })
+        // .catch((error) => {
+        //     console.log('El error es: '+error)
+        // })
 
-    		console.log(data.roles)
-    	})
+        // socket.emit('verificar_token', { token: 'hola soy un token..' })
+
+    	// socket.on('algo', function(data) {
+    		
+
+    	// 	console.log(data)
+    	// })
+
+
 
     </script>
 </head>

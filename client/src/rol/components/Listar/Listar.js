@@ -4,15 +4,15 @@ import CrearContainer from '../Crear'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-const isArrayEqual = (array1 = [], array2 = []) => {
-    if (array1 === array2) {
-        return true;
-    }
+// const isArrayEqual = (array1 = [], array2 = []) => {
+//     if (array1 === array2) {
+//         return true;
+//     }
 
-    // check one level deep
-    // return array1.length === array2.length &&
-    //     array1.every((item, index) => item === array2[index]);
-}
+//     // check one level deep
+//     // return array1.length === array2.length &&
+//     //     array1.every((item, index) => item === array2[index]);
+// }
 
 class Listar extends Component {
 	constructor(props) {
@@ -21,7 +21,6 @@ class Listar extends Component {
 	}
 
 	componentWillMount() {
-		// setTimeout(() => this.props.listarRoles(), 1000)
 		this.props.listarRoles()
 	}
 

@@ -5,7 +5,6 @@ import Cargando from '../../../app/components/Cargando'
 
 import FiltroContainer from '../Filtro'
 
-
 class Listar extends Component {
 	constructor(props) {
 		super(props)

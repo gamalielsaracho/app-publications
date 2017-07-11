@@ -1,112 +1,116 @@
-import axios from 'axios'
+// import axios from 'axios'
 
-export const API_URL = 'http://localhost:3000/api'
+import io from 'socket.io-client'
 
-export function errorHandler(dispatch, error, type) {
-	// let mensageError = error.data.error ? error.data.error : error.data
+export let socket = io.connect('http://localhost:3000')
 
-	let mensageError = error.data
-	console.log(mensageError)
-	if(error.status == 401) {
-		mensageError = 'No estas autenticado para hacer Esto.'
-	}
+// export const API_URL = 'http://localhost:3000/api'
 
-	dispatch({ type: type, payload: mensageError })
-}
+// export function errorHandler(dispatch, error, type) {
+// 	// let mensageError = error.data.error ? error.data.error : error.data
 
-// ....
+// 	let mensageError = error.data
+// 	console.log(mensageError)
+// 	if(error.status == 401) {
+// 		mensageError = 'No estas autenticado para hacer Esto.'
+// 	}
 
+// 	dispatch({ type: type, payload: mensageError })
+// }
 
-export function postData(action, errorType, isAuthReq, url, dispatch, datos) {
-	const requestUrl = API_URL + url
-
-	let headers = {}
-
-	if(isAuthReq) {
-		headers = {
-			headers: { 'Authorization': localStorage.getItem('token') }
-		}
-	}
-
-	axios.post(requestUrl, datos, headers)
-	.then((response) => {
-		var contenido = response.data
-
-		datos.id_rol = contenido.id_rol 
-
-		contenido.datoInsertado = datos
-		// contenido.datoInsertado.id_rol = contenido.id_rol
-
-		console.log(contenido)
-
-		dispatch({ type: action, payload: contenido })
-	})
-	.catch((error) => {
-		errorHandler(dispatch, error.response, errorType)
-	})
-}
+// // ....
 
 
-export function getData(action, errorType, isAuthReq, url, dispatch) {
-	const requestUrl = API_URL + url
+// export function postData(action, errorType, isAuthReq, url, dispatch, datos) {
+// 	const requestUrl = API_URL + url
 
-	let headers = {}
+// 	let headers = {}
 
-	if(isAuthReq) {
-		headers = {
-			headers: { 'Authorization': localStorage.getItem('token') }
-		}
-	}
+// 	if(isAuthReq) {
+// 		headers = {
+// 			headers: { 'Authorization': localStorage.getItem('token') }
+// 		}
+// 	}
 
-	axios.get(requestUrl, headers)
-	.then((response) => {
+// 	axios.post(requestUrl, datos, headers)
+// 	.then((response) => {
+// 		var contenido = response.data
+
+// 		datos.id_rol = contenido.id_rol 
+
+// 		contenido.datoInsertado = datos
+// 		// contenido.datoInsertado.id_rol = contenido.id_rol
+
+// 		console.log(contenido)
+
+// 		dispatch({ type: action, payload: contenido })
+// 	})
+// 	.catch((error) => {
+// 		errorHandler(dispatch, error.response, errorType)
+// 	})
+// }
+
+
+// export function getData(action, errorType, isAuthReq, url, dispatch) {
+// 	const requestUrl = API_URL + url
+
+// 	let headers = {}
+
+// 	if(isAuthReq) {
+// 		headers = {
+// 			headers: { 'Authorization': localStorage.getItem('token') }
+// 		}
+// 	}
+
+// 	axios.get(requestUrl, headers)
+// 	.then((response) => {
 		
 
-		dispatch({ type: action, payload: response.data })
-	})
-	.catch((error) => {
-		errorHandler(dispatch, error.response, errorType)
-	})
-}
+// 		dispatch({ type: action, payload: response.data })
+// 	})
+// 	.catch((error) => {
+// 		errorHandler(dispatch, error.response, errorType)
+// 	})
+// }
 
 
-export function putData(action, errorType, isAuthReq, url, dispatch, data) {
-	const requestUrl = API_URL + url
+// export function putData(action, errorType, isAuthReq, url, dispatch, data) {
+// 	const requestUrl = API_URL + url
 
-	let headers = {}
+// 	let headers = {}
 
-	if(isAuthReq) {
-		headers = {
-			headers: { 'Authorization': localStorage.getItem('token') }
-		}
-	}
+// 	if(isAuthReq) {
+// 		headers = {
+// 			headers: { 'Authorization': localStorage.getItem('token') }
+// 		}
+// 	}
 
-	axios.put(requestUrl, data, headers)
-	.then((response) => {
-		dispatch({ type: action, payload: response.data })
-	})
-	.catch((error) => {
-		errorHandler(dispatch, error.response, errorType)
-	})
-}
+// 	axios.put(requestUrl, data, headers)
+// 	.then((response) => {
+// 		dispatch({ type: action, payload: response.data })
+// 	})
+// 	.catch((error) => {
+// 		errorHandler(dispatch, error.response, errorType)
+// 	})
+// }
 
 
-export function deleteData(action, errorType, isAuthReq, url, dispatch) {
-	const requestUrl = API_URL + url
+// export function deleteData(action, errorType, isAuthReq, url, dispatch) {
+// 	const requestUrl = API_URL + url
 
-	let headers = {}
+// 	let headers = {}
 
-	if(isAuthReq) {
-		headers = {
-			headers: { 'Authorization': localStorage.getItem('token') }
-		}
-	}
+// 	if(isAuthReq) {
+// 		headers = {
+// 			headers: { 'Authorization': localStorage.getItem('token') }
+// 		}
+// 	}
 
-	axios.delete(requestUrl, headers)
-	.then((response) => {
-		dispatch({ type: action, payload: response.data })
-	})
-	.catch((error) => {
-		errorHandler(dispatch, error.response, errorType)
-	})
-}
+// 	axios.delete(requestUrl, headers)
+// 	.then((response) => {
+// 		dispatch({ type: action, payload: response.data })
+// 	})
+// 	.catch((error) => {
+// 		errorHandler(dispatch, error.response, errorType)
+// 	})
+// }

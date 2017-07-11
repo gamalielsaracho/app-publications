@@ -45,15 +45,15 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
-				},
-				listar: { 
-					roles: [ ...state.listar.roles, action.payload.datoInsertado ]
 				}
+				// listar: { 
+				// 	roles: [ ...state.listar.roles, action.payload.datoInsertado ]
+				// }
 			})
 
 		case CREAR_ROL_FALLO:
 			return state = Object.assign({}, state, {
-				crear: { error: action.payload.error }
+				crear: { error: action.payload }
 			})
 
 		// LISTAR.
