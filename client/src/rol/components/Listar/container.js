@@ -1,7 +1,10 @@
 import { connect } from 'react-redux'
 
 import {
-	listarRoles
+	listarRoles,
+	eliminarRole,
+	mostrarRol,
+	cerrarModalMostrarRol
 } from '../../actions'
 
 import Listar from './Listar'
@@ -18,6 +21,15 @@ function mapDispatchToProps(dispatch) {
 	return {
 		listarRoles: () => {
 			dispatch(listarRoles())
+		},
+		eliminarRole: (idRol) => {
+			dispatch(eliminarRole(idRol))
+		},
+		mostrarRol: (idRol) => {
+			dispatch(mostrarRol(idRol))
+		},
+		cerrarModalMostrarRol: () => {
+			dispatch(cerrarModalMostrarRol())
 		}
 	}
 }

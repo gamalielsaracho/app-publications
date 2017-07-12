@@ -4,15 +4,7 @@ import CrearContainer from '../Crear'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-// const isArrayEqual = (array1 = [], array2 = []) => {
-//     if (array1 === array2) {
-//         return true;
-//     }
-
-//     // check one level deep
-//     // return array1.length === array2.length &&
-//     //     array1.every((item, index) => item === array2[index]);
-// }
+import MostarContainer from '../Mostrar'
 
 class Listar extends Component {
 	constructor(props) {
@@ -39,7 +31,6 @@ class Listar extends Component {
 		// }else {
 		// 	return false
 		// }
-
 	}	
 
 	renderRoles(roles) {
@@ -56,8 +47,13 @@ class Listar extends Component {
 			            <td className='center'>{ rol.id_rol }</td>
 			            <td className='center'>{ rol.nombre }</td>
 			            <td className='center'>
-			            	<a className="#e53935 red darken-1 btn">Editar</a>
-			            	<a style={style.btn} className="#0288d1 light-blue darken-2 btn">Eliminar</a>
+			            	<a onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="#0288d1 light-blue darken-2 btn">
+			            		Mostrar
+			            	</a>
+			            	<a style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
+			            	<a onClick={() => { this.props.eliminarRole(rol.id_rol) }} style={style.btn} className="#e53935 red darken-1 btn">
+			            		Eliminar
+			            	</a>
 			            </td>
 			        </tr>		
 				})
@@ -76,6 +72,8 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div className='container'>
+					<MostarContainer/>
+
 					<div className='row'>
 						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
 							<CrearContainer/>

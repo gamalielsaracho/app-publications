@@ -21,7 +21,6 @@ export default (socket, io) => {
 	
 	roles()
 
-	socket.emit('hello', { contenido: 'hola mundo' })
 
 	socket.on('crear_rol', function(data) {
 		Rol.crear(data, (err, rol) => {
@@ -62,4 +61,17 @@ export default (socket, io) => {
 		})
 	})
 
+
+	socket.on('editar_rol', (data) => {
+		Rol.editar(data, (err) => {
+			if(err) {
+				socket.emit('editar_rol', { error: 'Ocurrió un error, intente nuevamente' })
+				return
+			}
+
+			socket.emit('editar_rol', { mensaje: 'Se actualizó exitósamente.' })
+		
+			roles()
+		})
+	})
 }

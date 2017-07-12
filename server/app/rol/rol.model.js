@@ -19,3 +19,15 @@ exports.mostrar = (id, callback) => {
 
 	connection.end()
 }
+
+exports.eliminar = (id, callback) => {
+	return connection.query('delete from roles where id_rol = ?', [id], callback)
+
+	connection.end()
+}
+
+exports.editar = (data, callback) => {
+	return connection.query('update roles set nombre = ? where id_rol = ?', [data.nombre, data.id_rol], callback)
+
+	connection.end()
+}
