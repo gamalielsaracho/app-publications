@@ -15,9 +15,16 @@ export const MOSTRAR_ROL_FALLO = 'mostrar_rol_fallo'
 
 export const CERRAR_MODAL_MOSTRAR_ROL = 'cerrar_modal_mostrar_rol'
 
+	// Editar Rol.
+export const MOSTRAR_EDITAR_ROL_REQUEST = 'mostrar_editar_rol_request'
+export const MOSTRAR_EDITAR_ROL_EXITO = 'mostrar_editar_rol_exito'
+export const MOSTRAR_EDITAR_ROL_FALLO = 'mostrar_editar_rol_fallo'
+
 export const EDITAR_ROL_REQUEST = 'editar_rol_request'
 export const EDITAR_ROL_EXITO = 'editar_rol_exito'
 export const EDITAR_ROL_FALLO = 'editar_rol_fallo'
+
+export const CERRAR_MODAL_EDITAR_ROL = 'cerrar_modal_editar_rol'
 
 export const ELIMINAR_ROL_REQUEST = 'eliminair_rol_request'
 export const ELIMINAR_ROL_EXITO = 'eliminair_rol_exito'
