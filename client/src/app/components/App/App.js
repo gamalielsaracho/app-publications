@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
+import InitializeFromStateForm from '../InitializeFromStateForm'
+
 class App extends Component {
 	constructor(props) {
 		super(props)
@@ -65,6 +67,7 @@ class App extends Component {
 				    </div>
 			    </div>
 		  	</nav>
+		  	<InitializeFromStateForm/>
 			{this.props.children}
 		</div>
 	}
