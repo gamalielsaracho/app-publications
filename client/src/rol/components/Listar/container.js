@@ -4,7 +4,8 @@ import {
 	listarRoles,
 	eliminarRole,
 	mostrarRol,
-	cerrarModalMostrarRol
+	
+	mostrarEditarRol
 } from '../../actions'
 
 import Listar from './Listar'
@@ -28,8 +29,9 @@ function mapDispatchToProps(dispatch) {
 		mostrarRol: (idRol) => {
 			dispatch(mostrarRol(idRol))
 		},
-		cerrarModalMostrarRol: () => {
-			dispatch(cerrarModalMostrarRol())
+
+		mostrarEditarRol: (idRol) => {
+			dispatch(mostrarEditarRol(idRol))
 		}
 	}
 }
