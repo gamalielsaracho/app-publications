@@ -16,9 +16,16 @@ import {
 
 	CERRAR_MODAL_MOSTRAR_ROL,
 
+	// Editar Rol.
+	MOSTRAR_EDITAR_ROL_REQUEST,
+	MOSTRAR_EDITAR_ROL_EXITO,
+	MOSTRAR_EDITAR_ROL_FALLO,
+
 	EDITAR_ROL_REQUEST,
 	EDITAR_ROL_EXITO,
 	EDITAR_ROL_FALLO,
+
+	CERRAR_MODAL_EDITAR_ROL,
 
 	ELIMINAR_ROL_REQUEST,
 	ELIMINAR_ROL_EXITO,
@@ -34,6 +41,8 @@ const INITIAL_STATE = {
 	listar: { roles:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, rol: {}, error: '', abierto: false },
+	
+	mostrarEditar: { cargando: false, rol: {}, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -105,16 +114,6 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
-		case CERRAR_MODAL_MOSTRAR_ROL:
-			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					rol: {},
-					error: '',
-					abierto: false
-				}
-			})
-
 		case MOSTRAR_ROL_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
@@ -125,21 +124,80 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
+		case CERRAR_MODAL_MOSTRAR_ROL:
+			return Object.assign({}, state, {
+				mostrar: {
+					cargando: false,
+					rol: {},
+					error: '',
+					abierto: false
+				}
+			})
+
+
 		// EDITAR.
+		case MOSTRAR_EDITAR_ROL_REQUEST:
+			return Object.assign({}, state, {
+				mostrarEditar: { cargando: true, abierto: true },
+				mostrar: { abierto: false }
+			})
+
+		case MOSTRAR_EDITAR_ROL_EXITO:
+			return Object.assign({}, state, {
+				mostrarEditar: {
+					cargando: false,
+					abierto: true,
+					rol: action.payload
+				},
+				mostrar: { abierto: false }
+			})
+
+		case MOSTRAR_EDITAR_ROL_FALLO:
+			return Object.assign({}, state, {
+				mostrarEditar: {
+					cargando: false,
+					abierto: true,
+					rol: {},
+					error: action.payload
+				},
+				mostrar: { abierto: false }
+			})
+
 		case EDITAR_ROL_REQUEST:
 			return Object.assign({}, state, {
-
+				editar: { cargando: true }
 			})
 
 		case EDITAR_ROL_EXITO:
 			return Object.assign({}, state, {
-
+				editar: { 
+					cargando: false, 
+					mensaje: action.payload.mensaje
+				},
+				mostrarEditar: { abierto: false, rol: {} }
 			})
 
 		case EDITAR_ROL_FALLO:
 			return Object.assign({}, state, {
-
+				editar: { 
+					cargando: false,
+					mensaje: '', 
+					error: action.payload,
+					abierto: true
+				}
 			})
+
+		case CERRAR_MODAL_EDITAR_ROL:
+			return Object.assign({}, state, {
+				mostrarEditar: {
+					cargando: false,
+					abierto: false,
+					rol: {},
+					error: ''
+				}
+			})
+
+		
 
 		// ELIMINAR.
 		case ELIMINAR_ROL_REQUEST:
