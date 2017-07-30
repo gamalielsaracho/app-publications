@@ -53,7 +53,7 @@ class Mostrar extends Component {
 		}
 
 		let styles = {
-			lastProjectContainer: {
+			mostrarRolContainer: {
 				"boxShadow":"0 0 10px #888",
 				"padding":"1em",
 				"background": "#fff"
@@ -62,20 +62,22 @@ class Mostrar extends Component {
 
 		const { cargando, rol, error, abierto } = this.props.mostrar
 
+		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
+		
+
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
 				       	contentLabel="Minimal Modal Example"
 				       	style={customStyles}>
 
-				<div className='container'>
-				<div style={styles.lastProjectContainer}>
+				<div style={styles.mostrarRolContainer} className='container'>
 					
 					<div className='row end-lg end-md end-sm end-xs'>
 						<span onClick={() => { this.props.cerrarModalMostrarRol() }}>Cerrar</span>
 					</div>
 
-					<div className='row left-lg left-md left-sm left-xs'>
-						<div className='col-xs-6 col-sm-6 col-md-6 col-lg-6'>
+					<div className='row center-lg center-md center-sm center-xs'>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
@@ -83,8 +85,6 @@ class Mostrar extends Component {
 						</div>
 					</div>
 				</div>
-				</div>
-				
 
 			</ReactModal>
 		} else {
