@@ -6,6 +6,8 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import MostarContainer from '../Mostrar'
 
+import EditarContainer from '../Editar'
+
 class Listar extends Component {
 	constructor(props) {
 		super(props)
@@ -17,11 +19,11 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		console.log("actual:")
-		console.log(this.props.roles)
+		// console.log("actual:")
+		// console.log(this.props.roles)
 
-		console.log("el que sigue:")
-		console.log(nextProps.roles)
+		// console.log("el que sigue:")
+		// console.log(nextProps.roles)
 
 		return nextProps.roles !== this.props.roles
 
@@ -50,7 +52,7 @@ class Listar extends Component {
 			            	<a onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="#0288d1 light-blue darken-2 btn">
 			            		Mostrar
 			            	</a>
-			            	<a style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
+			            	<a onClick={() => { this.props.mostrarEditarRol(rol.id_rol) }} style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
 			            	<a onClick={() => { this.props.eliminarRole(rol.id_rol) }} style={style.btn} className="#e53935 red darken-1 btn">
 			            		Eliminar
 			            	</a>
@@ -62,16 +64,17 @@ class Listar extends Component {
 	}
 
 	render() {
-		console.log(this.props.mostrar)
 
 		const { roles, cargando, error } = this.props.listar
 
-		console.log(this.props.listar)
+		// console.log(this.props.listar)
 
 		if(cargando) {
 			return <Cargando/>
 		} else {
 				return <div className='container'>
+				
+					<EditarContainer/>
 					<MostarContainer/>
 
 					<div className='row'>
