@@ -16,9 +16,16 @@ import {
 
 	CERRAR_MODAL_MOSTRAR_ROL,
 
+	// Editar Rol.
+	MOSTRAR_EDITAR_ROL_REQUEST,
+	MOSTRAR_EDITAR_ROL_EXITO,
+	MOSTRAR_EDITAR_ROL_FALLO,
+
 	EDITAR_ROL_REQUEST,
 	EDITAR_ROL_EXITO,
 	EDITAR_ROL_FALLO,
+
+	CERRAR_MODAL_EDITAR_ROL,
 
 	ELIMINAR_ROL_REQUEST,
 	ELIMINAR_ROL_EXITO,
@@ -124,7 +131,45 @@ export function cerrarModalMostrarRol() {
 	}
 }
 
+export function mostrarEditarRol(idRol) {
+	return (dispatch) => {
+		dispatch({ type: MOSTRAR_EDITAR_ROL_REQUEST })
 
+		socket.emit('mostrar_rol', { id_rol: idRol })
+
+		socket.on('mostrar_rol', (data) => {
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: MOSTRAR_EDITAR_ROL_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MOSTRAR_EDITAR_ROL_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+export function editarRol(datosFormulario) {
+	return (dispatch) => {
+		dispatch({ type: EDITAR_ROL_REQUEST })
+
+		socket.emit('editar_rol', datosFormulario)
+
+		socket.on('editar_rol', (data) => {
+			if(data.error) {
+				dispatch({ type: EDITAR_ROL_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: EDITAR_ROL_EXITO, payload: data })
+			}
+		})
+
+	}
+}
+
+export function cerrarModalEditarRol() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_MODAL_EDITAR_ROL })
+	}
+}
 
 
 
