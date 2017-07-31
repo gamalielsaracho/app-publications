@@ -1,15 +1,22 @@
 import {
 	ABRIR_FORMULARIO_CREAR_ROL,
-	CERRAR_FORMULARIO_CREAR_ROL,
+
+	ABRIR_FORMULARIO_EDITAR_ROL_REQUEST,
+	ABRIR_FORMULARIO_EDITAR_ROL_EXITO,
+	ABRIR_FORMULARIO_EDITAR_ROL_FALLO,
+
+	CERRAR_FORMULARIO_ROL,
 
 	LISTAR_ROLES_REQUEST,
 	LISTAR_ROLES_EXITO,
 	LISTAR_ROLES_FALLO,
 
+	// Create rol.
 	CREAR_ROL_REQUEST,
 	CREAR_ROL_EXITO,
 	CREAR_ROL_FALLO,
 
+	// Show rol.
 	MOSTRAR_ROL_REQUEST,
 	MOSTRAR_ROL_EXITO,
 	MOSTRAR_ROL_FALLO,
@@ -17,16 +24,11 @@ import {
 	CERRAR_MODAL_MOSTRAR_ROL,
 
 	// Editar Rol.
-	MOSTRAR_EDITAR_ROL_REQUEST,
-	MOSTRAR_EDITAR_ROL_EXITO,
-	MOSTRAR_EDITAR_ROL_FALLO,
-
 	EDITAR_ROL_REQUEST,
 	EDITAR_ROL_EXITO,
 	EDITAR_ROL_FALLO,
 
-	CERRAR_MODAL_EDITAR_ROL,
-
+	// Delete Rol.
 	ELIMINAR_ROL_REQUEST,
 	ELIMINAR_ROL_EXITO,
 	ELIMINAR_ROL_FALLO
@@ -38,15 +40,34 @@ import { socket } from '../../globalActions'
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
-export function abrirFormularioRol() {
+export function abrirFormularioCrearRol() {
 	return (dispatch) => {
+		dispatch(reset('Formulario'))
+
 		dispatch({ type: ABRIR_FORMULARIO_CREAR_ROL })
+	}
+}
+
+export function abrirFormularioEditarRol(idRol) {
+	return (dispatch) => {
+		dispatch({ type: ABRIR_FORMULARIO_EDITAR_ROL_REQUEST })
+
+		socket.emit('mostrar_rol', { id_rol: idRol })
+
+		socket.on('mostrar_rol', (data) => {
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: ABRIR_FORMULARIO_EDITAR_ROL_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: ABRIR_FORMULARIO_EDITAR_ROL_EXITO, payload: data })
+			}
+		})
 	}
 }
 
 export function cerrarFormularioRol() {
 	return (dispatch) => {
-		dispatch({ type: CERRAR_FORMULARIO_CREAR_ROL })
+		dispatch({ type: CERRAR_FORMULARIO_ROL })
 	}
 }
 
@@ -82,7 +103,7 @@ export function crearRol(datosFormulario) {
 			}
 		})
 	
-		dispatch(reset('Crear'))
+		dispatch(reset('Formulario'))
 	}
 }
 
@@ -131,25 +152,11 @@ export function cerrarModalMostrarRol() {
 	}
 }
 
-export function mostrarEditarRol(idRol) {
-	return (dispatch) => {
-		dispatch({ type: MOSTRAR_EDITAR_ROL_REQUEST })
-
-		socket.emit('mostrar_rol', { id_rol: idRol })
-
-		socket.on('mostrar_rol', (data) => {
-			// console.log(data)
-			if(data.error) {
-				dispatch({ type: MOSTRAR_EDITAR_ROL_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: MOSTRAR_EDITAR_ROL_EXITO, payload: data })
-			}
-		})
-	}
-}
-
 export function editarRol(datosFormulario) {
 	return (dispatch) => {
+
+		// console.log('los datos son...')
+		// console.log(datosFormulario)
 		dispatch({ type: EDITAR_ROL_REQUEST })
 
 		socket.emit('editar_rol', datosFormulario)
@@ -162,12 +169,6 @@ export function editarRol(datosFormulario) {
 			}
 		})
 
-	}
-}
-
-export function cerrarModalEditarRol() {
-	return (dispatch) => {
-		dispatch({ type: CERRAR_MODAL_EDITAR_ROL })
 	}
 }
 
