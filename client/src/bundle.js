@@ -50195,10 +50195,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Crear = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../Crear\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _Crear2 = _interopRequireDefault(_Crear);
-
 	var _Cargando = __webpack_require__(577);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
