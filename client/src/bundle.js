@@ -48027,15 +48027,69 @@
 		switch (action.type) {
 			case _types.ABRIR_FORMULARIO_CREAR_ROL:
 				return Object.assign({}, state, {
-					formulario: { mostrar: true }
+					formulario: {
+						abirtoCrear: true,
+						abirtoEditar: false,
+						iniciarValores: false,
+						error: '',
+						cargando: false,
+						rol: {}
+					},
+					mostrar: { abierto: false }
 				});
 
-			case _types.CERRAR_FORMULARIO_CREAR_ROL:
+			case _types.ABRIR_FORMULARIO_EDITAR_ROL_REQUEST:
 				return Object.assign({}, state, {
-					formulario: { mostrar: false },
-					crear: { mensaje: '', error: '' }
+					formulario: {
+						abirtoCrear: false,
+						abirtoEditar: true,
+						iniciarValores: true,
+						error: '',
+						cargando: true,
+						rol: {}
+					},
+					mostrar: { abierto: false }
 				});
 
+			case _types.ABRIR_FORMULARIO_EDITAR_ROL_EXITO:
+				return Object.assign({}, state, {
+					formulario: {
+						abirtoCrear: false,
+						abirtoEditar: true,
+						iniciarValores: true,
+						error: '',
+						cargando: false,
+						rol: action.payload
+					},
+					mostrar: { abierto: false }
+				});
+
+			case _types.ABRIR_FORMULARIO_EDITAR_ROL_FALLO:
+				return Object.assign({}, state, {
+					formulario: {
+						abirtoCrear: false,
+						abirtoEditar: true,
+						iniciarValores: true,
+						error: action.payload,
+						cargando: false,
+						rol: {}
+					},
+					mostrar: { abierto: false }
+				});
+
+			case _types.CERRAR_FORMULARIO_ROL:
+				return Object.assign({}, state, {
+					formulario: {
+						abirtoCrear: false,
+						abirtoEditar: false,
+						iniciarValores: false,
+						error: '',
+						cargando: false,
+						rol: {}
+					}
+				});
+
+			// CREATE ROL.
 			case _types.CREAR_ROL_REQUEST:
 				return state = Object.assign({}, state, {
 					crear: { cargando: true }
@@ -48047,7 +48101,8 @@
 				return Object.assign({}, state, {
 					crear: {
 						mensaje: action.payload.mensaje
-					}
+					},
+					formulario: { abirtoCrear: false }
 					// listar: { 
 					// 	roles: [ ...state.listar.roles, action.payload.datoInsertado ]
 					// }
@@ -48077,7 +48132,8 @@
 			// MOSTRAR.
 			case _types.MOSTRAR_ROL_REQUEST:
 				return Object.assign({}, state, {
-					mostrar: { cargando: true, abierto: true }
+					mostrar: { cargando: true, abierto: true },
+					formulario: { abirtoEditar: false, abirtoCrear: false }
 				});
 
 			case _types.MOSTRAR_ROL_EXITO:
@@ -48086,7 +48142,8 @@
 						cargando: false,
 						rol: action.payload,
 						abierto: true
-					}
+					},
+					formulario: { abirtoEditar: false, abirtoCrear: false }
 				});
 
 			case _types.MOSTRAR_ROL_FALLO:
@@ -48096,7 +48153,8 @@
 						rol: {},
 						error: action.payload,
 						abierto: true
-					}
+					},
+					formulario: { abirtoEditar: false, abirtoCrear: false }
 				});
 
 			case _types.CERRAR_MODAL_MOSTRAR_ROL:
@@ -48110,33 +48168,6 @@
 				});
 
 			// EDITAR.
-			case _types.MOSTRAR_EDITAR_ROL_REQUEST:
-				return Object.assign({}, state, {
-					mostrarEditar: { cargando: true, abierto: true },
-					mostrar: { abierto: false }
-				});
-
-			case _types.MOSTRAR_EDITAR_ROL_EXITO:
-				return Object.assign({}, state, {
-					mostrarEditar: {
-						cargando: false,
-						abierto: true,
-						rol: action.payload
-					},
-					mostrar: { abierto: false }
-				});
-
-			case _types.MOSTRAR_EDITAR_ROL_FALLO:
-				return Object.assign({}, state, {
-					mostrarEditar: {
-						cargando: false,
-						abierto: true,
-						rol: {},
-						error: action.payload
-					},
-					mostrar: { abierto: false }
-				});
-
 			case _types.EDITAR_ROL_REQUEST:
 				return Object.assign({}, state, {
 					editar: { cargando: true }
@@ -48148,7 +48179,7 @@
 						cargando: false,
 						mensaje: action.payload.mensaje
 					},
-					mostrarEditar: { abierto: false, rol: {} }
+					formulario: { abirtoEditar: false }
 				});
 
 			case _types.EDITAR_ROL_FALLO:
@@ -48156,18 +48187,7 @@
 					editar: {
 						cargando: false,
 						mensaje: '',
-						error: action.payload,
-						abierto: true
-					}
-				});
-
-			case _types.CERRAR_MODAL_EDITAR_ROL:
-				return Object.assign({}, state, {
-					mostrarEditar: {
-						cargando: false,
-						abierto: false,
-						rol: {},
-						error: ''
+						error: action.payload
 					}
 				});
 
@@ -48204,15 +48224,17 @@
 
 	var INITIAL_STATE = {
 		formulario: {
-			mostrar: false,
-			nombre: ''
+			abirtoCrear: false,
+			abirtoEditar: false,
+			iniciarValores: false,
+			error: '',
+			cargando: false,
+			rol: {}
 		},
 		crear: { mensaje: '', cargando: false, error: '' },
 		listar: { roles: [], cargando: false, error: '' },
 		eliminar: { cargando: false, mensaje: '', error: '' },
 		mostrar: { cargando: false, rol: {}, error: '', abierto: false },
-
-		mostrarEditar: { cargando: false, rol: {}, error: '', abierto: false },
 		editar: { cargando: false, mensaje: '', error: '' }
 	};
 
@@ -48225,34 +48247,37 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var ABRIR_FORMULARIO_CREAR_ROL = exports.ABRIR_FORMULARIO_CREAR_ROL = 'abrir_formulario_crear_rol';
-	var CERRAR_FORMULARIO_CREAR_ROL = exports.CERRAR_FORMULARIO_CREAR_ROL = 'cerrar_formulario_crear_rol';
-
+	// FIND.
 	var LISTAR_ROLES_REQUEST = exports.LISTAR_ROLES_REQUEST = 'listar_roles_request';
 	var LISTAR_ROLES_EXITO = exports.LISTAR_ROLES_EXITO = 'listar_roles_exito';
 	var LISTAR_ROLES_FALLO = exports.LISTAR_ROLES_FALLO = 'listar_roles_fallo';
+
+	// EDIT.
+	var ABRIR_FORMULARIO_EDITAR_ROL_REQUEST = exports.ABRIR_FORMULARIO_EDITAR_ROL_REQUEST = 'abrir_formulario_editar_rol_request';
+	var ABRIR_FORMULARIO_EDITAR_ROL_EXITO = exports.ABRIR_FORMULARIO_EDITAR_ROL_EXITO = 'abrir_formulario_editar_rol_exito';
+	var ABRIR_FORMULARIO_EDITAR_ROL_FALLO = exports.ABRIR_FORMULARIO_EDITAR_ROL_FALLO = 'abrir_formulario_editar_rol_fallo';
+
+	var EDITAR_ROL_REQUEST = exports.EDITAR_ROL_REQUEST = 'edit_role_request';
+	var EDITAR_ROL_EXITO = exports.EDITAR_ROL_EXITO = 'edit_role_exito';
+	var EDITAR_ROL_FALLO = exports.EDITAR_ROL_FALLO = 'edit_role_fallo';
+
+	// CREATE.
+	var ABRIR_FORMULARIO_CREAR_ROL = exports.ABRIR_FORMULARIO_CREAR_ROL = 'abrir_formulario_crear_rol';
 
 	var CREAR_ROL_REQUEST = exports.CREAR_ROL_REQUEST = 'crear_rol_request';
 	var CREAR_ROL_EXITO = exports.CREAR_ROL_EXITO = 'crear_rol_exito';
 	var CREAR_ROL_FALLO = exports.CREAR_ROL_FALLO = 'crear_rol_fallo';
 
+	var CERRAR_FORMULARIO_ROL = exports.CERRAR_FORMULARIO_ROL = 'cerrar_formulario_rol';
+
+	// SHOW.
 	var MOSTRAR_ROL_REQUEST = exports.MOSTRAR_ROL_REQUEST = 'mostrar_rol_request';
 	var MOSTRAR_ROL_EXITO = exports.MOSTRAR_ROL_EXITO = 'mostrar_rol_exito';
 	var MOSTRAR_ROL_FALLO = exports.MOSTRAR_ROL_FALLO = 'mostrar_rol_fallo';
 
 	var CERRAR_MODAL_MOSTRAR_ROL = exports.CERRAR_MODAL_MOSTRAR_ROL = 'cerrar_modal_mostrar_rol';
 
-	// Editar Rol.
-	var MOSTRAR_EDITAR_ROL_REQUEST = exports.MOSTRAR_EDITAR_ROL_REQUEST = 'mostrar_editar_rol_request';
-	var MOSTRAR_EDITAR_ROL_EXITO = exports.MOSTRAR_EDITAR_ROL_EXITO = 'mostrar_editar_rol_exito';
-	var MOSTRAR_EDITAR_ROL_FALLO = exports.MOSTRAR_EDITAR_ROL_FALLO = 'mostrar_editar_rol_fallo';
-
-	var EDITAR_ROL_REQUEST = exports.EDITAR_ROL_REQUEST = 'editar_rol_request';
-	var EDITAR_ROL_EXITO = exports.EDITAR_ROL_EXITO = 'editar_rol_exito';
-	var EDITAR_ROL_FALLO = exports.EDITAR_ROL_FALLO = 'editar_rol_fallo';
-
-	var CERRAR_MODAL_EDITAR_ROL = exports.CERRAR_MODAL_EDITAR_ROL = 'cerrar_modal_editar_rol';
-
+	// DELETE.
 	var ELIMINAR_ROL_REQUEST = exports.ELIMINAR_ROL_REQUEST = 'eliminair_rol_request';
 	var ELIMINAR_ROL_EXITO = exports.ELIMINAR_ROL_EXITO = 'eliminair_rol_exito';
 	var ELIMINAR_ROL_FALLO = exports.ELIMINAR_ROL_FALLO = 'eliminair_rol_fallo';
@@ -48277,23 +48302,23 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _DashBoard = __webpack_require__(560);
+	var _DashBoard = __webpack_require__(562);
 
 	var _DashBoard2 = _interopRequireDefault(_DashBoard);
 
-	var _RegistrarPage = __webpack_require__(563);
+	var _RegistrarPage = __webpack_require__(565);
 
 	var _RegistrarPage2 = _interopRequireDefault(_RegistrarPage);
 
-	var _AutenticarPage = __webpack_require__(567);
+	var _AutenticarPage = __webpack_require__(569);
 
 	var _AutenticarPage2 = _interopRequireDefault(_AutenticarPage);
 
-	var _ListarPage = __webpack_require__(571);
+	var _ListarPage = __webpack_require__(573);
 
 	var _ListarPage2 = _interopRequireDefault(_ListarPage);
 
-	var _ListarRolesPage = __webpack_require__(580);
+	var _ListarRolesPage = __webpack_require__(582);
 
 	var _ListarRolesPage2 = _interopRequireDefault(_ListarRolesPage);
 
@@ -48398,10 +48423,6 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRouter = __webpack_require__(224);
-
-	var _InitializeFromStateForm = __webpack_require__(557);
-
-	var _InitializeFromStateForm2 = _interopRequireDefault(_InitializeFromStateForm);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48563,7 +48584,6 @@
 							)
 						)
 					),
-					_react2.default.createElement(_InitializeFromStateForm2.default, null),
 					this.props.children
 				);
 			}
@@ -48575,148 +48595,182 @@
 	exports.default = App;
 
 /***/ }),
-/* 557 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _container = __webpack_require__(612);
-
-	var _container2 = _interopRequireDefault(_container);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _container2.default;
-
-/***/ }),
-/* 558 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reduxForm = __webpack_require__(321);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'];
-
-	var InitializeFromStateForm = function (_Component) {
-	  _inherits(InitializeFromStateForm, _Component);
-
-	  function InitializeFromStateForm() {
-	    _classCallCheck(this, InitializeFromStateForm);
-
-	    return _possibleConstructorReturn(this, (InitializeFromStateForm.__proto__ || Object.getPrototypeOf(InitializeFromStateForm)).apply(this, arguments));
-	  }
-
-	  _createClass(InitializeFromStateForm, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.props.mostrarEditarRol(25);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var handleSubmit = this.props.handleSubmit;
-
-	      console.log(this.props.initialValues);
-
-	      return _react2.default.createElement(
-	        'form',
-	        { onSubmit: handleSubmit },
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Nombre'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(_reduxForm.Field, {
-	              name: 'nombre',
-	              component: 'input',
-	              type: 'text',
-	              placeholder: 'Nombre'
-	            })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return InitializeFromStateForm;
-	}(_react.Component);
-
-	exports.default = InitializeFromStateForm;
-
-/***/ }),
-/* 559 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var LOAD = 'redux-form-examples/account/LOAD';
-
-	var reducer = function reducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case LOAD:
-	      return {
-	        data: action.data
-	      };
-	    default:
-	      return state;
-	  }
-	};
-
-	/**
-	 * Simulates data loaded into this reducer from somewhere
-	 */
-	var load = exports.load = function load(data) {
-	  return { type: LOAD, data: data };
-	};
-
-	exports.default = reducer;
-
-/***/ }),
+/* 557 */,
+/* 558 */,
+/* 559 */,
 /* 560 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.abrirFormularioCrearRol = abrirFormularioCrearRol;
+	exports.abrirFormularioEditarRol = abrirFormularioEditarRol;
+	exports.cerrarFormularioRol = cerrarFormularioRol;
+	exports.listarRoles = listarRoles;
+	exports.crearRol = crearRol;
+	exports.eliminarRole = eliminarRole;
+	exports.mostrarRol = mostrarRol;
+	exports.cerrarModalMostrarRol = cerrarModalMostrarRol;
+	exports.editarRol = editarRol;
+
+	var _types = __webpack_require__(552);
+
+	var _socket = __webpack_require__(181);
+
+	var _socket2 = _interopRequireDefault(_socket);
+
+	var _globalActions = __webpack_require__(180);
+
+	var _reactRouter = __webpack_require__(224);
+
+	var _reduxForm = __webpack_require__(321);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function abrirFormularioCrearRol() {
+		return function (dispatch) {
+			dispatch((0, _reduxForm.reset)('Formulario'));
+
+			dispatch({ type: _types.ABRIR_FORMULARIO_CREAR_ROL });
+		};
+	}
+
+	function abrirFormularioEditarRol(idRol) {
+		return function (dispatch) {
+			dispatch({ type: _types.ABRIR_FORMULARIO_EDITAR_ROL_REQUEST });
+
+			_globalActions.socket.emit('mostrar_rol', { id_rol: idRol });
+
+			_globalActions.socket.on('mostrar_rol', function (data) {
+				// console.log(data)
+				if (data.error) {
+					dispatch({ type: _types.ABRIR_FORMULARIO_EDITAR_ROL_FALLO, payload: data.error });
+				} else {
+					dispatch({ type: _types.ABRIR_FORMULARIO_EDITAR_ROL_EXITO, payload: data });
+				}
+			});
+		};
+	}
+
+	function cerrarFormularioRol() {
+		return function (dispatch) {
+			dispatch({ type: _types.CERRAR_FORMULARIO_ROL });
+		};
+	}
+
+	function listarRoles() {
+		return function (dispatch) {
+
+			dispatch({ type: _types.LISTAR_ROLES_REQUEST });
+
+			var socket = (0, _socket2.default)('http://localhost:3000');
+
+			socket.on('listar_roles', function (data) {
+
+				if (data.error) {
+					dispatch({ type: _types.LISTAR_ROLES_FALLO, payload: data.error });
+				} else {
+					dispatch({ type: _types.LISTAR_ROLES_EXITO, payload: data });
+				}
+			});
+		};
+	}
+
+	function crearRol(datosFormulario) {
+		return function (dispatch) {
+
+			dispatch({ type: _types.CREAR_ROL_REQUEST });
+
+			_globalActions.socket.emit('crear_rol', datosFormulario);
+			_globalActions.socket.on('crear_rol', function (data) {
+				if (data.err) {
+					dispatch({ type: _types.CREAR_ROL_FALLO, payload: data.error });
+				} else {
+					dispatch({ type: _types.CREAR_ROL_EXITO, payload: data });
+				}
+			});
+
+			dispatch((0, _reduxForm.reset)('Formulario'));
+		};
+	}
+
+	function eliminarRole(idRol) {
+		return function (dispatch) {
+
+			dispatch({ type: _types.ELIMINAR_ROL_REQUEST });
+
+			// var socket = io('http://localhost:3000')
+
+			_globalActions.socket.emit('eliminar_rol', { id_rol: idRol });
+
+			_globalActions.socket.on('eliminar_rol', function (data) {
+
+				if (data.error) {
+					dispatch({ type: _types.ELIMINAR_ROL_FALLO, payload: data.error });
+				} else {
+					dispatch({ type: _types.ELIMINAR_ROL_EXITO, payload: data });
+				}
+			});
+		};
+	}
+
+	function mostrarRol(idRol) {
+		return function (dispatch) {
+			dispatch({ type: _types.MOSTRAR_ROL_REQUEST });
+
+			_globalActions.socket.emit('mostrar_rol', { id_rol: idRol });
+
+			_globalActions.socket.on('mostrar_rol', function (data) {
+				// console.log(data)
+				if (data.error) {
+					dispatch({ type: _types.MOSTRAR_ROL_FALLO, payload: data.error });
+				} else {
+					dispatch({ type: _types.MOSTRAR_ROL_EXITO, payload: data });
+				}
+			});
+		};
+	}
+
+	function cerrarModalMostrarRol() {
+		return function (dispatch) {
+			dispatch({ type: _types.CERRAR_MODAL_MOSTRAR_ROL });
+		};
+	}
+
+	function editarRol(datosFormulario) {
+		return function (dispatch) {
+
+			// console.log('los datos son...')
+			// console.log(datosFormulario)
+			dispatch({ type: _types.EDITAR_ROL_REQUEST });
+
+			_globalActions.socket.emit('editar_rol', datosFormulario);
+
+			_globalActions.socket.on('editar_rol', function (data) {
+				if (data.error) {
+					dispatch({ type: _types.EDITAR_ROL_FALLO, payload: data.error });
+				} else {
+					dispatch({ type: _types.EDITAR_ROL_EXITO, payload: data });
+				}
+			});
+		};
+	}
+
+/***/ }),
+/* 561 */,
+/* 562 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
-	var _container = __webpack_require__(561);
+	var _container = __webpack_require__(563);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -48725,7 +48779,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 561 */
+/* 563 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48736,7 +48790,7 @@
 
 	var _reactRedux = __webpack_require__(279);
 
-	var _DashBoard = __webpack_require__(562);
+	var _DashBoard = __webpack_require__(564);
 
 	var _DashBoard2 = _interopRequireDefault(_DashBoard);
 
@@ -48753,7 +48807,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_DashBoard2.default);
 
 /***/ }),
-/* 562 */
+/* 564 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48850,7 +48904,7 @@
 	exports.default = DashBoard;
 
 /***/ }),
-/* 563 */
+/* 565 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48865,7 +48919,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Registrar = __webpack_require__(564);
+	var _Registrar = __webpack_require__(566);
 
 	var _Registrar2 = _interopRequireDefault(_Registrar);
 
@@ -48899,7 +48953,7 @@
 	exports.default = RegistrarPage;
 
 /***/ }),
-/* 564 */
+/* 566 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48908,7 +48962,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(565);
+	var _container = __webpack_require__(567);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -48917,7 +48971,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 565 */
+/* 567 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48932,7 +48986,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Registrar = __webpack_require__(566);
+	var _Registrar = __webpack_require__(568);
 
 	var _Registrar2 = _interopRequireDefault(_Registrar);
 
@@ -48995,7 +49049,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Registrar2.default));
 
 /***/ }),
-/* 566 */
+/* 568 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49155,7 +49209,7 @@
 	exports.default = Registrar;
 
 /***/ }),
-/* 567 */
+/* 569 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49170,7 +49224,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Autenticar = __webpack_require__(568);
+	var _Autenticar = __webpack_require__(570);
 
 	var _Autenticar2 = _interopRequireDefault(_Autenticar);
 
@@ -49204,7 +49258,7 @@
 	exports.default = AutenticarPage;
 
 /***/ }),
-/* 568 */
+/* 570 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49213,7 +49267,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(569);
+	var _container = __webpack_require__(571);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -49222,7 +49276,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 569 */
+/* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49237,7 +49291,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Autenticar = __webpack_require__(570);
+	var _Autenticar = __webpack_require__(572);
 
 	var _Autenticar2 = _interopRequireDefault(_Autenticar);
 
@@ -49282,7 +49336,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Autenticar2.default));
 
 /***/ }),
-/* 570 */
+/* 572 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49440,7 +49494,7 @@
 	exports.default = Autenticar;
 
 /***/ }),
-/* 571 */
+/* 573 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49455,7 +49509,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Listar = __webpack_require__(572);
+	var _Listar = __webpack_require__(574);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -49489,7 +49543,7 @@
 	exports.default = ListarPage;
 
 /***/ }),
-/* 572 */
+/* 574 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49498,7 +49552,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(573);
+	var _container = __webpack_require__(575);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -49507,7 +49561,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 573 */
+/* 575 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49522,7 +49576,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Listar = __webpack_require__(574);
+	var _Listar = __webpack_require__(576);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -49560,7 +49614,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Listar2.default);
 
 /***/ }),
-/* 574 */
+/* 576 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49579,11 +49633,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Cargando = __webpack_require__(575);
+	var _Cargando = __webpack_require__(577);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
-	var _Filtro = __webpack_require__(577);
+	var _Filtro = __webpack_require__(579);
 
 	var _Filtro2 = _interopRequireDefault(_Filtro);
 
@@ -49779,7 +49833,7 @@
 	exports.default = Listar;
 
 /***/ }),
-/* 575 */
+/* 577 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49788,7 +49842,7 @@
 	  value: true
 	});
 
-	var _Cargando = __webpack_require__(576);
+	var _Cargando = __webpack_require__(578);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
@@ -49797,7 +49851,7 @@
 	exports.default = _Cargando2.default;
 
 /***/ }),
-/* 576 */
+/* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49891,7 +49945,7 @@
 	exports.default = Cargando;
 
 /***/ }),
-/* 577 */
+/* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49900,7 +49954,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(578);
+	var _container = __webpack_require__(580);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -49909,7 +49963,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 578 */
+/* 580 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49922,7 +49976,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Filtro = __webpack_require__(579);
+	var _Filtro = __webpack_require__(581);
 
 	var _Filtro2 = _interopRequireDefault(_Filtro);
 
@@ -49945,7 +49999,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Filtro2.default);
 
 /***/ }),
-/* 579 */
+/* 581 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50009,7 +50063,7 @@
 	exports.default = Filtro;
 
 /***/ }),
-/* 580 */
+/* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50024,7 +50078,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Listar = __webpack_require__(581);
+	var _Listar = __webpack_require__(583);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -50058,7 +50112,7 @@
 	exports.default = ListarRolesPage;
 
 /***/ }),
-/* 581 */
+/* 583 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50067,7 +50121,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(582);
+	var _container = __webpack_require__(584);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -50076,7 +50130,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 582 */
+/* 584 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50087,9 +50141,9 @@
 
 	var _reactRedux = __webpack_require__(279);
 
-	var _actions = __webpack_require__(583);
+	var _actions = __webpack_require__(560);
 
-	var _Listar = __webpack_require__(584);
+	var _Listar = __webpack_require__(585);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -50114,9 +50168,11 @@
 			mostrarRol: function mostrarRol(idRol) {
 				dispatch((0, _actions.mostrarRol)(idRol));
 			},
-
-			mostrarEditarRol: function mostrarEditarRol(idRol) {
-				dispatch((0, _actions.mostrarEditarRol)(idRol));
+			abrirFormularioCrearRol: function abrirFormularioCrearRol() {
+				dispatch((0, _actions.abrirFormularioCrearRol)());
+			},
+			abrirFormularioEditarRol: function abrirFormularioEditarRol(idRol) {
+				dispatch((0, _actions.abrirFormularioEditarRol)(idRol));
 			}
 		};
 	}
@@ -50124,171 +50180,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Listar2.default);
 
 /***/ }),
-/* 583 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.abrirFormularioRol = abrirFormularioRol;
-	exports.cerrarFormularioRol = cerrarFormularioRol;
-	exports.listarRoles = listarRoles;
-	exports.crearRol = crearRol;
-	exports.eliminarRole = eliminarRole;
-	exports.mostrarRol = mostrarRol;
-	exports.cerrarModalMostrarRol = cerrarModalMostrarRol;
-	exports.mostrarEditarRol = mostrarEditarRol;
-	exports.editarRol = editarRol;
-	exports.cerrarModalEditarRol = cerrarModalEditarRol;
-
-	var _types = __webpack_require__(552);
-
-	var _socket = __webpack_require__(181);
-
-	var _socket2 = _interopRequireDefault(_socket);
-
-	var _globalActions = __webpack_require__(180);
-
-	var _reactRouter = __webpack_require__(224);
-
-	var _reduxForm = __webpack_require__(321);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function abrirFormularioRol() {
-		return function (dispatch) {
-			dispatch({ type: _types.ABRIR_FORMULARIO_CREAR_ROL });
-		};
-	}
-
-	function cerrarFormularioRol() {
-		return function (dispatch) {
-			dispatch({ type: _types.CERRAR_FORMULARIO_CREAR_ROL });
-		};
-	}
-
-	function listarRoles() {
-		return function (dispatch) {
-
-			dispatch({ type: _types.LISTAR_ROLES_REQUEST });
-
-			var socket = (0, _socket2.default)('http://localhost:3000');
-
-			socket.on('listar_roles', function (data) {
-
-				if (data.error) {
-					dispatch({ type: _types.LISTAR_ROLES_FALLO, payload: data.error });
-				} else {
-					dispatch({ type: _types.LISTAR_ROLES_EXITO, payload: data });
-				}
-			});
-		};
-	}
-
-	function crearRol(datosFormulario) {
-		return function (dispatch) {
-
-			dispatch({ type: _types.CREAR_ROL_REQUEST });
-
-			_globalActions.socket.emit('crear_rol', datosFormulario);
-			_globalActions.socket.on('crear_rol', function (data) {
-				if (data.err) {
-					dispatch({ type: _types.CREAR_ROL_FALLO, payload: data.error });
-				} else {
-					dispatch({ type: _types.CREAR_ROL_EXITO, payload: data });
-				}
-			});
-
-			dispatch((0, _reduxForm.reset)('Crear'));
-		};
-	}
-
-	function eliminarRole(idRol) {
-		return function (dispatch) {
-
-			dispatch({ type: _types.ELIMINAR_ROL_REQUEST });
-
-			// var socket = io('http://localhost:3000')
-
-			_globalActions.socket.emit('eliminar_rol', { id_rol: idRol });
-
-			_globalActions.socket.on('eliminar_rol', function (data) {
-
-				if (data.error) {
-					dispatch({ type: _types.ELIMINAR_ROL_FALLO, payload: data.error });
-				} else {
-					dispatch({ type: _types.ELIMINAR_ROL_EXITO, payload: data });
-				}
-			});
-		};
-	}
-
-	function mostrarRol(idRol) {
-		return function (dispatch) {
-			dispatch({ type: _types.MOSTRAR_ROL_REQUEST });
-
-			_globalActions.socket.emit('mostrar_rol', { id_rol: idRol });
-
-			_globalActions.socket.on('mostrar_rol', function (data) {
-				// console.log(data)
-				if (data.error) {
-					dispatch({ type: _types.MOSTRAR_ROL_FALLO, payload: data.error });
-				} else {
-					dispatch({ type: _types.MOSTRAR_ROL_EXITO, payload: data });
-				}
-			});
-		};
-	}
-
-	function cerrarModalMostrarRol() {
-		return function (dispatch) {
-			dispatch({ type: _types.CERRAR_MODAL_MOSTRAR_ROL });
-		};
-	}
-
-	function mostrarEditarRol(idRol) {
-		return function (dispatch) {
-			dispatch({ type: _types.MOSTRAR_EDITAR_ROL_REQUEST });
-
-			_globalActions.socket.emit('mostrar_rol', { id_rol: idRol });
-
-			_globalActions.socket.on('mostrar_rol', function (data) {
-				// console.log(data)
-				if (data.error) {
-					dispatch({ type: _types.MOSTRAR_EDITAR_ROL_FALLO, payload: data.error });
-				} else {
-					dispatch({ type: _types.MOSTRAR_EDITAR_ROL_EXITO, payload: data });
-				}
-			});
-		};
-	}
-
-	function editarRol(datosFormulario) {
-		return function (dispatch) {
-			dispatch({ type: _types.EDITAR_ROL_REQUEST });
-
-			_globalActions.socket.emit('editar_rol', datosFormulario);
-
-			_globalActions.socket.on('editar_rol', function (data) {
-				if (data.error) {
-					dispatch({ type: _types.EDITAR_ROL_FALLO, payload: data.error });
-				} else {
-					dispatch({ type: _types.EDITAR_ROL_EXITO, payload: data });
-				}
-			});
-		};
-	}
-
-	function cerrarModalEditarRol() {
-		return function (dispatch) {
-			dispatch({ type: _types.CERRAR_MODAL_EDITAR_ROL });
-		};
-	}
-
-/***/ }),
-/* 584 */
+/* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50303,25 +50195,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Crear = __webpack_require__(585);
+	var _Crear = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../Crear\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _Crear2 = _interopRequireDefault(_Crear);
 
-	var _Cargando = __webpack_require__(575);
+	var _Cargando = __webpack_require__(577);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
-	var _MensajeOerror = __webpack_require__(588);
+	var _MensajeOerror = __webpack_require__(589);
 
 	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
-	var _Mostrar = __webpack_require__(590);
+	var _Formulario = __webpack_require__(613);
+
+	var _Formulario2 = _interopRequireDefault(_Formulario);
+
+	var _Mostrar = __webpack_require__(591);
 
 	var _Mostrar2 = _interopRequireDefault(_Mostrar);
-
-	var _Editar = __webpack_require__(609);
-
-	var _Editar2 = _interopRequireDefault(_Editar);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -50406,7 +50298,7 @@
 								_react2.default.createElement(
 									'a',
 									{ onClick: function onClick() {
-											_this2.props.mostrarEditarRol(rol.id_rol);
+											_this2.props.abrirFormularioEditarRol(rol.id_rol);
 										}, style: style.btn, className: '#0288d1 light-green darken-2 btn' },
 									'Editar'
 								),
@@ -50438,7 +50330,7 @@
 					return _react2.default.createElement(
 						'div',
 						{ className: 'container' },
-						_react2.default.createElement(_Editar2.default, null),
+						_react2.default.createElement(_Formulario2.default, null),
 						_react2.default.createElement(_Mostrar2.default, null),
 						_react2.default.createElement(
 							'div',
@@ -50446,7 +50338,11 @@
 							_react2.default.createElement(
 								'div',
 								{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-4' },
-								_react2.default.createElement(_Crear2.default, null)
+								_react2.default.createElement(
+									'button',
+									{ onClick: this.props.abrirFormularioCrearRol, className: '#0288d1 light-blue darken-2 btn' },
+									'Agregar'
+								)
 							)
 						),
 						_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
@@ -50502,7 +50398,10 @@
 	exports.default = Listar;
 
 /***/ }),
-/* 585 */
+/* 586 */,
+/* 587 */,
+/* 588 */,
+/* 589 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50511,245 +50410,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(586);
-
-	var _container2 = _interopRequireDefault(_container);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _container2.default;
-
-/***/ }),
-/* 586 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _reactRedux = __webpack_require__(279);
-
-	var _reduxForm = __webpack_require__(321);
-
-	var _actions = __webpack_require__(583);
-
-	var _Crear = __webpack_require__(587);
-
-	var _Crear2 = _interopRequireDefault(_Crear);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var validate = function validate(values) {
-		var errors = {};
-
-		if (!values.nombre) {
-			errors.nombre = 'Tienes que introducir un nombre.';
-		} else if (values.nombre.length < 5) {
-			errors.nombre = 'Tiene que ser por lo menos 5 characteres.';
-		}
-
-		return errors;
-	};
-
-	function mapStateToProps(state) {
-		return {
-			mostrar: state.rol.formulario.mostrar,
-			crear: state.rol.crear
-		};
-	}
-
-	function mapDispatchToProps(dispatch) {
-		return {
-			crearRol: function crearRol(datosFormulario) {
-				dispatch((0, _actions.crearRol)(datosFormulario));
-			},
-			abrirFormularioRol: function abrirFormularioRol() {
-				dispatch((0, _actions.abrirFormularioRol)());
-			},
-			cerrarFormularioRol: function cerrarFormularioRol() {
-				dispatch((0, _actions.cerrarFormularioRol)());
-			}
-		};
-	}
-
-	var form = (0, _reduxForm.reduxForm)({
-		form: 'Crear',
-		validate: validate
-	});
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Crear2.default));
-
-/***/ }),
-/* 587 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reduxForm = __webpack_require__(321);
-
-	var _Cargando = __webpack_require__(575);
-
-	var _Cargando2 = _interopRequireDefault(_Cargando);
-
-	var _MensajeOerror = __webpack_require__(588);
-
-	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var renderField = function renderField(_ref) {
-		var input = _ref.input,
-		    label = _ref.label,
-		    type = _ref.type,
-		    _ref$meta = _ref.meta,
-		    touched = _ref$meta.touched,
-		    error = _ref$meta.error,
-		    warning = _ref$meta.warning;
-		return _react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement('input', _extends({}, input, { placeholder: label, type: type })),
-				touched && error && _react2.default.createElement(
-					'span',
-					null,
-					error
-				)
-			),
-			_react2.default.createElement('br', null)
-		);
-	};
-
-	var Crear = function (_Component) {
-		_inherits(Crear, _Component);
-
-		function Crear(props) {
-			_classCallCheck(this, Crear);
-
-			var _this = _possibleConstructorReturn(this, (Crear.__proto__ || Object.getPrototypeOf(Crear)).call(this, props));
-
-			_this.enviarFormulario = _this.enviarFormulario.bind(_this);
-			_this.renderCargando = _this.renderCargando.bind(_this);
-			return _this;
-		}
-
-		_createClass(Crear, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-				this.props.cerrarFormularioRol();
-			}
-		}, {
-			key: 'enviarFormulario',
-			value: function enviarFormulario(formProps) {
-				console.log(formProps);
-				this.props.crearRol(formProps);
-			}
-		}, {
-			key: 'renderCargando',
-			value: function renderCargando(cargando) {
-				if (cargando) {
-					return _react2.default.createElement(_Cargando2.default, null);
-				} else {
-					return _react2.default.createElement('span', null);
-				}
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var styles = {
-					btn: {
-						marginLeft: "10px"
-					},
-					contenedorCrear: {
-						"margin": "10px"
-					}
-				};
-
-				var _props = this.props,
-				    handleSubmit = _props.handleSubmit,
-				    pristine = _props.pristine,
-				    reset = _props.reset,
-				    submitting = _props.submitting;
-				var _props$crear = this.props.crear,
-				    cargando = _props$crear.cargando,
-				    mensaje = _props$crear.mensaje,
-				    error = _props$crear.error;
-
-
-				if (this.props.mostrar) {
-					return _react2.default.createElement(
-						'div',
-						{ style: styles.contenedorCrear },
-						this.renderCargando(cargando),
-						_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: mensaje }),
-						_react2.default.createElement(
-							'form',
-							{ onSubmit: handleSubmit(this.enviarFormulario) },
-							_react2.default.createElement(_reduxForm.Field, { name: 'nombre', type: 'text', component: renderField, label: 'Nombre' }),
-							_react2.default.createElement(
-								'button',
-								{ className: '#0288d1 light-blue darken-2 btn', type: 'submit', disabled: submitting },
-								'Guardar'
-							),
-							_react2.default.createElement(
-								'button',
-								{ style: styles.btn, onClick: this.props.cerrarFormularioRol, className: '#0288d1 light-blue darken-2 btn' },
-								'Cancelar'
-							)
-						)
-					);
-				} else {
-					return _react2.default.createElement(
-						'div',
-						{ style: styles.contenedorCrear },
-						_react2.default.createElement(
-							'button',
-							{ onClick: this.props.abrirFormularioRol, className: '#0288d1 light-blue darken-2 btn' },
-							'Agregar'
-						)
-					);
-				}
-			}
-		}]);
-
-		return Crear;
-	}(_react.Component);
-
-	exports.default = Crear;
-
-/***/ }),
-/* 588 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _MensajeOerror = __webpack_require__(589);
+	var _MensajeOerror = __webpack_require__(590);
 
 	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
@@ -50758,7 +50419,7 @@
 	exports.default = _MensajeOerror2.default;
 
 /***/ }),
-/* 589 */
+/* 590 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50846,7 +50507,7 @@
 	exports.default = MensajeOerror;
 
 /***/ }),
-/* 590 */
+/* 591 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50855,7 +50516,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(591);
+	var _container = __webpack_require__(592);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -50864,7 +50525,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 591 */
+/* 592 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50875,9 +50536,9 @@
 
 	var _reactRedux = __webpack_require__(279);
 
-	var _actions = __webpack_require__(583);
+	var _actions = __webpack_require__(560);
 
-	var _Mostrar = __webpack_require__(592);
+	var _Mostrar = __webpack_require__(593);
 
 	var _Mostrar2 = _interopRequireDefault(_Mostrar);
 
@@ -50900,7 +50561,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Mostrar2.default);
 
 /***/ }),
-/* 592 */
+/* 593 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50915,15 +50576,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactModal = __webpack_require__(593);
+	var _reactModal = __webpack_require__(594);
 
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 
-	var _MensajeOerror = __webpack_require__(588);
+	var _MensajeOerror = __webpack_require__(589);
 
 	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
-	var _Cargando = __webpack_require__(575);
+	var _Cargando = __webpack_require__(577);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
@@ -51063,7 +50724,7 @@
 	exports.default = Mostrar;
 
 /***/ }),
-/* 593 */
+/* 594 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51072,7 +50733,7 @@
 	  value: true
 	});
 
-	var _Modal = __webpack_require__(594);
+	var _Modal = __webpack_require__(595);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -51081,7 +50742,7 @@
 	exports.default = _Modal2.default;
 
 /***/ }),
-/* 594 */
+/* 595 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -51103,19 +50764,19 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _propTypes = __webpack_require__(595);
+	var _propTypes = __webpack_require__(596);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _ModalPortal = __webpack_require__(600);
+	var _ModalPortal = __webpack_require__(601);
 
 	var _ModalPortal2 = _interopRequireDefault(_ModalPortal);
 
-	var _ariaAppHider = __webpack_require__(604);
+	var _ariaAppHider = __webpack_require__(605);
 
 	var ariaAppHider = _interopRequireWildcard(_ariaAppHider);
 
-	var _safeHTMLElement = __webpack_require__(607);
+	var _safeHTMLElement = __webpack_require__(608);
 
 	var _safeHTMLElement2 = _interopRequireDefault(_safeHTMLElement);
 
@@ -51305,7 +50966,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 595 */
+/* 596 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -51332,17 +50993,17 @@
 	  // By explicitly using `prop-types` you are opting into new development behavior.
 	  // http://fb.me/prop-types-in-prod
 	  var throwOnDirectAccess = true;
-	  module.exports = __webpack_require__(596)(isValidElement, throwOnDirectAccess);
+	  module.exports = __webpack_require__(597)(isValidElement, throwOnDirectAccess);
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(599)();
+	  module.exports = __webpack_require__(600)();
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 596 */
+/* 597 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -51360,8 +51021,8 @@
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
 
-	var ReactPropTypesSecret = __webpack_require__(597);
-	var checkPropTypes = __webpack_require__(598);
+	var ReactPropTypesSecret = __webpack_require__(598);
+	var checkPropTypes = __webpack_require__(599);
 
 	module.exports = function(isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
@@ -51861,7 +51522,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 597 */
+/* 598 */
 /***/ (function(module, exports) {
 
 	/**
@@ -51881,7 +51542,7 @@
 
 
 /***/ }),
-/* 598 */
+/* 599 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -51898,7 +51559,7 @@
 	if (process.env.NODE_ENV !== 'production') {
 	  var invariant = __webpack_require__(8);
 	  var warning = __webpack_require__(11);
-	  var ReactPropTypesSecret = __webpack_require__(597);
+	  var ReactPropTypesSecret = __webpack_require__(598);
 	  var loggedTypeFailures = {};
 	}
 
@@ -51949,7 +51610,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 599 */
+/* 600 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -51965,7 +51626,7 @@
 
 	var emptyFunction = __webpack_require__(12);
 	var invariant = __webpack_require__(8);
-	var ReactPropTypesSecret = __webpack_require__(597);
+	var ReactPropTypesSecret = __webpack_require__(598);
 
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -52014,7 +51675,7 @@
 
 
 /***/ }),
-/* 600 */
+/* 601 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -52033,29 +51694,29 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(595);
+	var _propTypes = __webpack_require__(596);
 
-	var _focusManager = __webpack_require__(601);
+	var _focusManager = __webpack_require__(602);
 
 	var focusManager = _interopRequireWildcard(_focusManager);
 
-	var _scopeTab = __webpack_require__(603);
+	var _scopeTab = __webpack_require__(604);
 
 	var _scopeTab2 = _interopRequireDefault(_scopeTab);
 
-	var _ariaAppHider = __webpack_require__(604);
+	var _ariaAppHider = __webpack_require__(605);
 
 	var ariaAppHider = _interopRequireWildcard(_ariaAppHider);
 
-	var _refCount = __webpack_require__(605);
+	var _refCount = __webpack_require__(606);
 
 	var refCount = _interopRequireWildcard(_refCount);
 
-	var _bodyClassList = __webpack_require__(606);
+	var _bodyClassList = __webpack_require__(607);
 
 	var bodyClassList = _interopRequireWildcard(_bodyClassList);
 
-	var _safeHTMLElement = __webpack_require__(607);
+	var _safeHTMLElement = __webpack_require__(608);
 
 	var _safeHTMLElement2 = _interopRequireDefault(_safeHTMLElement);
 
@@ -52373,7 +52034,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 601 */
+/* 602 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52388,7 +52049,7 @@
 	exports.setupScopedFocus = setupScopedFocus;
 	exports.teardownScopedFocus = teardownScopedFocus;
 
-	var _tabbable = __webpack_require__(602);
+	var _tabbable = __webpack_require__(603);
 
 	var _tabbable2 = _interopRequireDefault(_tabbable);
 
@@ -52465,7 +52126,7 @@
 	}
 
 /***/ }),
-/* 602 */
+/* 603 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -52520,7 +52181,7 @@
 	}
 
 /***/ }),
-/* 603 */
+/* 604 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52530,7 +52191,7 @@
 	});
 	exports.default = scopeTab;
 
-	var _tabbable = __webpack_require__(602);
+	var _tabbable = __webpack_require__(603);
 
 	var _tabbable2 = _interopRequireDefault(_tabbable);
 
@@ -52553,7 +52214,7 @@
 	}
 
 /***/ }),
-/* 604 */
+/* 605 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -52622,7 +52283,7 @@
 	}
 
 /***/ }),
-/* 605 */
+/* 606 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -52663,7 +52324,7 @@
 	}
 
 /***/ }),
-/* 606 */
+/* 607 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52674,7 +52335,7 @@
 	exports.add = add;
 	exports.remove = remove;
 
-	var _refCount = __webpack_require__(605);
+	var _refCount = __webpack_require__(606);
 
 	var refCount = _interopRequireWildcard(_refCount);
 
@@ -52699,7 +52360,7 @@
 	}
 
 /***/ }),
-/* 607 */
+/* 608 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52708,7 +52369,7 @@
 	  value: true
 	});
 
-	var _exenv = __webpack_require__(608);
+	var _exenv = __webpack_require__(609);
 
 	var _exenv2 = _interopRequireDefault(_exenv);
 
@@ -52721,7 +52382,7 @@
 	exports.default = SafeHTMLElement;
 
 /***/ }),
-/* 608 */
+/* 609 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -52766,7 +52427,10 @@
 
 
 /***/ }),
-/* 609 */
+/* 610 */,
+/* 611 */,
+/* 612 */,
+/* 613 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52775,7 +52439,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(610);
+	var _container = __webpack_require__(614);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -52784,7 +52448,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 610 */
+/* 614 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52797,11 +52461,11 @@
 
 	var _reduxForm = __webpack_require__(321);
 
-	var _actions = __webpack_require__(583);
+	var _actions = __webpack_require__(560);
 
-	var _Editar = __webpack_require__(611);
+	var _Formulario = __webpack_require__(615);
 
-	var _Editar2 = _interopRequireDefault(_Editar);
+	var _Formulario2 = _interopRequireDefault(_Formulario);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52819,35 +52483,36 @@
 
 	function mapStateToProps(state) {
 		return {
-			mostrarEditar: state.rol.mostrarEditar,
-			initialValues: state.rol.mostrarEditar.rol,
-			editar: state.rol.editar
+			formulario: state.rol.formulario,
+			initialValues: state.rol.formulario.rol,
+			enableReinitialize: state.rol.formulario.iniciarValores,
+			editarContenido: state.rol.formulario.iniciarValores
 		};
 	}
 
 	function mapDispatchToProps(dispatch) {
 		return {
+			crearRol: function crearRol(datosFormulario) {
+				dispatch((0, _actions.crearRol)(datosFormulario));
+			},
+			cerrarFormularioRol: function cerrarFormularioRol() {
+				dispatch((0, _actions.cerrarFormularioRol)());
+			},
 			editarRol: function editarRol(datosFormulario) {
 				dispatch((0, _actions.editarRol)(datosFormulario));
-			},
-			mostrarEditarRol: function mostrarEditarRol(idRol) {
-				dispatch((0, _actions.mostrarEditarRol)(idRol));
-			},
-			cerrarModalEditarRol: function cerrarModalEditarRol() {
-				dispatch((0, _actions.cerrarModalEditarRol)());
 			}
 		};
 	}
 
 	var form = (0, _reduxForm.reduxForm)({
-		form: 'Editar',
+		form: 'Formulario',
 		validate: validate
 	});
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Editar2.default));
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Formulario2.default));
 
 /***/ }),
-/* 611 */
+/* 615 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52858,23 +52523,25 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactModal = __webpack_require__(593);
+	var _reduxForm = __webpack_require__(321);
+
+	var _reactModal = __webpack_require__(594);
 
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 
-	var _reduxForm = __webpack_require__(321);
-
-	var _MensajeOerror = __webpack_require__(588);
-
-	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
-
-	var _Cargando = __webpack_require__(575);
+	var _Cargando = __webpack_require__(577);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
+
+	var _MensajeOerror = __webpack_require__(589);
+
+	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52884,58 +52551,64 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	// import { Field, reduxForm, reset, initialize } from 'redux-form'
-
-
-	var renderField = function renderField(field) {
+	var renderField = function renderField(_ref) {
+		var input = _ref.input,
+		    label = _ref.label,
+		    type = _ref.type,
+		    _ref$meta = _ref.meta,
+		    touched = _ref$meta.touched,
+		    error = _ref$meta.error,
+		    warning = _ref$meta.warning;
 		return _react2.default.createElement(
 			'div',
 			null,
 			_react2.default.createElement(
-				'label',
-				null,
-				field.input.label
-			),
-			_react2.default.createElement('input', field.input),
-			field.touched && field.error && _react2.default.createElement(
 				'div',
-				{ className: 'error' },
-				field.error
-			)
+				null,
+				_react2.default.createElement('input', _extends({}, input, { placeholder: label, type: type })),
+				touched && error && _react2.default.createElement(
+					'span',
+					null,
+					error
+				)
+			),
+			_react2.default.createElement('br', null)
 		);
 	};
 
-	var Editar = function (_Component) {
-		_inherits(Editar, _Component);
+	var Formulario = function (_Component) {
+		_inherits(Formulario, _Component);
 
-		function Editar(props) {
-			_classCallCheck(this, Editar);
+		function Formulario(props) {
+			_classCallCheck(this, Formulario);
 
-			var _this = _possibleConstructorReturn(this, (Editar.__proto__ || Object.getPrototypeOf(Editar)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Formulario.__proto__ || Object.getPrototypeOf(Formulario)).call(this, props));
 
 			_this.enviarFormulario = _this.enviarFormulario.bind(_this);
 			_this.renderCargando = _this.renderCargando.bind(_this);
-			_this.renderRol = _this.renderRol.bind(_this);
 			return _this;
 		}
 
 		// componentWillMount() {
+		// 	if(this.props.enableReinitialize) {
+
+		// 	} else {
+
+		// 	}
 		// }
 
-		// componentDidMount() {
-		//   this.handleInitialize();
-		// }
+		_createClass(Formulario, [{
+			key: 'enviarFormulario',
+			value: function enviarFormulario(formProps) {
+				console.log(this.props.editarContenido);
 
-		// handleInitialize() {
-		//   const initData = {
-		//     "nombre": this.props.nombre,
-		//   }
-
-		//   this.props.initialize(initData);
-
-		// }
-
-		_createClass(Editar, [{
+				if (this.props.editarContenido) {
+					this.props.editarRol(formProps);
+				} else {
+					this.props.crearRol(formProps);
+				}
+			}
+		}, {
 			key: 'renderCargando',
 			value: function renderCargando(cargando) {
 				if (cargando) {
@@ -52943,43 +52616,6 @@
 				} else {
 					return _react2.default.createElement('span', null);
 				}
-			}
-		}, {
-			key: 'renderRol',
-			value: function renderRol(rol) {
-				if (rol) {
-					var styles = {
-						btn: {
-							marginLeft: "10px"
-						}
-					};
-
-					var handleSubmit = this.props.handleSubmit;
-
-
-					return _react2.default.createElement(
-						'div',
-						null,
-						_react2.default.createElement(
-							'form',
-							{ onSubmit: handleSubmit(this.enviarFormulario) },
-							_react2.default.createElement(_reduxForm.Field, { name: 'nombre', type: 'text', component: renderField, label: 'Nombre' }),
-							_react2.default.createElement(
-								'button',
-								{ action: 'submit' },
-								'Save changes'
-							)
-						)
-					);
-				} else {
-					return _react2.default.createElement('span', null);
-				}
-			}
-		}, {
-			key: 'enviarFormulario',
-			value: function enviarFormulario(formProps) {
-				alert(formProps.nombre);
-				// this.props.editarRol(formProps)
 			}
 		}, {
 			key: 'render',
@@ -53006,6 +52642,12 @@
 				};
 
 				var styles = {
+					btn: {
+						marginLeft: "10px"
+					},
+					contenedorCrear: {
+						"margin": "10px"
+					},
 					mostrarRolContainer: {
 						"boxShadow": "0 0 10px #888",
 						"padding": "1em",
@@ -53013,113 +52655,67 @@
 					}
 				};
 
-				var _props$mostrarEditar = this.props.mostrarEditar,
-				    cargando = _props$mostrarEditar.cargando,
-				    rol = _props$mostrarEditar.rol,
-				    error = _props$mostrarEditar.error,
-				    abierto = _props$mostrarEditar.abierto;
+				var _props = this.props,
+				    handleSubmit = _props.handleSubmit,
+				    pristine = _props.pristine,
+				    reset = _props.reset,
+				    submitting = _props.submitting;
+				var _props$formulario = this.props.formulario,
+				    abirtoCrear = _props$formulario.abirtoCrear,
+				    abirtoEditar = _props$formulario.abirtoEditar,
+				    error = _props$formulario.error,
+				    cargando = _props$formulario.cargando,
+				    rol = _props$formulario.rol;
 
 
-				console.log("Editar está: " + this.props.mostrarEditar.abierto);
+				var abierto = abirtoEditar ? abirtoEditar : abirtoCrear;
 
-				// console.log(this.props.editar)
-
-				if (abierto) {
-					return _react2.default.createElement(
-						_reactModal2.default,
-						{ isOpen: abierto,
-							contentLabel: 'Minimal Modal Example',
-							style: customStyles },
+				return _react2.default.createElement(
+					_reactModal2.default,
+					{ isOpen: abierto,
+						contentLabel: 'Minimal Modal Example',
+						style: customStyles },
+					_react2.default.createElement(
+						'div',
+						{ style: styles.mostrarRolContainer, className: 'container' },
 						_react2.default.createElement(
 							'div',
-							{ style: styles.mostrarRolContainer, className: 'container' },
+							{ className: 'row center-lg center-md center-sm center-xs' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'row center-lg center-md center-sm center-xs' },
+								{ className: 'col-xs-12 col-sm-6 col-md-6 col-lg-6' },
 								_react2.default.createElement(
 									'div',
-									{ className: 'col-xs-12 col-sm-6 col-md-6 col-lg-6' },
+									null,
+									_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
+									this.renderCargando(cargando),
 									_react2.default.createElement(
-										'div',
-										null,
-										_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
-										this.renderCargando(cargando),
-										this.renderRol(rol)
+										'form',
+										{ onSubmit: handleSubmit(this.enviarFormulario) },
+										_react2.default.createElement(_reduxForm.Field, { name: 'nombre', type: 'text', component: renderField, label: 'Nombre' }),
+										_react2.default.createElement(
+											'button',
+											{ className: '#0288d1 light-blue darken-2 btn', type: 'submit', disabled: submitting },
+											'Guardar'
+										),
+										_react2.default.createElement(
+											'button',
+											{ style: styles.btn, onClick: this.props.cerrarFormularioRol, className: '#0288d1 light-blue darken-2 btn' },
+											'Cancelar'
+										)
 									)
 								)
 							)
 						)
-					);
-				} else {
-					return _react2.default.createElement('span', null);
-				}
+					)
+				);
 			}
 		}]);
 
-		return Editar;
+		return Formulario;
 	}(_react.Component);
 
-	exports.default = Editar;
-
-/***/ }),
-/* 612 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _reactRedux = __webpack_require__(279);
-
-	var _account = __webpack_require__(559);
-
-	var _reduxForm = __webpack_require__(321);
-
-	var _actions = __webpack_require__(583);
-
-	var _InitializeFromStateForm = __webpack_require__(558);
-
-	var _InitializeFromStateForm2 = _interopRequireDefault(_InitializeFromStateForm);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var data = {
-		// used to populate "account" reducer when "Load" is clicked
-		nombre: 'GAMAAAA.'
-		// lastName: 'Doe',
-		// age: '42',
-		// sex: 'female',
-		// employed: true,
-		// favoriteColor: 'Blue',
-		// bio: 'Born to write amazing Redux code.'
-	};
-
-	function mapStateToProps(state) {
-		// console.log("eeee:"+state.rol.mostrarEditar.rol.nombre)
-
-		return {
-			initialValues: state.rol.mostrarEditar.rol,
-			enableReinitialize: true
-		};
-	}
-
-	function mapDispatchToProps(dispatch) {
-		return {
-			mostrarEditarRol: function mostrarEditarRol(idRol) {
-				dispatch((0, _actions.mostrarEditarRol)(idRol));
-			}
-		};
-	}
-
-	// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
-	var form = (0, _reduxForm.reduxForm)({
-		form: 'initializeFromState' // a unique identifier for this form
-	});
-
-	// You have to connect() to any reducers that you wish to connect to yourself
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_InitializeFromStateForm2.default));
+	exports.default = Formulario;
 
 /***/ })
 /******/ ]);
