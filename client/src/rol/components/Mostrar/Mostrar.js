@@ -64,7 +64,6 @@ class Mostrar extends Component {
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
-
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
 				       	contentLabel="Minimal Modal Example"
