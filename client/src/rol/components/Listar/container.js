@@ -4,8 +4,9 @@ import {
 	listarRoles,
 	eliminarRole,
 	mostrarRol,
-	
-	mostrarEditarRol
+
+	abrirFormularioCrearRol,
+	abrirFormularioEditarRol
 } from '../../actions'
 
 import Listar from './Listar'
@@ -29,9 +30,11 @@ function mapDispatchToProps(dispatch) {
 		mostrarRol: (idRol) => {
 			dispatch(mostrarRol(idRol))
 		},
-
-		mostrarEditarRol: (idRol) => {
-			dispatch(mostrarEditarRol(idRol))
+		abrirFormularioCrearRol: () => {
+			dispatch(abrirFormularioCrearRol())
+		},
+		abrirFormularioEditarRol: (idRol) => {
+			dispatch(abrirFormularioEditarRol(idRol))
 		}
 	}
 }
