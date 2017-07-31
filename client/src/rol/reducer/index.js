@@ -1,10 +1,11 @@
 import {
-	ABRIR_FORMULARIO_CREAR_ROL,
-	CERRAR_FORMULARIO_CREAR_ROL,
+	CERRAR_FORMULARIO_ROL,
 
 	LISTAR_ROLES_REQUEST,
 	LISTAR_ROLES_EXITO,
 	LISTAR_ROLES_FALLO,
+
+	ABRIR_FORMULARIO_CREAR_ROL,
 
 	CREAR_ROL_REQUEST,
 	CREAR_ROL_EXITO,
@@ -17,15 +18,14 @@ import {
 	CERRAR_MODAL_MOSTRAR_ROL,
 
 	// Editar Rol.
-	MOSTRAR_EDITAR_ROL_REQUEST,
-	MOSTRAR_EDITAR_ROL_EXITO,
-	MOSTRAR_EDITAR_ROL_FALLO,
+		// form to edit a rol.
+	ABRIR_FORMULARIO_EDITAR_ROL_REQUEST,
+	ABRIR_FORMULARIO_EDITAR_ROL_EXITO,
+	ABRIR_FORMULARIO_EDITAR_ROL_FALLO,
 
 	EDITAR_ROL_REQUEST,
 	EDITAR_ROL_EXITO,
 	EDITAR_ROL_FALLO,
-
-	CERRAR_MODAL_EDITAR_ROL,
 
 	ELIMINAR_ROL_REQUEST,
 	ELIMINAR_ROL_EXITO,
@@ -34,15 +34,17 @@ import {
 
 const INITIAL_STATE = {
 	formulario: {
-		mostrar: false,
-		nombre: ''
+		abirtoCrear: false,
+		abirtoEditar: false,
+		iniciarValores: false,
+		error: '',
+		cargando: false,
+		rol: {}
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { roles:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, rol: {}, error: '', abierto: false },
-	
-	mostrarEditar: { cargando: false, rol: {}, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -50,15 +52,70 @@ export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
 		case ABRIR_FORMULARIO_CREAR_ROL:
 			return Object.assign({}, state, {
-				formulario: { mostrar: true }
+				formulario: {
+					abirtoCrear: true,
+					abirtoEditar: false,
+					iniciarValores: false,
+					error: '',
+					cargando: false,
+					rol: {}
+				},
+				mostrar: { abierto: false }
 			})
 
-		case CERRAR_FORMULARIO_CREAR_ROL:
+		case ABRIR_FORMULARIO_EDITAR_ROL_REQUEST:
 			return Object.assign({}, state, {
-				formulario: { mostrar: false },
-				crear: { mensaje: '', error: '' }
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: true,
+					iniciarValores: true,
+					error: '',
+					cargando: true,
+					rol: {}
+				},
+				mostrar: { abierto: false }
 			})
 
+		case ABRIR_FORMULARIO_EDITAR_ROL_EXITO:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: true,
+					iniciarValores: true,
+					error: '',
+					cargando: false,
+					rol: action.payload
+				},
+				mostrar: { abierto: false }
+			})
+
+		case ABRIR_FORMULARIO_EDITAR_ROL_FALLO:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: true,
+					iniciarValores: true,
+					error: action.payload,
+					cargando: false,
+					rol: {}
+				},
+				mostrar: { abierto: false }
+			})
+
+
+		case CERRAR_FORMULARIO_ROL:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: false,
+					iniciarValores: false,
+					error: '',
+					cargando: false,
+					rol: {}
+				}
+			})
+
+		// CREATE ROL.
 		case CREAR_ROL_REQUEST:
 			return state = Object.assign({}, state, {
 				crear: { cargando: true }
@@ -70,7 +127,8 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
-				}
+				},
+				formulario: { abirtoCrear: false }
 				// listar: { 
 				// 	roles: [ ...state.listar.roles, action.payload.datoInsertado ]
 				// }
@@ -102,7 +160,8 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_ROL_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true }
+				mostrar: { cargando: true, abierto: true },
+				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
 		case MOSTRAR_ROL_EXITO:
@@ -111,7 +170,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					rol: action.payload,
 					abierto: true
-				}
+				},
+				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
 		case MOSTRAR_ROL_FALLO:
@@ -121,7 +181,8 @@ export default function (state = INITIAL_STATE, action) {
 					rol: {},
 					error: action.payload,
 					abierto: true
-				}
+				},
+				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
 		case CERRAR_MODAL_MOSTRAR_ROL:
@@ -136,33 +197,6 @@ export default function (state = INITIAL_STATE, action) {
 
 
 		// EDITAR.
-		case MOSTRAR_EDITAR_ROL_REQUEST:
-			return Object.assign({}, state, {
-				mostrarEditar: { cargando: true, abierto: true },
-				mostrar: { abierto: false }
-			})
-
-		case MOSTRAR_EDITAR_ROL_EXITO:
-			return Object.assign({}, state, {
-				mostrarEditar: {
-					cargando: false,
-					abierto: true,
-					rol: action.payload
-				},
-				mostrar: { abierto: false }
-			})
-
-		case MOSTRAR_EDITAR_ROL_FALLO:
-			return Object.assign({}, state, {
-				mostrarEditar: {
-					cargando: false,
-					abierto: true,
-					rol: {},
-					error: action.payload
-				},
-				mostrar: { abierto: false }
-			})
-
 		case EDITAR_ROL_REQUEST:
 			return Object.assign({}, state, {
 				editar: { cargando: true }
@@ -174,7 +208,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				mostrarEditar: { abierto: false, rol: {} }
+				formulario: { abirtoEditar: false }
 			})
 
 		case EDITAR_ROL_FALLO:
@@ -182,21 +216,9 @@ export default function (state = INITIAL_STATE, action) {
 				editar: { 
 					cargando: false,
 					mensaje: '', 
-					error: action.payload,
-					abierto: true
+					error: action.payload
 				}
 			})
-
-		case CERRAR_MODAL_EDITAR_ROL:
-			return Object.assign({}, state, {
-				mostrarEditar: {
-					cargando: false,
-					abierto: false,
-					rol: {},
-					error: ''
-				}
-			})
-
 		
 
 		// ELIMINAR.
