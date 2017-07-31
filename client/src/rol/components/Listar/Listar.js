@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import CrearContainer from '../Crear'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
