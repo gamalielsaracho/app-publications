@@ -4,9 +4,8 @@ import CrearContainer from '../Crear'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import FormularioContainer from '../Formulario'
 import MostarContainer from '../Mostrar'
-
-import EditarContainer from '../Editar'
 
 class Listar extends Component {
 	constructor(props) {
@@ -52,7 +51,7 @@ class Listar extends Component {
 			            	<a onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="#0288d1 light-blue darken-2 btn">
 			            		Mostrar
 			            	</a>
-			            	<a onClick={() => { this.props.mostrarEditarRol(rol.id_rol) }} style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
+			            	<a onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
 			            	<a onClick={() => { this.props.eliminarRole(rol.id_rol) }} style={style.btn} className="#e53935 red darken-1 btn">
 			            		Eliminar
 			            	</a>
@@ -74,12 +73,12 @@ class Listar extends Component {
 		} else {
 				return <div className='container'>
 				
-					<EditarContainer/>
+					<FormularioContainer/>
 					<MostarContainer/>
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<CrearContainer/>
+							<button onClick={ this.props.abrirFormularioCrearRol } className='#0288d1 light-blue darken-2 btn'>Agregar</button>
 						</div>
 					</div>
 					<MensajeOerror error={error} mensaje={null}/>
