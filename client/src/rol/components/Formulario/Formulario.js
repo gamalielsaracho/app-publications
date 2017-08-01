@@ -94,30 +94,28 @@ class Formulario extends Component {
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
-		return <ReactModal isOpen={abierto}
-				       	contentLabel="Minimal Modal Example"
-				       	style={customStyles}>
+		if(abierto) {
+			return <ReactModal isOpen={abierto}
+					       	contentLabel="Minimal Modal Example"
+					       	style={customStyles}>
 
-			<div style={styles.mostrarRolContainer} className='container'>
-						
-				<div className='row center-lg center-md center-sm center-xs'>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-						<div>
+				<div style={styles.mostrarRolContainer}>
+							
+					<MensajeOerror error={error} mensaje={null}/>
+					{ this.renderCargando(cargando) }
 
-							<MensajeOerror error={error} mensaje={null}/>
-							{ this.renderCargando(cargando) }
+					<form onSubmit={handleSubmit(this.enviarFormulario)}>
+						<Field name='nombre' type='text' component={renderField} label='Nombre'/>
+											
+						<button className='#0288d1 light-blue darken-2 btn' type="submit" disabled={submitting}>Guardar</button>
+						<button style={styles.btn} onClick={ this.props.cerrarFormularioRol } className='#0288d1 light-blue darken-2 btn'>Cancelar</button>
+					</form>
 
-							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								<Field name='nombre' type='text' component={renderField} label='Nombre'/>
-										
-								<button className='#0288d1 light-blue darken-2 btn' type="submit" disabled={submitting}>Guardar</button>
-								<button style={styles.btn} onClick={ this.props.cerrarFormularioRol } className='#0288d1 light-blue darken-2 btn'>Cancelar</button>
-							</form>
-						</div>
-					</div>
 				</div>
-			</div>
-		</ReactModal>
+			</ReactModal>
+		} else {
+			return <span></span>
+		}
 	}
 }
 
