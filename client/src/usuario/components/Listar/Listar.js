@@ -80,7 +80,7 @@ class Listar extends Component {
 		if(cargando) {
 			return <Cargando/>
 		}else {
-			return <div className='container'>
+			return <div>
 				<div className='row center-lg center-md center-sm center-xs'>
 					<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
 						<input type='text' placeholder='Nombre'
