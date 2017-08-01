@@ -48678,9 +48678,17 @@
 		_createClass(DashBoard, [{
 			key: 'render',
 			value: function render() {
-				var style = {
-					color: "#fff",
-					textAling: "center"
+				var styles = {
+					menuContainer: {
+						"padding": "1em"
+					},
+					btnContainer: {
+						padding: '0em .5em .5em 1.5em',
+						color: "#fff"
+					},
+					btnText: {
+						color: "#fff"
+					}
 				};
 
 				return _react2.default.createElement(
@@ -48691,33 +48699,84 @@
 						{ className: 'row justify-lg justify-md justify-sm justify-xs' },
 						_react2.default.createElement(
 							'div',
-							{ className: '#00b0ff light-blue accent-3 col-xs-12 col-sm-12 col-md-2 col-lg-2' },
+							{ style: styles.menuContainer, className: '#00b0ff light-blue accent-3 col-xs-12 col-sm-12 col-md-2 col-lg-2' },
 							_react2.default.createElement(
-								'ul',
-								null,
+								'div',
+								{ className: 'row justify-lg justify-md between-sm justify-xs' },
 								_react2.default.createElement(
-									'li',
-									{ className: 'center' },
+									'div',
+									{ className: 'col-xs-12 col-sm-4 col-md-12 col-lg-12' },
 									_react2.default.createElement(
-										_reactRouter.Link,
-										{ style: style, to: '/roles' },
-										'Roles'
+										'h5',
+										{ className: 'center' },
+										'Hola LOP'
 									)
 								),
 								_react2.default.createElement(
-									'li',
-									{ className: 'center' },
+									'div',
+									{ className: 'col-xs-12 col-sm-4 col-md-12 col-lg-12' },
 									_react2.default.createElement(
-										_reactRouter.Link,
-										{ style: style, to: '/usuarios' },
-										'Usuarios'
+										'ul',
+										{ className: 'row justify-lg justify-md justify-sm justify-xs' },
+										_react2.default.createElement(
+											'div',
+											{ style: styles.btnContainer, className: 'col-xs-6 col-sm-6 col-md-12 col-lg-12' },
+											_react2.default.createElement(
+												'div',
+												{ className: 'row justify-lg justify-md justify-sm justify-xs' },
+												_react2.default.createElement(
+													'div',
+													{ className: 'col-xs-6 col-sm-6 col-md-6 col-lg-6' },
+													_react2.default.createElement(
+														_reactRouter.Link,
+														{ style: styles.btnText, to: '/roles' },
+														'Roles'
+													)
+												),
+												_react2.default.createElement(
+													'div',
+													{ className: 'col-xs-3 col-sm-3 col-md-3 col-lg-3' },
+													_react2.default.createElement(
+														'i',
+														{ className: 'sm material-icons' },
+														'insert_chart'
+													)
+												)
+											)
+										),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.btnContainer, className: 'col-xs-6 col-sm-6 col-md-12 col-lg-12' },
+											_react2.default.createElement(
+												'div',
+												{ className: 'row justify-lg justify-md justify-sm justify-xs' },
+												_react2.default.createElement(
+													'div',
+													{ className: 'col-xs-6 col-sm-6 col-md-6 col-lg-6' },
+													_react2.default.createElement(
+														_reactRouter.Link,
+														{ style: styles.btnText, to: '/usuarios' },
+														'Usuarios'
+													)
+												),
+												_react2.default.createElement(
+													'div',
+													{ className: 'col-xs-3 col-sm-3 col-md-3 col-lg-3' },
+													_react2.default.createElement(
+														'i',
+														{ className: 'sm material-icons' },
+														'supervisor_account'
+													)
+												)
+											)
+										)
 									)
 								)
 							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: ' col-xs-12 col-sm-12 col-md-10 col-lg-10' },
+							{ className: 'col-xs-12 col-sm-12 col-md-10 col-lg-10' },
 							_react2.default.createElement('br', null),
 							this.props.children
 						)
