@@ -70,7 +70,7 @@ class Listar extends Component {
 		if(cargando) {
 			return <Cargando/>
 		} else {
-				return <div className='container'>
+				return <div>
 				
 					<FormularioContainer/>
 					<MostarContainer/>
@@ -81,8 +81,8 @@ class Listar extends Component {
 						</div>
 					</div>
 					<MensajeOerror error={error} mensaje={null}/>
-					<div className='row'>
-						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-12'>
+					<div className='row row center-lg center-md center-sm center-xs'>
+						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
 							<h4 className='center'>Roles</h4>
 
 							<table>
