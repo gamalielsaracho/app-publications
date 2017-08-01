@@ -100,17 +100,15 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div style={styles.mostrarRolContainer}>
-							
 					<MensajeOerror error={error} mensaje={null}/>
 					{ this.renderCargando(cargando) }
 
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>
 						<Field name='nombre' type='text' component={renderField} label='Nombre'/>
-											
+												
 						<button className='#0288d1 light-blue darken-2 btn' type="submit" disabled={submitting}>Guardar</button>
 						<button style={styles.btn} onClick={ this.props.cerrarFormularioRol } className='#0288d1 light-blue darken-2 btn'>Cancelar</button>
 					</form>
-
 				</div>
 			</ReactModal>
 		} else {
