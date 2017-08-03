@@ -48302,35 +48302,37 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _DashBoard = __webpack_require__(557);
+	var _HomePage = __webpack_require__(560);
+
+	var _HomePage2 = _interopRequireDefault(_HomePage);
+
+	var _DashBoard = __webpack_require__(567);
 
 	var _DashBoard2 = _interopRequireDefault(_DashBoard);
 
-	var _RegistrarPage = __webpack_require__(560);
+	var _RegistrarPage = __webpack_require__(570);
 
 	var _RegistrarPage2 = _interopRequireDefault(_RegistrarPage);
 
-	var _AutenticarPage = __webpack_require__(564);
+	var _AutenticarPage = __webpack_require__(574);
 
 	var _AutenticarPage2 = _interopRequireDefault(_AutenticarPage);
 
-	var _ListarPage = __webpack_require__(568);
+	var _ListarPage = __webpack_require__(578);
 
 	var _ListarPage2 = _interopRequireDefault(_ListarPage);
 
-	var _ListarRolesPage = __webpack_require__(577);
+	var _ListarRolesPage = __webpack_require__(587);
 
 	var _ListarRolesPage2 = _interopRequireDefault(_ListarRolesPage);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// USUARIO.
-
-
-	// App Principal de la aplicación.
 	exports.default = _react2.default.createElement(
 		_reactRouter.Route,
 		{ path: '/', component: _App2.default },
+		_react2.default.createElement(_reactRouter.IndexRoute, { component: _HomePage2.default }),
 		_react2.default.createElement(_reactRouter.Route, { path: '/registrarse', component: _RegistrarPage2.default }),
 		_react2.default.createElement(_reactRouter.Route, { path: '/entrar', component: _AutenticarPage2.default }),
 		_react2.default.createElement(
@@ -48345,6 +48347,9 @@
 
 
 	// DashBoard App.
+
+
+	// App Principal de la aplicación.
 
 /***/ }),
 /* 554 */
@@ -48424,6 +48429,10 @@
 
 	var _reactRouter = __webpack_require__(224);
 
+	var _Menu = __webpack_require__(557);
+
+	var _Menu2 = _interopRequireDefault(_Menu);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48438,39 +48447,123 @@
 		function App(props) {
 			_classCallCheck(this, App);
 
-			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+			return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+		}
+
+		_createClass(App, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_Menu2.default, null),
+					this.props.children
+				);
+			}
+		}]);
+
+		return App;
+	}(_react.Component);
+
+	exports.default = App;
+
+/***/ }),
+/* 557 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _container = __webpack_require__(558);
+
+	var _container2 = _interopRequireDefault(_container);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _container2.default;
+
+/***/ }),
+/* 558 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _reactRedux = __webpack_require__(279);
+
+	var _Menu = __webpack_require__(559);
+
+	var _Menu2 = _interopRequireDefault(_Menu);
+
+	var _actions = __webpack_require__(178);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function mapStateToProps(state) {
+		return {
+			usuarioEstado: state.usuario.usuarioEstado
+		};
+	}
+
+	function mapDispatchToProps(dispatch) {
+		return {
+			salirUsuario: function salirUsuario() {
+				dispatch((0, _actions.salirUsuario)());
+			}
+		};
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Menu2.default);
+
+/***/ }),
+/* 559 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(224);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Menu = function (_Component) {
+		_inherits(Menu, _Component);
+
+		function Menu(props) {
+			_classCallCheck(this, Menu);
+
+			var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
 			_this.renderLinks = _this.renderLinks.bind(_this);
 			return _this;
 		}
 
-		// componentWillMount() {
-		// 	const token = localStorage.getItem('token')
-
-		// 	if(token) {
-		// 		this.props.verificarTokenUsuario(token)
-		// 	}
-		// }
-
-		// componentWillReceiveProps(nextProps) {
-		//    if (this.props.cat.id != nextProps.cat.id) {
-		//      this.setState({cat: nextProps.cat});
-		//    }
-		//    if (this.props.checkBoxHobbies.length < nextProps.checkBoxHobbies.length) {
-		//      this.setState({catHobbies: nextProps.catHobbies, checkBoxHobbies: nextProps.checkBoxHobbies});
-		//    }
-		//  }
-
-		// shouldComponentUpdate(next_props, next_state) {
-		// 	console.log(next_state)
-		// }
-
-		_createClass(App, [{
+		_createClass(Menu, [{
 			key: 'renderLinks',
 			value: function renderLinks(autenticado, usuario) {
 				var _this2 = this;
 
-				console.log(usuario);
 				if (autenticado) {
 					return _react2.default.createElement(
 						'div',
@@ -48523,6 +48616,42 @@
 							null,
 							_react2.default.createElement(
 								_reactRouter.Link,
+								{ to: '/' },
+								'Inicio'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								'a',
+								{ href: '#nosotros' },
+								'Nosotros'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								'a',
+								{ href: '#horarios' },
+								'Horarios'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								'a',
+								{ href: '#cantactanos' },
+								'Contactanos'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
 								{ to: '/registrarse' },
 								'Registrarse'
 							)
@@ -48540,6 +48669,19 @@
 				}
 			}
 		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				console.log(this.refs);
+
+				$('.button-collapse').sideNav({
+					menuWidth: 300, // Default is 300
+					edge: 'left', // Choose the horizontal origin
+					closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+					draggable: true, // Choose whether you can drag to open on touch screens,
+					onOpen: function onOpen(el) {}, // A function to be called when sideNav is opened
+					onClose: function onClose(el) {} });
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var _props$usuarioEstado = this.props.usuarioEstado,
@@ -48551,51 +48693,129 @@
 
 				console.log(this.props.usuarioEstado);
 
+				var styles = {
+					logoIcon: {
+						color: '#2d4c50'
+					}
+				};
+
 				return _react2.default.createElement(
-					'div',
-					null,
+					'nav',
+					{ className: 'nav-extended #00b0ff light-blue accent-3' },
 					_react2.default.createElement(
-						'nav',
-						{ className: '#00b0ff light-blue accent-3' },
+						'div',
+						{ className: 'nav-wrapper' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'nav-wrapper container' },
+							{ className: 'container' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'row' },
+								{ className: 'row center-lg center-md center-sm center-xs' },
 								_react2.default.createElement(
 									'div',
-									{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-6' },
+									{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ className: 'brand-logo', to: '/' },
+										'USF'
+									),
 									_react2.default.createElement(
 										'a',
-										{ href: '/', className: 'brand-logo' },
-										'Logo'
+										{ ref: 'btnMovil', href: '#', 'data-activates': 'mobile-demo', className: 'button-collapse' },
+										_react2.default.createElement('span', { className: 'foteer__icon icon-menu' })
 									)
 								),
 								_react2.default.createElement(
 									'div',
-									{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-6' },
+									{ className: 'col-xs-12 col-sm-9 col-md-9 col-lg-9' },
 									_react2.default.createElement(
 										'ul',
-										{ id: 'nav-mobile', className: 'right hide-on-med-and-down ' },
+										{ id: 'nav-mobile', className: 'right hide-on-med-and-down' },
+										this.renderLinks(autenticado, datosToken)
+									),
+									_react2.default.createElement(
+										'ul',
+										{ className: 'side-nav', id: 'mobile-demo' },
 										this.renderLinks(autenticado, datosToken)
 									)
 								)
 							)
 						)
-					),
-					this.props.children
+					)
 				);
 			}
 		}]);
 
-		return App;
+		return Menu;
 	}(_react.Component);
 
-	exports.default = App;
+	exports.default = Menu;
 
 /***/ }),
-/* 557 */
+/* 560 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Header = __webpack_require__(561);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _Nosotros = __webpack_require__(563);
+
+	var _Nosotros2 = _interopRequireDefault(_Nosotros);
+
+	var _Footer = __webpack_require__(565);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HomePage = function (_Component) {
+		_inherits(HomePage, _Component);
+
+		function HomePage() {
+			_classCallCheck(this, HomePage);
+
+			return _possibleConstructorReturn(this, (HomePage.__proto__ || Object.getPrototypeOf(HomePage)).apply(this, arguments));
+		}
+
+		_createClass(HomePage, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_Header2.default, null),
+					_react2.default.createElement(_Nosotros2.default, null),
+					_react2.default.createElement(_Footer2.default, null)
+				);
+			}
+		}]);
+
+		return HomePage;
+	}(_react.Component);
+
+	exports.default = HomePage;
+
+/***/ }),
+/* 561 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48604,7 +48824,468 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(558);
+	var _Header = __webpack_require__(562);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Header2.default;
+
+/***/ }),
+/* 562 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Header = function (_Component) {
+		_inherits(Header, _Component);
+
+		function Header() {
+			_classCallCheck(this, Header);
+
+			return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+		}
+
+		_createClass(Header, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				// $('.carousel.carousel-slider').carousel({fullWidth: true});
+
+				$('.carousel.carousel-slider').carousel({ fullWidth: true });
+
+				autoplay();
+				function autoplay() {
+					$('.carousel.carousel-slider').carousel('next');
+					setTimeout(autoplay, 4500);
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var styles = {
+					headerContainer1: {
+						// backgroundColor:'#F43838',
+						background: 'url(https://dempsey-siders.com/wp-content/uploads/2014/08/dempseyPageHeaderHealth.jpg)',
+						backgroundSize: 'cover',
+						backgroundPosition: 'center',
+						backgroundRepeat: 'no-repeat',
+						height: '100%',
+						paddingTop: '80px',
+						width: 'auto'
+					},
+					headerContainer2: {
+						// backgroundColor:'#F43838',
+						background: 'url(http://localhost:8080/images/header.jpg)',
+						backgroundSize: 'cover',
+						backgroundPosition: 'center',
+						backgroundRepeat: 'no-repeat',
+						height: '100%',
+						paddingTop: '80px',
+						width: 'auto'
+					}
+				};
+
+				return _react2.default.createElement(
+					'div',
+					{ id: 'inicio', className: 'carousel carousel-slider center', 'data-indicators': 'true' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'carousel-item', href: '#one!' },
+						_react2.default.createElement(
+							'div',
+							{ style: styles.headerContainer1 },
+							_react2.default.createElement(
+								'h2',
+								null,
+								'First Panel'
+							),
+							_react2.default.createElement(
+								'p',
+								{ className: 'white-text' },
+								'This is your first panel'
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'carousel-item red white-text', href: '#two!' },
+						_react2.default.createElement(
+							'div',
+							{ style: styles.headerContainer2 },
+							_react2.default.createElement(
+								'h2',
+								null,
+								'Second Panel'
+							),
+							_react2.default.createElement(
+								'p',
+								{ className: 'white-text' },
+								'This is your second panel'
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Header;
+	}(_react.Component);
+
+	exports.default = Header;
+
+/***/ }),
+/* 563 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _Nosotros = __webpack_require__(564);
+
+	var _Nosotros2 = _interopRequireDefault(_Nosotros);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Nosotros2.default;
+
+/***/ }),
+/* 564 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Nosotros = function (_Component) {
+		_inherits(Nosotros, _Component);
+
+		function Nosotros() {
+			_classCallCheck(this, Nosotros);
+
+			return _possibleConstructorReturn(this, (Nosotros.__proto__ || Object.getPrototypeOf(Nosotros)).apply(this, arguments));
+		}
+
+		_createClass(Nosotros, [{
+			key: 'render',
+			value: function render() {
+
+				var coter = {
+					border: '1px solid red'
+				};
+
+				return _react2.default.createElement(
+					'div',
+					{ id: 'nosotros', className: 'container-fluid container-max' },
+					_react2.default.createElement(
+						'h2',
+						{ className: 'center' },
+						'Nosotros'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'row beetwen-lg around-md around-sm center-xs' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-xs-12 col-sm-5 col-md-5 col-lg-5 container' },
+							_react2.default.createElement(
+								'h5',
+								{ className: 'center' },
+								'Misi\xF3n'
+							),
+							_react2.default.createElement(
+								'p',
+								{ className: 'text-justify' },
+								'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-xs-12 col-sm-5 col-md-5 col-lg-5 container' },
+							_react2.default.createElement(
+								'h5',
+								{ className: 'center' },
+								'Visi\xF3n'
+							),
+							_react2.default.createElement(
+								'p',
+								{ className: 'text-justify' },
+								'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Nosotros;
+	}(_react.Component);
+
+	exports.default = Nosotros;
+
+/***/ }),
+/* 565 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _Footer = __webpack_require__(566);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Footer2.default;
+
+/***/ }),
+/* 566 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(224);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Footer = function (_Component) {
+		_inherits(Footer, _Component);
+
+		function Footer() {
+			_classCallCheck(this, Footer);
+
+			return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
+		}
+
+		_createClass(Footer, [{
+			key: 'render',
+			value: function render() {
+				var coter = {
+					border: '1px solid red'
+				};
+
+				return _react2.default.createElement(
+					'footer',
+					{ id: 'cantactanos', className: 'container-fluid container-max #03a9f4 light-blue' },
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'div',
+						{ className: 'row center-lg center-md center-sm center-xs' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-xs-12 col-sm-5 col-md-5 col-lg-2' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'logo-container' },
+								_react2.default.createElement('img', { src: 'http://localhost:8080/images/logo.jpg' })
+							),
+							_react2.default.createElement(
+								'h5',
+								{ className: 'center' },
+								'USF'
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'row middle-lg middle-md middle-sm center-xs' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-xs-12 col-sm-6 col-md-5 col-lg-3 container' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'foteer__container-icon-descripcion' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__icon' },
+									_react2.default.createElement('span', { className: 'foteer__icon icon-mail4' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__descripcion' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'foteer__descripcion' },
+										'usf@gmail.com'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'foteer__container-icon-descripcion' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__icon' },
+									_react2.default.createElement('span', { className: 'foteer__icon icon-facebook' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__descripcion' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'foteer__descripcion' },
+										'facebook/usf'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'foteer__container-icon-descripcion' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__icon' },
+									_react2.default.createElement('span', { className: 'foteer__icon icon-twitter' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__descripcion' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'foteer__descripcion' },
+										'twitter/usf'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'foteer__container-icon-descripcion' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__icon' },
+									_react2.default.createElement('span', { className: 'foteer__icon icon-phone' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'foteer__container__descripcion' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'foteer__descripcion' },
+										'071-111-876'
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-xs-12 col-sm-6 col-md-5 col-lg-3 container' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'row center-lg center-md center-sm center-xs' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-xs-4 col-sm-3 col-md-3 col-lg-3 container' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'footer__link center' },
+										'Home'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-xs-4 col-sm-3 col-md-3 col-lg-3 container' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'footer__link center' },
+										'Nosotros'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-xs-4 col-sm-3 col-md-3 col-lg-3 container' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'footer__link center' },
+										'Servicios'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-xs-4 col-sm-3 col-md-3 col-lg-3 container' },
+									_react2.default.createElement(
+										'p',
+										{ className: 'footer__link center' },
+										'Horarios'
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Footer;
+	}(_react.Component);
+
+	exports.default = Footer;
+
+/***/ }),
+/* 567 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _container = __webpack_require__(568);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -48613,7 +49294,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 558 */
+/* 568 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48624,7 +49305,7 @@
 
 	var _reactRedux = __webpack_require__(279);
 
-	var _DashBoard = __webpack_require__(559);
+	var _DashBoard = __webpack_require__(569);
 
 	var _DashBoard2 = _interopRequireDefault(_DashBoard);
 
@@ -48641,7 +49322,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_DashBoard2.default);
 
 /***/ }),
-/* 559 */
+/* 569 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48791,7 +49472,7 @@
 	exports.default = DashBoard;
 
 /***/ }),
-/* 560 */
+/* 570 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48806,7 +49487,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Registrar = __webpack_require__(561);
+	var _Registrar = __webpack_require__(571);
 
 	var _Registrar2 = _interopRequireDefault(_Registrar);
 
@@ -48840,7 +49521,7 @@
 	exports.default = RegistrarPage;
 
 /***/ }),
-/* 561 */
+/* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48849,7 +49530,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(562);
+	var _container = __webpack_require__(572);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -48858,7 +49539,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 562 */
+/* 572 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48873,7 +49554,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Registrar = __webpack_require__(563);
+	var _Registrar = __webpack_require__(573);
 
 	var _Registrar2 = _interopRequireDefault(_Registrar);
 
@@ -48936,7 +49617,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Registrar2.default));
 
 /***/ }),
-/* 563 */
+/* 573 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49065,7 +49746,7 @@
 					_react2.default.createElement('br', null),
 					_react2.default.createElement(
 						'div',
-						{ className: 'row center-lg' },
+						{ className: 'row center-lg center-md center-sm center-xs' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-4' },
@@ -49096,7 +49777,7 @@
 	exports.default = Registrar;
 
 /***/ }),
-/* 564 */
+/* 574 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49111,7 +49792,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Autenticar = __webpack_require__(565);
+	var _Autenticar = __webpack_require__(575);
 
 	var _Autenticar2 = _interopRequireDefault(_Autenticar);
 
@@ -49145,7 +49826,7 @@
 	exports.default = AutenticarPage;
 
 /***/ }),
-/* 565 */
+/* 575 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49154,7 +49835,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(566);
+	var _container = __webpack_require__(576);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -49163,7 +49844,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 566 */
+/* 576 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49178,7 +49859,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Autenticar = __webpack_require__(567);
+	var _Autenticar = __webpack_require__(577);
 
 	var _Autenticar2 = _interopRequireDefault(_Autenticar);
 
@@ -49223,7 +49904,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Autenticar2.default));
 
 /***/ }),
-/* 567 */
+/* 577 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49352,7 +50033,7 @@
 					_react2.default.createElement('br', null),
 					_react2.default.createElement(
 						'div',
-						{ className: 'row center-lg' },
+						{ className: 'row center-lg center-md center-sm center-xs' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-4' },
@@ -49381,7 +50062,7 @@
 	exports.default = Autenticar;
 
 /***/ }),
-/* 568 */
+/* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49396,7 +50077,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Listar = __webpack_require__(569);
+	var _Listar = __webpack_require__(579);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -49430,7 +50111,7 @@
 	exports.default = ListarPage;
 
 /***/ }),
-/* 569 */
+/* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49439,7 +50120,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(570);
+	var _container = __webpack_require__(580);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -49448,7 +50129,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 570 */
+/* 580 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49463,7 +50144,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Listar = __webpack_require__(571);
+	var _Listar = __webpack_require__(581);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -49501,7 +50182,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Listar2.default);
 
 /***/ }),
-/* 571 */
+/* 581 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49520,11 +50201,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Cargando = __webpack_require__(572);
+	var _Cargando = __webpack_require__(582);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
-	var _Filtro = __webpack_require__(574);
+	var _Filtro = __webpack_require__(584);
 
 	var _Filtro2 = _interopRequireDefault(_Filtro);
 
@@ -49720,7 +50401,7 @@
 	exports.default = Listar;
 
 /***/ }),
-/* 572 */
+/* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49729,7 +50410,7 @@
 	  value: true
 	});
 
-	var _Cargando = __webpack_require__(573);
+	var _Cargando = __webpack_require__(583);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
@@ -49738,7 +50419,7 @@
 	exports.default = _Cargando2.default;
 
 /***/ }),
-/* 573 */
+/* 583 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49832,7 +50513,7 @@
 	exports.default = Cargando;
 
 /***/ }),
-/* 574 */
+/* 584 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49841,7 +50522,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(575);
+	var _container = __webpack_require__(585);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -49850,7 +50531,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 575 */
+/* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49863,7 +50544,7 @@
 
 	var _actions = __webpack_require__(178);
 
-	var _Filtro = __webpack_require__(576);
+	var _Filtro = __webpack_require__(586);
 
 	var _Filtro2 = _interopRequireDefault(_Filtro);
 
@@ -49886,7 +50567,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Filtro2.default);
 
 /***/ }),
-/* 576 */
+/* 586 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49950,7 +50631,7 @@
 	exports.default = Filtro;
 
 /***/ }),
-/* 577 */
+/* 587 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49965,7 +50646,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Listar = __webpack_require__(578);
+	var _Listar = __webpack_require__(588);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -49999,7 +50680,7 @@
 	exports.default = ListarRolesPage;
 
 /***/ }),
-/* 578 */
+/* 588 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50008,7 +50689,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(579);
+	var _container = __webpack_require__(589);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -50017,7 +50698,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 579 */
+/* 589 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50028,9 +50709,9 @@
 
 	var _reactRedux = __webpack_require__(279);
 
-	var _actions = __webpack_require__(580);
+	var _actions = __webpack_require__(590);
 
-	var _Listar = __webpack_require__(581);
+	var _Listar = __webpack_require__(591);
 
 	var _Listar2 = _interopRequireDefault(_Listar);
 
@@ -50067,7 +50748,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Listar2.default);
 
 /***/ }),
-/* 580 */
+/* 590 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50229,7 +50910,7 @@
 	}
 
 /***/ }),
-/* 581 */
+/* 591 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50244,19 +50925,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Cargando = __webpack_require__(572);
+	var _Cargando = __webpack_require__(582);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
-	var _MensajeOerror = __webpack_require__(582);
+	var _MensajeOerror = __webpack_require__(592);
 
 	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
-	var _Formulario = __webpack_require__(584);
+	var _Formulario = __webpack_require__(594);
 
 	var _Formulario2 = _interopRequireDefault(_Formulario);
 
-	var _Mostrar = __webpack_require__(603);
+	var _Mostrar = __webpack_require__(613);
 
 	var _Mostrar2 = _interopRequireDefault(_Mostrar);
 
@@ -50443,7 +51124,7 @@
 	exports.default = Listar;
 
 /***/ }),
-/* 582 */
+/* 592 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50452,7 +51133,7 @@
 	  value: true
 	});
 
-	var _MensajeOerror = __webpack_require__(583);
+	var _MensajeOerror = __webpack_require__(593);
 
 	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
@@ -50461,7 +51142,7 @@
 	exports.default = _MensajeOerror2.default;
 
 /***/ }),
-/* 583 */
+/* 593 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50549,7 +51230,7 @@
 	exports.default = MensajeOerror;
 
 /***/ }),
-/* 584 */
+/* 594 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50558,7 +51239,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(585);
+	var _container = __webpack_require__(595);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -50567,7 +51248,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 585 */
+/* 595 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50580,9 +51261,9 @@
 
 	var _reduxForm = __webpack_require__(321);
 
-	var _actions = __webpack_require__(580);
+	var _actions = __webpack_require__(590);
 
-	var _Formulario = __webpack_require__(586);
+	var _Formulario = __webpack_require__(596);
 
 	var _Formulario2 = _interopRequireDefault(_Formulario);
 
@@ -50631,7 +51312,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(form(_Formulario2.default));
 
 /***/ }),
-/* 586 */
+/* 596 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50650,15 +51331,15 @@
 
 	var _reduxForm = __webpack_require__(321);
 
-	var _reactModal = __webpack_require__(587);
+	var _reactModal = __webpack_require__(597);
 
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 
-	var _Cargando = __webpack_require__(572);
+	var _Cargando = __webpack_require__(582);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
-	var _MensajeOerror = __webpack_require__(582);
+	var _MensajeOerror = __webpack_require__(592);
 
 	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
@@ -50829,7 +51510,7 @@
 	exports.default = Formulario;
 
 /***/ }),
-/* 587 */
+/* 597 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50838,7 +51519,7 @@
 	  value: true
 	});
 
-	var _Modal = __webpack_require__(588);
+	var _Modal = __webpack_require__(598);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -50847,7 +51528,7 @@
 	exports.default = _Modal2.default;
 
 /***/ }),
-/* 588 */
+/* 598 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -50869,19 +51550,19 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _propTypes = __webpack_require__(589);
+	var _propTypes = __webpack_require__(599);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _ModalPortal = __webpack_require__(594);
+	var _ModalPortal = __webpack_require__(604);
 
 	var _ModalPortal2 = _interopRequireDefault(_ModalPortal);
 
-	var _ariaAppHider = __webpack_require__(598);
+	var _ariaAppHider = __webpack_require__(608);
 
 	var ariaAppHider = _interopRequireWildcard(_ariaAppHider);
 
-	var _safeHTMLElement = __webpack_require__(601);
+	var _safeHTMLElement = __webpack_require__(611);
 
 	var _safeHTMLElement2 = _interopRequireDefault(_safeHTMLElement);
 
@@ -51071,7 +51752,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 589 */
+/* 599 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -51098,17 +51779,17 @@
 	  // By explicitly using `prop-types` you are opting into new development behavior.
 	  // http://fb.me/prop-types-in-prod
 	  var throwOnDirectAccess = true;
-	  module.exports = __webpack_require__(590)(isValidElement, throwOnDirectAccess);
+	  module.exports = __webpack_require__(600)(isValidElement, throwOnDirectAccess);
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(593)();
+	  module.exports = __webpack_require__(603)();
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 590 */
+/* 600 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -51126,8 +51807,8 @@
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
 
-	var ReactPropTypesSecret = __webpack_require__(591);
-	var checkPropTypes = __webpack_require__(592);
+	var ReactPropTypesSecret = __webpack_require__(601);
+	var checkPropTypes = __webpack_require__(602);
 
 	module.exports = function(isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
@@ -51627,7 +52308,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 591 */
+/* 601 */
 /***/ (function(module, exports) {
 
 	/**
@@ -51647,7 +52328,7 @@
 
 
 /***/ }),
-/* 592 */
+/* 602 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -51664,7 +52345,7 @@
 	if (process.env.NODE_ENV !== 'production') {
 	  var invariant = __webpack_require__(8);
 	  var warning = __webpack_require__(11);
-	  var ReactPropTypesSecret = __webpack_require__(591);
+	  var ReactPropTypesSecret = __webpack_require__(601);
 	  var loggedTypeFailures = {};
 	}
 
@@ -51715,7 +52396,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 593 */
+/* 603 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -51731,7 +52412,7 @@
 
 	var emptyFunction = __webpack_require__(12);
 	var invariant = __webpack_require__(8);
-	var ReactPropTypesSecret = __webpack_require__(591);
+	var ReactPropTypesSecret = __webpack_require__(601);
 
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -51780,7 +52461,7 @@
 
 
 /***/ }),
-/* 594 */
+/* 604 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -51799,29 +52480,29 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(589);
+	var _propTypes = __webpack_require__(599);
 
-	var _focusManager = __webpack_require__(595);
+	var _focusManager = __webpack_require__(605);
 
 	var focusManager = _interopRequireWildcard(_focusManager);
 
-	var _scopeTab = __webpack_require__(597);
+	var _scopeTab = __webpack_require__(607);
 
 	var _scopeTab2 = _interopRequireDefault(_scopeTab);
 
-	var _ariaAppHider = __webpack_require__(598);
+	var _ariaAppHider = __webpack_require__(608);
 
 	var ariaAppHider = _interopRequireWildcard(_ariaAppHider);
 
-	var _refCount = __webpack_require__(599);
+	var _refCount = __webpack_require__(609);
 
 	var refCount = _interopRequireWildcard(_refCount);
 
-	var _bodyClassList = __webpack_require__(600);
+	var _bodyClassList = __webpack_require__(610);
 
 	var bodyClassList = _interopRequireWildcard(_bodyClassList);
 
-	var _safeHTMLElement = __webpack_require__(601);
+	var _safeHTMLElement = __webpack_require__(611);
 
 	var _safeHTMLElement2 = _interopRequireDefault(_safeHTMLElement);
 
@@ -52139,7 +52820,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 595 */
+/* 605 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52154,7 +52835,7 @@
 	exports.setupScopedFocus = setupScopedFocus;
 	exports.teardownScopedFocus = teardownScopedFocus;
 
-	var _tabbable = __webpack_require__(596);
+	var _tabbable = __webpack_require__(606);
 
 	var _tabbable2 = _interopRequireDefault(_tabbable);
 
@@ -52231,7 +52912,7 @@
 	}
 
 /***/ }),
-/* 596 */
+/* 606 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -52286,7 +52967,7 @@
 	}
 
 /***/ }),
-/* 597 */
+/* 607 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52296,7 +52977,7 @@
 	});
 	exports.default = scopeTab;
 
-	var _tabbable = __webpack_require__(596);
+	var _tabbable = __webpack_require__(606);
 
 	var _tabbable2 = _interopRequireDefault(_tabbable);
 
@@ -52319,7 +53000,7 @@
 	}
 
 /***/ }),
-/* 598 */
+/* 608 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -52388,7 +53069,7 @@
 	}
 
 /***/ }),
-/* 599 */
+/* 609 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -52429,7 +53110,7 @@
 	}
 
 /***/ }),
-/* 600 */
+/* 610 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52440,7 +53121,7 @@
 	exports.add = add;
 	exports.remove = remove;
 
-	var _refCount = __webpack_require__(599);
+	var _refCount = __webpack_require__(609);
 
 	var refCount = _interopRequireWildcard(_refCount);
 
@@ -52465,7 +53146,7 @@
 	}
 
 /***/ }),
-/* 601 */
+/* 611 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52474,7 +53155,7 @@
 	  value: true
 	});
 
-	var _exenv = __webpack_require__(602);
+	var _exenv = __webpack_require__(612);
 
 	var _exenv2 = _interopRequireDefault(_exenv);
 
@@ -52487,7 +53168,7 @@
 	exports.default = SafeHTMLElement;
 
 /***/ }),
-/* 602 */
+/* 612 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -52532,7 +53213,7 @@
 
 
 /***/ }),
-/* 603 */
+/* 613 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52541,7 +53222,7 @@
 	  value: true
 	});
 
-	var _container = __webpack_require__(604);
+	var _container = __webpack_require__(614);
 
 	var _container2 = _interopRequireDefault(_container);
 
@@ -52550,7 +53231,7 @@
 	exports.default = _container2.default;
 
 /***/ }),
-/* 604 */
+/* 614 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52561,9 +53242,9 @@
 
 	var _reactRedux = __webpack_require__(279);
 
-	var _actions = __webpack_require__(580);
+	var _actions = __webpack_require__(590);
 
-	var _Mostrar = __webpack_require__(605);
+	var _Mostrar = __webpack_require__(615);
 
 	var _Mostrar2 = _interopRequireDefault(_Mostrar);
 
@@ -52586,7 +53267,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Mostrar2.default);
 
 /***/ }),
-/* 605 */
+/* 615 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52601,15 +53282,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactModal = __webpack_require__(587);
+	var _reactModal = __webpack_require__(597);
 
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 
-	var _MensajeOerror = __webpack_require__(582);
+	var _MensajeOerror = __webpack_require__(592);
 
 	var _MensajeOerror2 = _interopRequireDefault(_MensajeOerror);
 
-	var _Cargando = __webpack_require__(572);
+	var _Cargando = __webpack_require__(582);
 
 	var _Cargando2 = _interopRequireDefault(_Cargando);
 
