@@ -50,7 +50,7 @@ class Autenticar extends Component {
 		console.log(this.props.autenticacion)
 		return <div className='container'>
 			<br/>
-			<div className='row center-lg'>
+			<div className='row center-lg center-md center-sm center-xs'>
 				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
 				{ this.renderCargando(cargando) }
 				{ this.renderError(error) }
