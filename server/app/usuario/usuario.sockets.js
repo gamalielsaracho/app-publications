@@ -16,7 +16,7 @@ export default (socket, io) => {
 			}
 
 			// console.log(usuarios)
-			
+				
 			io.sockets.emit('listar_usuarios', { usuarios: usuarios })
 		})
 	}
