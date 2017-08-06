@@ -45,7 +45,7 @@ class Listar extends Component {
 				roles.map((rol) => {
 					return <tr key={rol.id_rol}>
 			            <td className='center'>{ rol.id_rol }</td>
-			            <td className='center'>{ rol.nombre }</td>
+			            <td className='center'>{ rol.descripcion }</td>
 			            <td className='center'>
 			            	<a onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="#0288d1 light-blue darken-2 btn">
 			            		Mostrar
