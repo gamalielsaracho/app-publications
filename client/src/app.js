@@ -18,20 +18,12 @@ const store = createStoreWithMiddleware(reducers)
 const token = localStorage.getItem('token')
 console.log(token)
 
-
 if(token) {
 	store.dispatch(verificarTokenUsuario(token))
 	console.log("hola de el punto de entrada.")
 }else {
 	console.log("no hay token..")
 }
-
-// import { socket } from '././globalActions'
-
-// socket.on('listar_usuarios', function(data) {
-    		
-//     console.log(data)
-// })
 
 import routes from './routes'
 
