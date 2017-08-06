@@ -41,7 +41,7 @@ class Mostrar extends Component {
 			//     // backgroundColor: 'rgba(255, 255, 255, 0.75)'
 			// },
 		    content : {
-			    top: '51%',
+			    top: '39%',
 			    left: '50%',
 			    right: 'auto',
 			    bottom: 'auto',
@@ -81,6 +81,9 @@ class Mostrar extends Component {
 							<MensajeOerror error={error} mensaje={null}/>
 
 							{ this.renderRol(rol) }
+						</div>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+							
 						</div>
 					</div>
 				</div>
