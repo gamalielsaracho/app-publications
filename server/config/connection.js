@@ -6,7 +6,7 @@ var dataBase = {
 	host: '127.0.0.1',
 	user: 'root',
 	password: '',
-	database: 'mercado'
+	database: 'usf'
 }
 
 export default mysql.createConnection(dataBase, function(err, connection) {
