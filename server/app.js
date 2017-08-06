@@ -10,11 +10,14 @@ app.get('/', (req, res) => {
 	res.sendfile('index.html')
 })
 
+
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
 	
-	require('././app/usuario/usuario.sockets')(socket, io)
+	require('././app/personal/personal.sockets')(socket, io)
 	require('././app/rol/rol.sockets')(socket, io)
+	require('././app/especialidad/especialidad.sockets')(socket, io)
+	require('././app/ciudad/ciudad.sockets')(socket, io)
 
 	socket.on('disconnect', function () {
 		console.log('El usuario se Desconecto.')
