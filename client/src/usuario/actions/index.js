@@ -30,21 +30,23 @@ import {
 
 // import {API_URL} from '../../globalActions'
 
-import { socket } from '../../globalActions'
+// import { socket } from '../../globalActions'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
 // import axios from 'axios'
 
+var socketUsuario = io('http://localhost:3000')
 
 export function registrarUsuario(datosFormulario) {
 
 	return (dispatch) => {
 		dispatch({ type: REGISTRAR_USUARIO_REQUEST })
 
-		socket.emit('registrar_usuario', datosFormulario)
+		socketUsuario.emit('registrar_usuario', datosFormulario)
 
-		socket.on('registrar_usuario', (data) => {
+		socketUsuario.on('registrar_usuario', (data) => {
 			if(data.error) {
 				dispatch({ type: REGISTRAR_USUARIO_FALLO, payload: data.error })
 			} else {
@@ -60,9 +62,9 @@ export function autenticarUsuario(datosFormulario) {
 	return (dispatch) => {
 		dispatch({ type: AUTENTICAR_USUARIO_REQUEST })
 
-		socket.emit('autenticar_usuario', datosFormulario)
+		socketUsuario.emit('autenticar_usuario', datosFormulario)
 
-		socket.on('autenticar_usuario', (data) => {
+		socketUsuario.on('autenticar_usuario', (data) => {
 			if(data.error) {
 				dispatch({ type: AUTENTICAR_USUARIO_FALLO, payload: data.error })
 			} else {
@@ -86,8 +88,8 @@ export function verificarTokenUsuario(token) {
 	return (dispatch) => {
 		dispatch({ type: VERIFICAR_TOKEN_USUARIO_REQUEST })
 
-		socket.emit('verificar_token', { token: token })
-		socket.on('verificar_token', (data) => {
+		socketUsuario.emit('verificar_token', { token: token })
+		socketUsuario.on('verificar_token', (data) => {
 			if(data.error) {
 				dispatch({ type: VERIFICAR_TOKEN_USUARIO_FALLO, payload: data.error })
 			} else {
@@ -113,9 +115,10 @@ export function listarUsuarios() {
 
 		dispatch({ type: LISTAR_USUARIOS_REQUEST })
 
-		var socket = io('http://localhost:3000')
+		var socketUsuario = io.connect('http://localhost:3000')
 
-		socket.on('listar_usuarios', function(data) {
+
+		socketUsuario.on('listar_usuarios', function(data) {
 			if(data.error) {
 				dispatch({ type: LISTAR_USUARIOS_FALLO, payload: data.error })
 			} else {	
