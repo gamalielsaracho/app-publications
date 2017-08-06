@@ -13,7 +13,7 @@ exports.find = (callback) => {
 }
 
 exports.update = (data, callback) => {
-	return connection.query('update roles set nombre = ? where id_rol = ?', [data.nombre, data.id_rol], callback)
+	return connection.query('update roles set descripcion = ? where id_rol = ?', [data.nombre, data.id_rol], callback)
 
 	connection.end()
 }
