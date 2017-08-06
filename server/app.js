@@ -11,35 +11,15 @@ app.get('/', (req, res) => {
 })
 
 io.on('connection', function (socket) {
-	console.log('Un usuario Conectado.')
-
-	socket.usuario = 'Rie'
-
-	// Primero tiene que pasar por acá, y verificar el token.
-	// socket.on('verificar_token', (data) => {
-		
-		// console.log(data)
-
-		// socket.tokenUsuario = data.token
-
-		require('././app/usuario/usuario.sockets')(socket, io)
-		require('././app/rol/rol.sockets')(socket, io)
-	// })
-
-
-	// todos los sockets por cada modulo.
-	// algo(socket, io)
-	// if(usuario == 'Toro') {
-	// } else {
-		// console.log('No puedes ver esto.')
-	// }
+	console.log('Un usuario Conectado INICIO.!')
+	
+	require('././app/usuario/usuario.sockets')(socket, io)
+	require('././app/rol/rol.sockets')(socket, io)
 
 	socket.on('disconnect', function () {
 		console.log('El usuario se Desconecto.')
 	})
 })
-
-
 
 server.listen(3000, (err) => {
 	if(err) {
