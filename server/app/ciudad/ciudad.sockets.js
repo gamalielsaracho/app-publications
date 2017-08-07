@@ -1,18 +1,13 @@
 import Ciudad from './ciudad.model'
 
-import Query from '../queries'
-
-const table = 'ciudades'
-const fieldId = 'id_ciudad'
-
 export default (socket, io) => {
 	
 		function ciudades() {
-			Query.find(table, (err, ciudades) => {
+			Ciudad.find((err, ciudades) => {
 				if(err) {
 					console.log(err)
 				
-					socket.emit('listar_ciudades', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
+					socket.emit('listar_ciudades', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 					return
 				}
 
@@ -26,7 +21,7 @@ export default (socket, io) => {
 		socket.on('crear_ciudad', function(data) {
 			Ciudad.create(data, (err, ciudad) => {
 				if(err) {
-					socket.emit('crear_ciudad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('crear_ciudad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
@@ -38,9 +33,9 @@ export default (socket, io) => {
 
 
 		socket.on('mostrar_ciudad', (data) => {
-			Query.findById(table, fieldId, data.id_ciudad, (err, ciudad) => {
+			Ciudad.findById(data.id_ciudad, (err, ciudad) => {
 				if(err) {
-					socket.emit('mostrar_ciudad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('mostrar_ciudad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
@@ -50,9 +45,9 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_ciudad', (data) => {
-			Query.delete(table, fieldId, data.id_ciudad, (err) => {
+			Ciudad.delete(data.id_ciudad, (err) => {
 				if(err) {
-					socket.emit('eliminar_ciudad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('eliminar_ciudad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
@@ -66,7 +61,7 @@ export default (socket, io) => {
 		socket.on('editar_ciudad', (data) => {
 			Ciudad.update(data, (err) => {
 				if(err) {
-					socket.emit('editar_ciudad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('editar_ciudad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
