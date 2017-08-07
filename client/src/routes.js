@@ -17,6 +17,11 @@ import ListarPage from '././usuario/pages/ListarPage'
 // ROL.
 import ListarRolesPage from '././rol/pages/ListarRolesPage'
 
+// ESPECIALIDAD.
+import ListarEspecialidadesPage from '././especialidades/pages/ListarEspecialidadesPage'
+
+// CIUDADES.
+import ListarCiudadesPage from '././ciudad/pages/ListarCiudadesPage'
 
 export default (
 	<Route path='/' component={AppContainer}>
@@ -27,5 +32,8 @@ export default (
 		<Route path='/dashboard' component={DashBoardContainer}>
 			<Route path='/usuarios' component={ListarPage}/>
 			<Route path='/roles' component={ListarRolesPage}/>
+			<Route path='/especialidades' component={ListarEspecialidadesPage}/>
+			<Route path='/ciudades' component={ListarCiudadesPage}/>
+			
 		</Route>
 	</Route>)
