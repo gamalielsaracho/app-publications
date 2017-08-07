@@ -109,6 +109,7 @@ export function crearRol(datosFormulario) {
 
 export function eliminarRole(idRol) {
 	return (dispatch) => {
+		// alert(idRol)
 
 		dispatch({ type: ELIMINAR_ROL_REQUEST })
 
@@ -117,7 +118,7 @@ export function eliminarRole(idRol) {
 		socket.emit('eliminar_rol', { id_rol: idRol })
 
 		socket.on('eliminar_rol', (data) => {
-
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: ELIMINAR_ROL_FALLO, payload: data.error })
 			} else {
@@ -155,8 +156,6 @@ export function cerrarModalMostrarRol() {
 export function editarRol(datosFormulario) {
 	return (dispatch) => {
 
-		// console.log('los datos son...')
-		// console.log(datosFormulario)
 		dispatch({ type: EDITAR_ROL_REQUEST })
 
 		socket.emit('editar_rol', datosFormulario)

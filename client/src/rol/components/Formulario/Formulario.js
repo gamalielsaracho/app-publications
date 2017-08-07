@@ -9,6 +9,7 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
     <div>
+      <label>{ label }</label>
       <input {...input} placeholder={label} type={type}/>
       { touched && ((error && <span>{error}</span>)) }
     </div>
@@ -104,7 +105,7 @@ class Formulario extends Component {
 					{ this.renderCargando(cargando) }
 
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>
-						<Field name='nombre' type='text' component={renderField} label='Nombre'/>
+						<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 												
 						<button className='#0288d1 light-blue darken-2 btn' type="submit" disabled={submitting}>Guardar</button>
 						<button style={styles.btn} onClick={ this.props.cerrarFormularioRol } className='#0288d1 light-blue darken-2 btn'>Cancelar</button>
