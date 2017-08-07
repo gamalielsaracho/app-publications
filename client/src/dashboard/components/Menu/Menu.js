@@ -52,6 +52,28 @@ class Menu extends Component {
 							</div>
 						</div>
 
+						<div className='col-xs-6 col-sm-6 col-md-12 col-lg-12'>
+							<div className='row around-lg around-md around-sm around-xs'>
+								<div className='col-xs-6 col-sm-7 col-md-9 col-lg-9'>
+									<Link style={styles.btnText} to='/especialidades'>Especialidades</Link>
+								</div>
+								<div className='col-xs-6 col-sm-2 col-md-2 col-lg-2'>
+									<i className="sm material-icons">insert_chart</i>
+								</div>
+							</div>
+						</div>
+
+						<div className='col-xs-6 col-sm-6 col-md-12 col-lg-12'>
+							<div className='row around-lg around-md around-sm around-xs'>
+								<div className='col-xs-6 col-sm-7 col-md-9 col-lg-9'>
+									<Link style={styles.btnText} to='/ciudades'>Ciudades</Link>
+								</div>
+								<div className='col-xs-6 col-sm-2 col-md-2 col-lg-2'>
+									<i className="sm material-icons">insert_chart</i>
+								</div>
+							</div>
+						</div>
+
 
 					</ul>
 				</div>
