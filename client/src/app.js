@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import {
-	verificarTokenUsuario
+	verificarTokenPersonal
 } from '././usuario/actions'
 
 import { Provider } from 'react-redux'
@@ -19,7 +19,7 @@ const token = localStorage.getItem('token')
 console.log(token)
 
 if(token) {
-	store.dispatch(verificarTokenUsuario(token))
+	store.dispatch(verificarTokenPersonal(token))
 	console.log("hola de el punto de entrada.")
 }else {
 	console.log("no hay token..")
