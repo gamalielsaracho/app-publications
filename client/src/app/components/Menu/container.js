@@ -3,20 +3,20 @@ import { connect } from 'react-redux'
 import Menu from './Menu'
 
 import {
-	salirUsuario
+	salirPersonal
 } from '../../../usuario/actions'
 
 
 function mapStateToProps(state) {
 	return {
-		usuarioEstado: state.usuario.usuarioEstado
+		usuarioEstado: state.personal.usuarioEstado
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		salirUsuario: () => {
-			dispatch(salirUsuario())
+		salirPersonal: () => {
+			dispatch(salirPersonal())
 		}
 	}
 }

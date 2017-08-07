@@ -3,24 +3,24 @@ import { connect } from 'react-redux'
 import App from './App'
 
 import {
-	verificarTokenUsuario,
-	salirUsuario
+	verificarTokenPersonal,
+	salirPersonal
 } from '../../../usuario/actions'
 
 
 function mapStateToProps(state) {
 	return {
-		usuarioEstado: state.usuario.usuarioEstado
+		usuarioEstado: state.personal.usuarioEstado
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		verificarTokenUsuario: (token) => {
-			dispatch(verificarTokenUsuario(token))
+		verificarTokenPersonal: (token) => {
+			dispatch(verificarTokenPersonal(token))
 		},
-		salirUsuario: () => {
-			dispatch(salirUsuario())
+		salirPersonal: () => {
+			dispatch(salirPersonal())
 		}
 	}
 }
