@@ -1,18 +1,13 @@
 import Especialidad from './especialidad.model'
 
-import Query from '../queries'
-
-const table = 'especialidades'
-const fieldId = 'id_especialidad'
-
 export default (socket, io) => {
 	
 		function especialidades() {
-			Query.find(table, (err, especialidades) => {
+			Especialidad.find((err, especialidades) => {
 				if(err) {
 					console.log(err)
 				
-					socket.emit('listar_especialidades', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
+					socket.emit('listar_especialidades', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 					return
 				}
 
@@ -26,7 +21,7 @@ export default (socket, io) => {
 		socket.on('crear_especialidad', function(data) {
 			Especialidad.create(data, (err, especialidad) => {
 				if(err) {
-					socket.emit('crear_especialidad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('crear_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
@@ -38,9 +33,9 @@ export default (socket, io) => {
 
 
 		socket.on('mostrar_especialidad', (data) => {
-			Query.findById(table, fieldId, data.id_especialidad, (err, especialidad) => {
+			Especialidad.findById(data.id_especialidad, (err, especialidad) => {
 				if(err) {
-					socket.emit('mostrar_especialidad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('mostrar_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
@@ -50,9 +45,11 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_especialidad', (data) => {
-			Query.delete(table, fieldId, data.id_especialidad, (err) => {
+			console.log("EL ID ES: "+data.id_especialidad)
+
+			Especialidad.delete(data.id_especialidad, (err) => {
 				if(err) {
-					socket.emit('eliminar_especialidad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('eliminar_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
@@ -64,9 +61,10 @@ export default (socket, io) => {
 
 
 		socket.on('editar_especialidad', (data) => {
+
 			Especialidad.update(data, (err) => {
 				if(err) {
-					socket.emit('editar_especialidad', { error: 'Ocurrió un error, intente nuevamente' })
+					socket.emit('editar_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
