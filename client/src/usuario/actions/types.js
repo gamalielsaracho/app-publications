@@ -6,27 +6,27 @@
 // RESET_REGISTER_FORM = 'reset_register_form'
 	
 	// Registro de usuario.
-export const REGISTRAR_USUARIO_REQUEST = 'registrar_usuario_request'
-export const REGISTRAR_USUARIO_EXITO = 'registrar_usuario_exito'
-export const REGISTRAR_USUARIO_FALLO = 'registrar_usuario_fallo'
+export const REGISTRAR_PERSONAL_REQUEST = 'registrar_personal_request'
+export const REGISTRAR_PERSONAL_EXITO = 'registrar_personal_exito'
+export const REGISTRAR_PERSONAL_FALLO = 'registrar_personal_fallo'
 
 	// Autenticación de usuario.
-export const AUTENTICAR_USUARIO_REQUEST = 'autenticar_usuario_request'
-export const AUTENTICAR_USUARIO_EXITO = 'autenticar_usuario_exito'
-export const AUTENTICAR_USUARIO_FALLO = 'autenticar_usuario_fallo'
+export const AUTENTICAR_PERSONAL_REQUEST = 'autenticar_personal_request'
+export const AUTENTICAR_PERSONAL_EXITO = 'autenticar_personal_exito'
+export const AUTENTICAR_PERSONAL_FALLO = 'autenticar_personal_fallo'
 
 	// Obtiene los datos del usuario desde el servidor.
-export const VERIFICAR_TOKEN_USUARIO_REQUEST = 'verificar_token_usuario_request'
-export const VERIFICAR_TOKEN_USUARIO_EXITO = 'verificar_token_usuario_exito'
-export const VERIFICAR_TOKEN_USUARIO_FALLO = 'verificar_token_usuario_fallo'
+export const VERIFICAR_TOKEN_PERSONAL_REQUEST = 'verificar_token_personal_request'
+export const VERIFICAR_TOKEN_PERSONAL_EXITO = 'verificar_token_personal_exito'
+export const VERIFICAR_TOKEN_PERSONAL_FALLO = 'verificar_token_personal_fallo'
 
 	// Para cuando el usuario cierra sesión.
-export const SALIR_USUARIO = 'salir_usuario'
+export const SALIR_PERSONAL = 'salir_personal'
 
 	// Listar todos los usuarios registrados.
-export const LISTAR_USUARIOS_REQUEST = 'listar_usuarios_request'
-export const LISTAR_USUARIOS_EXITO = 'listar_usuarios_exito'
-export const LISTAR_USUARIOS_FALLO = 'listar_usuarios_fallo'
+export const LISTAR_PERSONALES_REQUEST = 'listar_personales_request'
+export const LISTAR_PERSONALES_EXITO = 'listar_personales_exito'
+export const LISTAR_PERSONALES_FALLO = 'listar_personales_fallo'
 
 	// Actualizar la popiedad value de los inputs para filtrar usuarios.
 export const ACTUALIZAR_FORMULARIO_FILTRO = 'actualizar_formulario_filtro'

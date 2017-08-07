@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import { 
-	listarUsuarios,
+	listarPersonales,
 	actualizarFormularioFiltro
 } from '../../actions'
 
@@ -11,32 +11,32 @@ import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		listar: state.usuario.listar,
-		filtro: state.usuario.filtro
+		listar: state.personal.listar,
+		filtro: state.personal.filtro
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarUsuarios: () => {
-			dispatch(listarUsuarios())
+		listarPersonales: () => {
+			dispatch(listarPersonales())
 		},
 		actualizarFormularioFiltro: (valores) => {
 			dispatch(actualizarFormularioFiltro(valores))
 		},
-		filtrarUsuarios: (usuarios, valores) => {
+		filtrarPersonales: (personales, valores) => {
 			console.log("el apellido es: "+valores.apellido)
 			
-			usuarios = usuarios.filter((u) => {
+			personales = personales.filter((u) => {
 				return u.apellido.toLowerCase().match(valores.apellido) &&
 					u.nombre.toLowerCase().match(valores.nombre) &&
 					u.correo.toLowerCase().match(valores.correo)
 			})
 
-			// console.log(usuarios)
+			// console.log(personales)
 
-			return usuarios
+			return personales
 		}
 	}
 }

@@ -8,12 +8,12 @@ import FiltroContainer from '../Filtro'
 class Listar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderUsuarios = this.renderUsuarios.bind(this)
+		this.renderPersonales = this.renderPersonales.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 	}
 
 	componentWillMount() {
-		this.props.listarUsuarios()
+		this.props.listarPersonales()
 	}
 
 	handleChange(e) {
@@ -25,12 +25,8 @@ class Listar extends Component {
 
 		this.props.actualizarFormularioFiltro(valoresInputActualizando)
 	}
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	// console.log(nextState)
-	// 	return nextState.usuarios.length !== this.props.usuarios.length 
-	// }
 
-	renderUsuarios(usuarios) {
+	renderPersonales(personales) {
 		let style = {
 			btn: {
 				"marginLeft":"10px"
@@ -49,16 +45,16 @@ class Listar extends Component {
 
 
 		if(con.nombre.length > 0 || con.apellido.length > 0 || con.correo.length > 0){
-			usuarios = this.props.filtrarUsuarios(usuarios, con)
+			personales = this.props.filtrarPersonales(personales, con)
 		}
 
 		return <tbody>
 				{
-				  usuarios.map((usuario) => {
-					return <tr key={usuario.id}>
-			            <td className='center'>{ usuario.nombre }</td>
-			            <td className='center'>{ usuario.apellido }</td>
-			            <td className='center'>{ usuario.correo }</td>
+				  personales.map((personal) => {
+					return <tr key={personal.id_personal}>
+			            <td className='center'>{ personal.nombre }</td>
+			            <td className='center'>{ personal.apellido }</td>
+			            <td className='center'>{ personal.correo }</td>
 			            <td className='center'>
 			            	<a className="#e53935 red darken-1 btn">Editar</a>
 			            	<a style={style.btn} className="#0288d1 light-blue darken-2 btn">Eliminar</a>
@@ -72,7 +68,7 @@ class Listar extends Component {
 
 	render() { 
 
-		const { usuarios, cargando, error } = this.props.listar
+		const { personales, cargando, error } = this.props.listar
 		let filtro = this.props.filtro
 
 		console.log(this.props.listar)
@@ -110,7 +106,7 @@ class Listar extends Component {
 			          </tr>
 			        </thead>
 
-					{ this.renderUsuarios(usuarios) }
+					{ this.renderPersonales(personales) }
 
 				</table>
 				

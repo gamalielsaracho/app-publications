@@ -1,21 +1,21 @@
 import {
-	REGISTRAR_USUARIO_REQUEST,
-	REGISTRAR_USUARIO_EXITO,
-	REGISTRAR_USUARIO_FALLO,
+	REGISTRAR_PERSONAL_REQUEST,
+	REGISTRAR_PERSONAL_EXITO,
+	REGISTRAR_PERSONAL_FALLO,
 
-	AUTENTICAR_USUARIO_REQUEST,
-	AUTENTICAR_USUARIO_EXITO,
-	AUTENTICAR_USUARIO_FALLO,
+	AUTENTICAR_PERSONAL_REQUEST,
+	AUTENTICAR_PERSONAL_EXITO,
+	AUTENTICAR_PERSONAL_FALLO,
 
-	VERIFICAR_TOKEN_USUARIO_REQUEST,
-	VERIFICAR_TOKEN_USUARIO_EXITO,
-	VERIFICAR_TOKEN_USUARIO_FALLO,
+	VERIFICAR_TOKEN_PERSONAL_REQUEST,
+	VERIFICAR_TOKEN_PERSONAL_EXITO,
+	VERIFICAR_TOKEN_PERSONAL_FALLO,
 
-	SALIR_USUARIO,
+	SALIR_PERSONAL,
 
-	LISTAR_USUARIOS_REQUEST,
-	LISTAR_USUARIOS_EXITO,
-	LISTAR_USUARIOS_FALLO,
+	LISTAR_PERSONALES_REQUEST,
+	LISTAR_PERSONALES_EXITO,
+	LISTAR_PERSONALES_FALLO,
 
 	ACTUALIZAR_FORMULARIO_FILTRO
 
@@ -25,10 +25,10 @@ const INITIAL_STATE = {
 	filtro: { 
 		nombre: '', apellido: '', correo: ''  
 	},
-	listar: { usuarios:[], cargando: false, error: '' },
+	listar: { personales:[], cargando: false, error: '' },
 	registro:{ mensaje:'', error:'', cargando:false },
 	autenticacion: { mensaje: '', error: '', cargando: false },
-	mostrar: { mensaje:'', error:'', cargando:false, usuario: {} },
+	mostrar: { mensaje:'', error:'', cargando:false, personal: {} },
 	actualizar:{ mensaje:'', error:'', cargando:false },
 	usuarioEstado: {
 		cargando: false,
@@ -40,25 +40,25 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
-		case REGISTRAR_USUARIO_REQUEST:
+		case REGISTRAR_PERSONAL_REQUEST:
 			return Object.assign({}, state, { registro: { cargando: true } }) 
 
-		case REGISTRAR_USUARIO_EXITO:
+		case REGISTRAR_PERSONAL_EXITO:
 			return Object.assign({}, state, { 
 				registro: { cargando:false, error:'', mensaje: action.payload.mensaje } 
 			})
 
-		case REGISTRAR_USUARIO_FALLO:
+		case REGISTRAR_PERSONAL_FALLO:
 			return Object.assign({}, state, { 
 				registro:{ cargando:false, error: action.payload.error, mensaje:'' }
 			})
 
 			// Autenticación de Usuario.
-		case AUTENTICAR_USUARIO_REQUEST:
+		case AUTENTICAR_PERSONAL_REQUEST:
 			return Object.assign({}, state, { 
 				autenticacion:{ cargando:true }
 			})
-		case AUTENTICAR_USUARIO_EXITO:
+		case AUTENTICAR_PERSONAL_EXITO:
 			return Object.assign({}, state, { 
 				autenticacion:{ 
 					cargando:false,
@@ -66,18 +66,17 @@ export default function (state = INITIAL_STATE, action) {
 					error: '' }
 			})
 
-		case AUTENTICAR_USUARIO_FALLO:
+		case AUTENTICAR_PERSONAL_FALLO:
 			return Object.assign({}, state, { 
 				autenticacion:{ cargando:false, error: action.payload.error, mensaje:'' }
 			})
 
-		case VERIFICAR_TOKEN_USUARIO_REQUEST:
+		case VERIFICAR_TOKEN_PERSONAL_REQUEST:
 			return Object.assign({}, state, { 
 				usuarioEstado:{ cargando: true }
 			})
 
-		case VERIFICAR_TOKEN_USUARIO_EXITO:
-			// console.log("VERIFICAR_TOKEN_USUARIO_EXITO")
+		case VERIFICAR_TOKEN_PERSONAL_EXITO:
 			return Object.assign({}, state, { 
 				usuarioEstado:{
 					cargando: false,
@@ -87,7 +86,7 @@ export default function (state = INITIAL_STATE, action) {
 				} 
 			}) 
 
-		case VERIFICAR_TOKEN_USUARIO_FALLO:
+		case VERIFICAR_TOKEN_PERSONAL_FALLO:
 			return Object.assign({}, state, { 
 				usuarioEstado:{
 					cargando: false,
@@ -97,7 +96,7 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
-		case SALIR_USUARIO:
+		case SALIR_PERSONAL:
 			return Object.assign({}, state, { 
 				usuarioEstado:{ 
 					cargando:false,
@@ -107,24 +106,24 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
-		case LISTAR_USUARIOS_REQUEST:
+		case LISTAR_PERSONALES_REQUEST:
 			return state = Object.assign({}, state, {
 				listar: { cargando: true }
 			})
 
-		case LISTAR_USUARIOS_EXITO:
+		case LISTAR_PERSONALES_EXITO:
 			return state = Object.assign({}, state, {
 				listar: {
-					usuarios: action.payload.usuarios, 
+					personales: action.payload.personales, 
 					cargando:false, 
 					error: ''
 				}
 			})
 
-		case LISTAR_USUARIOS_FALLO:
+		case LISTAR_PERSONALES_FALLO:
 			return state = Object.assign({}, state, {
 				listar: {
-					usuarios: [],
+					personales: [],
 					cargando: false,
 					error: action.payload.error					
 				}

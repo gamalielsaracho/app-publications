@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	autenticarUsuario
+	autenticarPersonal
 } from '../../actions'
 
 import Autenticar from './Autenticar'
@@ -26,14 +26,14 @@ const validate = values => {
 
 function mapStateToProps(state) {
 	return {
-		autenticacion: state.usuario.autenticacion
+		autenticacion: state.personal.autenticacion
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		autenticarUsuario: (datosFormulario) => {
-			dispatch(autenticarUsuario(datosFormulario))
+		autenticarPersonal: (datosFormulario) => {
+			dispatch(autenticarPersonal(datosFormulario))
 		}
 	}
 }

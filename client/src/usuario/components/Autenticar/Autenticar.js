@@ -20,7 +20,7 @@ class Autenticar extends Component {
 	}
 
 	enviarFormulario(formProps) {
-		this.props.autenticarUsuario(formProps)
+		this.props.autenticarPersonal(formProps)
 	}
 
 	renderCargando(cargando) {
