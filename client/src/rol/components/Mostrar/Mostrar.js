@@ -23,7 +23,7 @@ class Mostrar extends Component {
 	renderRol(rol) {
 		if(rol) {
 			return <div>
-				<span>Nombre: { rol.nombre }</span>
+				<span>Nombre: { rol.descripcion }</span>
 			</div>
 		} else {
 			return <span></span>
