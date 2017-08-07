@@ -1,4 +1,4 @@
-import Usuario from './personal.model'
+import Personal from './personal.model'
 
 import jwt from 'jsonwebtoken'
 import config from '../../config'
@@ -8,43 +8,41 @@ const tokenExpiry = config.key.tokenExpiry
 
 export default (socket, io) => {
 
-	function usuariosLista() {
-		Usuario.listar((err, usuarios) => {
+	function personalesLista() {
+		Personal.listar((err, personales) => {
 			if(err) {
-				socket.emit('listar_usuarios', { error: 'Ocurrió un error, intente nuevamente.' })
+				socket.emit('listar_personales', { error: 'Ocurrió un error, intente nuevamente.' })
 				return
 			}
-
-			// console.log(usuarios)
 				
-			io.sockets.emit('listar_usuarios', { usuarios: usuarios })
+			io.sockets.emit('listar_personales', { personales: personales })
 		})
 	}
 
-	usuariosLista()
+	personalesLista()
 
-	socket.on('registrar_usuario', (data) => {
+	socket.on('registrar_personal', (data) => {
 
-		Usuario.verificarCorreo(data.correo, (err, usuarioExistente) => {
+		Personal.verificarCorreo(data.correo, (err, personalExistente) => {
 			if(err) {
-				socket.emit('registrar_usuario', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
+				socket.emit('registrar_personal', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
 				return
 			}
 
-			console.log(usuarioExistente.length != 0)
+			console.log(personalExistente.length != 0)
 
-			if(usuarioExistente.length != 0) {
-				socket.emit('registrar_usuario', { error: 'Este correo ya está registrado.' })
+			if(personalExistente.length != 0) {
+				socket.emit('registrar_personal', { error: 'Este correo ya está registrado.' })
 			}else {
-				Usuario.crear(data, (err, usuario) => {
+				Personal.crear(data, (err, personal) => {
 					if(err) {
-						socket.emit('registrar_usuario', { error: 'Lo sentimos, ocurrió un error. intente nuevamente.' })
+						socket.emit('registrar_personal', { error: 'Lo sentimos, ocurrió un error. intente nuevamente.' })
 						return
 					}
 
-					socket.emit('registrar_usuario', { mensaje: 'El usuario se creó exitosamente.' })
+					socket.emit('registrar_personal', { mensaje: 'El personal se creó exitosamente.' })
 					
-					usuariosLista()
+					personalesLista()
 				})
 			}
 
@@ -52,55 +50,52 @@ export default (socket, io) => {
 	})
 
 
-	socket.on('autenticar_usuario', (data) => {
+	socket.on('autenticar_personal', (data) => {
 
-		console.log('Los datos que llegaron son')
-		console.log(data)
-
-		Usuario.verificarCorreo(data.correo, (err, usuario) => {
+		Personal.verificarCorreo(data.correo, (err, personal) => {
 
 			if(err) {
 				return next(err)
 			}
 
-			if(usuario[0]) {
-				console.log("contrasena server: "+usuario[0].contrasena)
+			if(personal[0]) {
+				console.log("contrasena server: "+personal[0].contrasena)
 
-				if(usuario[0].contrasena != data.contrasena) {
-					socket.emit('autenticar_usuario', { error: 'La contraseña es incorrecta.' })
+				if(personal[0].contrasena != data.contrasena) {
+					socket.emit('autenticar_personal', { error: 'La contraseña es incorrecta.' })
 					return
 				}
 
 				let datosToken = {
-					id: usuario[0].id,
-					nombre: usuario[0].nombre,
-					apellido: usuario[0].apellido,
-					correo: usuario[0].correo
+					id: personal[0].id,
+					nombre: personal[0].nombre,
+					apellido: personal[0].apellido,
+					correo: personal[0].correo
 				}
 
 				const token = jwt.sign(datosToken, privateKey, { expiresIn: tokenExpiry })
 
-				socket.emit('autenticar_usuario', { 
+				socket.emit('autenticar_personal', { 
 					token: token,
 					mensaje: 'Autenticación exitosamente.' 
 				})
 			
 			} else {
-				socket.emit('autenticar_usuario', { error: 'Este correo no existe.' })
+				socket.emit('autenticar_personal', { error: 'Este correo no existe.' })
 			}
 
 		})
 	})
 
 
-	socket.on('mostrar_usuario', (data) => {
-		Usuario.mostrar(data.id_usuario, (err, usuario) => {
+	socket.on('mostrar_personal', (data) => {
+		Personal.mostrar(data.id_usuario, (err, personal) => {
 			if(err) {
-				socket.emit('mostrar_usuario', { error: 'Ocurrió un error, intente nuevamente' })
+				socket.emit('mostrar_personal', { error: 'Ocurrió un error, intente nuevamente' })
 				return
 			}
 
-			socket.emit('mostrar_usuario', usuario[0])
+			socket.emit('mostrar_personal', personal[0])
 		})
 	})
 
@@ -112,15 +107,14 @@ export default (socket, io) => {
 			return
 		}
 
-		jwt.verify(token, privateKey, (err, usuario) => {
+		jwt.verify(token, privateKey, (err, personal) => {
 			if(err) {
 				throw error
 			}
 
-			Usuario.verificarCorreo(usuario.correo, (err, userFromServer) => {
+			Personal.verificarCorreo(personal.correo, (err, personalFromServer) => {
 
-				socket.emit('verificar_token', userFromServer[0])
-				// console.log(userFromServer)
+				socket.emit('verificar_token', personalFromServer[0])
 			})
 		})
 	})
