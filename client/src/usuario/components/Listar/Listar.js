@@ -27,13 +27,6 @@ class Listar extends Component {
 	}
 
 	renderPersonales(personales) {
-		let style = {
-			btn: {
-				"marginLeft":"10px"
-			}
-		}
-
-		console.log(style.btn)
 
 		let filtro = this.props.filtro
 
@@ -52,12 +45,12 @@ class Listar extends Component {
 				{
 				  personales.map((personal) => {
 					return <tr key={personal.id_personal}>
-			            <td className='center'>{ personal.nombre }</td>
-			            <td className='center'>{ personal.apellido }</td>
-			            <td className='center'>{ personal.correo }</td>
-			            <td className='center'>
-			            	<a className="#e53935 red darken-1 btn">Editar</a>
-			            	<a style={style.btn} className="#0288d1 light-blue darken-2 btn">Eliminar</a>
+			            <td>{ personal.nombre }</td>
+			            <td>{ personal.apellido }</td>
+			            <td>{ personal.correo }</td>
+			            <td>
+							<button type="button" className="btn btn-success">Editar</button>
+							<button type="button" className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			          </tr>		
 				  })
@@ -77,39 +70,48 @@ class Listar extends Component {
 			return <Cargando/>
 		}else {
 			return <div>
-				<div className='row center-lg center-md center-sm center-xs'>
-					<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
-						<input type='text' placeholder='Nombre'
-						value={filtro.nombre} ref='nombre'
-						onChange={this.handleChange}/>
+				<h1 className='text-center'>Usuarios</h1>
+				<br/>
+				<div className='row'>
+					<div className='col-lg-4'>
+						<div className="input-group">
+							<input className='form-control' type='text' placeholder='Nombre'
+							value={filtro.nombre} ref='nombre'
+							onChange={this.handleChange} />
+							</div> 
 						</div>
-					<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
-						<input type='text' placeholder='Apellido'
-						value={filtro.apellido} ref='apellido'
-						onChange={this.handleChange}/>
+					<div className='col-lg-4'>
+						<div className="input-group">
+							<input className='form-control' type='text' placeholder='Apellido'
+							value={filtro.apellido} ref='apellido'
+							onChange={this.handleChange}/>
+						</div>
 					</div>
-					<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
-						<input type='text' placeholder='Correo'
-						value={filtro.correo} ref='correo'
-						onChange={this.handleChange}/>
+					<div className='col-lg-4'>
+						<div className="input-group">
+							<input className='form-control' type='text' placeholder='Correo'
+							value={filtro.correo} ref='correo'
+							onChange={this.handleChange}/>
+						</div>
 					</div>
 				</div>
 
+				<br/>
+				<div className="table-responsive">
+					<table className='table table-striped'>
+						<thead>
+				          <tr>
+				              <th>Nombre</th>
+				              <th>Apellido</th>
+				              <th>Correo</th>
+				              <th>Opciones</th>
+				          </tr>
+				        </thead>
 
-				<table>
-					<thead>
-			          <tr>
-			              <th className='center'>Nombre</th>
-			              <th className='center'>Apellido</th>
-			              <th className='center'>Correo</th>
-			              <th className='center'>Opciones</th>
-			          </tr>
-			        </thead>
+						{ this.renderPersonales(personales) }
 
-					{ this.renderPersonales(personales) }
-
-				</table>
-				
+					</table>
+				</div>
 
 			</div>
 		}
