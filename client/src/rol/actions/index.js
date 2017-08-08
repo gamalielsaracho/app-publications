@@ -42,7 +42,7 @@ import { reset } from 'redux-form'
 
 export function abrirFormularioCrearRol() {
 	return (dispatch) => {
-		dispatch(reset('Formulario'))
+		dispatch(reset('FormularioRol'))
 
 		dispatch({ type: ABRIR_FORMULARIO_CREAR_ROL })
 	}
@@ -103,7 +103,7 @@ export function crearRol(datosFormulario) {
 			}
 		})
 	
-		dispatch(reset('Formulario'))
+		dispatch(reset('FormularioRol'))
 	}
 }
 
