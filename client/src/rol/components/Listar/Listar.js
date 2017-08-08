@@ -23,37 +23,25 @@ class Listar extends Component {
 		// console.log("el que sigue:")
 		// console.log(nextProps.roles)
 
-		return nextProps.roles !== this.props.roles
-
-
-		// if(this.props.listar.roles != nextProps.listar.roles) {
-		// 	return true
-		// }else {
-		// 	return false
-		// }
+		if(nextProps.roles !== this.props.roles) {
+			return true
+		}else {
+			return false
+		}
 	}	
 
 	renderRoles(roles) {
-		let style = {
-			btn: {
-				"marginLeft":"10px"
-			}
-		}
 
 		return <tbody>
 			{
 				roles.map((rol) => {
 					return <tr key={rol.id_rol}>
-			            <td className='center'>{ rol.id_rol }</td>
-			            <td className='center'>{ rol.descripcion }</td>
-			            <td className='center'>
-			            	<a onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="#0288d1 light-blue darken-2 btn">
-			            		Mostrar
-			            	</a>
-			            	<a onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
-			            	<a onClick={() => { this.props.eliminarRole(rol.id_rol) }} style={style.btn} className="#e53935 red darken-1 btn">
-			            		Eliminar
-			            	</a>
+			            <td>{ rol.id_rol }</td>
+			            <td>{ rol.descripcion }</td>
+			            <td>
+							<button onClick={() => { this.props.mostrarRol(rol.id_rol) }} type="button" className="btn btn-info btn-space">Mostrar</button>
+							<button onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} type="button" className="btn btn-warning btn-space">Editar</button>
+							<button onClick={() => { this.props.eliminarRole(rol.id_rol) }} type="button" className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
@@ -65,40 +53,37 @@ class Listar extends Component {
 
 		const { roles, cargando, error } = this.props.listar
 
-		// console.log(this.props.listar)
-
 		if(cargando) {
 			return <Cargando/>
 		} else {
 				return <div>
-				
+					<h1 className='text-center'>Roles</h1>
+					
 					<FormularioContainer/>
 					<MostarContainer/>
 
+					<MensajeOerror error={error} mensaje={null}/>
+
 					<div className='row'>
-						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearRol } className='#0288d1 light-blue darken-2 btn'>Agregar</button>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+							<button onClick={ this.props.abrirFormularioCrearRol } className='btn btn-success'>Agregar</button>
 						</div>
 					</div>
-					<MensajeOerror error={error} mensaje={null}/>
-					<div className='row row center-lg center-md center-sm center-xs'>
-						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<h4 className='center'>Roles</h4>
+					<br/>
 
-							<table>
-								<thead>
-						          <tr>
-						              <th className='center'>Id</th>
-						              <th className='center'>Nombre</th>
-						              <th className='center'>Opciones</th>
-						          </tr>
-						        </thead>
+					<div className='table-responsive'>
+						<table className='table table-striped'>
+							<thead>
+						    	<tr>
+						        	<th className='center'>Id</th>
+						        	<th className='center'>Nombre</th>
+						        	<th className='center'>Opciones</th>
+						    	</tr>
+						    </thead>
 
-								{ this.renderRoles(roles) }
+							{ this.renderRoles(roles) }
 
-							</table>
-
-						</div>
+						</table>
 					</div>
 				</div>
 		}
