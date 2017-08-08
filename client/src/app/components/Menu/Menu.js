@@ -9,71 +9,51 @@ class Menu extends Component {
 
 	renderLinks(autenticado, usuario) {
 		if(autenticado) {
-			return <div>
+			return <ul className="nav navbar-nav navbar-right">
 				<li><Link to='/dashboard'>Panel</Link></li>
 				<li><Link to='/usuarios'>Usuarios</Link></li>
 				<li><Link to='/perfil'>{ usuario.correo }</Link></li>
 				<li onClick={() => { this.props.salirPersonal() }}><a>Salir</a></li>
-			</div>
+			</ul>
 		}else {
-			return <div>
+			return <ul className="nav navbar-nav navbar-right">
 				<li><Link to='/'>Inicio</Link></li>
 				<li><a href='#nosotros'>Nosotros</a></li>
 				<li><a href='#horarios'>Horarios</a></li>
 				<li><a href='#cantactanos'>Contactanos</a></li>
 				<li><Link to='/registrarse'>Registrarse</Link></li>
 				<li><Link to='/entrar'>Entrar</Link></li>
-			</div>
+			</ul>
 		}
 	}
 
-	componentDidMount() {
-		console.log(this.refs)
-		
-		$('.button-collapse').sideNav({
-	      menuWidth: 300, // Default is 300
-	      edge: 'left', // Choose the horizontal origin
-	      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-	      draggable: true, // Choose whether you can drag to open on touch screens,
-	      onOpen: function(el) {  }, // A function to be called when sideNav is opened
-	      onClose: function(el) {  }, // A function to be called when sideNav is closed
-    	});
-
-	}
 
 	render() {
 		const { cargando, error, datosToken, autenticado } = this.props.usuarioEstado
 
 		console.log(this.props.usuarioEstado)
 
-		let styles = {
-			logoIcon: {
-				color: '#2d4c50'
-			}
-		}
 
-		return <nav className="nav-extended #00b0ff light-blue accent-3">
-			<div className="nav-wrapper">
-				<div className='container'>
-					<div className='row center-lg center-md center-sm center-xs'>
-						<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
-							<Link className="brand-logo" to='/'>USF</Link>
-				      		<a ref='btnMovil' href="#" data-activates="mobile-demo" className="button-collapse">
-				      			<span className="foteer__icon icon-menu"></span>
-				      		</a>
-						</div>
-						<div className='col-xs-12 col-sm-9 col-md-9 col-lg-9'>
-							<ul id="nav-mobile" className="right hide-on-med-and-down">
-						       { this.renderLinks(autenticado, datosToken) }
-						    </ul>
-							<ul className="side-nav" id="mobile-demo">
-						    	{ this.renderLinks(autenticado, datosToken) }
-						    </ul>
-						</div>
-					</div>
-				</div>
-			</div>
+		return <nav className="navbar navbar-default">
+		  <div className="container-fluid">
+		    <div className="navbar-header">
+		      <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span className="sr-only">Toggle navigation</span>
+		        <span className="icon-bar"></span>
+		        <span className="icon-bar"></span>
+		        <span className="icon-bar"></span>
+		      </button>
+		      <a className="navbar-brand" href="/">Unidad de Salud Familiar</a>
+		    </div>
+
+		    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+				{ this.renderLinks(autenticado, datosToken) }
+
+		    </div>
+		  </div>
 		</nav>
+
 	}
 }
 
