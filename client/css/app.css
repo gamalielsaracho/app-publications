@@ -3,15 +3,15 @@ body {
 	margin: 0;
 }
 
-img {
-	max-width: 100% !important;
-	height: 100%;
-	display: block;
+.img-center {
+	display: flex;
 }
 
 .text-justify {
 	text-align: justify;
 }
+
+
 
 
 .container-max {
@@ -82,5 +82,18 @@ footer {
 }
 
 
+/* DashBoard */
+
+.btn-space {
+	margin-left: .5em;
+}
+
+.back-green {
+	background-color: #a6e063;
+}
+
+.back-nav {
+	background-color: #f2f7ec;
+}
 
 
