@@ -48984,8 +48984,8 @@
 
 				if (autenticado) {
 					return _react2.default.createElement(
-						'div',
-						null,
+						'ul',
+						{ className: 'nav navbar-nav navbar-right' },
 						_react2.default.createElement(
 							'li',
 							null,
@@ -49027,8 +49027,8 @@
 					);
 				} else {
 					return _react2.default.createElement(
-						'div',
-						null,
+						'ul',
+						{ className: 'nav navbar-nav navbar-right' },
 						_react2.default.createElement(
 							'li',
 							null,
@@ -49087,19 +49087,6 @@
 				}
 			}
 		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				console.log(this.refs);
-
-				$('.button-collapse').sideNav({
-					menuWidth: 300, // Default is 300
-					edge: 'left', // Choose the horizontal origin
-					closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-					draggable: true, // Choose whether you can drag to open on touch screens,
-					onOpen: function onOpen(el) {}, // A function to be called when sideNav is opened
-					onClose: function onClose(el) {} });
-			}
-		}, {
 			key: 'render',
 			value: function render() {
 				var _props$usuarioEstado = this.props.usuarioEstado,
@@ -49111,53 +49098,37 @@
 
 				console.log(this.props.usuarioEstado);
 
-				var styles = {
-					logoIcon: {
-						color: '#2d4c50'
-					}
-				};
-
 				return _react2.default.createElement(
 					'nav',
-					{ className: 'nav-extended #00b0ff light-blue accent-3' },
+					{ className: 'navbar navbar-default' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'nav-wrapper' },
+						{ className: 'container-fluid' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'container' },
+							{ className: 'navbar-header' },
 							_react2.default.createElement(
-								'div',
-								{ className: 'row center-lg center-md center-sm center-xs' },
+								'button',
+								{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
 								_react2.default.createElement(
-									'div',
-									{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
-									_react2.default.createElement(
-										_reactRouter.Link,
-										{ className: 'brand-logo', to: '/' },
-										'USF'
-									),
-									_react2.default.createElement(
-										'a',
-										{ ref: 'btnMovil', href: '#', 'data-activates': 'mobile-demo', className: 'button-collapse' },
-										_react2.default.createElement('span', { className: 'foteer__icon icon-menu' })
-									)
+									'span',
+									{ className: 'sr-only' },
+									'Toggle navigation'
 								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'col-xs-12 col-sm-9 col-md-9 col-lg-9' },
-									_react2.default.createElement(
-										'ul',
-										{ id: 'nav-mobile', className: 'right hide-on-med-and-down' },
-										this.renderLinks(autenticado, datosToken)
-									),
-									_react2.default.createElement(
-										'ul',
-										{ className: 'side-nav', id: 'mobile-demo' },
-										this.renderLinks(autenticado, datosToken)
-									)
-								)
+								_react2.default.createElement('span', { className: 'icon-bar' }),
+								_react2.default.createElement('span', { className: 'icon-bar' }),
+								_react2.default.createElement('span', { className: 'icon-bar' })
+							),
+							_react2.default.createElement(
+								'a',
+								{ className: 'navbar-brand', href: '/' },
+								'Unidad de Salud Familiar'
 							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+							this.renderLinks(autenticado, datosToken)
 						)
 					)
 				);
@@ -49782,10 +49753,10 @@
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'container-fluid container-max' },
+					{ className: 'container-fluid' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'row justify-lg justify-md justify-sm justify-xs' },
+						{ className: 'row' },
 						_react2.default.createElement(_Menu2.default, null),
 						_react2.default.createElement(
 							'div',
@@ -49859,148 +49830,81 @@
 		_createClass(Menu, [{
 			key: 'render',
 			value: function render() {
-				var styles = {
-					menuContainer: {
-						"padding": "1em"
-						// "height": '570px'
-					},
-					btnContainer: {
-						padding: '0em .5em .5em 1.5em',
-						color: "#fff"
-					},
-					btnText: {
-						color: "#fff"
-					}
-				};
-
-				var po = {
-					border: '1px solid black'
-				};
 
 				return _react2.default.createElement(
 					'div',
-					{ style: styles.menuContainer, className: '#00b0ff light-blue accent-3 col-xs-12 col-sm-12 col-md-2 col-lg-2' },
+					{ className: 'col-sm-3 col-md-2 back-green' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'row justify-lg justify-md between-sm justify-xs' },
+						{ className: 'row' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'col-xs-12 col-sm-4 col-md-12 col-lg-12' },
+							{ className: 'col-xs-4 col-sm-6 col-md-6 col-lg-6' },
+							_react2.default.createElement('br', null),
+							_react2.default.createElement('img', { className: 'img-circle img-responsive', src: 'http://localhost:8080/images/gama.jpg' })
+						)
+					),
+					_react2.default.createElement(
+						'h4',
+						{ className: 'text-center' },
+						'Hola LOP'
+					),
+					_react2.default.createElement(
+						'ul',
+						{ className: 'nav nav-sidebar' },
+						_react2.default.createElement(
+							'li',
+							null,
 							_react2.default.createElement(
-								'h5',
-								{ className: 'center' },
-								'Hola LOP'
+								_reactRouter.Link,
+								{ to: '/usuarios' },
+								'Usuarios ',
+								_react2.default.createElement(
+									'span',
+									{ className: 'badge' },
+									'14'
+								)
 							)
 						),
 						_react2.default.createElement(
-							'div',
-							{ className: 'col-xs-12 col-sm-4 col-md-12 col-lg-12' },
+							'li',
+							null,
 							_react2.default.createElement(
-								'ul',
-								{ className: 'row justify-lg justify-md justify-sm justify-xs' },
+								_reactRouter.Link,
+								{ to: '/roles' },
+								'Roles ',
 								_react2.default.createElement(
-									'div',
-									{ className: 'col-xs-6 col-sm-6 col-md-12 col-lg-12' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'row around-lg around-md around-sm around-xs' },
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-7 col-md-9 col-lg-9' },
-											_react2.default.createElement(
-												_reactRouter.Link,
-												{ style: styles.btnText, to: '/usuarios' },
-												'Usuarios'
-											)
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-2 col-md-2 col-lg-2' },
-											_react2.default.createElement(
-												'i',
-												{ className: 'sm material-icons' },
-												'insert_chart'
-											)
-										)
-									)
-								),
+									'span',
+									{ className: 'badge' },
+									'1'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/especialidades' },
+								'Especialidades ',
 								_react2.default.createElement(
-									'div',
-									{ className: 'col-xs-6 col-sm-6 col-md-12 col-lg-12' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'row around-lg around-md around-sm around-xs' },
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-7 col-md-9 col-lg-9' },
-											_react2.default.createElement(
-												_reactRouter.Link,
-												{ style: styles.btnText, to: '/roles' },
-												'Roles'
-											)
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-2 col-md-2 col-lg-2' },
-											_react2.default.createElement(
-												'i',
-												{ className: 'sm material-icons' },
-												'insert_chart'
-											)
-										)
-									)
-								),
+									'span',
+									{ className: 'badge' },
+									'0'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/ciudades' },
+								'Ciudades ',
 								_react2.default.createElement(
-									'div',
-									{ className: 'col-xs-6 col-sm-6 col-md-12 col-lg-12' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'row around-lg around-md around-sm around-xs' },
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-7 col-md-9 col-lg-9' },
-											_react2.default.createElement(
-												_reactRouter.Link,
-												{ style: styles.btnText, to: '/especialidades' },
-												'Especialidades'
-											)
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-2 col-md-2 col-lg-2' },
-											_react2.default.createElement(
-												'i',
-												{ className: 'sm material-icons' },
-												'insert_chart'
-											)
-										)
-									)
-								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'col-xs-6 col-sm-6 col-md-12 col-lg-12' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'row around-lg around-md around-sm around-xs' },
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-7 col-md-9 col-lg-9' },
-											_react2.default.createElement(
-												_reactRouter.Link,
-												{ style: styles.btnText, to: '/ciudades' },
-												'Ciudades'
-											)
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'col-xs-6 col-sm-2 col-md-2 col-lg-2' },
-											_react2.default.createElement(
-												'i',
-												{ className: 'sm material-icons' },
-												'insert_chart'
-											)
-										)
-									)
+									'span',
+									{ className: 'badge' },
+									'8'
 								)
 							)
 						)
@@ -50792,13 +50696,6 @@
 		}, {
 			key: 'renderPersonales',
 			value: function renderPersonales(personales) {
-				var style = {
-					btn: {
-						"marginLeft": "10px"
-					}
-				};
-
-				console.log(style.btn);
 
 				var filtro = this.props.filtro;
 
@@ -50821,30 +50718,30 @@
 							{ key: personal.id_personal },
 							_react2.default.createElement(
 								'td',
-								{ className: 'center' },
+								null,
 								personal.nombre
 							),
 							_react2.default.createElement(
 								'td',
-								{ className: 'center' },
+								null,
 								personal.apellido
 							),
 							_react2.default.createElement(
 								'td',
-								{ className: 'center' },
+								null,
 								personal.correo
 							),
 							_react2.default.createElement(
 								'td',
-								{ className: 'center' },
+								null,
 								_react2.default.createElement(
-									'a',
-									{ className: '#e53935 red darken-1 btn' },
+									'button',
+									{ type: 'button', className: 'btn btn-success' },
 									'Editar'
 								),
 								_react2.default.createElement(
-									'a',
-									{ style: style.btn, className: '#0288d1 light-blue darken-2 btn' },
+									'button',
+									{ type: 'button', className: 'btn btn-danger btn-space' },
 									'Eliminar'
 								)
 							)
@@ -50871,62 +50768,85 @@
 						'div',
 						null,
 						_react2.default.createElement(
-							'div',
-							{ className: 'row center-lg center-md center-sm center-xs' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
-								_react2.default.createElement('input', { type: 'text', placeholder: 'Nombre',
-									value: filtro.nombre, ref: 'nombre',
-									onChange: this.handleChange })
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
-								_react2.default.createElement('input', { type: 'text', placeholder: 'Apellido',
-									value: filtro.apellido, ref: 'apellido',
-									onChange: this.handleChange })
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-xs-12 col-sm-3 col-md-3 col-lg-3' },
-								_react2.default.createElement('input', { type: 'text', placeholder: 'Correo',
-									value: filtro.correo, ref: 'correo',
-									onChange: this.handleChange })
-							)
+							'h1',
+							{ className: 'text-center' },
+							'Usuarios'
 						),
+						_react2.default.createElement('br', null),
 						_react2.default.createElement(
-							'table',
-							null,
+							'div',
+							{ className: 'row' },
 							_react2.default.createElement(
-								'thead',
-								null,
+								'div',
+								{ className: 'col-lg-4' },
 								_react2.default.createElement(
-									'tr',
-									null,
-									_react2.default.createElement(
-										'th',
-										{ className: 'center' },
-										'Nombre'
-									),
-									_react2.default.createElement(
-										'th',
-										{ className: 'center' },
-										'Apellido'
-									),
-									_react2.default.createElement(
-										'th',
-										{ className: 'center' },
-										'Correo'
-									),
-									_react2.default.createElement(
-										'th',
-										{ className: 'center' },
-										'Opciones'
-									)
+									'div',
+									{ className: 'input-group' },
+									_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Nombre',
+										value: filtro.nombre, ref: 'nombre',
+										onChange: this.handleChange })
 								)
 							),
-							this.renderPersonales(personales)
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-lg-4' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'input-group' },
+									_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Apellido',
+										value: filtro.apellido, ref: 'apellido',
+										onChange: this.handleChange })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-lg-4' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'input-group' },
+									_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Correo',
+										value: filtro.correo, ref: 'correo',
+										onChange: this.handleChange })
+								)
+							)
+						),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement(
+							'div',
+							{ className: 'table-responsive' },
+							_react2.default.createElement(
+								'table',
+								{ className: 'table table-striped' },
+								_react2.default.createElement(
+									'thead',
+									null,
+									_react2.default.createElement(
+										'tr',
+										null,
+										_react2.default.createElement(
+											'th',
+											null,
+											'Nombre'
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Apellido'
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Correo'
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Opciones'
+										)
+									)
+								),
+								this.renderPersonales(personales)
+							)
 						)
 					);
 				}
@@ -51320,7 +51240,7 @@
 
 	function abrirFormularioCrearRol() {
 		return function (dispatch) {
-			dispatch((0, _reduxForm.reset)('Formulario'));
+			dispatch((0, _reduxForm.reset)('FormularioRol'));
 
 			dispatch({ type: _types.ABRIR_FORMULARIO_CREAR_ROL });
 		};
@@ -51381,7 +51301,7 @@
 				}
 			});
 
-			dispatch((0, _reduxForm.reset)('Formulario'));
+			dispatch((0, _reduxForm.reset)('FormularioRol'));
 		};
 	}
 
@@ -51643,24 +51563,16 @@
 				// console.log("el que sigue:")
 				// console.log(nextProps.roles)
 
-				return nextProps.roles !== this.props.roles;
-
-				// if(this.props.listar.roles != nextProps.listar.roles) {
-				// 	return true
-				// }else {
-				// 	return false
-				// }
+				if (nextProps.roles !== this.props.roles) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}, {
 			key: 'renderRoles',
 			value: function renderRoles(roles) {
 				var _this2 = this;
-
-				var style = {
-					btn: {
-						"marginLeft": "10px"
-					}
-				};
 
 				return _react2.default.createElement(
 					'tbody',
@@ -51671,36 +51583,36 @@
 							{ key: rol.id_rol },
 							_react2.default.createElement(
 								'td',
-								{ className: 'center' },
+								null,
 								rol.id_rol
 							),
 							_react2.default.createElement(
 								'td',
-								{ className: 'center' },
+								null,
 								rol.descripcion
 							),
 							_react2.default.createElement(
 								'td',
-								{ className: 'center' },
+								null,
 								_react2.default.createElement(
-									'a',
+									'button',
 									{ onClick: function onClick() {
 											_this2.props.mostrarRol(rol.id_rol);
-										}, className: '#0288d1 light-blue darken-2 btn' },
+										}, type: 'button', className: 'btn btn-info btn-space' },
 									'Mostrar'
 								),
 								_react2.default.createElement(
-									'a',
+									'button',
 									{ onClick: function onClick() {
 											_this2.props.abrirFormularioEditarRol(rol.id_rol);
-										}, style: style.btn, className: '#0288d1 light-green darken-2 btn' },
+										}, type: 'button', className: 'btn btn-warning btn-space' },
 									'Editar'
 								),
 								_react2.default.createElement(
-									'a',
+									'button',
 									{ onClick: function onClick() {
 											_this2.props.eliminarRole(rol.id_rol);
-										}, style: style.btn, className: '#e53935 red darken-1 btn' },
+										}, type: 'button', className: 'btn btn-danger btn-space' },
 									'Eliminar'
 								)
 							)
@@ -51716,7 +51628,6 @@
 				    cargando = _props$listar.cargando,
 				    error = _props$listar.error;
 
-				// console.log(this.props.listar)
 
 				if (cargando) {
 					return _react2.default.createElement(_Cargando2.default, null);
@@ -51724,61 +51635,58 @@
 					return _react2.default.createElement(
 						'div',
 						null,
+						_react2.default.createElement(
+							'h1',
+							{ className: 'text-center' },
+							'Roles'
+						),
 						_react2.default.createElement(_Formulario2.default, null),
 						_react2.default.createElement(_Mostrar2.default, null),
+						_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
 						_react2.default.createElement(
 							'div',
 							{ className: 'row' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'col-xs-12 col-sm-8 col-md-6 col-lg-4' },
+								{ className: 'col-xs-12 col-sm-6 col-md-6 col-lg-4' },
 								_react2.default.createElement(
 									'button',
-									{ onClick: this.props.abrirFormularioCrearRol, className: '#0288d1 light-blue darken-2 btn' },
+									{ onClick: this.props.abrirFormularioCrearRol, className: 'btn btn-success' },
 									'Agregar'
 								)
 							)
 						),
-						_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
+						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
-							{ className: 'row row center-lg center-md center-sm center-xs' },
+							{ className: 'table-responsive' },
 							_react2.default.createElement(
-								'div',
-								{ className: 'col-xs-12 col-sm-12 col-md-12 col-lg-12' },
+								'table',
+								{ className: 'table table-striped' },
 								_react2.default.createElement(
-									'h4',
-									{ className: 'center' },
-									'Roles'
-								),
-								_react2.default.createElement(
-									'table',
+									'thead',
 									null,
 									_react2.default.createElement(
-										'thead',
+										'tr',
 										null,
 										_react2.default.createElement(
-											'tr',
-											null,
-											_react2.default.createElement(
-												'th',
-												{ className: 'center' },
-												'Id'
-											),
-											_react2.default.createElement(
-												'th',
-												{ className: 'center' },
-												'Nombre'
-											),
-											_react2.default.createElement(
-												'th',
-												{ className: 'center' },
-												'Opciones'
-											)
+											'th',
+											{ className: 'center' },
+											'Id'
+										),
+										_react2.default.createElement(
+											'th',
+											{ className: 'center' },
+											'Nombre'
+										),
+										_react2.default.createElement(
+											'th',
+											{ className: 'center' },
+											'Opciones'
 										)
-									),
-									this.renderRoles(roles)
-								)
+									)
+								),
+								this.renderRoles(roles)
 							)
 						)
 					);
@@ -51940,10 +51848,10 @@
 	var validate = function validate(values) {
 		var errors = {};
 
-		if (!values.nombre) {
-			errors.nombre = 'Tienes que introducir un nombre.';
-		} else if (values.nombre.length < 5) {
-			errors.nombre = 'Tiene que ser por lo menos 5 characteres.';
+		if (!values.descripcion) {
+			errors.descripcion = 'Tienes que introducir una descripción.';
+		} else if (values.descripcion.length < 5) {
+			errors.descripcion = 'Tiene que ser por lo menos 5 characteres.';
 		}
 
 		return errors;
@@ -51973,7 +51881,7 @@
 	}
 
 	var form = (0, _reduxForm.reduxForm)({
-		form: 'Formulario',
+		form: 'FormularioRol',
 		validate: validate
 	});
 
@@ -52032,18 +51940,18 @@
 			null,
 			_react2.default.createElement(
 				'div',
-				null,
+				{ className: 'form-group' },
 				_react2.default.createElement(
 					'label',
-					null,
+					{ htmlFor: label },
 					label
 				),
-				_react2.default.createElement('input', _extends({}, input, { placeholder: label, type: type })),
-				touched && error && _react2.default.createElement(
-					'span',
-					null,
-					error
-				)
+				_react2.default.createElement('input', _extends({ className: 'form-control' }, input, { placeholder: label, type: type }))
+			),
+			touched && error && _react2.default.createElement(
+				'label',
+				{ className: 'text-danger' },
+				error
 			),
 			_react2.default.createElement('br', null)
 		);
@@ -52062,18 +51970,10 @@
 			return _this;
 		}
 
-		// componentWillMount() {
-		// 	if(this.props.enableReinitialize) {
-
-		// 	} else {
-
-		// 	}
-		// }
-
 		_createClass(Formulario, [{
 			key: 'enviarFormulario',
 			value: function enviarFormulario(formProps) {
-				console.log(this.props.editarContenido);
+				console.log('this.props.editarContenido');
 
 				if (this.props.editarContenido) {
 					this.props.editarRol(formProps);
@@ -52094,37 +51994,8 @@
 			key: 'render',
 			value: function render() {
 				var customStyles = {
-					// overlay : {
-					//     position: '',
-					//     // top: 0,
-					//     // left: 0,
-					//     // right: 0,
-					//     // bottom: 0,
-					//     // backgroundColor: 'rgba(255, 255, 255, 0.75)'
-					// },
 					content: {
-						top: '51%',
-						left: '50%',
-						right: 'auto',
-						bottom: 'auto',
-						marginRight: '-50%',
-						transform: 'translate(-50%, -50%)',
-						border: 'none',
-						background: 'none'
-					}
-				};
-
-				var styles = {
-					btn: {
-						marginLeft: "10px"
-					},
-					contenedorCrear: {
-						"margin": "10px"
-					},
-					mostrarRolContainer: {
-						"boxShadow": "0 0 10px #888",
-						"padding": "1em",
-						"background": "#fff"
+						height: '40vh'
 					}
 				};
 
@@ -52151,22 +52022,30 @@
 							style: customStyles },
 						_react2.default.createElement(
 							'div',
-							{ style: styles.mostrarRolContainer },
-							_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
-							this.renderCargando(cargando),
+							{ className: 'container' },
 							_react2.default.createElement(
-								'form',
-								{ onSubmit: handleSubmit(this.enviarFormulario) },
-								_react2.default.createElement(_reduxForm.Field, { name: 'descripcion', type: 'text', component: renderField, label: 'Descripci\xF3n' }),
+								'div',
+								{ className: 'row' },
 								_react2.default.createElement(
-									'button',
-									{ className: '#0288d1 light-blue darken-2 btn', type: 'submit', disabled: submitting },
-									'Guardar'
-								),
-								_react2.default.createElement(
-									'button',
-									{ style: styles.btn, onClick: this.props.cerrarFormularioRol, className: '#0288d1 light-blue darken-2 btn' },
-									'Cancelar'
+									'div',
+									{ className: 'col-xs-12 col-sm-6 col-md-6 col-lg-6' },
+									_react2.default.createElement(_MensajeOerror2.default, { error: error, mensaje: null }),
+									this.renderCargando(cargando),
+									_react2.default.createElement(
+										'form',
+										{ onSubmit: handleSubmit(this.enviarFormulario) },
+										_react2.default.createElement(_reduxForm.Field, { name: 'descripcion', type: 'text', component: renderField, label: 'Descripci\xF3n' }),
+										_react2.default.createElement(
+											'button',
+											{ className: 'btn btn-info btn-space', type: 'submit', disabled: submitting },
+											'Guardar'
+										),
+										_react2.default.createElement(
+											'button',
+											{ onClick: this.props.cerrarFormularioRol, type: 'button', className: 'btn btn-primary btn-space' },
+											'Cancelar'
+										)
+									)
 								)
 							)
 						)
