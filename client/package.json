@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "webpack": "webpack --process --colors --watch"
+    "webpack": "webpack --process --colors --watch",
+    "webpack-server":"webpack-dev-server --history-api-fallback"
   },
   "author": "gamaliel saracho",
   "license": "ISC",
