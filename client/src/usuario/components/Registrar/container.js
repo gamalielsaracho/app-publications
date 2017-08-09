@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	registrarUsuario
+	registrarPersonal
 } from '../../actions'
 
 import Registrar from './Registrar'
@@ -43,14 +43,14 @@ const validate = values => {
 
 function mapStateToProps(state) {
 	return {
-		registro: state.usuario.registro
+		registro: state.personal.registro
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		registrarUsuario: (datosFormulario) => {
-			dispatch(registrarUsuario(datosFormulario))
+		registrarPersonal: (datosFormulario) => {
+			dispatch(registrarPersonal(datosFormulario))
 		}
 	}
 }
