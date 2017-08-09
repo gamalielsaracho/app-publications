@@ -5,7 +5,7 @@ var path = require('path')
 module.exports = {
 	entry: './src/app.js',
 	output: {
-		path: './src/', 
+		path: './disk/', 
 		filename:'bundle.js'
 	},
 
