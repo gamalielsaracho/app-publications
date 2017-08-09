@@ -4,10 +4,11 @@ import { Field, reduxForm } from 'redux-form'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
-    <div>
-      <input {...input} placeholder={label} type={type}/>
-      { touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+    <div className="form-group">
+      <label htmlFor={label}>{label}</label>
+      <input className="form-control" {...input} placeholder={label} type={type}/>
     </div>
+    { touched && ((error && <p className="text-danger text-center">{ error }</p>)) }
   </div>
 )
 
@@ -21,7 +22,7 @@ class Registrar extends Component {
 	}
 
 	enviarFormulario(formProps) {
-		this.props.registrarUsuario(formProps)
+		this.props.registrarPersonal(formProps)
 	}
 
 	renderCargando(cargando) {
@@ -50,21 +51,36 @@ class Registrar extends Component {
 		
 		console.log(this.props.registro)
 		return <div className='container'>
-			<br/>
-			<div className='row center-lg center-md center-sm center-xs'>
-				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-				{ this.renderCargando(cargando) }
-				{ this.renderError(error) }
-				<form onSubmit={handleSubmit(this.enviarFormulario)}>
-					<Field name="nombre" type="text" component={renderField} label="Nombre"/>
-					<Field name="apellido" type="text" component={renderField} label="Apellido"/>
-					<Field name="correo" type="text" component={renderField} label="Correo"/>
-					<Field name="contrasena" type="password" component={renderField} label="Contraseña"/>
-				
-					<button className='right red accent-3 btn' type="submit" disabled={submitting}>Enviar</button>
-				</form>
+
+			{ this.renderCargando(cargando) }
+			{ this.renderError(error) }
+			<form onSubmit={handleSubmit(this.enviarFormulario)}>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-6 col-lg-3'>
+						<Field name="nroDocumento" type="text" component={renderField} label="Numero de documento"/>
+						<Field name="id_especialidad" type="text" component={renderField} label="Especialidades"/>
+						<Field name="id_rol" type="text" component={renderField} label="Rol"/>
+						<Field name="nombres" type="text" component={renderField} label="Nombres"/>
+						<Field name="apellidos" type="text" component={renderField} label="Apellidos"/>
+						<Field name="id_ciudad" type="text" component={renderField} label="Ciudad"/>
+						<Field name="correo" type="text" component={renderField} label="Correo"/>
+					</div>
+					<div className='col-xs-12 col-sm-12 col-md-6 col-lg-3'>
+						<Field name="id_tipoDocumento" type="text" component={renderField} label="Tipo documento"/>
+						<Field name="nroRegistro" type="text" component={renderField} label="Numero de registro"/>
+						<Field name="telefono" type="text" component={renderField} label="Telefono"/>
+						<Field name="celular" type="text" component={renderField} label="Celular"/>
+						<Field name="direccion" type="text" component={renderField} label="Dirección"/>
+						<Field name="fecha_nacimiento" type="date" component={renderField} label="Fecha de nacimiento"/>
+						<Field name="contrasena" type="text" component={renderField} label="Contraseña"/>
+					</div>
 				</div>
-			</div>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-6 col-lg-3'>
+						<button className='right red accent-3 btn' type="submit" disabled={submitting}>Enviar</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	}
 }
