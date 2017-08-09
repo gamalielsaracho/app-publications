@@ -12,10 +12,10 @@ import Formulario from './Formulario'
 const validate = (values) => {
 	const errors = {}
 
-	if(!values.nombre) {
-		errors.nombre = 'Tienes que introducir un nombre.'
-	}else if (values.nombre.length < 5) {
-   		errors.nombre = 'Tiene que ser por lo menos 5 characteres.'
+	if(!values.descripcion) {
+		errors.descripcion = 'Tienes que introducir una descripción.'
+	}else if (values.descripcion.length < 5) {
+   		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
 	}
 
 	return errors
