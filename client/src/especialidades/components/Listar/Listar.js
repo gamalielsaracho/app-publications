@@ -23,26 +23,17 @@ class Listar extends Component {
 	}	
 
 	renderEspecialidades(especialidades) {
-		let style = {
-			btn: {
-				"marginLeft":"10px"
-			}
-		}
-
+		
 		return <tbody>
 			{
 				especialidades.map((especialidad) => {
 					return <tr key={especialidad.id_especialidad}>
-			            <td className='center'>{ especialidad.id_especialidad }</td>
-			            <td className='center'>{ especialidad.descripcion }</td>
-			            <td className='center'>
-			            	<a onClick={() => { this.props.mostrarEspecialidad(especialidad.id_especialidad) }} className="#0288d1 light-blue darken-2 btn">
-			            		Mostrar
-			            	</a>
-			            	<a onClick={() => { this.props.abrirFormularioEditarEspecialidad(especialidad.id_especialidad) }} style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
-			            	<a onClick={() => { this.props.eliminarEspecialidad(especialidad.id_especialidad) }} style={style.btn} className="#e53935 red darken-1 btn">
-			            		Eliminar
-			            	</a>
+			            <td>{ especialidad.id_especialidad }</td>
+			            <td>{ especialidad.descripcion }</td>
+			            <td>
+							<button type="button" onClick={() => { this.props.mostrarEspecialidad(especialidad.id_especialidad) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarEspecialidad(especialidad.id_especialidad) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarEspecialidad(especialidad.id_especialidad) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
@@ -58,34 +49,32 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div>
-				
+					<h1 className='text-center'>Especialidades</h1>
+					
 					<FormularioContainer/>
 					<MostarContainer/>
 
+					<MensajeOerror error={error} mensaje={null}/>
+
 					<div className='row'>
-						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearEspecialidad } className='#0288d1 light-blue darken-2 btn'>Agregar</button>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+							<button type="button" onClick={ this.props.abrirFormularioCrearEspecialidad } className='btn btn-success'>Agregar</button>
 						</div>
 					</div>
-					<MensajeOerror error={error} mensaje={null}/>
-					<div className='row row center-lg center-md center-sm center-xs'>
-						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<h4 className='center'>Especialidades</h4>
 
-							<table>
-								<thead>
-						          <tr>
-						              <th className='center'>Id especialidad</th>
-						              <th className='center'>Descripción</th>
-						              <th className='center'>Opciones</th>
-						          </tr>
-						        </thead>
+					<div className='table-responsive'>
+						<table className='table table-striped'>
+							<thead>
+						    	<tr>
+						        	<th>Id especialidad</th>
+						        	<th>Descripción</th>
+						        	<th>Opciones</th>
+						    	</tr>
+						    </thead>
 
-								{ this.renderEspecialidades(especialidades) }
+							{ this.renderEspecialidades(especialidades) }
 
-							</table>
-
-						</div>
+						</table>
 					</div>
 				</div>
 		}
