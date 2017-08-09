@@ -39,9 +39,9 @@ class Listar extends Component {
 			            <td>{ rol.id_rol }</td>
 			            <td>{ rol.descripcion }</td>
 			            <td>
-							<button onClick={() => { this.props.mostrarRol(rol.id_rol) }} type="button" className="btn btn-info btn-space">Mostrar</button>
-							<button onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} type="button" className="btn btn-warning btn-space">Editar</button>
-							<button onClick={() => { this.props.eliminarRole(rol.id_rol) }} type="button" className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarRole(rol.id_rol) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
