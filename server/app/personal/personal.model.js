@@ -2,14 +2,14 @@
 
 import connection from '../../config/connection'
 
-exports.crear = (data, callback) => {
+exports.create = (data, callback) => {
 
 	return connection.query('INSERT INTO personales SET ?', data, callback)
 
 	connection.end()
 }
 
-exports.verificarCorreo = (correo, callback) => {
+exports.verifyEmail = (correo, callback) => {
 
 	return connection.query('select * from personales where correo = ?', [correo], callback)
 
@@ -20,15 +20,15 @@ exports.verificarCorreo = (correo, callback) => {
 // 	return connection.query('select * from personales where contrasena = ?', [contrasena], callback)
 // }
 
-exports.listar = (callback) => {
+exports.find = (callback) => {
 
 	return connection.query('SELECT * FROM personales', callback)
 
 	connection.end()
 }
 
-exports.mostrar = (userId, callback) => {
-	return connection.query('select * from personales where id = ?', [userId], callback)
+exports.findById = (idPersonal, callback) => {
+	return connection.query('select * from personales where id_personal = ?', [idPersonal], callback)
 
 	connection.end()
 }
