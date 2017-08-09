@@ -11,7 +11,10 @@ body {
 	text-align: justify;
 }
 
-
+/*.center-col {
+	display: flex;
+	align-content: space-between;
+}*/
 
 
 .container-max {
