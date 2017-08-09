@@ -9,7 +9,7 @@ const tokenExpiry = config.key.tokenExpiry
 export default (socket, io) => {
 
 	function personalesLista() {
-		Personal.listar((err, personales) => {
+		Personal.find((err, personales) => {
 			if(err) {
 				socket.emit('listar_personales', { error: 'Ocurrió un error, intente nuevamente.' })
 				return
@@ -23,7 +23,7 @@ export default (socket, io) => {
 
 	socket.on('registrar_personal', (data) => {
 
-		Personal.verificarCorreo(data.correo, (err, personalExistente) => {
+		Personal.verifyEmail(data.correo, (err, personalExistente) => {
 			if(err) {
 				socket.emit('registrar_personal', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
 				return
@@ -34,7 +34,7 @@ export default (socket, io) => {
 			if(personalExistente.length != 0) {
 				socket.emit('registrar_personal', { error: 'Este correo ya está registrado.' })
 			}else {
-				Personal.crear(data, (err, personal) => {
+				Personal.create(data, (err, personal) => {
 					if(err) {
 						socket.emit('registrar_personal', { error: 'Lo sentimos, ocurrió un error. intente nuevamente.' })
 						return
@@ -52,7 +52,7 @@ export default (socket, io) => {
 
 	socket.on('autenticar_personal', (data) => {
 
-		Personal.verificarCorreo(data.correo, (err, personal) => {
+		Personal.verifyEmail(data.correo, (err, personal) => {
 
 			if(err) {
 				return next(err)
@@ -89,7 +89,7 @@ export default (socket, io) => {
 
 
 	socket.on('mostrar_personal', (data) => {
-		Personal.mostrar(data.id_usuario, (err, personal) => {
+		Personal.findById(data.id_usuario, (err, personal) => {
 			if(err) {
 				socket.emit('mostrar_personal', { error: 'Ocurrió un error, intente nuevamente' })
 				return
@@ -112,7 +112,7 @@ export default (socket, io) => {
 				throw error
 			}
 
-			Personal.verificarCorreo(personal.correo, (err, personalFromServer) => {
+			Personal.verifyEmail(personal.correo, (err, personalFromServer) => {
 
 				socket.emit('verificar_token', personalFromServer[0])
 			})
