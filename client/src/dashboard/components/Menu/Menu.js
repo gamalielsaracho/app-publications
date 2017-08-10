@@ -5,7 +5,7 @@ class Menu extends Component {
 	render() {
 
 		return <div className='col-sm-3 col-md-2 back-green'>
-			<div className='row'>
+			<div className='row center-xs center-sm center-md center-lg'>
 				<div className='col-xs-4 col-sm-6 col-md-6 col-lg-6'>
 					<br/>
 					<img className='img-circle img-responsive' src='http://localhost:8080/images/gama.jpg'/>
