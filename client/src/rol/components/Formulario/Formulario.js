@@ -13,7 +13,6 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
     	<input className="form-control" {...input} placeholder={label} type={type}/>
 	</div>
     { touched && ((error && <label className="text-danger">{ error }</label>)) }
-    <br/>
   </div>
 )
 
