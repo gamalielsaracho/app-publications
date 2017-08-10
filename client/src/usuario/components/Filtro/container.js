@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import {
-	buscarUsuarios
+	actualizarFormularioFiltro
 } from '../../actions'
 
 import Filtro from './Filtro'
@@ -10,14 +10,14 @@ import Filtro from './Filtro'
 
 function mapStateToProps(state) {
 	return {
-		filtro: state.usuario.filtro
+		filtro: state.personal.filtro
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		buscarUsuarios: (valores) => {
-			dispatch(buscarUsuarios(valores))
+		actualizarFormularioFiltro: (valores) => {
+			dispatch(actualizarFormularioFiltro(valores))
 		}
 	}
 }
