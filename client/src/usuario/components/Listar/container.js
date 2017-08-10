@@ -26,11 +26,11 @@ function mapDispatchToProps(dispatch) {
 			dispatch(actualizarFormularioFiltro(valores))
 		},
 		filtrarPersonales: (personales, valores) => {
-			console.log("el apellido es: "+valores.apellido)
+			console.log("el apellido es: "+valores.apellidos)
 			
 			personales = personales.filter((u) => {
-				return u.apellido.toLowerCase().match(valores.apellido) &&
-					u.nombre.toLowerCase().match(valores.nombre) &&
+				return u.apellidos.toLowerCase().match(valores.apellidos) &&
+					u.nombres.toLowerCase().match(valores.nombres) &&
 					u.correo.toLowerCase().match(valores.correo)
 			})
 
