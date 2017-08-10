@@ -10,19 +10,19 @@ class Menu extends Component {
 	renderLinks(autenticado, usuario) {
 		if(autenticado) {
 			return <ul className="nav navbar-nav navbar-right">
-				<li><Link to='/dashboard'>Panel</Link></li>
-				<li><Link to='/usuarios'>Usuarios</Link></li>
-				<li><Link to='/perfil'>{ usuario.correo }</Link></li>
+				<li><Link to='/dashboard' className='menu__text-link'>Panel</Link></li>
+				<li><Link to='/usuarios' className='menu__text-link'>Usuarios</Link></li>
+				<li><Link to='/perfil' className='menu__text-link'>{ usuario.correo }</Link></li>
 				<li onClick={() => { this.props.salirPersonal() }}><a>Salir</a></li>
 			</ul>
 		}else {
 			return <ul className="nav navbar-nav navbar-right">
-				<li><Link to='/'>Inicio</Link></li>
-				<li><a href='#nosotros'>Nosotros</a></li>
-				<li><a href='#horarios'>Horarios</a></li>
-				<li><a href='#cantactanos'>Contactanos</a></li>
-				<li><Link to='/registrarse'>Registrarse</Link></li>
-				<li><Link to='/entrar'>Entrar</Link></li>
+				<li><Link to='/' className='menu__text-link'>Inicio</Link></li>
+				<li><a href='#nosotros' className='menu__text-link'>Nosotros</a></li>
+				<li><a href='#horarios' className='menu__text-link'>Horarios</a></li>
+				<li><a href='#cantactanos' className='menu__text-link'>Contactanos</a></li>
+				<li><Link to='/registrarse' className='menu__text-link'>Registrarse</Link></li>
+				<li><Link to='/entrar' className='menu__text-link'>Entrar</Link></li>
 			</ul>
 		}
 	}
@@ -34,26 +34,25 @@ class Menu extends Component {
 		console.log(this.props.usuarioEstado)
 
 
-		return <nav className="navbar navbar-default">
-		  <div className="container-fluid">
-		    <div className="navbar-header">
-		      <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		        <span className="sr-only">Toggle navigation</span>
-		        <span className="icon-bar"></span>
-		        <span className="icon-bar"></span>
-		        <span className="icon-bar"></span>
-		      </button>
-		      <a className="navbar-brand" href="/">Unidad de Salud Familiar</a>
-		    </div>
+		return <div className='back-nav'>
+			<nav className="navbar back-nav container">
+			  <div className="container-fluid">
+			    <div className="navbar-header">
+			      <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span className="foteer__icon icon-list"></span>
+			      </button>
 
-		    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			      <a className="navbar-brand menu__text-link" href="/">Unidad de Salud Familiar</a>
+			    </div>
 
-				{ this.renderLinks(autenticado, datosToken) }
+			    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-		    </div>
-		  </div>
-		</nav>
+					{ this.renderLinks(autenticado, datosToken) }
 
+			    </div>
+			  </div>
+			</nav>
+		</div>
 	}
 }
 
