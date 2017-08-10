@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "webpack": "webpack --process --colors --watch",
-    "webpack-server":"webpack-dev-server --history-api-fallback"
+    "webpack-server":"webpack-dev-server --history-api-fallback",
+    "css": "stylus ./css/app.styl --watch -c"
   },
   "author": "gamaliel saracho",
   "license": "ISC",
