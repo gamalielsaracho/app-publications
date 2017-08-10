@@ -9,7 +9,7 @@ class Filtro extends Component {
 
 		return <div>
 			<input type='text' ref='nombre'
-				onChange={(e) => this.props.buscarUsuarios(this.props.usuarios, ReactDOM.findDOMNode(this.refs.nombre).value)} 
+				onChange={(e) => this.props.actualizarFormularioFiltro(this.props.usuarios, ReactDOM.findDOMNode(this.refs.nombre).value)} 
 				/>
 		</div>
 	}
