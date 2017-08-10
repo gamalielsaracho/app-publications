@@ -4,10 +4,11 @@ import { Field, reduxForm } from 'redux-form'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
-    <div>
-      <input {...input} placeholder={label} type={type}/>
-      {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+    <div className='form-group'>
+		<label htmlFor={label}>{label}</label>
+		<input {...input} placeholder={label} type={type} className="form-control"/>
     </div>
+	{ touched && ((error && <p className="text-danger text-center">{ error }</p>)) }
   </div>
 )
 
@@ -50,18 +51,23 @@ class Autenticar extends Component {
 		console.log(this.props.autenticacion)
 		return <div className='container'>
 			<br/>
-			<div className='row center-lg center-md center-sm center-xs'>
-				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-				{ this.renderCargando(cargando) }
-				{ this.renderError(error) }
-				<form onSubmit={handleSubmit(this.enviarFormulario)}>
-					<Field name="correo" type="text" component={renderField} label="Correo"/>
-					<Field name="contrasena" type="password" component={renderField} label="Contraseña"/>
-				
-					<button className='right red accent-3 btn' type="submit" disabled={submitting}>Enviar</button>
-				</form>
+			<div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-4 col-lg-4 col-centered'>
+					{ this.renderCargando(cargando) }
+					{ this.renderError(error) }
+					<form onSubmit={handleSubmit(this.enviarFormulario)}>
+						<Field name="correo" type="text" component={renderField} label="Correo"/>
+						<Field name="contrasena" type="password" component={renderField} label="Contraseña"/>
+					
+						<div className='row end-lg end-md end-sm end-xs'>
+							<div className='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
+								<button className='btn btn-success text-right' type="submit" disabled={submitting}>Enviar</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
+			<br/>
 		</div>
 	}
 }
