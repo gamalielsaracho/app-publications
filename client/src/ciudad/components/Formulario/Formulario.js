@@ -8,12 +8,11 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
-    <div>
-      <label>{ label }</label>
-      <input {...input} placeholder={label} type={type}/>
-      { touched && ((error && <span>{error}</span>)) }
+    <div className="form-group">
+      <label htmlFor={label}>{ label }</label>
+      <input className="form-control" {...input} placeholder={label} type={type}/>
     </div>
-    <br/>
+    { touched && ((error && <label className="text-danger">{ error }</label>)) }
   </div>
 )
 
@@ -42,39 +41,10 @@ class Formulario extends Component {
 
 	render() {
 		const customStyles = {
-			// overlay : {
-			//     position: '',
-			//     // top: 0,
-			//     // left: 0,
-			//     // right: 0,
-			//     // bottom: 0,
-			//     // backgroundColor: 'rgba(255, 255, 255, 0.75)'
-			// },
 		    content : {
-			    top: '51%',
-			    left: '50%',
-			    right: 'auto',
-			    bottom: 'auto',
-			    marginRight: '-50%',
-			    transform: 'translate(-50%, -50%)',
-			    border: 'none',
-			    background: 'none'
+			    height: '40vh',
+		  		position: 'none'
 		  	}
-		}
-
-
-		let styles = {
-			btn: {
-				marginLeft:"10px"
-			},
-			contenedorCrear: {
-				"margin": "10px"
-			},
-			mostrarRolContainer: {
-				"boxShadow":"0 0 10px #888",
-				"padding":"1em",
-				"background": "#fff"
-			}
 		}
 
 		const { handleSubmit, pristine, reset, submitting } = this.props
@@ -90,16 +60,20 @@ class Formulario extends Component {
 					       	contentLabel="Minimal Modal Example"
 					       	style={customStyles}>
 
-				<div style={styles.mostrarRolContainer}>
-					<MensajeOerror error={error} mensaje={null}/>
-					{ this.renderCargando(cargando) }
+				<div className='container'>
+					<div className='row'>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+							<MensajeOerror error={error} mensaje={null}/>
+							{ this.renderCargando(cargando) }
 
-					<form onSubmit={handleSubmit(this.enviarFormulario)}>
-						<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-												
-						<button className='#0288d1 light-blue darken-2 btn' type="submit" disabled={submitting}>Guardar</button>
-						<button style={styles.btn} onClick={ this.props.cerrarFormularioCiudad } className='#0288d1 light-blue darken-2 btn'>Cancelar</button>
-					</form>
+							<form onSubmit={handleSubmit(this.enviarFormulario)}>
+								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
+														
+								<button type="submit" className='btn btn-info btn-space' disabled={submitting}>Guardar</button>
+								<button onClick={ this.props.cerrarFormularioCiudad } className='btn btn-primary btn-space'>Cancelar</button>
+							</form>
+						</div>
+					</div>
 				</div>
 			</ReactModal>
 		} else {
