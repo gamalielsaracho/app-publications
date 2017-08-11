@@ -70,7 +70,7 @@ class Listar extends Component {
 			return <Cargando/>
 		}else {
 			return <div>
-				<h1 className='text-center'>Usuarios</h1>
+				<h1 className='text-center'>Personales</h1>
 				<br/>
 				<div className='row'>
 					<div className='col-lg-4'>
