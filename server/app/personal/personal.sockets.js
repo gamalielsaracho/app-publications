@@ -55,7 +55,7 @@ export default (socket, io) => {
 		Personal.verifyEmail(data.correo, (err, personal) => {
 
 			if(err) {
-				return next(err)
+				return console.log(err)
 			}
 
 			if(personal[0]) {
