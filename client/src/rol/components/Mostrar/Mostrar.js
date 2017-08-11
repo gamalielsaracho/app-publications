@@ -33,7 +33,8 @@ class Mostrar extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh'
+		  		height: '40vh',
+		  		position: 'none'
 		  	}
 		}
 
@@ -48,14 +49,13 @@ class Mostrar extends Component {
 				       	style={customStyles}>
 
 				<div className='container'>
-					<div className='row'>
-						<p className='text-right'>
-							<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
-						</p>
+
+					<div className='row end-lg end-md end-sm end-xs'>
+						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
 					</div>
 
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
 							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
