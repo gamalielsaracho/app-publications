@@ -35,18 +35,14 @@ class Listar extends Component {
 			{
 				ciudades.map((ciudad) => {
 					return <tr key={ciudad.id_ciudad}>
-			            <td className='center'>{ ciudad.id_ciudad }</td>
-			            <td className='center'>{ ciudad.descripcion }</td>
-			            <td className='center'>
-			            	<a onClick={() => { this.props.mostrarCiudad(ciudad.id_ciudad) }} className="#0288d1 light-blue darken-2 btn">
-			            		Mostrar
-			            	</a>
-			            	<a onClick={() => { this.props.abrirFormularioEditarCiudad(ciudad.id_ciudad) }} style={style.btn} className="#0288d1 light-green darken-2 btn">Editar</a>
-			            	<a onClick={() => { this.props.eliminarCiudad(ciudad.id_ciudad) }} style={style.btn} className="#e53935 red darken-1 btn">
-			            		Eliminar
-			            	</a>
+			            <td>{ ciudad.id_ciudad }</td>
+			            <td>{ ciudad.descripcion }</td>
+			            <td>
+							<button type="button" onClick={() => { this.props.mostrarCiudad(ciudad.id_ciudad) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarCiudad(ciudad.id_ciudad) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarCiudad(ciudad.id_ciudad) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
-			        </tr>		
+			        </tr>	
 				})
 			}
 		</tbody>
@@ -60,34 +56,34 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div>
-				
+					<h1 className='text-center'>Ciudades</h1>
+
 					<FormularioContainer/>
 					<MostarContainer/>
 
+					<MensajeOerror error={error} mensaje={null}/>
+
 					<div className='row'>
 						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearCiudad } className='#0288d1 light-blue darken-2 btn'>Agregar</button>
+							<button onClick={ this.props.abrirFormularioCrearCiudad } className='btn btn-success'>Agregar</button>
 						</div>
 					</div>
-					<MensajeOerror error={error} mensaje={null}/>
-					<div className='row row center-lg center-md center-sm center-xs'>
-						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<h4 className='center'>Ciudades</h4>
+					<br/>
+					
+					<div className='table-responsive'>
 
-							<table>
-								<thead>
-						          <tr>
-						              <th className='center'>Id_ciudad</th>
-						              <th className='center'>Descripción</th>
-						              <th className='center'>Opciones</th>
-						          </tr>
-						        </thead>
+						<table className='table table-striped'>
+							<thead>
+						    	<tr>
+						        	<th className='center'>Id_ciudad</th>
+						        	<th className='center'>Descripción</th>
+						        	<th className='center'>Opciones</th>
+						    	</tr>
+						    </thead>
 
-								{ this.renderCiudades(ciudades) }
+							{ this.renderCiudades(ciudades) }
 
-							</table>
-
-						</div>
+						</table>
 					</div>
 				</div>
 		}
