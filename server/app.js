@@ -18,6 +18,8 @@ io.on('connection', function (socket) {
 	require('././app/rol/rol.sockets')(socket, io)
 	require('././app/especialidad/especialidad.sockets')(socket, io)
 	require('././app/ciudad/ciudad.sockets')(socket, io)
+	require('././app/departamento/departamento.sockets')(socket, io)
+	
 
 	socket.on('disconnect', function () {
 		console.log('El usuario se Desconecto.')
