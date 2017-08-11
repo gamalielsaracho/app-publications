@@ -23,6 +23,9 @@ import ListarEspecialidadesPage from '././especialidades/pages/ListarEspecialida
 // CIUDADES.
 import ListarCiudadesPage from '././ciudad/pages/ListarCiudadesPage'
 
+// DEPARTAMENTOS.
+import ListarDepartamentosPage from '././departamento/pages/ListarDepartamentosPage'
+
 export default (
 	<Route path='/' component={AppContainer}>
 		<IndexRoute component={HomePage}/>
@@ -34,6 +37,7 @@ export default (
 			<Route path='/roles' component={ListarRolesPage}/>
 			<Route path='/especialidades' component={ListarEspecialidadesPage}/>
 			<Route path='/ciudades' component={ListarCiudadesPage}/>
+			<Route path='/departamentos' component={ListarDepartamentosPage}/>
 			
 		</Route>
 	</Route>)
