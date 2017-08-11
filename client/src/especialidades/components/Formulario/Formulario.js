@@ -13,7 +13,6 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
       <input className="form-control" {...input} placeholder={label} type={type}/>
     </div>
     { touched && ((error && <label className="text-danger">{ error }</label>)) }
-    <br/>
   </div>
 )
 
@@ -43,7 +42,8 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh'
+		  		height: '40vh',
+		  		position: 'none'
 		  	}
 		}
 
