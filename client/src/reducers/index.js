@@ -6,6 +6,8 @@ import personalReducer from '../usuario/reducer'
 import rolReducer from '../rol/reducer'
 import especialidadReducer from '../especialidades/reducer'
 import ciudadReducer from '../ciudad/reducer'
+import departamentoReducer from '../departamento/reducer'
+
 
 
 const rootReducer = combineReducers({
@@ -13,7 +15,8 @@ const rootReducer = combineReducers({
 	personal: personalReducer,
 	rol: rolReducer,
 	especialidad: especialidadReducer,
-	ciudad: ciudadReducer
+	ciudad: ciudadReducer,
+	departamento: departamentoReducer
 })
 
 export default rootReducer
