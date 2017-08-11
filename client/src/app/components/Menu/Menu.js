@@ -13,7 +13,7 @@ class Menu extends Component {
 				<li><Link to='/dashboard' className='menu__text-link'>Panel</Link></li>
 				<li><Link to='/usuarios' className='menu__text-link'>Usuarios</Link></li>
 				<li><Link to='/perfil' className='menu__text-link'>{ usuario.correo }</Link></li>
-				<li onClick={() => { this.props.salirPersonal() }}><a>Salir</a></li>
+				<li onClick={() => { this.props.salirPersonal() }}><a className='menu__text-link'>Salir</a></li>
 			</ul>
 		}else {
 			return <ul className="nav navbar-nav navbar-right">
