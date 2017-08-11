@@ -65,7 +65,7 @@ class Listar extends Component {
 					<MensajeOerror error={error} mensaje={null}/>
 
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
 							<button onClick={ this.props.abrirFormularioCrearRol } className='btn btn-success'>Agregar</button>
 						</div>
 					</div>
