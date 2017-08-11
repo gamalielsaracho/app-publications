@@ -44,7 +44,8 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh'
+		  		height: '40vh',
+		  		position: 'none'
 		  	}
 		}
 
@@ -71,8 +72,8 @@ class Formulario extends Component {
 								
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
-								<button className="btn btn-info btn-space" type="submit" disabled={submitting}>Guardar</button>
-								<button onClick={ this.props.cerrarFormularioRol } type="button" className="btn btn-primary btn-space">Cancelar</button>
+								<button type="submit" className="btn btn-info btn-space" disabled={submitting}>Guardar</button>
+								<button type="button" onClick={ this.props.cerrarFormularioRol } className="btn btn-primary btn-space">Cancelar</button>
 								
 							</form>
 						</div>
