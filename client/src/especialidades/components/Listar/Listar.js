@@ -61,6 +61,7 @@ class Listar extends Component {
 							<button type="button" onClick={ this.props.abrirFormularioCrearEspecialidad } className='btn btn-success'>Agregar</button>
 						</div>
 					</div>
+					<br/>
 
 					<div className='table-responsive'>
 						<table className='table table-striped'>
