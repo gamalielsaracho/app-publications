@@ -18,6 +18,7 @@ class Menu extends Component {
 				<li><Link to='/roles'>Roles <span className="badge">1</span></Link></li>
 				<li><Link to='/especialidades'>Especialidades <span className="badge">0</span></Link></li>
 				<li><Link to='/ciudades'>Ciudades <span className="badge">8</span></Link></li>
+				<li><Link to='/departamentos'>Departamentos <span className="badge">8</span></Link></li>
 	        </ul>
 						
 		</div>
