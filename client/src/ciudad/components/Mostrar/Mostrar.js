@@ -23,7 +23,7 @@ class Mostrar extends Component {
 	renderCiudad(ciudad) {
 		if(ciudad) {
 			return <div>
-				<span>Nombre: { ciudad.descripcion }</span>
+				<p><strong>Nombre:</strong> { ciudad.descripcion }</p>
 			</div>
 		} else {
 			return <span></span>
@@ -32,32 +32,10 @@ class Mostrar extends Component {
 
 	render() {
 		const customStyles = {
-			// overlay : {
-			//     position: '',
-			//     // top: 0,
-			//     // left: 0,
-			//     // right: 0,
-			//     // bottom: 0,
-			//     // backgroundColor: 'rgba(255, 255, 255, 0.75)'
-			// },
 		    content : {
-			    top: '39%',
-			    left: '50%',
-			    right: 'auto',
-			    bottom: 'auto',
-			    marginRight: '-50%',
-			    transform: 'translate(-50%, -50%)',
-			    border: 'none',
-			    background: 'none'
+		  		height: '40vh',
+		  		position: 'none'
 		  	}
-		}
-
-		let styles = {
-			mostrarRolContainer: {
-				"boxShadow":"0 0 10px #888",
-				"padding":"1em",
-				"background": "#fff"
-			}
 		}
 
 		const { cargando, ciudad, error, abierto } = this.props.mostrar
@@ -69,21 +47,18 @@ class Mostrar extends Component {
 				       	contentLabel="Minimal Modal Example"
 				       	style={customStyles}>
 
-				<div style={styles.mostrarRolContainer} className='container'>
+				<div className='container'>
 					
 					<div className='row end-lg end-md end-sm end-xs'>
-						<span onClick={() => { this.props.cerrarModalMostrarCiudad() }}>Cerrar</span>
+						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarCiudad() }}></span>
 					</div>
 
-					<div className='row center-lg center-md center-sm center-xs'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+					<div className='row'>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
 							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
 							{ this.renderCiudad(ciudad) }
-						</div>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-							
 						</div>
 					</div>
 				</div>
