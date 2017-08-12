@@ -22,14 +22,14 @@ export default (socket, io) => {
 	personalesLista()
 
 	socket.on('registrar_personal', (data) => {
-
-		Personal.verifyEmail(data.correo, (err, personalExistente) => {
+		// console.log(data)
+		Personal.verifyEmailRegister(data.correo, (err, personalExistente) => {
 			if(err) {
 				socket.emit('registrar_personal', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
 				return
 			}
 
-			console.log(personalExistente.length != 0)
+			console.log(personalExistente)
 
 			if(personalExistente.length != 0) {
 				socket.emit('registrar_personal', { error: 'Este correo ya está registrado.' })
@@ -52,25 +52,30 @@ export default (socket, io) => {
 
 	socket.on('autenticar_personal', (data) => {
 
-		Personal.verifyEmail(data.correo, (err, personal) => {
+		Personal.verifyEmailAuth(data.correo, (err, contenido) => {
+
+			let dato = contenido[0]
+			
+			console.log(dato)
 
 			if(err) {
 				return console.log(err)
 			}
 
-			if(personal[0]) {
-				console.log("contrasena server: "+personal[0].contrasena)
+			if(dato) {
+				console.log("contrasena server: "+dato.personal.contrasena)
 
-				if(personal[0].contrasena != data.contrasena) {
+				if(dato.personal.contrasena != data.contrasena) {
 					socket.emit('autenticar_personal', { error: 'La contraseña es incorrecta.' })
 					return
 				}
 
 				let datosToken = {
-					id: personal[0].id,
-					nombre: personal[0].nombre,
-					apellido: personal[0].apellido,
-					correo: personal[0].correo
+					id_personal: dato.personal.id_personal,
+					nombres: dato.personal.nombres,
+					apellidos: dato.personal.apellidos,
+					correo: dato.personal.correo,
+					rol: dato.rol.descripcion
 				}
 
 				const token = jwt.sign(datosToken, privateKey, { expiresIn: tokenExpiry })
@@ -112,7 +117,7 @@ export default (socket, io) => {
 				throw error
 			}
 
-			Personal.verifyEmail(personal.correo, (err, personalFromServer) => {
+			Personal.verifyEmailAuth(personal.correo, (err, personalFromServer) => {
 
 				socket.emit('verificar_token', personalFromServer[0])
 			})
