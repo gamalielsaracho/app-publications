@@ -7,7 +7,6 @@ import {
 	AUTENTICAR_PERSONAL_EXITO,
 	AUTENTICAR_PERSONAL_FALLO,
 
-	VERIFICAR_TOKEN_PERSONAL_REQUEST,
 	VERIFICAR_TOKEN_PERSONAL_EXITO,
 	VERIFICAR_TOKEN_PERSONAL_FALLO,
 
@@ -73,7 +72,6 @@ export function autenticarPersonal(datosFormulario) {
 export function verificarTokenPersonal(token) {
 
 	return (dispatch) => {
-		dispatch({ type: VERIFICAR_TOKEN_PERSONAL_REQUEST })
 
 		socketPersonal.emit('verificar_token', { token: token })
 		socketPersonal.on('verificar_token', (data) => {
