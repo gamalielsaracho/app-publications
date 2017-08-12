@@ -21,6 +21,11 @@ class Formulario extends Component {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
 		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFieldSelectDepartamento = this.renderFieldSelectDepartamento.bind(this)
+	}
+
+	componentWillMount() {
+		this.props.listarDepartamentos()
 	}
 
 	enviarFormulario(formProps) {
@@ -34,6 +39,32 @@ class Formulario extends Component {
 	renderCargando(cargando) {
 		if(cargando) {
 			return <Cargando/>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderFieldSelectDepartamento({ input, label, listaDepartamentos, type, meta: { touched, error, warning } }) {
+		let departamentos = listaDepartamentos.departamentos
+
+		if(departamentos) {
+			return <div>
+				<div className='form-group'>
+			    	<label htmlFor={label}>{label}</label>
+					<select {...input} name={name} className='form-control'>
+						<option value=''>Selecionar Departamento</option>
+						{
+							departamentos.map((departamento) => {
+								return <option key={departamento.id_departamento} value={departamento.id_departamento}>
+									{ departamento.descripcion }
+								</option>
+							})
+						}
+							
+					</select>
+				</div>
+		    	{ touched && ((error && <p className="text-danger text-center">{ error }</p>)) }
+			</div>
 		} else {
 			return <span></span>
 		}
@@ -67,6 +98,7 @@ class Formulario extends Component {
 							{ this.renderCargando(cargando) }
 
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
+								<Field name='id_departamento' type='text' component={this.renderFieldSelectDepartamento} listaDepartamentos={this.props.listaDepartamentos} label='Departamento'/>
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
 								<button type="submit" className='btn btn-info btn-space' disabled={submitting}>Guardar</button>
