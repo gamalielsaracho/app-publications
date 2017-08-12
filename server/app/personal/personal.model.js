@@ -9,9 +9,24 @@ exports.create = (data, callback) => {
 	connection.end()
 }
 
-exports.verifyEmail = (correo, callback) => {
+exports.verifyEmailRegister = (correo, callback) => {
+	var options = {
+		sql: 'select * from personales where correo = ?', 
+		nestTables: false
+	}
 
-	return connection.query('select * from personales where correo = ?', [correo], callback)
+	return connection.query(options, [correo], callback)
+
+	connection.end()
+}
+
+exports.verifyEmailAuth = (correo, callback) => {
+	var options = {
+		sql: 'select * from personales personal, roles rol where personal.id_rol = rol.id_rol AND correo = ?', 
+		nestTables: true
+	}
+
+	return connection.query(options, [correo], callback)
 
 	connection.end()
 }
@@ -21,8 +36,12 @@ exports.verifyEmail = (correo, callback) => {
 // }
 
 exports.find = (callback) => {
+	var options = {
+		sql: 'SELECT * FROM personales personal, roles rol where personal.id_rol = rol.id_rol', 
+		nestTables: true
+	}
 
-	return connection.query('SELECT * FROM personales', callback)
+	return connection.query(options, callback)
 
 	connection.end()
 }
