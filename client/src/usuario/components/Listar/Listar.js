@@ -18,8 +18,8 @@ class Listar extends Component {
 
 	handleChange(e) {
 		let valoresInputActualizando = {
-			nombre: ReactDOM.findDOMNode(this.refs.nombre).value,
-			apellido: ReactDOM.findDOMNode(this.refs.apellido).value,
+			nombres: ReactDOM.findDOMNode(this.refs.nombres).value,
+			apellidos: ReactDOM.findDOMNode(this.refs.apellidos).value,
 			correo: ReactDOM.findDOMNode(this.refs.correo).value
 		}
 
@@ -31,23 +31,23 @@ class Listar extends Component {
 		let filtro = this.props.filtro
 
 		let con = { // Condiciones.
-			nombre: filtro.nombre.trim().toLowerCase(),
-			apellido: filtro.apellido.trim().toLowerCase(),
+			nombres: filtro.nombres.trim().toLowerCase(),
+			apellidos: filtro.apellidos.trim().toLowerCase(),
 			correo: filtro.correo.trim().toLowerCase()
 		}
 
 
-		if(con.nombre.length > 0 || con.apellido.length > 0 || con.correo.length > 0){
+		if(con.nombres.length > 0 || con.apellidos.length > 0 || con.correo.length > 0){
 			personales = this.props.filtrarPersonales(personales, con)
 		}
 
 		return <tbody>
 				{
-				  personales.map((personal) => {
-					return <tr key={personal.id_personal}>
-			            <td>{ personal.nombre }</td>
-			            <td>{ personal.apellido }</td>
-			            <td>{ personal.correo }</td>
+				  personales.map((dato) => {
+					return <tr key={dato.personal.id_personal}>
+			            <td>{ dato.personal.nombres }</td>
+			            <td>{ dato.personal.apellidos }</td>
+			            <td>{ dato.personal.correo }</td>
 			            <td>
 							<button type="button" className="btn btn-success">Editar</button>
 							<button type="button" className="btn btn-danger btn-space">Eliminar</button>
@@ -76,14 +76,14 @@ class Listar extends Component {
 					<div className='col-lg-4'>
 						<div className="input-group">
 							<input className='form-control' type='text' placeholder='Nombre'
-							value={filtro.nombre} ref='nombre'
+							value={filtro.nombres} ref='nombres'
 							onChange={this.handleChange} />
 							</div> 
 						</div>
 					<div className='col-lg-4'>
 						<div className="input-group">
 							<input className='form-control' type='text' placeholder='Apellido'
-							value={filtro.apellido} ref='apellido'
+							value={filtro.apellidos} ref='apellidos'
 							onChange={this.handleChange}/>
 						</div>
 					</div>
