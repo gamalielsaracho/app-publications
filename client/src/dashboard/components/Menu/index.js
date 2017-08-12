@@ -1,2 +1,2 @@
-import Menu from './Menu'
-export default Menu
+import MenuContainer from './container'
+export default MenuContainer
