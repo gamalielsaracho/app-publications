@@ -7,7 +7,6 @@ import {
 	AUTENTICAR_PERSONAL_EXITO,
 	AUTENTICAR_PERSONAL_FALLO,
 
-	VERIFICAR_TOKEN_PERSONAL_REQUEST,
 	VERIFICAR_TOKEN_PERSONAL_EXITO,
 	VERIFICAR_TOKEN_PERSONAL_FALLO,
 
@@ -23,7 +22,7 @@ import {
 
 const INITIAL_STATE = {
 	filtro: { 
-		nombre: '', apellido: '', correo: ''  
+		nombres: '', apellidos: '', correo: ''  
 	},
 	listar: { personales:[], cargando: false, error: '' },
 	registro:{ mensaje:'', error:'', cargando:false },
@@ -31,7 +30,7 @@ const INITIAL_STATE = {
 	mostrar: { mensaje:'', error:'', cargando:false, personal: {} },
 	actualizar:{ mensaje:'', error:'', cargando:false },
 	usuarioEstado: {
-		cargando: false,
+		// cargando: false,
 		error: '',
 		datosToken: {},
 		autenticado: false
@@ -71,15 +70,11 @@ export default function (state = INITIAL_STATE, action) {
 				autenticacion:{ cargando:false, error: action.payload.error, mensaje:'' }
 			})
 
-		case VERIFICAR_TOKEN_PERSONAL_REQUEST:
-			return Object.assign({}, state, { 
-				usuarioEstado:{ cargando: true }
-			})
 
 		case VERIFICAR_TOKEN_PERSONAL_EXITO:
 			return Object.assign({}, state, { 
 				usuarioEstado:{
-					cargando: false,
+					// cargando: false,
 					error: '',
 					datosToken: action.payload,
 					autenticado: true 
@@ -89,7 +84,7 @@ export default function (state = INITIAL_STATE, action) {
 		case VERIFICAR_TOKEN_PERSONAL_FALLO:
 			return Object.assign({}, state, { 
 				usuarioEstado:{
-					cargando: false,
+					// cargando: false,
 					datosToken: {},
 					autenticado: false, 
 					error: action.payload.error
@@ -134,8 +129,8 @@ export default function (state = INITIAL_STATE, action) {
 
 			return state = Object.assign({}, state, {
 				filtro: {
-					nombre: valores.nombre,
-					apellido: valores.apellido,
+					nombres: valores.nombres,
+					apellidos: valores.apellidos,
 					correo: valores.correo 
 				}
 			})
