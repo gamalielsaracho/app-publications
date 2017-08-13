@@ -8,6 +8,8 @@ import especialidadReducer from '../especialidades/reducer'
 import ciudadReducer from '../ciudad/reducer'
 import departamentoReducer from '../departamento/reducer'
 
+import areaReducer from '../area/reducer'
+import alergiaReducer from '../alergia/reducer'
 
 
 const rootReducer = combineReducers({
@@ -16,7 +18,9 @@ const rootReducer = combineReducers({
 	rol: rolReducer,
 	especialidad: especialidadReducer,
 	ciudad: ciudadReducer,
-	departamento: departamentoReducer
+	departamento: departamentoReducer,
+	area: areaReducer,
+	alergia: alergiaReducer
 })
 
 export default rootReducer
