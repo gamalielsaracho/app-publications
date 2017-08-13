@@ -75,9 +75,9 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th className='center'>Id</th>
-						        	<th className='center'>Nombre</th>
-						        	<th className='center'>Opciones</th>
+						        	<th>Id</th>
+						        	<th>Nombre</th>
+						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
 
