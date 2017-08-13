@@ -6,6 +6,8 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import FormularioContainer from '../../../departamento/components/Formulario'
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
     <div className="form-group">
@@ -48,7 +50,7 @@ class Formulario extends Component {
 		let departamentos = listaDepartamentos.departamentos
 
 		if(departamentos) {
-			return <div>
+			return <div className="form-inline">
 				<div className='form-group'>
 			    	<label htmlFor={label}>{label}</label>
 					<select {...input} name={name} className='form-control'>
@@ -63,8 +65,12 @@ class Formulario extends Component {
 							
 					</select>
 				</div>
-		    	{ touched && ((error && <p className="text-danger text-center">{ error }</p>)) }
+		
+				<button type='button' onClick={ this.props.abrirFormularioCrearDepartamento } className='btn btn-success btn-space'>Nuevo Departamento</button>
+
+		    	{ touched && ((error && <div><br/><p className="text-danger text-center">{ error }</p></div>)) }
 			</div>
+
 		} else {
 			return <span></span>
 		}
@@ -73,7 +79,7 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-			    height: '40vh',
+			    height: '50vh',
 		  		position: 'none'
 		  	}
 		}
@@ -97,14 +103,19 @@ class Formulario extends Component {
 							<MensajeOerror error={error} mensaje={null}/>
 							{ this.renderCargando(cargando) }
 
+							<FormularioContainer/>
+
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								<Field name='id_departamento' type='text' component={this.renderFieldSelectDepartamento} listaDepartamentos={this.props.listaDepartamentos} label='Departamento'/>
+								
+								<Field name='id_departamento' type='text' component={this.renderFieldSelectDepartamento} listaDepartamentos={this.props.listaDepartamentos} label='Departamento: '/>
+								<br/>
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
 								<button type="submit" className='btn btn-info btn-space' disabled={submitting}>Guardar</button>
-								<button onClick={ this.props.cerrarFormularioCiudad } className='btn btn-primary btn-space'>Cancelar</button>
+								<button type='button' onClick={ this.props.cerrarFormularioCiudad } className='btn btn-primary btn-space'>Cancelar</button>
 							</form>
 						</div>
+						
 					</div>
 				</div>
 			</ReactModal>

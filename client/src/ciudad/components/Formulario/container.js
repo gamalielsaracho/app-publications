@@ -8,13 +8,18 @@ import {
 } from '../../actions'
 
 import {
-	listarDepartamentos
+	listarDepartamentos,
+	abrirFormularioCrearDepartamento
 } from '../../../departamento/actions'
 
 import Formulario from './Formulario'
 
 const validate = (values) => {
 	const errors = {}
+
+	if(!values.id_departamento) {
+		errors.id_departamento = 'Tienes que introducir un departamento.'
+	}
 
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
@@ -52,6 +57,9 @@ function mapDispatchToProps(dispatch) {
 
 		listarDepartamentos: () => {
 			dispatch(listarDepartamentos())
+		},
+		abrirFormularioCrearDepartamento: () => {
+			dispatch(abrirFormularioCrearDepartamento())
 		}
 	}
 }
