@@ -14,11 +14,17 @@ app.get('/', (req, res) => {
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
 	
+	// Personal.
 	require('././app/personal/personal.sockets')(socket, io)
 	require('././app/rol/rol.sockets')(socket, io)
 	require('././app/especialidad/especialidad.sockets')(socket, io)
 	require('././app/ciudad/ciudad.sockets')(socket, io)
 	require('././app/departamento/departamento.sockets')(socket, io)
+
+	// Paciente.
+	require('././app/area/area.sockets')(socket, io)
+	require('././app/alergia/alergia.sockets')(socket, io)
+
 	
 
 	socket.on('disconnect', function () {
