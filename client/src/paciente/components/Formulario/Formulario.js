@@ -6,6 +6,8 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import FieldSelectAreas from '../../../area/components/FieldSelectAreas'
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -21,6 +23,10 @@ class Formulario extends Component {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
 		this.renderCargando = this.renderCargando.bind(this)
+	}
+
+	componentWillMount() {
+		this.props.listarAreas()
 	}
 
 	enviarFormulario(formProps) {
@@ -70,8 +76,10 @@ class Formulario extends Component {
 
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								
+								<Field name='id_area' type='text' component={FieldSelectAreas} listaAreas={this.props.listaAreas} label='Area'/>
+								
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-														
+
 								<button type="submit" className="btn btn-info btn-space" disabled={submitting}>Guardar</button>
 								<button type="button" onClick={ this.props.cerrarFormularioPaciente } className="btn btn-primary btn-space">Cancelar</button>
 								
