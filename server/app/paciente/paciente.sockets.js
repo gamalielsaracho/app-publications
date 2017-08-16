@@ -35,11 +35,15 @@ export default (socket, io) => {
 
 
 		socket.on('mostrar_paciente', (data) => {
-			Paciente.findById(data.id_paciente, (err, paciente) => {
+			console.log(data)
+			Paciente.findById(data, (err, paciente) => {
 				if(err) {
+					console.log(err)
 					socket.emit('mostrar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
+
+				console.log(paciente)
 
 				socket.emit('mostrar_paciente', paciente[0])
 			})
@@ -47,7 +51,7 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_paciente', (data) => {
-			Paciente.delete(data.id_paciente, (err) => {
+			Paciente.delete(data, (err) => {
 				if(err) {
 					socket.emit('eliminar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 					return
