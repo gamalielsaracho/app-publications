@@ -7,6 +7,10 @@ import {
 	cerrarFormularioPaciente
 } from '../../actions'
 
+import {
+	listarAreas,
+} from '../../../area/actions'
+
 import Formulario from './Formulario'
 
 const validate = (values) => {
@@ -26,7 +30,9 @@ function mapStateToProps(state) {
 		formulario: state.paciente.formulario,
 		initialValues: state.paciente.formulario.paciente,
 		enableReinitialize: state.paciente.formulario.iniciarValores,
-		editarContenido: state.paciente.formulario.iniciarValores
+		editarContenido: state.paciente.formulario.iniciarValores,
+
+    	listaAreas: state.area.listar,
 	}
 }
 
@@ -41,6 +47,10 @@ function mapDispatchToProps(dispatch) {
 		},
 		editarPaciente: (datosFormulario) => {
 			dispatch(editarPaciente(datosFormulario))
+		},
+
+		listarAreas: () => {
+			dispatch(listarAreas())
 		}
 	}
 }
