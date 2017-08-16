@@ -37,6 +37,7 @@ class Menu extends Component {
 			<li><Link to='/departamentos'>Departamentos (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/areas'>Areas (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/alergias'>Alergias (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
 		</ul>
 	}
 
@@ -49,6 +50,7 @@ class Menu extends Component {
 			<li><Link to='/departamentos'>Departamentos (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/areas'>Areas (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/alergias'>Alergias (Ven) <span className="badge">8</span></Link></li>
+			<li><Link to='/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
 		</ul>
 	}
 
