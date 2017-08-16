@@ -32,6 +32,9 @@ import ListarAreasPage from '././area/pages/ListarAreasPage'
 // ALERGIAS.
 import ListarAlergiasPage from '././alergia/pages/ListarAlergiasPage'
 
+// PACIENTES
+import ListarPacientesPage from '././paciente/pages/ListarPacientesPage'
+
 export default (
 	<Route path='/' component={AppContainer}>
 		<IndexRoute component={HomePage}/>
@@ -47,6 +50,6 @@ export default (
 			
 			<Route path='/areas' component={ListarAreasPage}/>
 			<Route path='/alergias' component={ListarAlergiasPage}/>
-
+			<Route path='/pacientes' component={ListarPacientesPage}/>
 		</Route>
 	</Route>)
