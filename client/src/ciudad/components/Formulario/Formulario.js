@@ -50,27 +50,31 @@ class Formulario extends Component {
 		let departamentos = listaDepartamentos.departamentos
 
 		if(departamentos) {
-			return <div className="form-inline">
-				<div className='form-group'>
-			    	<label htmlFor={label}>{label}</label>
-					<select {...input} name={name} className='form-control'>
-						<option value=''>Selecionar Departamento</option>
-						{
-							departamentos.map((departamento) => {
-								return <option key={departamento.id_departamento} value={departamento.id_departamento}>
-									{ departamento.descripcion }
-								</option>
-							})
-						}
-							
-					</select>
+			return <div className="form-group">
+			    <label htmlFor={label}>{label}</label>
+
+				<div className='form-inline'>
+					<div className="form-group">
+						<select {...input} name={name} className='form-control'>
+							<option value=''>Selecionar Departamento</option>
+							{
+								departamentos.map((departamento) => {
+									return <option key={departamento.id_departamento} value={departamento.id_departamento}>
+										{ departamento.descripcion }
+									</option>
+								})
+							}
+								
+						</select>
+					</div>
+
+					<button type='button' onClick={ this.props.abrirFormularioCrearDepartamento } className='btn btn-success btn-space btn-sm'>
+						<span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo Departamento
+					</button>
+
+			    	{ touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
-		
-				<button type='button' onClick={ this.props.abrirFormularioCrearDepartamento } className='btn btn-success btn-space'>Nuevo Departamento</button>
-
-		    	{ touched && ((error && <div><br/><p className="text-danger text-center">{ error }</p></div>)) }
 			</div>
-
 		} else {
 			return <span></span>
 		}
@@ -98,6 +102,8 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
+					<h4 className='text-center'>Formulario ciudad</h4>
+
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							<MensajeOerror error={error} mensaje={null}/>
@@ -107,8 +113,7 @@ class Formulario extends Component {
 
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								
-								<Field name='id_departamento' type='text' component={this.renderFieldSelectDepartamento} listaDepartamentos={this.props.listaDepartamentos} label='Departamento: '/>
-								<br/>
+								<Field name='id_departamento' type='text' component={this.renderFieldSelectDepartamento} listaDepartamentos={this.props.listaDepartamentos} label='Departamento:'/>
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
 								<button type="submit" className='btn btn-info btn-space' disabled={submitting}>Guardar</button>
