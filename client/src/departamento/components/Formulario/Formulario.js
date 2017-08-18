@@ -61,6 +61,8 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
+					<h4 className='text-center'>Formulario departamento</h4>
+
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							<MensajeOerror error={error} mensaje={null}/>
