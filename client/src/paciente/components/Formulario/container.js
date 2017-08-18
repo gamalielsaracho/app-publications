@@ -8,22 +8,26 @@ import {
 } from '../../actions'
 
 import {
+	listarCiudades
+} from '../../../ciudad/actions'
+
+import {
 	listarAreas,
 } from '../../../area/actions'
 
 import Formulario from './Formulario'
 
-const validate = (values) => {
-	const errors = {}
+// const validate = (values) => {
+// 	const errors = {}
 
-	if(!values.descripcion) {
-		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.length < 5) {
-   		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
-	}
+// 	if(!values.descripcion) {
+// 		errors.descripcion = 'Tienes que introducir una descripción.'
+// 	}else if (values.descripcion.length < 5) {
+//    		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
+// 	}
 
-	return errors
-}
+// 	return errors
+// }
 
 function mapStateToProps(state) {
 	return {
@@ -33,6 +37,7 @@ function mapStateToProps(state) {
 		editarContenido: state.paciente.formulario.iniciarValores,
 
     	listaAreas: state.area.listar,
+		listaCiudades: state.ciudad.listar
 	}
 }
 
@@ -51,13 +56,16 @@ function mapDispatchToProps(dispatch) {
 
 		listarAreas: () => {
 			dispatch(listarAreas())
+		},
+		listarCiudades: () => {
+			dispatch(listarCiudades())
 		}
 	}
 }
 
 const form = reduxForm({
-	form: 'FormularioPaciente',
-	validate
+	form: 'FormularioPaciente'
+	// validate
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(form(Formulario))
