@@ -17,17 +17,69 @@ import {
 
 import Formulario from './Formulario'
 
-// const validate = (values) => {
-// 	const errors = {}
+// nroDocumento
+// nombres
+// sexo
+// direccion
+// celular
+// id_area
+// id_tipoDocumento
+// apellidos
+// fecha_nacimiento
+// telefono
+// id_ciudad
 
-// 	if(!values.descripcion) {
-// 		errors.descripcion = 'Tienes que introducir una descripción.'
-// 	}else if (values.descripcion.length < 5) {
-//    		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
-// 	}
+const validate = (values) => {
+	const errors = {}
 
-// 	return errors
-// }
+	if (!values.nroDocumento) {
+    	errors.nroDocumento = 'Nro de documento obligatorio.'
+	} else if (values.nroDocumento.length <= 4) {
+		errors.nroDocumento = 'Por lo menos 4 caracteres.'
+	}
+
+	if (!values.id_tipoDocumento) {
+		errors.id_tipoDocumento = 'Tipo de documento obligatorio.'
+	}
+
+	if (!values.nombres) {
+	    errors.nombres = 'Nombre completo es obligatorio.'
+	} else if (values.nombres.length <= 10) {
+		errors.nombres = 'Por lo menos 10 caracteres.'
+	}
+
+	if (!values.apellidos) {
+	    errors.apellidos = 'Apellido completo obligatorio.'
+	} else if (values.apellidos.length < 10) {
+	    errors.apellidos = 'Por lo menos 10 caracteres'
+	}	
+
+	if (!values.celular) {
+	    errors.celular = 'Nro de celular obligatorio.'
+	} else if (values.celular.length <= 7) {
+	    errors.celular = 'Como minimo 7 caracteres.'
+	}
+
+	if (!values.direccion) {
+	    errors.direccion = 'Dirección obligatorio.'
+	} else if (values.direccion.length < 10) {
+	    errors.direccion = 'Como minimo 10 caracteres.'
+	}
+
+	if (!values.fecha_nacimiento) {
+		errors.fecha_nacimiento = 'Fecha de nacimiento obligatorio.'
+	}
+
+	if(!values.id_area) {
+		errors.id_area = 'El campo area obligatorio.'
+	}
+
+	if(!values.id_ciudad) {
+		errors.id_ciudad = 'El campo ciudad obligatorio.'
+	}
+
+	return errors
+}
 
 function mapStateToProps(state) {
 	return {
@@ -64,8 +116,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 const form = reduxForm({
-	form: 'FormularioPaciente'
-	// validate
+	form: 'FormularioPaciente',
+	validate
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(form(Formulario))

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import {
 	listarPacientes,
 	eliminarPaciente,
-	mostrarPaciente,
 
 	abrirFormularioCrearPaciente,
 	abrirFormularioEditarPaciente
@@ -26,9 +25,6 @@ function mapDispatchToProps(dispatch) {
 		},
 		eliminarPaciente: (nroDocumento, idTipoDocumento) => {
 			dispatch(eliminarPaciente(nroDocumento, idTipoDocumento))
-		},
-		mostrarPaciente: (nroDocumento, idTipoDocumento) => {
-			dispatch(mostrarPaciente(nroDocumento, idTipoDocumento))
 		},
 		abrirFormularioCrearPaciente: () => {
 			dispatch(abrirFormularioCrearPaciente())

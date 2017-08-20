@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import FormularioContainer from '../Formulario'
-import MostarContainer from '../Mostrar'
+// import MostarContainer from '../Mostrar'
 
 class Listar extends Component {
 	constructor(props) {
@@ -52,7 +53,9 @@ class Listar extends Component {
 			            <td>{ paciente.ciudad.descripcion }</td>
 
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarPaciente(paciente.pa.nroDocumento, paciente.tipoDocumento.id_tipoDocumento) }} className="btn btn-info btn-space">Mostrar</button>
+							<Link to={`/${paciente.pa.nroDocumento}`}>
+								<button type="button" className="btn btn-info btn-space">Mostrar</button>
+							</Link>
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.nroDocumento, paciente.tipoDocumento.id_tipoDocumento) }} className="btn btn-warning btn-space">Editar</button>
 							<button type="button" onClick={() => { this.props.eliminarPaciente(paciente.pa.nroDocumento, paciente.tipoDocumento.id_tipoDocumento) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
@@ -73,7 +76,6 @@ class Listar extends Component {
 					<h1 className='text-center'>Pacientes</h1>
 					
 					<FormularioContainer/>
-					<MostarContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
 

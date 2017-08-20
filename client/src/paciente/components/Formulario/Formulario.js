@@ -101,8 +101,8 @@ class Formulario extends Component {
 									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 										<Field name='nroDocumento' type='text' component={renderField} label='Número de documento'/>
 										<Field name='nombres' type='text' component={renderField} label='Nombres'/>
-										<Field name='sexo' type='radio' component={this.renderFieldRadio} value='mujer' label='Mujer'/>
-										<Field name='sexo' type='radio' component={this.renderFieldRadio} value='hombre' label='Hombre'/>
+										<Field name='sexo' type='radio' component={this.renderFieldRadio} value='masculino' label='Masculino'/>
+										<Field name='sexo' type='radio' component={this.renderFieldRadio} value='femenino' label='Femenino'/>
 										<Field name='direccion' type='text' component={renderField} label='Dirección'/>
 										<Field name='celular' type='text' component={renderField} label='Celular'/>
 										<Field name='id_area' type='text' component={FieldSelectAreas} listaAreas={this.props.listaAreas} label='Area:'/>
@@ -111,7 +111,7 @@ class Formulario extends Component {
 									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 										<Field name='id_tipoDocumento' type='text' component={renderField} label='Tipo de documento'/>
 										<Field name='apellidos' type='text' component={renderField} label='Apellidos'/>
-										<Field name='fechaNacimiento' type='date' component={renderField} label='Fecha de nacimiento'/>
+										<Field name='fecha_nacimiento' type='date' component={renderField} label='Fecha de nacimiento'/>
 										<Field name='telefono' type='text' component={renderField} label='Telefono'/>
 										<Field name='id_ciudad' type='text' component={FieldSelectCiudadesContainer} listaCiudades={this.props.listaCiudades} label='Ciudad:'/>
 									</div>

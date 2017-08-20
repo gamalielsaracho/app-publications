@@ -10,7 +10,6 @@ class DashBoard extends Component {
 				<MenuContainer/>
 
 				<div className='col-xs-12 col-sm-12 col-md-10 col-lg-10'>
-					<br/>
 					{ this.props.children }
 				</div>
 			</div>

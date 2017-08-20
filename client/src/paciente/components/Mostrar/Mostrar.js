@@ -5,11 +5,17 @@ import ReactModal from 'react-modal'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import Cargando from '../../../app/components/Cargando'
 
+import ListarContainer from '../../../pacienteAlergia/components/Listar'
+
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderCargando = this.renderCargando.bind(this)
 		this.renderPaciente = this.renderPaciente.bind(this)
+	}
+	
+	componentWillMount() {
+		this.props.mostrarPaciente(this.props.nroDocumento, 1)
 	}
 
 	renderCargando(cargando) {
@@ -42,6 +48,10 @@ class Mostrar extends Component {
 				<p><strong>Sexo:</strong>{ this.renderSexo(paciente.pa.mujer) }</p>
 				<p><strong>Area:</strong> { paciente.area.descripcion }</p>
 				<p><strong>Ciudad:</strong> { paciente.ciudad.descripcion }</p>
+				
+				<ListarContainer 
+					nroDocumento={paciente.pa.nroDocumento}
+					id_tipoDocumento={paciente.pa.id_tipoDocumento}/>
 			</div>
 		} else {
 			return <span></span>
@@ -62,15 +72,8 @@ class Mostrar extends Component {
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
 		if(abierto) {
-			return <ReactModal isOpen={abierto}
-				       	contentLabel="Minimal Modal Example"
-				       	style={customStyles}>
+			return <div className='container'>
 
-				<div className='container'>
-
-					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarPaciente() }}></span>
-					</div>
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
@@ -81,8 +84,6 @@ class Mostrar extends Component {
 						</div>
 					</div>
 				</div>
-
-			</ReactModal>
 		} else {
 			return <span></span>
 		}

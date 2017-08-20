@@ -16,7 +16,7 @@ function FieldSelectAreas({ input, label, listaAreas, type, meta: { touched, err
 					}
 				</select>
 			</div>
-		   	{ touched && ((error && <p className="text-danger text-center">{ error }</p>)) }
+		   	{ touched && ((error && <label className="text-danger text-center">{ error }</label>)) }
 		</div>
 	} else {
 		return <span></span>
