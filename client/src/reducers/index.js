@@ -12,7 +12,7 @@ import areaReducer from '../area/reducer'
 import alergiaReducer from '../alergia/reducer'
 
 import pacienteReducer from '../paciente/reducer'
-
+import pacienteAlergiaReducer from '../pacienteAlergia/reducer'
 
 const rootReducer = combineReducers({
 	form: formReducer,
@@ -23,7 +23,8 @@ const rootReducer = combineReducers({
 	departamento: departamentoReducer,
 	area: areaReducer,
 	alergia: alergiaReducer,
-	paciente: pacienteReducer
+	paciente: pacienteReducer,
+	alergiaPaciente: pacienteAlergiaReducer
 })
 
 export default rootReducer
