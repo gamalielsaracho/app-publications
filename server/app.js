@@ -25,6 +25,7 @@ io.on('connection', function (socket) {
 	require('././app/area/area.sockets')(socket, io)
 	require('././app/alergia/alergia.sockets')(socket, io)
 	require('././app/paciente/paciente.sockets')(socket, io)
+	require('././app/pacienteAlergia/pacienteAlergia.sockets')(socket, io)
 
 	
 
