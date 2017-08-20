@@ -4,35 +4,53 @@ import connection from '../../config/connection'
 
 // Esta función trae todas las alergias que tiene un paciente.
 // listar por id_paciente.
-exports.findAlergiasByPaciente = (nroDocumento, id_tipoDocumento, callback) => {
-	return connection.query('select * from alergias al pacientesAlergias paAl WHERE paAl.nroDocumento = ? AND paAl.id_tipoDocumento = ? AND al.id_alergia = paAl.id_alergia', [nroDocumento, id_tipoDocumento], callback)
+exports.find = (nroDocumento, id_tipoDocumento, callback) => {
+	let q = `
+		SELECT alergia.descripcion, alergia.id_alergia,
+			pacienteAlergia.nroDocumento, pacienteAlergia.id_tipoDocumento, pacienteAlergia.observaciones
+			FROM alergias alergia, pacientesAlergias pacienteAlergia 
+				WHERE pacienteAlergia.nroDocumento = ? AND 
+				pacienteAlergia.id_tipoDocumento = ? 
+				AND pacienteAlergia.id_alergia = alergia.id_alergia 
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, [nroDocumento, id_tipoDocumento], callback)
 
 	connection.end()
 }
 
-// En data tendrá, nroDocumento, id_tipoDocumento, id_alergia, observaciones.
-exports.addAlergiaByPaciente = (data, callback) => {
-	return connection.query('INSERT INTO pacientesAlergias SET ?', data, callback)
-
-	connection.end()
-}
-
-// Eliminar 
-exports.deleteAlergiaByPaciente = (data, callback) => {
-	return connection.query('DELETE FROM pacientesAlergias WHERE nroDocumento = ?, id_tipoDocumento = ?, id_alergia = ?', [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
+exports.findById = (data, callback) => {
+	let q = `
+		SELECT * FROM pacientesAlergias 
+			WHERE nroDocumento = ?, id_tipoDocumento = ?, id_alergia = ? 
+	`
+	return connection.query(q, [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
 
 	connection.end()
 }
 
 // Agregar una alegia a un paciente, Simpre que el paciente exista.
+// En data tendrá, nroDocumento, id_tipoDocumento, id_alergia, observaciones.
 exports.create = (data, callback) => {
 	return connection.query('INSERT INTO pacientesAlergias SET ?', data, callback)
 
 	connection.end()
 }
 
-// Se actualiza una alergia para una paciente, simpre y cuando el paciente EXISTA.
-exports.updateByPaciente = (data, callback) => {
+// Eliminar 
+exports.delete = (data, callback) => {
+	return connection.query('DELETE FROM pacientesAlergias WHERE nroDocumento = ?, id_tipoDocumento = ?, id_alergia = ?', [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
+
+	connection.end()
+}
+
+// Se actualiza una alergia para un paciente, simpre y cuando el paciente EXISTA.
+exports.update = (data, callback) => {
 	return connection.query('UPDATE pacientesAlergias SET id_alergia = ?, observaciones = ? WHERE nroDocumento = ? id_tipoDocumento = ?', [data.id_alergia, data.observaciones, data.nroDocumento, data.id_tipoDocumento], callback)
 
 	connection.end()
