@@ -55,7 +55,7 @@ exports.create = (data, callback) => {
 
 // Eliminar 
 exports.delete = (data, callback) => {
-	console.log(data)
+	// console.log(data)
 	return connection.query('DELETE FROM pacientesAlergias WHERE nroDocumento = ? AND id_tipoDocumento = ? AND id_alergia = ?', [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
 
 	connection.end()
