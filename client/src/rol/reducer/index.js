@@ -145,7 +145,6 @@ export default function (state = INITIAL_STATE, action) {
 				listar: { cargando: true, error: '' }
 			})
 
-
 		case LISTAR_ROLES_EXITO:
 			return Object.assign({}, state, {
 				listar: { roles: action.payload.roles, cargando: false, error: '' }
