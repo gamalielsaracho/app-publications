@@ -25,7 +25,7 @@ import Formulario from './Formulario'
 // id_area
 // id_tipoDocumento
 // apellidos
-// fecha_nacimiento
+// fechaNacimiento
 // telefono
 // id_ciudad
 
@@ -66,8 +66,8 @@ const validate = (values) => {
 	    errors.direccion = 'Como minimo 10 caracteres.'
 	}
 
-	if (!values.fecha_nacimiento) {
-		errors.fecha_nacimiento = 'Fecha de nacimiento obligatorio.'
+	if (!values.fechaNacimiento) {
+		errors.fechaNacimiento = 'Fecha de nacimiento obligatorio.'
 	}
 
 	if(!values.id_area) {

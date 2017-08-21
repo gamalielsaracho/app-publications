@@ -1,2 +1,2 @@
-import MostarContainer from './container'
-export default MostarContainer
+import MostarPacienteContainer from './container'
+export default MostarPacienteContainer

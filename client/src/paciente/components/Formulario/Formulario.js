@@ -50,11 +50,11 @@ class Formulario extends Component {
 	enviarFormulario(formProps) {
 		console.log(formProps)
 
-		// if(this.props.editarContenido) {
-		// 	this.props.editarPaciente(formProps)
-		// } else {
-		// 	this.props.crearPaciente(formProps)
-		// }
+		if(this.props.editarContenido) {
+			this.props.editarPaciente(formProps)
+		} else {
+			this.props.crearPaciente(formProps)
+		}
 	}
 
 	renderCargando(cargando) {
@@ -111,7 +111,7 @@ class Formulario extends Component {
 									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 										<Field name='id_tipoDocumento' type='text' component={renderField} label='Tipo de documento'/>
 										<Field name='apellidos' type='text' component={renderField} label='Apellidos'/>
-										<Field name='fecha_nacimiento' type='date' component={renderField} label='Fecha de nacimiento'/>
+										<Field name='fechaNacimiento' type='date' component={renderField} label='Fecha de nacimiento'/>
 										<Field name='telefono' type='text' component={renderField} label='Telefono'/>
 										<Field name='id_ciudad' type='text' component={FieldSelectCiudadesContainer} listaCiudades={this.props.listaCiudades} label='Ciudad:'/>
 									</div>

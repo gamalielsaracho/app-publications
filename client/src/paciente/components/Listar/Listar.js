@@ -41,7 +41,7 @@ class Listar extends Component {
 			{
 				pacientes.map((paciente) => {
 					console.log(paciente)
-					return <tr key={paciente.tipoDocumento.id_tipoDocumento}>
+					return <tr key={paciente.pa.nroDocumento}>
 			            <td>{ paciente.pa.nroDocumento }</td>
 			            <td>{ paciente.tipoDocumento.descripcion }</td>
 			            <td>{ paciente.pa.nombres }</td>
@@ -53,7 +53,7 @@ class Listar extends Component {
 			            <td>{ paciente.ciudad.descripcion }</td>
 
 			            <td>
-							<Link to={`/${paciente.pa.nroDocumento}`}>
+							<Link to={`pacientes/${paciente.pa.nroDocumento}/${paciente.pa.id_tipoDocumento}`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.nroDocumento, paciente.tipoDocumento.id_tipoDocumento) }} className="btn btn-warning btn-space">Editar</button>

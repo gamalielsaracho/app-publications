@@ -6,10 +6,9 @@ import {
 
 import Mostrar from './Mostrar'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
 	return {
-		mostrar: state.paciente.mostrar,
-		nroDocumento: ownProps.nroDocumento
+		mostrar: state.paciente.mostrar
 	}
 }
 

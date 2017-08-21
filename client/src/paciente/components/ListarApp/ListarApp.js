@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-class PacienteApp extends Component {
+class ListarApp extends Component {
 	render() {
 		return <div>
 			<ul className="nav nav-tabs">
@@ -13,11 +13,12 @@ class PacienteApp extends Component {
 			  <li className="nav-item">
 			    <a className="nav-link">Detalle paciente</a>
 			  </li>
-			  
 			</ul>
+
 			{ this.props.children }
+			
 		</div>
 	}
 }
 
-export default PacienteApp
+export default ListarApp

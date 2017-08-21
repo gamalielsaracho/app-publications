@@ -5,7 +5,7 @@ import ReactModal from 'react-modal'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import Cargando from '../../../app/components/Cargando'
 
-import ListarContainer from '../../../pacienteAlergia/components/Listar'
+// import ListarContainer from '../../../pacienteAlergia/components/Listar'
 
 class Mostrar extends Component {
 	constructor(props) {
@@ -15,7 +15,7 @@ class Mostrar extends Component {
 	}
 	
 	componentWillMount() {
-		this.props.mostrarPaciente(this.props.nroDocumento, 1)
+		this.props.mostrarPaciente(this.props.nroDocumento, this.props.idTipoDocumento)
 	}
 
 	renderCargando(cargando) {
@@ -38,7 +38,7 @@ class Mostrar extends Component {
 		console.log(paciente)
 
 		if(paciente) {
-			return <div>
+			return <div >
 				<p><strong>Numero de Documento:</strong> { paciente.pa.nroDocumento }</p>
 				<p><strong>Tipo de Documento:</strong> { paciente.tipoDocumento.descripcion }</p>
 				<p><strong>Nombres:</strong> { paciente.pa.nombres }</p>
@@ -49,9 +49,14 @@ class Mostrar extends Component {
 				<p><strong>Area:</strong> { paciente.area.descripcion }</p>
 				<p><strong>Ciudad:</strong> { paciente.ciudad.descripcion }</p>
 				
-				<ListarContainer 
+				{/* Pasamos los valores de nroDocumento y id_tipoDocumento
+					desde la URL con ownProps para buscar todas alergias que tiene
+					un paciente en específico, desde la base de datos.
+				*/}
+
+				{/* <ListarContainer
 					nroDocumento={paciente.pa.nroDocumento}
-					id_tipoDocumento={paciente.pa.id_tipoDocumento}/>
+					id_tipoDocumento={paciente.pa.id_tipoDocumento}/> */}
 			</div>
 		} else {
 			return <span></span>
@@ -72,18 +77,14 @@ class Mostrar extends Component {
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
 		if(abierto) {
-			return <div className='container'>
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+					{ this.renderCargando(cargando) }
+					<MensajeOerror error={error} mensaje={null}/>
 
-
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
-							<MensajeOerror error={error} mensaje={null}/>
-
-							{ this.renderPaciente(paciente) }
-						</div>
-					</div>
+					{ this.renderPaciente(paciente) }
 				</div>
+			</div>
 		} else {
 			return <span></span>
 		}
