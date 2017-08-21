@@ -33,11 +33,16 @@ import ListarAreasPage from '././area/pages/ListarAreasPage'
 import ListarAlergiasPage from '././alergia/pages/ListarAlergiasPage'
 
 // PACIENTES
-import PacienteApp from '././paciente/components/PacienteApp'
+		// Listar.
+import ListarPacienteApp from '././paciente/components/ListarApp'
 
 import ListarPacientesPage from '././paciente/pages/ListarPacientesPage'
 
-import MostrarPacientePage from '././paciente/pages/MostrarPacientePage'
+import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
+	
+	// PACIENTE ALERGIAS.
+	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
+
 
 export default (
 	<Route path='/' component={AppContainer}>
@@ -54,11 +59,14 @@ export default (
 			
 			<Route path='/areas' component={ListarAreasPage}/>
 			<Route path='/alergias' component={ListarAlergiasPage}/>
-		
 
-			<Route path='/pacientes' component={PacienteApp}>
+
+			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
-				<Route path='/:nroDocumento' component={MostrarPacientePage}/>
+				<Route path='/pacientes/:nroDocumento/:idTipoDocumento' component={MostrarPacienteAppContainer}>
+					<Route path='/pacientes/:nroDocumento/:idTipoDocumento/alergias' component={ListarPacienteAlergiasPage}/>
+
+				</Route>
 			</Route>
 		</Route>
 
