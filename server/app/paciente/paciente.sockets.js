@@ -21,8 +21,18 @@ export default (socket, io) => {
 
 
 		socket.on('crear_paciente', function(data) {
+			if(data.sexo == 'masculino') {
+				data.hombre = true
+			} else {
+				data.mujer = true
+			}
+
+			delete data.sexo
+
+			console.log(data)
 			Paciente.create(data, (err, paciente) => {
 				if(err) {
+					console.log(err)
 					socket.emit('crear_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}

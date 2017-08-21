@@ -34,7 +34,7 @@ exports.findById = (data, callback) => {
 	connection.end()
 }
 
-exports.createPaciente = (data, callback) => {
+exports.create = (data, callback) => {
 	return connection.query('INSERT INTO pacientes SET ?', data, callback)
 
 	connection.end()
