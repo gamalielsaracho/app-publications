@@ -35,7 +35,15 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
-import { socket } from '../../globalActions'
+// import { socket } from '../../globalActions'
+
+var pacienteAlergia = io.connect('http://localhost:3000/pacienteAlergia');
+
+// pacienteAlergia.on('broadcast',function(data){
+// 	// document.body.innerHTML = '';
+// 	// document.write(data.description);
+// 	console.log(data)
+// });
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
@@ -52,13 +60,13 @@ export function abrirFormularioEditarPacienteAlergia(nroDocumento, id_tipoDocume
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_ALERGIA_REQUEST })
 
-		socket.emit('mostrar_alergiaPaciente', { 
+		pacienteAlergia.emit('mostrar_alergiaPaciente', { 
 			nroDocumento: nroDocumento,
 			id_tipoDocumento: id_tipoDocumento,
 			id_alergia: id_alergia
 		})
 
-		socket.on('mostrar_alergiaPaciente', (data) => {
+		pacienteAlergia.on('mostrar_alergiaPaciente', (data) => {
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_ALERGIA_FALLO, payload: data.error })
@@ -80,14 +88,20 @@ export function listarPacienteAlergias(nroDocumento, id_tipoDocumento) {
 
 		dispatch({ type: LISTAR_PACIENTE_ALERGIAS_REQUEST })
 
-		var socket = io('http://localhost:3000')
+		// var pacienteAlergia = io.connect('http://localhost:3000/pacienteAlergia');
 
-		socket.emit('listar_alergiasPaciente', {
+
+		pacienteAlergia.emit('mostrar_paciente_L', {
 			nroDocumento: nroDocumento,
 			id_tipoDocumento: id_tipoDocumento
 		})
 
-		socket.on('listar_alergiasPaciente', (data) => {
+		// pacienteAlergia.emit('mostrar_alergiaPaciente', {
+		// 	nroDocumento: nroDocumento,
+		// 	id_tipoDocumento: id_tipoDocumento
+		// })
+
+		pacienteAlergia.on('listar_alergiasPaciente', (data) => {
 			console.log(data)
 			if(data.error) {
 				dispatch({ type: LISTAR_PACIENTE_ALERGIAS_FALLO, payload: data.error })
@@ -103,9 +117,9 @@ export function crearPacienteAlergia(datosFormulario) {
 
 		dispatch({ type: CREAR_PACIENTE_ALERGIA_REQUEST })
 
-		socket.emit('crear_alergiaPaciente', datosFormulario)
+		pacienteAlergia.emit('crear_alergiaPaciente', datosFormulario)
 
-		socket.on('crear_alergiaPaciente', (data) => {
+		pacienteAlergia.on('crear_alergiaPaciente', (data) => {
 			if(data.err) {
 				dispatch({ type: CREAR_PACIENTE_ALERGIA_FALLO, payload: data.error })
 			} else {
@@ -122,15 +136,15 @@ export function eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alerg
 
 		dispatch({ type: ELIMINAR_PACIENTE_ALERGIA_REQUEST })
 
-		// var socket = io('http://localhost:3000')
+		// var pacienteAlergia = io('http://localhost:3000')
 
-		socket.emit('eliminar_alergiaPaciente', {
+		pacienteAlergia.emit('eliminar_alergiaPaciente', {
 			nroDocumento: nroDocumento,
 			id_tipoDocumento: id_tipoDocumento,
 			id_alergia: id_alergia
 		})
 
-		socket.on('eliminar_alergiaPaciente', (data) => {
+		pacienteAlergia.on('eliminar_alergiaPaciente', (data) => {
 
 			if(data.error) {
 				dispatch({ type: ELIMINAR_PACIENTE_ALERGIA_FALLO, payload: data.error })
@@ -146,13 +160,13 @@ export function mostrarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergi
 	return (dispatch) => {
 		dispatch({ type: MOSTRAR_PACIENTE_ALERGIA_REQUEST })
 
-		socket.emit('mostrar_alergiaPaciente', {
+		pacienteAlergia.emit('mostrar_alergiaPaciente', {
 			nroDocumento: nroDocumento,
 			id_tipoDocumento: id_tipoDocumento,
 			id_alergia: id_alergia
 		})
 
-		socket.on('mostrar_alergiaPaciente', (data) => {
+		pacienteAlergia.on('mostrar_alergiaPaciente', (data) => {
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: MOSTRAR_PACIENTE_ALERGIA_FALLO, payload: data.error })
@@ -175,9 +189,9 @@ export function editarPacienteAlergia(datosFormulario) {
 
 		dispatch({ type: EDITAR_PACIENTE_ALERGIA_REQUEST })
 
-		socket.emit('editar_alergiaPaciente', datosFormulario)
+		pacienteAlergia.emit('editar_alergiaPaciente', datosFormulario)
 
-		socket.on('editar_alergiaPaciente', (data) => {
+		pacienteAlergia.on('editar_alergiaPaciente', (data) => {
 			if(data.error) {
 				dispatch({ type: EDITAR_PACIENTE_ALERGIA_FALLO, payload: data.error })
 			} else {
