@@ -26,10 +26,21 @@ exports.find = (nroDocumento, id_tipoDocumento, callback) => {
 
 exports.findById = (data, callback) => {
 	let q = `
-		SELECT * FROM pacientesAlergias 
-			WHERE nroDocumento = ?, id_tipoDocumento = ?, id_alergia = ? 
+		SELECT alergia.id_alergia, alergia.descripcion,
+			pacienteAlergia.nroDocumento, pacienteAlergia.id_tipoDocumento, pacienteAlergia.observaciones
+			FROM alergias alergia, pacientesAlergias pacienteAlergia 
+				WHERE pacienteAlergia.nroDocumento = ? AND 
+				pacienteAlergia.id_tipoDocumento = ? AND 
+				pacienteAlergia.id_alergia = ? AND
+				pacienteAlergia.id_alergia = alergia.id_alergia
 	`
-	return connection.query(q, [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+		// SELECT * FROM pacientesAlergias 
+			// WHERE nroDocumento = ?, id_tipoDocumento = ?, id_alergia = ? 
+	return connection.query(options, [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
 
 	connection.end()
 }
@@ -44,7 +55,8 @@ exports.create = (data, callback) => {
 
 // Eliminar 
 exports.delete = (data, callback) => {
-	return connection.query('DELETE FROM pacientesAlergias WHERE nroDocumento = ?, id_tipoDocumento = ?, id_alergia = ?', [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
+	console.log(data)
+	return connection.query('DELETE FROM pacientesAlergias WHERE nroDocumento = ? AND id_tipoDocumento = ? AND id_alergia = ?', [data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
 
 	connection.end()
 }

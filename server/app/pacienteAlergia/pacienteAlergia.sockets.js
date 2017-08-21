@@ -4,6 +4,9 @@ export default (socket, io) => {
 	
 		function pacienteAlergias() {
 			socket.on('listar_alergiasPaciente', (data) => {
+				console.log("primero..")
+				console.log(data)
+
 				PacienteAlergia.find(data.nroDocumento, data.id_tipoDocumento, (err, alergias) => {
 					if(err) {
 						console.log(err)
@@ -34,6 +37,8 @@ export default (socket, io) => {
 				socket.emit('crear_alergiaPaciente', { mensaje: 'Se agregó exitósamente.' })
 			
 				pacienteAlergias()
+				console.log("y segundo..")
+
 			})
 		})
 
@@ -53,6 +58,7 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_alergiaPaciente', (data) => {
+
 			PacienteAlergia.delete(data, (err) => {
 				if(err) {
 					console.log(err)
