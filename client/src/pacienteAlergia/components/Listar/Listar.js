@@ -15,16 +15,10 @@ class Listar extends Component {
 	// this.props.nroDocumento -> es pasado como property.
 	// this.props.id_tipoDocumento
 	componentWillMount() {
-		this.props.listarPacienteAlergias(this.props.nroDocumento, this.props.id_tipoDocumento)
+		this.props.listarPacienteAlergias(this.props.nroDocumento, this.props.idTipoDocumento)
 	}
 
 	shouldComponentUpdate(nextProps) {
-		// console.log("actual:")
-		// console.log(this.props.alergias)
-
-		// console.log("el que sigue:")
-		// console.log(nextProps.alergias)
-
 		if(nextProps.alergias !== this.props.alergias) {
 			return true
 		}else {
@@ -40,9 +34,9 @@ class Listar extends Component {
 			            <td>{ i.alergia.id_alergia }</td>
 			            <td>{ i.alergia.descripcion }</td>
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarRole(rol.id_rol) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarPacienteAlergia(rol.id_rol) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarPacienteAlergia(rol.id_rol) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
@@ -54,20 +48,33 @@ class Listar extends Component {
 
 		const { alergias, cargando, error } = this.props.listar
 
+		console.log(this.props.listar)
+
 		if(cargando) {
 			return <Cargando/>
 		} else {
 				return <div>
-					<h1 className='text-center'>alergias</h1>
+					<h3 className='text-center'>Alergias</h3>
 					
-					<FormularioContainer/>
+					{/* pasamos los valores de nroDocumento y id_tipoDocumento,
+						que son pasados al componente Listar cuando es llamado en
+						el componente Mostrar de Paciente como property para que sean accesibles desde el 
+						componente Formulario de PacienteAlergia, 
+					    y así enviar a la base de datos, insertando en la tabla
+						intermedia de pacientes con alergias 
+					*/}
+
+					<FormularioContainer 
+						nroDocumento={this.props.nroDocumento}
+						id_tipoDocumento={this.props.idTipoDocumento}/>
+
 					<MostarContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearRol } className='btn btn-success'>Agregar</button>
+							<button onClick={ this.props.abrirFormularioCrearPacienteAlergia } className='btn btn-success'>Agregar</button>
 						</div>
 					</div>
 					<br/>

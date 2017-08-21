@@ -2,51 +2,63 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearRol,
-	editarRol,
-	cerrarFormularioRol
+	crearPacienteAlergia,
+	editarPacienteAlergia,
+	cerrarFormularioPacienteAlergia
 } from '../../actions'
+
+import {
+	listarAlergias
+} from '../../../alergia/actions'
 
 import Formulario from './Formulario'
 
 const validate = (values) => {
 	const errors = {}
 
-	if(!values.descripcion) {
-		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.length < 5) {
-   		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
+	if(!values.id_alergia) {
+		errors.id_alergia = 'Tienes que introducir una alergia.'
 	}
 
 	return errors
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
-		formulario: state.rol.formulario,
-		initialValues: state.rol.formulario.rol,
-		enableReinitialize: state.rol.formulario.iniciarValores,
-		editarContenido: state.rol.formulario.iniciarValores
+		formulario: state.alergiaPaciente.formulario,
+		initialValues: state.alergiaPaciente.formulario.alergiaPaciente,
+		enableReinitialize: state.alergiaPaciente.formulario.iniciarValores,
+		editarContenido: state.alergiaPaciente.formulario.iniciarValores,
+
+		// Lista de las Alergias para pasarle al componente FieldSelectAlergias
+		// como propiedad.
+		listaAlergias: state.alergia.listar // map.
+		// alergias: state.alergia.listar.alergias // shouldComponentUpdate.
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearRol: (datosFormulario) => {
-			dispatch(crearRol(datosFormulario))
+		crearPacienteAlergia: (datosFormulario) => {
+			dispatch(crearPacienteAlergia(datosFormulario))
 		},
-		cerrarFormularioRol: () => {
-			dispatch(cerrarFormularioRol())
+		cerrarFormularioPacienteAlergia: () => {
+			dispatch(cerrarFormularioPacienteAlergia())
 		},
-		editarRol: (datosFormulario) => {
-			dispatch(editarRol(datosFormulario))
+		editarPacienteAlergia: (datosFormulario) => {
+			dispatch(editarPacienteAlergia(datosFormulario))
+		},
+
+		// Llamar dentro de componentWillMount, para listar las alergias.
+		listarAlergias: () => {
+			dispatch(listarAlergias())
 		}
 	}
 }
 
 const form = reduxForm({
-	form: 'FormularioRol',
+	form: 'FormularioAlergiaPaciente',
 	validate
 })
 

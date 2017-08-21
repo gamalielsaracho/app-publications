@@ -3,8 +3,9 @@ import { Field, reset } from 'redux-form'
 import ReactModal from 'react-modal'
 
 import Cargando from '../../../app/components/Cargando'
-
 import MensajeOerror from '../../../app/components/MensajeOerror'
+
+import FieldSelectAlergiasContainer from '../../../alergia/components/FieldSelectAlergias'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -23,13 +24,20 @@ class Formulario extends Component {
 		this.renderCargando = this.renderCargando.bind(this)
 	}
 
+	componentWillMount() {
+		this.props.listarAlergias()
+	}
+
 	enviarFormulario(formProps) {
-		console.log('this.props.editarContenido')
+		formProps.nroDocumento = this.props.nroDocumento
+		formProps.id_tipoDocumento = this.props.id_tipoDocumento
+
+		console.log(formProps)
 
 		if(this.props.editarContenido) {
-			this.props.editarRol(formProps)
+			this.props.editarPacienteAlergia(formProps)
 		} else {
-			this.props.crearRol(formProps)
+			this.props.crearPacienteAlergia(formProps)
 		}
 	}
 
@@ -70,10 +78,11 @@ class Formulario extends Component {
 
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								
-								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
+								<Field name='id_alergia' type='number' component={FieldSelectAlergiasContainer} listaAlergias={this.props.listaAlergias} label='Alergia'/>
+								<Field name='observaciones' type='text' component={renderField} label='Observaciones'/>
 														
 								<button type="submit" className="btn btn-info btn-space" disabled={submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioRol } className="btn btn-primary btn-space">Cancelar</button>
+								<button type="button" onClick={ this.props.cerrarFormularioPacienteAlergia } className="btn btn-primary btn-space">Cancelar</button>
 								
 							</form>
 						</div>

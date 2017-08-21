@@ -1,2 +1,2 @@
-import ListarContainer from './container'
-export default ListarContainer
+import ListarPacienteAlergiasContainer from './container'
+export default ListarPacienteAlergiasContainer

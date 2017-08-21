@@ -80,7 +80,7 @@ export function listarPacienteAlergias(nroDocumento, id_tipoDocumento) {
 
 		dispatch({ type: LISTAR_PACIENTE_ALERGIAS_REQUEST })
 
-		// var socket = io('http://localhost:3000')
+		var socket = io('http://localhost:3000')
 
 		socket.emit('listar_alergiasPaciente', {
 			nroDocumento: nroDocumento,
@@ -88,7 +88,7 @@ export function listarPacienteAlergias(nroDocumento, id_tipoDocumento) {
 		})
 
 		socket.on('listar_alergiasPaciente', (data) => {
-
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: LISTAR_PACIENTE_ALERGIAS_FALLO, payload: data.error })
 			} else {
@@ -119,7 +119,6 @@ export function crearPacienteAlergia(datosFormulario) {
 
 export function eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia) {
 	return (dispatch) => {
-		// alert(idRol)
 
 		dispatch({ type: ELIMINAR_PACIENTE_ALERGIA_REQUEST })
 
@@ -132,7 +131,7 @@ export function eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alerg
 		})
 
 		socket.on('eliminar_alergiaPaciente', (data) => {
-			console.log(data)
+
 			if(data.error) {
 				dispatch({ type: ELIMINAR_PACIENTE_ALERGIA_FALLO, payload: data.error })
 			} else {

@@ -11,8 +11,11 @@ import {
 
 import Listar from './Listar'
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
+		nroDocumento: ownProps.nroDocumento,
+		idTipoDocumento: ownProps.idTipoDocumento,
+
 		crear: state.alergiaPaciente.crear,
 		listar: state.alergiaPaciente.listar,
 		alergias: state.alergiaPaciente.listar.alergias
