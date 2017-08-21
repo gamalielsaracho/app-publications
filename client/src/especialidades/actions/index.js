@@ -37,6 +37,8 @@ import {
 import io from 'socket.io-client'
 import { socket } from '../../globalActions'
 
+// var especialidadSocket = io.connect('http://localhost:3000/especialidad');
+
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
