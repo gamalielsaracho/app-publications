@@ -11,6 +11,9 @@ export default (socket, io) => {
 					return
 				}
 
+				// console.log('primero !')
+				// console.log(alergias)
+
 				io.sockets.emit('listar_alergias', { alergias: alergias })
 			})
 		}
@@ -27,6 +30,7 @@ export default (socket, io) => {
 
 				socket.emit('crear_alergia', { mensaje: 'Se agregó exitósamente.' })
 			
+				// console.log('Segundo !')
 				alergias()
 			})
 		})
