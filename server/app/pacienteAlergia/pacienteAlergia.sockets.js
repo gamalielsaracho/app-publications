@@ -1,31 +1,50 @@
 import PacienteAlergia from './pacienteAlergia.model'
 
-export default (socket, io) => {
-	
-		function pacienteAlergias() {
-			socket.on('listar_alergiasPaciente', (data) => {
-				console.log("primero..")
-				console.log(data)
+let nroDocumento
+let id_tipoDocumento
 
-				PacienteAlergia.find(data.nroDocumento, data.id_tipoDocumento, (err, alergias) => {
+let primero = 1
+
+export default (io) => {
+	var pacienteAlergiaNsp = io.of('/pacienteAlergia');
+	
+	pacienteAlergiaNsp.on('connection', function (socket) {
+
+		console.log('Paciente Alergia..!')
+
+		socket.on('mostrar_paciente_L', (data) => {
+			socket.nroDocumento = data.nroDocumento
+			socket.idTipoDocumento = data.id_tipoDocumento
+		})
+
+		function pacienteAlergias(nroDocumento, id_tipoDocumento) {
+			
+			// socket.on('mostrar_paciente_L', (data) => {
+				// console.log(data)
+
+				PacienteAlergia.find(nroDocumento, id_tipoDocumento, (err, alergias) => {
 					if(err) {
 						console.log(err)
-					
+						
 						socket.emit('listar_alergiasPaciente', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 						return
 					}
 
-					// console.log(roles)
-
-					io.sockets.emit('listar_alergiasPaciente', { alergias: alergias })
+					// console.log(alergias)
+						
+					pacienteAlergiaNsp.emit('listar_alergiasPaciente', { alergias: alergias })
 				})
-			})
+			// })
+
+			// console.log("NO ENTRÓ.(segunda vez).!")
 		}
-	
-		pacienteAlergias()
+
+		pacienteAlergias(socket.nroDocumento, socket.idTipoDocumento)
+
 
 
 		socket.on('crear_alergiaPaciente', function(data) {
+			// console.log(data)
 			PacienteAlergia.create(data, (err, alergia) => {
 				if(err) {
 					console.log(err)
@@ -36,8 +55,19 @@ export default (socket, io) => {
 
 				socket.emit('crear_alergiaPaciente', { mensaje: 'Se agregó exitósamente.' })
 			
-				pacienteAlergias()
 				console.log("y segundo..")
+
+				// socket.on('listar_alergiasPaciente', (data) => {
+				// 	console.log("LISTAR LLAMADA (CREAR)..!")
+
+				// socket.on('mostrar_paciente_L', (data) => {
+				// 	pacienteAlergias(data.nroDocumento, data.id_tipoDocumento)
+				// })
+				
+				pacienteAlergias(socket.nroDocumento, socket.idTipoDocumento)
+
+
+				// })
 
 			})
 		})
@@ -88,4 +118,12 @@ export default (socket, io) => {
 				pacienteAlergias()
 			})
 		})
+		
+
+		
+
+		// socket.on('disconnect', function () {
+		// 	console.log('Paciente Alergia Desconecto.')
+		// })
+	})
 }
