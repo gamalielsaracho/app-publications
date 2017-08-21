@@ -34,8 +34,8 @@ class Listar extends Component {
 			            <td>{ i.alergia.id_alergia }</td>
 			            <td>{ i.alergia.descripcion }</td>
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarPacienteAlergia(rol.id_rol) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarPacienteAlergia(rol.id_rol) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.mostrarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-warning btn-space">Editar</button>
 							<button type="button" onClick={() => { this.props.eliminarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
@@ -67,7 +67,7 @@ class Listar extends Component {
 					<FormularioContainer 
 						nroDocumento={this.props.nroDocumento}
 						id_tipoDocumento={this.props.idTipoDocumento}/>
-
+						
 					<MostarContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
