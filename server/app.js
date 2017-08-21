@@ -10,6 +10,7 @@ app.get('/', (req, res) => {
 	res.sendfile('index.html')
 })
 
+require('././app/pacienteAlergia/pacienteAlergia.sockets')(io)
 
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
@@ -25,7 +26,6 @@ io.on('connection', function (socket) {
 	require('././app/area/area.sockets')(socket, io)
 	require('././app/alergia/alergia.sockets')(socket, io)
 	require('././app/paciente/paciente.sockets')(socket, io)
-	require('././app/pacienteAlergia/pacienteAlergia.sockets')(socket, io)
 
 	
 
@@ -33,6 +33,49 @@ io.on('connection', function (socket) {
 		console.log('El usuario se Desconecto.')
 	})
 })
+
+
+// var nsp = io.of('/pacienteAlergia');
+
+// nsp.on('connection', function(socket){
+//   console.log('someone connected');
+
+//   nsp.emit('hi', 'Hello everyone!');
+// });
+
+
+// var clients = 0;
+
+// nsp.on('connection', function(socket){
+// 	clients++;
+// 	// Para cada uno.
+// 	nsp.emit('broadcast',{ description: clients + ' clients connected!'});
+	
+// 	socket.on('disconnect', function () {
+// 		clients--;
+// 		nsp.emit('broadcast',{ description: clients + ' clients connected!'});
+// 	});
+// });
+
+// var chat = io
+//   .of('/chat')
+//   .on('connection', function (socket) {
+//     socket.emit('a message', {
+//         that: 'only'
+//       , '/chat': 'will get'
+//     });
+//     chat.emit('a message', {
+//         everyone: 'in'
+//       , '/chat': 'will get'
+//     });
+//   });
+
+// var news = io
+//   .of('/news')
+//   .on('connection', function (socket) {
+//     socket.emit('item', { news: 'item' });
+//   });
+
 
 server.listen(3000, (err) => {
 	if(err) {
