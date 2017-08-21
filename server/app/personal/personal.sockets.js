@@ -29,7 +29,7 @@ export default (socket, io) => {
 				return
 			}
 
-			console.log(personalExistente)
+			// console.log(personalExistente)
 
 			if(personalExistente.length != 0) {
 				socket.emit('registrar_personal', { error: 'Este correo ya está registrado.' })
@@ -56,7 +56,7 @@ export default (socket, io) => {
 
 			let dato = contenido[0]
 			
-			console.log(dato)
+			// console.log(dato)
 
 			if(err) {
 				return console.log(err)
