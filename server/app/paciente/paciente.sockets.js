@@ -29,7 +29,7 @@ export default (socket, io) => {
 
 			delete data.sexo
 
-			console.log(data)
+			// console.log(data)
 			Paciente.create(data, (err, paciente) => {
 				if(err) {
 					console.log(err)
@@ -45,7 +45,7 @@ export default (socket, io) => {
 
 
 		socket.on('mostrar_paciente', (data) => {
-			console.log(data)
+			// console.log(data)
 			Paciente.findById(data, (err, paciente) => {
 				if(err) {
 					console.log(err)
