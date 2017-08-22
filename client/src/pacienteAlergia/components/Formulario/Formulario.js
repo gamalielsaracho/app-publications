@@ -29,14 +29,16 @@ class Formulario extends Component {
 	}
 
 	enviarFormulario(formProps) {
+
 		formProps.nroDocumento = this.props.nroDocumento
 		formProps.id_tipoDocumento = this.props.id_tipoDocumento
-
+		
 		console.log(formProps)
 
 		if(this.props.editarContenido) {
 			this.props.editarPacienteAlergia(formProps)
 		} else {
+
 			this.props.crearPacienteAlergia(formProps)
 		}
 	}
@@ -60,7 +62,7 @@ class Formulario extends Component {
 		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
-			abirtoCrear, abirtoEditar, error, cargando, rol 
+			abirtoCrear, abirtoEditar, error, cargando, alergia 
 		} = this.props.formulario
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
