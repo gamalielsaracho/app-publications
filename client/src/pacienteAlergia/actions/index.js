@@ -88,18 +88,11 @@ export function listarPacienteAlergias(nroDocumento, id_tipoDocumento) {
 
 		dispatch({ type: LISTAR_PACIENTE_ALERGIAS_REQUEST })
 
-		// var pacienteAlergia = io.connect('http://localhost:3000/pacienteAlergia');
 
-
-		pacienteAlergia.emit('mostrar_paciente_L', {
+		pacienteAlergia.emit('listar_alergiasPaciente', {
 			nroDocumento: nroDocumento,
 			id_tipoDocumento: id_tipoDocumento
 		})
-
-		// pacienteAlergia.emit('mostrar_alergiaPaciente', {
-		// 	nroDocumento: nroDocumento,
-		// 	id_tipoDocumento: id_tipoDocumento
-		// })
 
 		pacienteAlergia.on('listar_alergiasPaciente', (data) => {
 			console.log(data)
