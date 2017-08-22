@@ -77,6 +77,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PACIENTE_ALERGIA_EXITO:
+			console.log(action.payload)
 			return Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
