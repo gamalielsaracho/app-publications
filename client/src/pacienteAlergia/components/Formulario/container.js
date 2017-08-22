@@ -23,10 +23,10 @@ const validate = (values) => {
 	return errors
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
 	return {
 		formulario: state.alergiaPaciente.formulario,
-		initialValues: state.alergiaPaciente.formulario.alergiaPaciente,
+		initialValues: state.alergiaPaciente.formulario.alergia,
 		enableReinitialize: state.alergiaPaciente.formulario.iniciarValores,
 		editarContenido: state.alergiaPaciente.formulario.iniciarValores,
 
