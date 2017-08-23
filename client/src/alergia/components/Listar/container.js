@@ -25,7 +25,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarAlergias())
 		},
 		eliminarAlergia: (idAlergia) => {
-			dispatch(eliminarAlergia(idAlergia))
+			var r = confirm("Está seguro que desea eliminar?");
+		    if (r == true) {
+				dispatch(eliminarAlergia(idAlergia))
+		    }
 		},
 		mostrarAlergia: (idAlergia) => {
 			dispatch(mostrarAlergia(idAlergia))
