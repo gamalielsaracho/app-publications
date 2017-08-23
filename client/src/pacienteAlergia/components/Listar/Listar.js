@@ -27,12 +27,14 @@ class Listar extends Component {
 	}	
 
 	PacienteAlergias(alergias) {
+		console.log(alergias)
 		return <tbody>
 			{
 				alergias.map((i) => {
 					return <tr key={i.alergia.id_alergia}>
 			            <td>{ i.alergia.id_alergia }</td>
 			            <td>{ i.alergia.descripcion }</td>
+			            <td>{ i.pacienteAlergia.observaciones }</td>
 			            <td>
 							<button type="button" onClick={() => { this.props.mostrarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-info btn-space">Mostrar</button>
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-warning btn-space">Editar</button>
@@ -84,7 +86,8 @@ class Listar extends Component {
 							<thead>
 						    	<tr>
 						        	<th>Id</th>
-						        	<th>Descripción</th>
+						        	<th>Alergia</th>
+						        	<th>Observaciones</th>
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
