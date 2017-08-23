@@ -64,16 +64,17 @@ exports.delete = (data, callback) => {
 // Se actualiza una alergia para un paciente, simpre y cuando el paciente EXISTA.
 exports.update = (data, callback) => {
 	let q = `
-		UPDATE pacientesAlergias SET 
-			id_alergia = ?, observaciones = ? 
-		WHERE nroDocumento = ? AND id_tipoDocumento = ?
+		UPDATE pacientesAlergias SET observaciones = ? 
+		WHERE nroDocumento = ? AND 
+		id_tipoDocumento = ? AND
+		id_alergia = ?
 	`
 	var options = {
 		sql: q, 
 		nestTables: false
 	}
 
-	return connection.query(options, [data.id_alergia, data.observaciones, data.nroDocumento, data.id_tipoDocumento], callback)
+	return connection.query(options, [data.observaciones, data.nroDocumento, data.id_tipoDocumento, data.id_alergia], callback)
 
 	connection.end()
 }

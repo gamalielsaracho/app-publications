@@ -37,7 +37,8 @@ export default (io) => {
 
 			socket.on('crear_alergiaPaciente', function(data) {
 				// console.log(data)
-				PacienteAlergia.create(data, (err, alergia) => {
+				
+				PacienteAlergia.findById(data, (err, alergiaExistente) => {
 					if(err) {
 						console.log(err)
 
@@ -45,9 +46,26 @@ export default (io) => {
 						return
 					}
 
-					socket.emit('crear_alergiaPaciente', { mensaje: 'Se agregó exitósamente.' })
-									
-					pacienteAlergias()
+					if(alergiaExistente[0]) {
+						// console.log(alergiaExistente[0])
+
+						socket.emit('crear_alergiaPaciente', { error: 'Esta alergia ya está registrada.' })
+						return
+					} else {
+						// console.log(data)
+						PacienteAlergia.create(data, (err) => {
+							if(err) {
+								console.log(err)
+
+								socket.emit('crear_alergiaPaciente', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							socket.emit('crear_alergiaPaciente', { mensaje: 'Se agregó exitósamente.' })
+											
+							pacienteAlergias()
+						})
+					}
 				})
 			})
 
@@ -84,9 +102,8 @@ export default (io) => {
 				})
 			})
 
-
 			socket.on('editar_alergiaPaciente', (data) => {
-				console.log(data)
+				// console.log(data)
 				PacienteAlergia.update(data, (err) => {
 					if(err) {
 						console.log(err)
@@ -96,7 +113,7 @@ export default (io) => {
 					}
 
 					socket.emit('editar_alergiaPaciente', { mensaje: 'Se actualizó exitósamente.' })
-				
+							
 					pacienteAlergias()
 				})
 			})
