@@ -22,6 +22,7 @@ class Formulario extends Component {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
 		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFieldSelectAlergias = this.renderFieldSelectAlergias.bind(this)
 	}
 
 	componentWillMount() {
@@ -40,6 +41,16 @@ class Formulario extends Component {
 		} else {
 
 			this.props.crearPacienteAlergia(formProps)
+		}
+	}
+
+	renderFieldSelectAlergias(listaAlergias, alergia) {
+		if(!this.props.editarContenido) {
+			return <div>
+				<Field name='id_alergia' type='number' component={FieldSelectAlergiasContainer} listaAlergias={listaAlergias} label='Alergia'/>
+			</div>
+		} else {
+			return <p><strong>Descripción:</strong> { alergia.descripcion }</p>
 		}
 	}
 
@@ -62,8 +73,13 @@ class Formulario extends Component {
 		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
-			abirtoCrear, abirtoEditar, error, cargando, alergia 
+			abirtoCrear, abirtoEditar, cargando, alergia 
 		} = this.props.formulario
+		
+		let error = this.props.formulario.error ? this.props.formulario.error 
+			: this.props.crear.error ? this.props.crear.error : this.props.editar.error 
+
+		console.log(error)
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
@@ -80,10 +96,10 @@ class Formulario extends Component {
 
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								
-								<Field name='id_alergia' type='number' component={FieldSelectAlergiasContainer} listaAlergias={this.props.listaAlergias} label='Alergia'/>
+								{ this.renderFieldSelectAlergias(this.props.listaAlergias, alergia) }
 								<Field name='observaciones' type='text' component={renderField} label='Observaciones'/>
-														
-								<button type="submit" className="btn btn-info btn-space" disabled={submitting}>Guardar</button>
+									
+								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 								<button type="button" onClick={ this.props.cerrarFormularioPacienteAlergia } className="btn btn-primary btn-space">Cancelar</button>
 								
 							</form>
