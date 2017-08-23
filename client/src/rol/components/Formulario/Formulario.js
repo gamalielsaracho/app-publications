@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Field, reset } from 'redux-form'
 import ReactModal from 'react-modal'
 
+import _ from 'lodash'
+
 import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -23,8 +25,8 @@ class Formulario extends Component {
 		this.renderCargando = this.renderCargando.bind(this)
 	}
 
-	enviarFormulario(formProps) {
-		console.log('this.props.editarContenido')
+	enviarFormulario(formProps) {		
+		console.log(formProps)
 
 		if(this.props.editarContenido) {
 			this.props.editarRol(formProps)
@@ -52,8 +54,12 @@ class Formulario extends Component {
 		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
-			abirtoCrear, abirtoEditar, error, cargando, rol 
+			abirtoCrear, abirtoEditar, cargando, rol 
 		} = this.props.formulario
+
+		let error = this.props.formulario.error ? this.props.formulario.error 
+			: this.props.crear.error ? this.props.crear.error : this.props.editar.error 
+
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
@@ -63,6 +69,8 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
+					<h4 className='text-center'>Formulario rol</h4>
+
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							<MensajeOerror error={error} mensaje={null}/>
@@ -72,7 +80,7 @@ class Formulario extends Component {
 								
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
-								<button type="submit" className="btn btn-info btn-space" disabled={submitting}>Guardar</button>
+								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 								<button type="button" onClick={ this.props.cerrarFormularioRol } className="btn btn-primary btn-space">Cancelar</button>
 								
 							</form>
