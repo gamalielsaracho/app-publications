@@ -116,7 +116,7 @@ class Formulario extends Component {
 								<Field name='id_departamento' type='text' component={this.renderFieldSelectDepartamento} listaDepartamentos={this.props.listaDepartamentos} label='Departamento:'/>
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
-								<button type="submit" className='btn btn-info btn-space' disabled={submitting}>Guardar</button>
+								<button type="submit" className='btn btn-info btn-space' disabled={pristine || submitting}>Guardar</button>
 								<button type='button' onClick={ this.props.cerrarFormularioCiudad } className='btn btn-primary btn-space'>Cancelar</button>
 							</form>
 						</div>

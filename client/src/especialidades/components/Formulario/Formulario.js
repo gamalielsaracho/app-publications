@@ -61,6 +61,8 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
+					<h4 className='text-center'>Formulario especialidad</h4>
+
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							<MensajeOerror error={error} mensaje={null}/>
@@ -69,7 +71,7 @@ class Formulario extends Component {
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
-								<button type="submit" className='btn btn-info btn-space' disabled={submitting}>Guardar</button>
+								<button type="submit" className='btn btn-info btn-space' disabled={pristine || submitting}>Guardar</button>
 								<button type="button" className='btn btn-primary btn-space' onClick={ this.props.cerrarFormularioEspecialidad }>Cancelar</button>
 							</form>
 						</div>

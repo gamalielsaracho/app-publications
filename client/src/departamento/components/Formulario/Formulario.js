@@ -71,7 +71,7 @@ class Formulario extends Component {
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
-								<button type="submit" className='btn btn-info btn-space' disabled={submitting}>Guardar</button>
+								<button type="submit" className='btn btn-info btn-space' disabled={pristine || submitting}>Guardar</button>
 								<button type="button" onClick={ this.props.cerrarFormularioDepartamento } className='btn btn-primary btn-space'>Cancelar</button>
 							</form>
 						</div>

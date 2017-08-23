@@ -119,7 +119,7 @@ class Formulario extends Component {
 
 								<div className='row row end-lg end-md end-sm end-xs'>
 									<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7'>
-										<button type="submit" className="btn btn-info btn-space" disabled={submitting}>Guardar</button>
+										<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 										<button type="button" onClick={ this.props.cerrarFormularioPaciente } className="btn btn-primary btn-space">Cancelar</button>
 									</div>
 								</div>
