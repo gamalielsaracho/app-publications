@@ -113,14 +113,16 @@ export function crearPacienteAlergia(datosFormulario) {
 		pacienteAlergia.emit('crear_alergiaPaciente', datosFormulario)
 
 		pacienteAlergia.on('crear_alergiaPaciente', (data) => {
-			if(data.err) {
+			// console.log(data)
+			if(data.error) {
 				dispatch({ type: CREAR_PACIENTE_ALERGIA_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: CREAR_PACIENTE_ALERGIA_EXITO, payload: data })
+				
+				dispatch(reset('FormularioAlergiaPaciente'))
 			}
 		})
 	
-		dispatch(reset('FormularioAlergiaPaciente'))
 	}
 }
 
