@@ -25,7 +25,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarEspecialidades())
 		},
 		eliminarEspecialidad: (idEspecialidad) => {
-			dispatch(eliminarEspecialidad(idEspecialidad))
+			var r = confirm("Está seguro que desea eliminar?");
+		    if (r == true) {
+				dispatch(eliminarEspecialidad(idEspecialidad))
+		    }
 		},
 		mostrarEspecialidad: (idEspecialidad) => {
 			dispatch(mostrarEspecialidad(idEspecialidad))

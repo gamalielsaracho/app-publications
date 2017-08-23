@@ -37,7 +37,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearEspecialidad(datosFormulario))
 		},
 		cerrarFormularioEspecialidad: () => {
-			dispatch(cerrarFormularioEspecialidad())
+			var r = confirm("Está seguro que desea cancelar?");
+		    if (r == true) {
+				dispatch(cerrarFormularioEspecialidad())
+		    }
 		},
 		editarEspecialidad: (datosFormulario) => {
 			dispatch(editarEspecialidad(datosFormulario))

@@ -48,7 +48,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearCiudad(datosFormulario))
 		},
 		cerrarFormularioCiudad: () => {
-			dispatch(cerrarFormularioCiudad())
+			var r = confirm("Está seguro que desea cancelar?");
+		    if (r == true) {
+				dispatch(cerrarFormularioCiudad())
+		    }
 		},
 		editarCiudad: (datosFormulario) => {
 			dispatch(editarCiudad(datosFormulario))

@@ -25,7 +25,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarCiudades())
 		},
 		eliminarCiudad: (idCiudad) => {
-			dispatch(eliminarCiudad(idCiudad))
+			var r = confirm("Está seguro que desea eliminar?");
+		    if (r == true) {
+				dispatch(eliminarCiudad(idCiudad))
+		    }
 		},
 		mostrarCiudad: (idCiudad) => {
 			dispatch(mostrarCiudad(idCiudad))

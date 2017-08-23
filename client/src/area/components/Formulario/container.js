@@ -37,7 +37,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearArea(datosFormulario))
 		},
 		cerrarFormularioArea: () => {
-			dispatch(cerrarFormularioArea())
+			var r = confirm("Está seguro que desea cancelar?");
+		    if (r == true) {
+				dispatch(cerrarFormularioArea())
+		    }
 		},
 		editarArea: (datosFormulario) => {
 			dispatch(editarArea(datosFormulario))

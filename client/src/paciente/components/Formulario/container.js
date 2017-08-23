@@ -100,7 +100,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearPaciente(datosFormulario))
 		},
 		cerrarFormularioPaciente: () => {
-			dispatch(cerrarFormularioPaciente())
+			var r = confirm("Está seguro que desea cancelar?");
+		    if (r == true) {
+				dispatch(cerrarFormularioPaciente())
+		    }
 		},
 		editarPaciente: (datosFormulario) => {
 			dispatch(editarPaciente(datosFormulario))

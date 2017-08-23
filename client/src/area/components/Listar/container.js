@@ -25,7 +25,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarAreas())
 		},
 		eliminarArea: (idArea) => {
-			dispatch(eliminarArea(idArea))
+			var r = confirm("Está seguro que desea eliminar?");
+		    if (r == true) {
+				dispatch(eliminarArea(idArea))
+		    }
 		},
 		mostrarArea: (idArea) => {
 			dispatch(mostrarArea(idArea))

@@ -25,7 +25,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarDepartamentos())
 		},
 		eliminarDepartamento: (idDepartamento) => {
-			dispatch(eliminarDepartamento(idDepartamento))
+			var r = confirm("Está seguro que desea eliminar?");
+		    if (r == true) {
+				dispatch(eliminarDepartamento(idDepartamento))
+		    }
 		},
 		mostrarDepartamento: (idDepartamento) => {
 			dispatch(mostrarDepartamento(idDepartamento))

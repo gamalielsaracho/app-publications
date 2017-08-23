@@ -37,7 +37,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearAlergia(datosFormulario))
 		},
 		cerrarFormularioAlergia: () => {
-			dispatch(cerrarFormularioAlergia())
+			var r = confirm("Está seguro que desea cancelar?");
+		    if (r == true) {
+				dispatch(cerrarFormularioAlergia())
+		    }
 		},
 		editarAlergia: (datosFormulario) => {
 			dispatch(editarAlergia(datosFormulario))
