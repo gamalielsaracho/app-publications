@@ -28,7 +28,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarPacienteAlergias(nroDocumento, id_tipoDocumento))
 		},
 		eliminarPacienteAlergia: (nroDocumento, id_tipoDocumento, id_alergia) => {
-			dispatch(eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia))
+			var r = confirm("Está seguro que desea eliminar?");
+		    if (r == true) {
+				dispatch(eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia))
+		    }
 		},
 		mostrarPacienteAlergia: (nroDocumento, id_tipoDocumento, id_alergia) => {
 			dispatch(mostrarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia))
