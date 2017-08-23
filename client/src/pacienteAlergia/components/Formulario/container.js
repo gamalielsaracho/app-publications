@@ -30,6 +30,10 @@ function mapStateToProps(state) {
 		enableReinitialize: state.alergiaPaciente.formulario.iniciarValores,
 		editarContenido: state.alergiaPaciente.formulario.iniciarValores,
 
+		// Para obtener el error al crear o editar.
+		crear: state.alergiaPaciente.crear,
+		editar: state.alergiaPaciente.editar,
+
 		// Lista de las Alergias para pasarle al componente FieldSelectAlergias
 		// como propiedad.
 		listaAlergias: state.alergia.listar // map.
@@ -44,7 +48,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearPacienteAlergia(datosFormulario))
 		},
 		cerrarFormularioPacienteAlergia: () => {
-			dispatch(cerrarFormularioPacienteAlergia())
+		    var r = confirm("Está seguro que desea cancelar?");
+		    if (r == true) {
+				dispatch(cerrarFormularioPacienteAlergia())
+		    }
 		},
 		editarPacienteAlergia: (datosFormulario) => {
 			dispatch(editarPacienteAlergia(datosFormulario))
