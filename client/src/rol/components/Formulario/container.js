@@ -15,6 +15,7 @@ const validate = (values) => {
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
 	}else if (values.descripcion.length < 5) {
+		values.descripcion.toLowerCase()
    		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
 	}
 
@@ -26,7 +27,11 @@ function mapStateToProps(state) {
 		formulario: state.rol.formulario,
 		initialValues: state.rol.formulario.rol,
 		enableReinitialize: state.rol.formulario.iniciarValores,
-		editarContenido: state.rol.formulario.iniciarValores
+		editarContenido: state.rol.formulario.iniciarValores,
+
+		// Para obtener el error al crear o editar.
+		crear: state.rol.crear,
+		editar: state.rol.editar
 	}
 }
 
@@ -37,7 +42,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearRol(datosFormulario))
 		},
 		cerrarFormularioRol: () => {
-			dispatch(cerrarFormularioRol())
+			var r = confirm("Está seguro que desea cancelar?");
+		    if (r == true) {
+				dispatch(cerrarFormularioRol())
+		    }
 		},
 		editarRol: (datosFormulario) => {
 			dispatch(editarRol(datosFormulario))
