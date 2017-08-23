@@ -60,7 +60,11 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					alergia: {}
 				},
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+
+				// Limpia los estados de error.
+				editar: { error: '' },
+				crear: { error: '' }
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PACIENTE_ALERGIA_REQUEST:
@@ -87,7 +91,11 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					alergia: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+
+				// Limpia los estados de error.
+				editar: { error: '' },
+				crear: { error: '' }
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PACIENTE_ALERGIA_FALLO:
@@ -118,16 +126,14 @@ export default function (state = INITIAL_STATE, action) {
 
 		// CREATE alergia.
 		case CREAR_PACIENTE_ALERGIA_REQUEST:
-			return state = Object.assign({}, state, {
+			return Object.assign({}, state, {
 				crear: { cargando: true }
 			})
 
 		case CREAR_PACIENTE_ALERGIA_EXITO:
-			console.log(action.payload.datoInsertado)
-
 			return Object.assign({}, state, {
 				crear: { 
-					mensaje: action.payload.mensaje,
+					mensaje: action.payload.mensaje
 				},
 				formulario: { abirtoCrear: false }
 				// listar: { 
@@ -136,7 +142,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_PACIENTE_ALERGIA_FALLO:
-			return state = Object.assign({}, state, {
+			return Object.assign({}, state, {
 				crear: { error: action.payload }
 			})
 
