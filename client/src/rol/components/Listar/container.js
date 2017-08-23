@@ -25,7 +25,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarRoles())
 		},
 		eliminarRole: (idRol) => {
-			dispatch(eliminarRole(idRol))
+			var r = confirm("Está seguro que desea eliminar el rol?");
+		    if (r == true) {
+				dispatch(eliminarRole(idRol))
+		    }
 		},
 		mostrarRol: (idRol) => {
 			dispatch(mostrarRol(idRol))
