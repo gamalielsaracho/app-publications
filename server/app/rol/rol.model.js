@@ -1,6 +1,7 @@
 import connection from '../../config/connection'
 
 exports.find = (callback) => {
+	// LOWER(*)
 	return connection.query('SELECT * FROM roles', callback)
 
 	connection.end()
@@ -13,7 +14,10 @@ exports.findById = (idRol, callback) => {
 }
 
 exports.create = (data, callback) => {
-	return connection.query('INSERT INTO roles SET ?', data, callback)
+	let q = `
+		INSERT INTO roles SET ?
+	`
+	return connection.query(q, data, callback)
 
 	connection.end()
 }

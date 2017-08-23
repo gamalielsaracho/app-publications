@@ -21,6 +21,7 @@ export default (socket, io) => {
 
 
 		socket.on('crear_rol', function(data) {
+			// console.log(data)
 			Rol.create(data, (err, rol) => {
 				if(err) {
 					socket.emit('crear_rol', { error: 'Ocurrió un error, intente más tarde.' })
@@ -61,6 +62,7 @@ export default (socket, io) => {
 
 
 		socket.on('editar_rol', (data) => {
+			console.log(data)
 			Rol.update(data, (err) => {
 				if(err) {
 					socket.emit('editar_rol', { error: 'Ocurrió un error, intente más tarde.' })
