@@ -24,7 +24,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(listarPacientes())
 		},
 		eliminarPaciente: (nroDocumento, idTipoDocumento) => {
-			dispatch(eliminarPaciente(nroDocumento, idTipoDocumento))
+			var r = confirm("Está seguro que desea eliminar?");
+		    if (r == true) {
+				dispatch(eliminarPaciente(nroDocumento, idTipoDocumento))
+		    }
 		},
 		abrirFormularioCrearPaciente: () => {
 			dispatch(abrirFormularioCrearPaciente())
