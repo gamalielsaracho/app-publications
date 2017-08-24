@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
 })
 
 require('././app/pacienteAlergia/pacienteAlergia.sockets')(io)
+require('././app/cita/cita.sockets')(io)
 
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
