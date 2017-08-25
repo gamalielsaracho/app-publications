@@ -24,9 +24,30 @@ exports.findById = (data, callback) => {
 			pa.id_area = area.id_area AND
 			pa.nroDocumento = ? AND pa.id_tipoDocumento = ?
 	`
+	// let q = `
+	// 	SELECT * FROM pacientes
+	// 		WHERE
+	// 			nroDocumento = ? AND id_tipoDocumento = ?
+	// `
 	var options = {
 		sql: q, 
 		nestTables: true
+	}
+
+	return connection.query(options, [data.nroDocumento, data.id_tipoDocumento], callback)
+
+	connection.end()
+}
+
+exports.findByIdToUpdate = (data, callback) => {
+	let q = `
+		SELECT * FROM pacientes
+			WHERE
+				nroDocumento = ? AND id_tipoDocumento = ?
+	`
+	var options = {
+		sql: q,
+		nestTables: false
 	}
 
 	return connection.query(options, [data.nroDocumento, data.id_tipoDocumento], callback)
@@ -41,8 +62,26 @@ exports.create = (data, callback) => {
 }
 
 exports.update = (data, callback) => {
-	return connection.query('update pacientes set nroDocumento=?, id_tipoDocumento=?, nombres=?, apellidos=?, fechaNacimiento=?, direccion=?, fechaMuerte=?, celular=?, telefono=?, mujer=?, hombre=?, id_area=?, id_ciudad=? where id_paciente = ?', 
-		[data.nroDocumento, data.id_tipoDocumento, data.nombres, data.apellidos, data.fechaNacimiento, data.direccion, data.fechaMuerte, data.celular, data.telefono, data.mujer, data.hombre, data.id_area, data.id_ciudad, data.id_paciente], callback);
+	console.log('nroDocumento_old: '+data.nroDocumento_old)
+	console.log('id_tipoDocumento_old: '+data.id_tipoDocumento_old)
+	let q = `
+		UPDATE pacientes SET
+			nroDocumento=?, id_tipoDocumento=?, 
+			nombres=?, apellidos=?, fechaNacimiento=?, 
+			direccion=?, fechaMuerte=?, celular=?, 
+			telefono=?, mujer=?, hombre=?, 
+			id_area=?, id_ciudad=? 
+		WHERE
+			nroDocumento = ? AND
+			id_tipoDocumento = ?
+	`
+	return connection.query(q, [
+		data.nroDocumento, data.id_tipoDocumento, 
+		data.nombres, data.apellidos, data.fechaNacimiento, 
+		data.direccion, data.fechaMuerte, data.celular, 
+		data.telefono, data.mujer, data.hombre, data.id_area, 
+		data.id_ciudad, data.nroDocumento_old, 
+		data.id_tipoDocumento_old ], callback);
 
 	connection.end()
 }

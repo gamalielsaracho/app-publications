@@ -53,9 +53,23 @@ export default (socket, io) => {
 					return
 				}
 
-				console.log(paciente)
+				console.log(paciente[0])
 
 				socket.emit('mostrar_paciente', paciente[0])
+			})
+		})
+
+		socket.on('mostrar_paciente_editar', (data) => {
+			Paciente.findByIdToUpdate(data, (err, paciente) => {
+				if(err) {
+					console.log(err)
+					socket.emit('mostrar_paciente_editar', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				console.log(paciente[0])
+
+				socket.emit('mostrar_paciente_editar', paciente[0])
 			})
 		})
 
@@ -75,8 +89,21 @@ export default (socket, io) => {
 
 
 		socket.on('editar_paciente', (data) => {
+			console.log(data)
+
+			if(data.sexo == 'masculino') {
+				data.hombre = true
+				data.mujer = false
+			} else {
+				data.mujer = true
+				data.hombre = false
+			}
+
+			delete data.sexo
+
 			Paciente.update(data, (err) => {
 				if(err) {
+					console.log(err)
 					socket.emit('editar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
