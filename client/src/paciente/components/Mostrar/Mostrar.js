@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { formatDate } from '../../../globalActions'
+
 import ReactModal from 'react-modal'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -43,7 +45,7 @@ class Mostrar extends Component {
 				<p><strong>Tipo de Documento:</strong> { paciente.tipoDocumento.descripcion }</p>
 				<p><strong>Nombres:</strong> { paciente.pa.nombres }</p>
 				<p><strong>Apellidos:</strong> { paciente.pa.apellidos }</p>
-				<p><strong>Fecha de nacimiento:</strong> { paciente.pa.fechaNacimiento }</p>
+				<p><strong>Fecha de nacimiento:</strong> { formatDate(paciente.pa.fechaNacimiento) }</p>
 				<p><strong>Dirección:</strong> { paciente.pa.direccion }</p>
 				<p><strong>Sexo:</strong>{ this.renderSexo(paciente.pa.mujer) }</p>
 				<p><strong>Area:</strong> { paciente.area.descripcion }</p>

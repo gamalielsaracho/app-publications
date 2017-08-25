@@ -17,7 +17,7 @@ class MostrarApp extends Component {
 			<ul className="nav nav-tabs">
 			  <li className="nav-item">
 			    <a className="nav-link active">
-			    	<Link to={`/pacientes/${nroDocumento}/${idTipoDocumento}/alergias`}>Alergias</Link>
+			    	<Link to={`/dashboard/pacientes/${nroDocumento}/${idTipoDocumento}/alergias`}>Alergias</Link>
 			    </a>
 			  </li>
 			  <li className="nav-item">

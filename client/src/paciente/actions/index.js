@@ -35,7 +35,7 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
-import { socket } from '../../globalActions'
+import { socket, formatDate } from '../../globalActions'
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
@@ -52,13 +52,23 @@ export function abrirFormularioEditarPaciente(nroDocumento, idTipoDocumento) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_REQUEST })
 
-		socket.emit('mostrar_paciente', { 
+		socket.emit('mostrar_paciente_editar', { 
 			nroDocumento: nroDocumento,
 			id_tipoDocumento: idTipoDocumento 
 		})
 
-		socket.on('mostrar_paciente', (data) => {
-			// console.log(data)
+		socket.on('mostrar_paciente_editar', (data) => {
+
+			if(data.hombre) {
+				data.sexo = 'masculino'
+			} else {
+				data.sexo = 'femenino'
+			}
+
+			data.fechaNacimiento = formatDate(data.fechaNacimiento)
+
+			console.log(data)
+
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_FALLO, payload: data.error })
 			} else {
@@ -172,6 +182,8 @@ export function editarPaciente(datosFormulario) {
 		socket.emit('editar_paciente', datosFormulario)
 
 		socket.on('editar_paciente', (data) => {
+
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: EDITAR_PACIENTE_FALLO, payload: data.error })
 			} else {

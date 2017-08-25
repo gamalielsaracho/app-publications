@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
+import { formatDate } from '../../../globalActions'
+
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
@@ -46,14 +48,14 @@ class Listar extends Component {
 			            <td>{ paciente.tipoDocumento.descripcion }</td>
 			            <td>{ paciente.pa.nombres }</td>
 			            <td>{ paciente.pa.apellidos }</td>
-			            <td>{ paciente.pa.fechaNacimiento }</td>
+			            <td>{ formatDate(paciente.pa.fechaNacimiento) }</td>
 			            <td>{ paciente.pa.direccion }</td>
 			            { this.renderSexo(paciente.pa.mujer) }
 			            <td>{ paciente.area.descripcion }</td>
 			            <td>{ paciente.ciudad.descripcion }</td>
 
 			            <td>
-							<Link to={`pacientes/${paciente.pa.nroDocumento}/${paciente.pa.id_tipoDocumento}`}>
+							<Link to={`/dashboard/pacientes/${paciente.pa.nroDocumento}/${paciente.pa.id_tipoDocumento}`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.nroDocumento, paciente.tipoDocumento.id_tipoDocumento) }} className="btn btn-warning btn-space">Editar</button>

@@ -48,9 +48,16 @@ class Formulario extends Component {
 	}
 
 	enviarFormulario(formProps) {
-		console.log(formProps)
+		// console.log(formProps)
 
 		if(this.props.editarContenido) {
+
+			formProps.nroDocumento_old = this.props.initialValues.nroDocumento
+			formProps.id_tipoDocumento_old = this.props.initialValues.id_tipoDocumento
+
+			console.log('this.props.initialValues')
+			console.log(formProps)
+
 			this.props.editarPaciente(formProps)
 		} else {
 			this.props.crearPaciente(formProps)

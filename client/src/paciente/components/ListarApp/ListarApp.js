@@ -7,7 +7,7 @@ class ListarApp extends Component {
 			<ul className="nav nav-tabs">
 			  <li className="nav-item">
 			    <a className="nav-link active">
-			    	<Link to='/pacientes'>Listar</Link>
+			    	<Link to='/dashboard/pacientes'>Listar</Link>
 			    </a>
 			  </li>
 			  <li className="nav-item">

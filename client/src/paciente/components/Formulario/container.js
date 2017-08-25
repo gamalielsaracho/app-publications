@@ -81,10 +81,26 @@ const validate = (values) => {
 	return errors
 }
 
+let op = {
+	apellidos: "yututyutyutyu",
+	celular: "5665645646",
+	direccion: "rtyytrytrty657",
+	fechaNacimiento: "2017-08-10",
+	id_area: "2",
+	id_ciudad: "8",
+	id_tipoDocumento: "2",
+	nombres: "tyryrytryryt",
+	nroDocumento: "35544535454",
+	sexo: "femenino",
+	telefono: "65757567"
+}
+
 function mapStateToProps(state) {
 	return {
 		formulario: state.paciente.formulario,
 		initialValues: state.paciente.formulario.paciente,
+		// initialValues: op,
+
 		enableReinitialize: state.paciente.formulario.iniciarValores,
 		editarContenido: state.paciente.formulario.iniciarValores,
 
