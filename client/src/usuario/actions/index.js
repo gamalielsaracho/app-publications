@@ -33,6 +33,7 @@ export function registrarPersonal(datosFormulario) {
 		socketPersonal.emit('registrar_personal', datosFormulario)
 
 		socketPersonal.on('registrar_personal', (data) => {
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: REGISTRAR_PERSONAL_FALLO, payload: data.error })
 			} else {
