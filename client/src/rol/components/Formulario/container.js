@@ -42,10 +42,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearRol(datosFormulario))
 		},
 		cerrarFormularioRol: () => {
-			var r = confirm("Está seguro que desea cancelar?");
-		    if (r == true) {
+			// var r = confirm("Está seguro que desea cancelar?");
+		    // if (r == true) {
 				dispatch(cerrarFormularioRol())
-		    }
+		    // }
 		},
 		editarRol: (datosFormulario) => {
 			dispatch(editarRol(datosFormulario))

@@ -37,10 +37,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(crearDepartamento(datosFormulario))
 		},
 		cerrarFormularioDepartamento: () => {
-			var r = confirm("Está seguro que desea cancelar?");
-		    if (r == true) {
+			// var r = confirm("Está seguro que desea cancelar?");
+		    // if (r == true) {
 				dispatch(cerrarFormularioDepartamento())
-		    }
+		    // }
 		},
 		editarDepartamento: (datosFormulario) => {
 			dispatch(editarDepartamento(datosFormulario))
