@@ -22,9 +22,11 @@ export default (socket, io) => {
 	personalesLista()
 
 	socket.on('registrar_personal', (data) => {
-		// console.log(data)
+		// console.log(data.correo)
+
 		Personal.verifyEmailRegister(data.correo, (err, personalExistente) => {
 			if(err) {
+				console.log(err)
 				socket.emit('registrar_personal', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
 				return
 			}
@@ -36,6 +38,7 @@ export default (socket, io) => {
 			}else {
 				Personal.create(data, (err, personal) => {
 					if(err) {
+						console.log(err)
 						socket.emit('registrar_personal', { error: 'Lo sentimos, ocurrió un error. intente nuevamente.' })
 						return
 					}
