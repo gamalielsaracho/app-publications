@@ -42,9 +42,9 @@ const validate = values => {
   }
 
   // Validación con ROL y ESPECIALIDAD.
-  if (!values.id_especialidad) {
-    errors.id_rol = 'Especialidad obligatorio.'
-  }
+  // if (!values.id_especialidad) {
+  //   errors.id_rol = 'Especialidad obligatorio.'
+  // }
 
   if (!values.id_rol) {
     errors.id_rol = 'Rol obligatorio.'
