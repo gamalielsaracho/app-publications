@@ -78,7 +78,7 @@ class Registrar extends Component {
 	}
 
 	enviarFormulario(formProps) {
-		console.log(formProps)
+		// console.log(formProps)
 		this.props.registrarPersonal(formProps)
 	}
 
