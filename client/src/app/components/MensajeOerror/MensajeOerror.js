@@ -17,7 +17,7 @@ class MensajeOerror extends Component {
 				boxShadow: 'none',
 				border: `1px solid #${colorContenedor}`,
 				color: `#${colorContenedor}`,
-				padding: '16px'
+				padding: '.1em'
 			}
 		}
 
