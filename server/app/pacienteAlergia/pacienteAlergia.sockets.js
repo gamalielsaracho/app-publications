@@ -1,7 +1,6 @@
 import PacienteAlergia from './pacienteAlergia.model'
 
-let nroDocumento
-let id_tipoDocumento
+let idPaciente
 
 export default (io) => {
 	var pacienteAlergiaNsp = io.of('/pacienteAlergia');
@@ -10,16 +9,15 @@ export default (io) => {
 
 		console.log('Paciente Alergia..!')
 
-		// Cada vez que se muestra un paciente, se escucha nroDocumento 
+		// Cada vez que se muestra un paciente, se escucha idPaciente 
 		// y id_tipoDocumento. para mostrar las alergias de un paciente.
 		socket.on('listar_alergiasPaciente', (data) => {
 
-			nroDocumento = data.nroDocumento
-			id_tipoDocumento = data.id_tipoDocumento
+			idPaciente = data.id_paciente
 
 			function pacienteAlergias() {
 
-				PacienteAlergia.find(nroDocumento, id_tipoDocumento, (err, alergias) => {
+				PacienteAlergia.find(idPaciente, (err, alergias) => {
 					if(err) {
 						console.log(err)
 						
@@ -36,9 +34,9 @@ export default (io) => {
 
 
 			socket.on('crear_alergiaPaciente', function(data) {
-				// console.log(data)
+				console.log(data)
 				
-				PacienteAlergia.findById(data, (err, alergiaExistente) => {
+				PacienteAlergia.verifyIfExist(data, (err, alergiaExistente) => {
 					if(err) {
 						console.log(err)
 
