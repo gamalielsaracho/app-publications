@@ -23,17 +23,17 @@ function mapDispatchToProps(dispatch) {
 		listarPacientes: () => {
 			dispatch(listarPacientes())
 		},
-		eliminarPaciente: (nroDocumento, idTipoDocumento) => {
+		eliminarPaciente: (idPaciente) => {
 			var r = confirm("Está seguro que desea eliminar?");
 		    if (r == true) {
-				dispatch(eliminarPaciente(nroDocumento, idTipoDocumento))
+				dispatch(eliminarPaciente(idPaciente))
 		    }
 		},
 		abrirFormularioCrearPaciente: () => {
 			dispatch(abrirFormularioCrearPaciente())
 		},
-		abrirFormularioEditarPaciente: (nroDocumento, idTipoDocumento) => {
-			dispatch(abrirFormularioEditarPaciente(nroDocumento, idTipoDocumento))
+		abrirFormularioEditarPaciente: (idPaciente) => {
+			dispatch(abrirFormularioEditarPaciente(idPaciente))
 		}
 	}
 }

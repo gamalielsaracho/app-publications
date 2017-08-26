@@ -34,9 +34,12 @@ const validate = (values) => {
 
 	if (!values.nroDocumento) {
     	errors.nroDocumento = 'Nro de documento obligatorio.'
-	} else if (values.nroDocumento.length <= 4) {
-		errors.nroDocumento = 'Por lo menos 4 caracteres.'
+	} else {
+		if (values.nroDocumento.length < 7) {
+			errors.nroDocumento = 'Por lo menos 7 caracteres.'
+		}
 	}
+		
 
 	if (!values.id_tipoDocumento) {
 		errors.id_tipoDocumento = 'Tipo de documento obligatorio.'
@@ -47,7 +50,7 @@ const validate = (values) => {
 	} else if (values.nombres.length <= 10) {
 		errors.nombres = 'Por lo menos 10 caracteres.'
 	}
-
+ 
 	if (!values.apellidos) {
 	    errors.apellidos = 'Apellido completo obligatorio.'
 	} else if (values.apellidos.length < 10) {
@@ -81,29 +84,18 @@ const validate = (values) => {
 	return errors
 }
 
-let op = {
-	apellidos: "yututyutyutyu",
-	celular: "5665645646",
-	direccion: "rtyytrytrty657",
-	fechaNacimiento: "2017-08-10",
-	id_area: "2",
-	id_ciudad: "8",
-	id_tipoDocumento: "2",
-	nombres: "tyryrytryryt",
-	nroDocumento: "35544535454",
-	sexo: "femenino",
-	telefono: "65757567"
-}
-
 function mapStateToProps(state) {
 	return {
 		formulario: state.paciente.formulario,
 		initialValues: state.paciente.formulario.paciente,
-		// initialValues: op,
-
 		enableReinitialize: state.paciente.formulario.iniciarValores,
 		editarContenido: state.paciente.formulario.iniciarValores,
 
+		// Para obtener el error al crear o editar.
+		crear: state.paciente.crear,
+		editar: state.paciente.editar,
+
+		// Para listar en select, dentro del formulario. 
     	listaAreas: state.area.listar,
 		listaCiudades: state.ciudad.listar
 	}

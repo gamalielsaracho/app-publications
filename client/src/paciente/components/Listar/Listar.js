@@ -13,7 +13,6 @@ class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderPacientes = this.renderPacientes.bind(this)
-		this.renderSexo = this.renderSexo.bind(this)
 	}
 
 	componentWillMount() {
@@ -29,37 +28,28 @@ class Listar extends Component {
 		}
 	}	
 
-	renderSexo(mujer) {
-		if(mujer) {
-			return <td>Femenino</td> 
-		} else {
-			return <td>Masculino</td>
-		}
-	}
-
 	renderPacientes(pacientes) {
 
 		return <tbody>
 			{
 				pacientes.map((paciente) => {
-					console.log(paciente)
-					return <tr key={paciente.pa.nroDocumento}>
+					return <tr key={paciente.pa.id_paciente}>
 			            <td>{ paciente.pa.nroDocumento }</td>
 			            <td>{ paciente.tipoDocumento.descripcion }</td>
 			            <td>{ paciente.pa.nombres }</td>
 			            <td>{ paciente.pa.apellidos }</td>
 			            <td>{ formatDate(paciente.pa.fechaNacimiento) }</td>
 			            <td>{ paciente.pa.direccion }</td>
-			            { this.renderSexo(paciente.pa.mujer) }
+			            <td>{ paciente.pa.sexo }</td>
 			            <td>{ paciente.area.descripcion }</td>
 			            <td>{ paciente.ciudad.descripcion }</td>
 
 			            <td>
-							<Link to={`/dashboard/pacientes/${paciente.pa.nroDocumento}/${paciente.pa.id_tipoDocumento}`}>
+							<Link to={`/dashboard/pacientes/${paciente.pa.id_paciente}`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.nroDocumento, paciente.tipoDocumento.id_tipoDocumento) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarPaciente(paciente.pa.nroDocumento, paciente.tipoDocumento.id_tipoDocumento) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.id_paciente) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarPaciente(paciente.pa.id_paciente) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})

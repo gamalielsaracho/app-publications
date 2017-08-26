@@ -4,9 +4,8 @@ import MostrarApp from './MostrarApp'
 
 function mapStateToProps(state, ownProps) {
 	return {
-		nroDocumento: ownProps.params.nroDocumento,
-		idTipoDocumento: ownProps.params.idTipoDocumento
-
+		idPaciente: ownProps.params.idPaciente
+		
 		// nroDocumento: ownProps.params.nroDocumento,
 		// idTipoDocumento: ownProps.params.idTipoDocumento
 	}

@@ -48,16 +48,9 @@ class Formulario extends Component {
 	}
 
 	enviarFormulario(formProps) {
-		// console.log(formProps)
+		console.log(formProps)
 
 		if(this.props.editarContenido) {
-
-			formProps.nroDocumento_old = this.props.initialValues.nroDocumento
-			formProps.id_tipoDocumento_old = this.props.initialValues.id_tipoDocumento
-
-			console.log('this.props.initialValues')
-			console.log(formProps)
-
 			this.props.editarPaciente(formProps)
 		} else {
 			this.props.crearPaciente(formProps)
@@ -86,6 +79,10 @@ class Formulario extends Component {
 			abirtoCrear, abirtoEditar, error, cargando, paciente 
 		} = this.props.formulario
 
+		let Error = this.props.formulario.error ? this.props.formulario.error 
+			: this.props.crear.error ? this.props.crear.error : this.props.editar.error 
+
+
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
 		if(abierto) {
@@ -98,7 +95,7 @@ class Formulario extends Component {
 
 					<FormularioContainer/>
 
-					<MensajeOerror error={error} mensaje={null}/>
+					<MensajeOerror error={Error} mensaje={null}/>
 					{ this.renderCargando(cargando) }
 
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>

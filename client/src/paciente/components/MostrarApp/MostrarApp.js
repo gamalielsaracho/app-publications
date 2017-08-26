@@ -5,19 +5,18 @@ import MostarPacienteContainer from '../Mostrar'
 
 class MostrarApp extends Component {
 	render() {
-		let nroDocumento = this.props.nroDocumento
-		let idTipoDocumento = this.props.idTipoDocumento
+		let idPaciente = this.props.idPaciente
+		
 		return <div>
 			<br/>
 			<MostarPacienteContainer 
-				nroDocumento={nroDocumento}
-				idTipoDocumento={idTipoDocumento}/>
+				idPaciente={idPaciente}/>
 
 			<h3 className='text-center'>Historial Clínica</h3>
 			<ul className="nav nav-tabs">
 			  <li className="nav-item">
 			    <a className="nav-link active">
-			    	<Link to={`/dashboard/pacientes/${nroDocumento}/${idTipoDocumento}/alergias`}>Alergias</Link>
+			    	<Link to={`/dashboard/pacientes/${idPaciente}/alergias`}>Alergias</Link>
 			    </a>
 			  </li>
 			  <li className="nav-item">

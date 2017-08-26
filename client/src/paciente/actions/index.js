@@ -48,22 +48,15 @@ export function abrirFormularioCrearPaciente() {
 	}
 }
 
-export function abrirFormularioEditarPaciente(nroDocumento, idTipoDocumento) {
+export function abrirFormularioEditarPaciente(idPaciente) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_REQUEST })
 
 		socket.emit('mostrar_paciente_editar', { 
-			nroDocumento: nroDocumento,
-			id_tipoDocumento: idTipoDocumento 
+			id_paciente: idPaciente
 		})
 
 		socket.on('mostrar_paciente_editar', (data) => {
-
-			if(data.hombre) {
-				data.sexo = 'masculino'
-			} else {
-				data.sexo = 'femenino'
-			}
 
 			data.fechaNacimiento = formatDate(data.fechaNacimiento)
 
@@ -109,18 +102,22 @@ export function crearPaciente(datosFormulario) {
 
 		socket.emit('crear_paciente', datosFormulario)
 		socket.on('crear_paciente', (data) => {
-			if(data.err) {
+
+			console.log(data)
+
+			if(data.error) {
 				dispatch({ type: CREAR_PACIENTE_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: CREAR_PACIENTE_EXITO, payload: data })
+
+				dispatch(reset('FormularioPaciente'))
 			}
 		})
 	
-		dispatch(reset('FormularioPaciente'))
 	}
 }
 
-export function eliminarPaciente(nroDocumento, idTipoDocumento) {
+export function eliminarPaciente(idPaciente) {
 	return (dispatch) => {
 		// alert(idPaciente)
 
@@ -129,8 +126,7 @@ export function eliminarPaciente(nroDocumento, idTipoDocumento) {
 		// var socket = io('http://localhost:3000')
 
 		socket.emit('eliminar_paciente', {
-			nroDocumento: nroDocumento,
-			id_tipoDocumento: idTipoDocumento 
+			id_paciente: idPaciente
 		})
 
 		socket.on('eliminar_paciente', (data) => {
@@ -144,16 +140,14 @@ export function eliminarPaciente(nroDocumento, idTipoDocumento) {
 	}
 }
 
-export function mostrarPaciente(nroDocumento, idTipoDocumento) {
-	console.log('nroDocumento: '+nroDocumento)
-	console.log('idTipoDocumento: '+idTipoDocumento)
+export function mostrarPaciente(idPaciente) {
+	console.log('El id del Paciente es: '+idPaciente)
 
 	return (dispatch) => {
 		dispatch({ type: MOSTRAR_PACIENTE_REQUEST })
 
 		socket.emit('mostrar_paciente', {
-			nroDocumento: nroDocumento,
-			id_tipoDocumento: idTipoDocumento 
+			id_paciente: idPaciente
 		})
 
 		socket.on('mostrar_paciente', (data) => {

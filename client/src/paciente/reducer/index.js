@@ -112,7 +112,10 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					paciente: {}
-				}
+				},
+				// Limpia si es que anteriormente ocurió un error.
+				crear: { error: '' },
+				editar: { error: '' }
 			})
 
 		// CREATE paciente.

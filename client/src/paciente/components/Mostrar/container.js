@@ -15,8 +15,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		mostrarPaciente: (nroDocumento, idTipoDocumento) => {
-			dispatch(mostrarPaciente(nroDocumento, idTipoDocumento))
+		mostrarPaciente: (idPaciente) => {
+			dispatch(mostrarPaciente(idPaciente))
 		}
 	}
 }

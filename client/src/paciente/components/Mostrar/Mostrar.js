@@ -17,7 +17,7 @@ class Mostrar extends Component {
 	}
 	
 	componentWillMount() {
-		this.props.mostrarPaciente(this.props.nroDocumento, this.props.idTipoDocumento)
+		this.props.mostrarPaciente(this.props.idPaciente)
 	}
 
 	renderCargando(cargando) {
