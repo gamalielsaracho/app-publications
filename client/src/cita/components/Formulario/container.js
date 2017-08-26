@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearRol,
-	editarRol,
-	cerrarFormularioRol
+	crearCita,
+	editarCita,
+	cerrarFormularioCita
 } from '../../actions'
 
 import Formulario from './Formulario'
@@ -24,31 +24,58 @@ const validate = (values) => {
 
 function mapStateToProps(state) {
 	return {
-		formulario: state.rol.formulario,
-		initialValues: state.rol.formulario.rol,
-		enableReinitialize: state.rol.formulario.iniciarValores,
-		editarContenido: state.rol.formulario.iniciarValores,
+		formulario: state.cita.formulario,
+		initialValues: state.cita.formulario.cita,
+		enableReinitialize: state.cita.formulario.iniciarValores,
+		editarContenido: state.cita.formulario.iniciarValores,
 
 		// Para obtener el error al crear o editar.
-		crear: state.rol.crear,
-		editar: state.rol.editar
+		crear: state.cita.crear,
+		editar: state.cita.editar,
+
+		// Obtener la lista de citas creadas, para ver las fechas.
+		listar: state.cita.listar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearRol: (datosFormulario) => {
-			dispatch(crearRol(datosFormulario))
+		crearCita: (datosFormulario) => {
+			dispatch(crearCita(datosFormulario))
 		},
-		cerrarFormularioRol: () => {
-			var r = confirm("Está seguro que desea cancelar?");
-		    if (r == true) {
-				dispatch(cerrarFormularioRol())
-		    }
+		cerrarFormularioCita: () => {
+			// var r = confirm("Está seguro que desea cancelar?");
+		    // if (r == true) {
+				dispatch(cerrarFormularioCita())
+		    // }
 		},
-		editarRol: (datosFormulario) => {
-			dispatch(editarRol(datosFormulario))
+		editarCita: (datosFormulario) => {
+			dispatch(editarCita(datosFormulario))
+		},
+
+		// Lista para mostrar en el calendario.
+		listaCitasEdited: () => {
+			return [
+				{
+                    title: 'Pedro Raul',
+                    start: '2017-08-21T08:00:00',
+                    end: '2017-08-21T08:30:00',
+                    allDay: false
+                },
+                {
+                    title: 'Rie Motomori',
+                    start: '2017-08-23',
+                    // end: new Date(y, m, 1, 9, 00),
+                    allDay: false
+                },
+                {
+                    title: 'Gamaliel Saracho',
+                    start: '2017-08-23T08:00:00',
+                    end: '2017-08-23T08:30:00',
+                    allDay: false
+                }
+			]
 		}
 	}
 }

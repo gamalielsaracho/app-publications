@@ -49,14 +49,12 @@ export function abrirFormularioCrearCita() {
 	}
 }
 
-export function abrirFormularioEditarCita(idCita, fecha, hora) {
+export function abrirFormularioEditarCita(idCita) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_CITA_REQUEST })
 
 		citaSocket.emit('mostrar_cita', {
-			id_cita: idCita 
-			fecha: fecha,
-			hora: hora
+			id_cita: idCita
 		})
 
 		citaSocket.on('mostrar_cita', (data) => {
@@ -81,7 +79,10 @@ export function listarCitas() {
 
 		dispatch({ type: LISTAR_CITAS_REQUEST })
 
+		citaSocket.emit('listar_citas')
+
 		citaSocket.on('listar_citas', (data) => {
+			console.log(data)
 
 			if(data.error) {
 				dispatch({ type: LISTAR_CITAS_FALLO, payload: data.error })
@@ -110,16 +111,14 @@ export function crearCita(datosFormulario) {
 	}
 }
 
-export function eliminarCita(idCita, fecha, hora) {
+export function eliminarCita(idCita) {
 	return (dispatch) => {
 		// alert(idCita)
 
 		dispatch({ type: ELIMINAR_CITA_REQUEST })
 
 		citaSocket.emit('eliminar_cita', {
-			id_cita: idCita 
-			fecha: fecha,
-			hora: hora
+			id_cita: idCita
 		})
 
 		citaSocket.on('eliminar_cita', (data) => {
@@ -134,14 +133,12 @@ export function eliminarCita(idCita, fecha, hora) {
 }
 
 
-export function mostrarCita(idCita, fecha, hora) {
+export function mostrarCita(idCita) {
 	return (dispatch) => {
 		dispatch({ type: MOSTRAR_CITA_REQUEST })
 
 		citaSocket.emit('mostrar_cita', { 
-			id_cita: idCita 
-			fecha: fecha,
-			hora: hora
+			id_cita: idCita
 		})
 
 		citaSocket.on('mostrar_cita', (data) => {

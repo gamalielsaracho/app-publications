@@ -7,6 +7,7 @@ import _ from 'lodash'
 import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
+import CalendarioCitaContainer from '../Calendario'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -29,9 +30,9 @@ class Formulario extends Component {
 		console.log(formProps)
 
 		if(this.props.editarContenido) {
-			this.props.editarRol(formProps)
+			this.props.editarCita(formProps)
 		} else {
-			this.props.crearRol(formProps)
+			this.props.crearCita(formProps)
 		}
 	}
 
@@ -46,15 +47,15 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh',
+		  		height: '90vh',
 		  		position: 'none'
 		  	}
 		}
 
-		const { handleSubmit, pristine, reset, submitting } = this.props		
+		const { handleSubmit, fieldDisabled, pristine, reset, submitting } = this.props		
 		
 		const { 
-			abirtoCrear, abirtoEditar, cargando, rol 
+			abirtoCrear, abirtoEditar, cargando, cita 
 		} = this.props.formulario
 
 		let error = this.props.formulario.error ? this.props.formulario.error 
@@ -69,28 +70,54 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
-					<h4 className='text-center'>Formulario rol</h4>
+					<h4 className='text-center'>Formulario cita</h4>
 
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-							<MensajeOerror error={error} mensaje={null}/>
-							{ this.renderCargando(cargando) }
+						<MensajeOerror error={error} mensaje={null}/>
+						{ this.renderCargando(cargando) }
 
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+
+							<CalendarioCitaContainer citas= {[
+								{
+				                    title: 'Pedro Raul',
+				                    start: '2017-08-21T08:00:00',
+				                    end: '2017-08-21T08:30:00',
+				                    allDay: false
+				                },
+				                {
+				                    title: 'Rie Motomori',
+				                    start: '2017-08-23',
+				                    // end: new Date(y, m, 1, 9, 00),
+				                    allDay: false
+				                },
+				                {
+				                    title: 'Gamaliel Saracho',
+				                    start: '2017-08-23T08:00:00',
+				                    end: '2017-08-23T08:30:00',
+				                    allDay: false
+				                }
+							]}/>
+							
+						</div>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								
-								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-														
+								<Field active={false} name='fecha' type='text' component={renderField} label='Fecha'/>
+
 								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioRol } className="btn btn-primary btn-space">Cancelar</button>
-								
+								<button type="button" onClick={ this.props.cerrarFormularioCita } className="btn btn-primary btn-space">Cancelar</button>
 							</form>
 						</div>
+
 					</div>
+
 				</div>
 			</ReactModal>
 		} else {
 			return <span></span>
 		}
+														
 	}
 }
 

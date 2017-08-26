@@ -1,43 +1,43 @@
 import { connect } from 'react-redux'
 
 import {
-	listarRoles,
-	eliminarRole,
-	mostrarRol,
+	listarCitas,
+	eliminarCita,
+	mostrarCita,
 
-	abrirFormularioCrearRol,
-	abrirFormularioEditarRol
+	abrirFormularioCrearCita,
+	abrirFormularioEditarCita
 } from '../../actions'
 
 import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.rol.crear,
-		listar: state.rol.listar,
-		roles: state.rol.listar.roles
+		crear: state.cita.crear,
+		listar: state.cita.listar,
+		citas: state.cita.listar.citas
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarRoles: () => {
-			dispatch(listarRoles())
+		listarCitas: () => {
+			dispatch(listarCitas())
 		},
-		eliminarRole: (idRol) => {
+		eliminarCita: (idCita) => {
 			var r = confirm("Está seguro que desea eliminar el rol?");
 		    if (r == true) {
-				dispatch(eliminarRole(idRol))
+				dispatch(eliminarCita(idCita))
 		    }
 		},
-		mostrarRol: (idRol) => {
-			dispatch(mostrarRol(idRol))
+		mostrarCita: (idCita) => {
+			dispatch(mostrarCita(idCita))
 		},
-		abrirFormularioCrearRol: () => {
-			dispatch(abrirFormularioCrearRol())
+		abrirFormularioCrearCita: () => {
+			dispatch(abrirFormularioCrearCita())
 		},
-		abrirFormularioEditarRol: (idRol) => {
-			dispatch(abrirFormularioEditarRol(idRol))
+		abrirFormularioEditarCita: (idCita) => {
+			dispatch(abrirFormularioEditarCita(idCita))
 		}
 	}
 }

@@ -1,2 +1,2 @@
-import ListarContainer from './container'
-export default ListarContainer
+import ListarCitasContainer from './container'
+export default ListarCitasContainer
