@@ -63,8 +63,8 @@ export default (
 
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
-				<Route path='/dashboard/pacientes/:nroDocumento/:idTipoDocumento' component={MostrarPacienteAppContainer}>
-					<Route path='/dashboard/pacientes/:nroDocumento/:idTipoDocumento/alergias' component={ListarPacienteAlergiasPage}/>
+				<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
+					<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
 
 				</Route>
 			</Route>
