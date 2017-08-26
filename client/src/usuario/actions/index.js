@@ -64,7 +64,7 @@ export function autenticarPersonal(datosFormulario) {
 				dispatch(verificarTokenPersonal(token))
 
 				// enviar al perfil del Personal. cool.!
-				browserHistory.push(`/`)
+				browserHistory.push(`dashboard`)
 			}
 		})
 	}
