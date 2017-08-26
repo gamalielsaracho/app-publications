@@ -43,6 +43,8 @@ import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
 	// PACIENTE ALERGIAS.
 	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
 
+// CITAS.
+import ListarCitasPage from '././cita/pages/ListarCitasPage'
 
 export default (
 	<Route path='/' component={AppContainer}>
@@ -60,12 +62,14 @@ export default (
 			<Route path='/areas' component={ListarAreasPage}/>
 			<Route path='/alergias' component={ListarAlergiasPage}/>
 
+			<Route path='/dashboard/citas' component={ListarCitasPage}/>
 
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
+				
+
 				<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
 					<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
-
 				</Route>
 			</Route>
 		</Route>
