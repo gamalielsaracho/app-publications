@@ -3,9 +3,10 @@ import connection from '../../config/connection'
 exports.find = (callback) => {
 	let q = `
 		SELECT * FROM pacientes pa, tiposDocumentos tipoDocumento, ciudades ciudad, areas area 
-			WHERE pa.id_tipoDocumento = tipoDocumento.id_tipoDocumento AND
-			pa.id_ciudad = ciudad.id_ciudad AND
-			pa.id_area = area.id_area
+			WHERE 
+				pa.id_tipoDocumento = tipoDocumento.id_tipoDocumento AND
+				pa.id_ciudad = ciudad.id_ciudad AND
+				pa.id_area = area.id_area
 	`
 	var options = {
 		sql: q, 
@@ -20,21 +21,17 @@ exports.find = (callback) => {
 exports.findById = (data, callback) => {
 	let q = `
 		SELECT * FROM pacientes pa, tiposDocumentos tipoDocumento, ciudades ciudad, areas area
-			WHERE pa.id_ciudad = ciudad.id_ciudad AND
-			pa.id_area = area.id_area AND
-			pa.nroDocumento = ? AND pa.id_tipoDocumento = ?
+			WHERE 
+				pa.id_ciudad = ciudad.id_ciudad AND
+				pa.id_area = area.id_area AND
+				pa.id_paciente = ?
 	`
-	// let q = `
-	// 	SELECT * FROM pacientes
-	// 		WHERE
-	// 			nroDocumento = ? AND id_tipoDocumento = ?
-	// `
 	var options = {
 		sql: q, 
 		nestTables: true
 	}
 
-	return connection.query(options, [data.nroDocumento, data.id_tipoDocumento], callback)
+	return connection.query(options, [data.id_paciente], callback)
 
 	connection.end()
 }
@@ -43,10 +40,29 @@ exports.findByIdToUpdate = (data, callback) => {
 	let q = `
 		SELECT * FROM pacientes
 			WHERE
-				nroDocumento = ? AND id_tipoDocumento = ?
+				id_paciente = ?
 	`
+
 	var options = {
 		sql: q,
+		nestTables: false
+	}
+
+	return connection.query(options, [data.id_paciente], callback)
+
+	connection.end()
+}
+
+exports.verifyIfExist = (data, callback) => {
+	let q = `
+		SELECT * FROM pacientes
+			WHERE 
+				nroDocumento = ? AND
+				id_tipoDocumento = ?
+	`
+
+	var options = {
+		sql: q, 
 		nestTables: false
 	}
 
@@ -62,32 +78,36 @@ exports.create = (data, callback) => {
 }
 
 exports.update = (data, callback) => {
-	console.log('nroDocumento_old: '+data.nroDocumento_old)
-	console.log('id_tipoDocumento_old: '+data.id_tipoDocumento_old)
+	console.log(data)
 	let q = `
 		UPDATE pacientes SET
 			nroDocumento=?, id_tipoDocumento=?, 
 			nombres=?, apellidos=?, fechaNacimiento=?, 
 			direccion=?, fechaMuerte=?, celular=?, 
-			telefono=?, mujer=?, hombre=?, 
+			telefono=?, sexo = ?, 
 			id_area=?, id_ciudad=? 
 		WHERE
-			nroDocumento = ? AND
-			id_tipoDocumento = ?
+			id_paciente = ?
 	`
+
 	return connection.query(q, [
 		data.nroDocumento, data.id_tipoDocumento, 
 		data.nombres, data.apellidos, data.fechaNacimiento, 
 		data.direccion, data.fechaMuerte, data.celular, 
-		data.telefono, data.mujer, data.hombre, data.id_area, 
-		data.id_ciudad, data.nroDocumento_old, 
-		data.id_tipoDocumento_old ], callback);
+		data.telefono, data.sexo, data.id_area, 
+		data.id_ciudad, data.id_paciente ], callback);
 
 	connection.end()
 }
 
 exports.delete = (data, callback) => {	
-	return connection.query('DELETE FROM pacientes WHERE nroDocumento = ? AND id_tipoDocumento = ?', [data.nroDocumento, data.id_tipoDocumento], callback)
+	let q = `
+		DELETE FROM pacientes 
+		WHERE 
+			id_paciente = ?
+	`
+
+	return connection.query(q, [data.id_paciente], callback)
 
 	connection.end()
 }

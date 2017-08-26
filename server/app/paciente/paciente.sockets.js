@@ -21,25 +21,30 @@ export default (socket, io) => {
 
 
 		socket.on('crear_paciente', function(data) {
-			if(data.sexo == 'masculino') {
-				data.hombre = true
-			} else {
-				data.mujer = true
-			}
-
-			delete data.sexo
 
 			// console.log(data)
-			Paciente.create(data, (err, paciente) => {
+			Paciente.verifyIfExist(data, (err, pacienteExistente) => {
 				if(err) {
 					console.log(err)
 					socket.emit('crear_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('crear_paciente', { mensaje: 'Se agregó exitósamente.' })
-			
-				pacientes()
+				if(pacienteExistente[0]) {
+					socket.emit('crear_paciente', { error: 'Este paciente ya está registrado.' })
+				} else {
+					Paciente.create(data, (err, paciente) => {
+						if(err) {
+							console.log(err)
+							socket.emit('crear_paciente', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+
+						socket.emit('crear_paciente', { mensaje: 'Se agregó exitósamente.' })
+					
+						pacientes()
+					})
+				}
 			})
 		})
 
@@ -89,17 +94,7 @@ export default (socket, io) => {
 
 
 		socket.on('editar_paciente', (data) => {
-			console.log(data)
-
-			if(data.sexo == 'masculino') {
-				data.hombre = true
-				data.mujer = false
-			} else {
-				data.mujer = true
-				data.hombre = false
-			}
-
-			delete data.sexo
+			// console.log(data)
 
 			Paciente.update(data, (err) => {
 				if(err) {
