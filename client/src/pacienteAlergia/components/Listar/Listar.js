@@ -12,10 +12,9 @@ class Listar extends Component {
 		this.PacienteAlergias = this.PacienteAlergias.bind(this)
 	}
 
-	// this.props.nroDocumento -> es pasado como property.
-	// this.props.id_tipoDocumento
+	// this.props.idPaciente -> es pasado como property.
 	componentWillMount() {
-		this.props.listarPacienteAlergias(this.props.nroDocumento, this.props.idTipoDocumento)
+		this.props.listarPacienteAlergias(this.props.idPaciente)
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -27,7 +26,7 @@ class Listar extends Component {
 	}	
 
 	PacienteAlergias(alergias) {
-		console.log(alergias)
+		// console.log(alergias)
 		return <tbody>
 			{
 				alergias.map((i) => {
@@ -36,9 +35,9 @@ class Listar extends Component {
 			            <td>{ i.alergia.descripcion }</td>
 			            <td>{ i.pacienteAlergia.observaciones }</td>
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarPacienteAlergia(i.pacienteAlergia.nroDocumento, i.pacienteAlergia.id_tipoDocumento, i.alergia.id_alergia) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarPacienteAlergia(i.pacienteAlergia.id_paciente, i.alergia.id_alergia) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarPacienteAlergia(i.pacienteAlergia.id_paciente, i.alergia.id_alergia) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarPacienteAlergia(i.pacienteAlergia.id_paciente, i.alergia.id_alergia) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
@@ -66,9 +65,8 @@ class Listar extends Component {
 						intermedia de pacientes con alergias 
 					*/}
 
-					<FormularioContainer 
-						nroDocumento={this.props.nroDocumento}
-						id_tipoDocumento={this.props.idTipoDocumento}/>
+					<FormularioContainer
+						idPaciente={this.props.idPaciente}/>
 						
 					<MostarContainer/>
 

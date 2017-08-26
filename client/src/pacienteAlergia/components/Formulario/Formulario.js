@@ -31,8 +31,7 @@ class Formulario extends Component {
 
 	enviarFormulario(formProps) {
 
-		formProps.nroDocumento = this.props.nroDocumento
-		formProps.id_tipoDocumento = this.props.id_tipoDocumento
+		formProps.id_paciente = this.props.idPaciente
 		
 		console.log(formProps)
 

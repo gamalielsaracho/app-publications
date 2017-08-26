@@ -56,14 +56,13 @@ export function abrirFormularioCrearPacienteAlergia() {
 	}
 }
 
-export function abrirFormularioEditarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia) {
+export function abrirFormularioEditarPacienteAlergia(idPaciente, idAlergia) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_ALERGIA_REQUEST })
 
 		pacienteAlergia.emit('mostrar_alergiaPaciente', { 
-			nroDocumento: nroDocumento,
-			id_tipoDocumento: id_tipoDocumento,
-			id_alergia: id_alergia
+			id_paciente: idPaciente,
+			id_alergia: idAlergia
 		})
 
 		pacienteAlergia.on('mostrar_alergiaPaciente', (data) => {
@@ -83,15 +82,14 @@ export function cerrarFormularioPacienteAlergia() {
 	}
 }
 
-export function listarPacienteAlergias(nroDocumento, id_tipoDocumento) {
+export function listarPacienteAlergias(idPaciente) {
 	return (dispatch) => {
 
 		dispatch({ type: LISTAR_PACIENTE_ALERGIAS_REQUEST })
 
 
 		pacienteAlergia.emit('listar_alergiasPaciente', {
-			nroDocumento: nroDocumento,
-			id_tipoDocumento: id_tipoDocumento
+			id_paciente: idPaciente
 		})
 
 		pacienteAlergia.on('listar_alergiasPaciente', (data) => {
@@ -126,7 +124,7 @@ export function crearPacienteAlergia(datosFormulario) {
 	}
 }
 
-export function eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia) {
+export function eliminarPacienteAlergia(idPaciente, idAlergia) {
 	return (dispatch) => {
 
 		dispatch({ type: ELIMINAR_PACIENTE_ALERGIA_REQUEST })
@@ -134,9 +132,8 @@ export function eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alerg
 		// var pacienteAlergia = io('http://localhost:3000')
 
 		pacienteAlergia.emit('eliminar_alergiaPaciente', {
-			nroDocumento: nroDocumento,
-			id_tipoDocumento: id_tipoDocumento,
-			id_alergia: id_alergia
+			id_paciente: idPaciente,
+			id_alergia: idAlergia
 		})
 
 		pacienteAlergia.on('eliminar_alergiaPaciente', (data) => {
@@ -151,14 +148,13 @@ export function eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alerg
 }
 
 
-export function mostrarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia) {
+export function mostrarPacienteAlergia(idPaciente, idAlergia) {
 	return (dispatch) => {
 		dispatch({ type: MOSTRAR_PACIENTE_ALERGIA_REQUEST })
 
 		pacienteAlergia.emit('mostrar_alergiaPaciente', {
-			nroDocumento: nroDocumento,
-			id_tipoDocumento: id_tipoDocumento,
-			id_alergia: id_alergia
+			id_paciente: idPaciente,
+			id_alergia: idAlergia
 		})
 
 		pacienteAlergia.on('mostrar_alergiaPaciente', (data) => {
@@ -183,7 +179,7 @@ export function editarPacienteAlergia(datosFormulario) {
 	return (dispatch) => {
 
 		dispatch({ type: EDITAR_PACIENTE_ALERGIA_REQUEST })
-
+		
 		pacienteAlergia.emit('editar_alergiaPaciente', datosFormulario)
 
 		pacienteAlergia.on('editar_alergiaPaciente', (data) => {

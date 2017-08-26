@@ -13,8 +13,7 @@ import Listar from './Listar'
 
 function mapStateToProps(state, ownProps) {
 	return {
-		nroDocumento: ownProps.nroDocumento,
-		idTipoDocumento: ownProps.idTipoDocumento,
+		idPaciente: ownProps.idPaciente,
 
 		crear: state.alergiaPaciente.crear,
 		listar: state.alergiaPaciente.listar,
@@ -24,23 +23,23 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarPacienteAlergias: (nroDocumento, id_tipoDocumento) => {
-			dispatch(listarPacienteAlergias(nroDocumento, id_tipoDocumento))
+		listarPacienteAlergias: (idPaciente) => {
+			dispatch(listarPacienteAlergias(idPaciente))
 		},
-		eliminarPacienteAlergia: (nroDocumento, id_tipoDocumento, id_alergia) => {
+		eliminarPacienteAlergia: (idPaciente, idAlergia) => {
 			var r = confirm("Está seguro que desea eliminar?");
 		    if (r == true) {
-				dispatch(eliminarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia))
+				dispatch(eliminarPacienteAlergia(idPaciente, idAlergia))
 		    }
 		},
-		mostrarPacienteAlergia: (nroDocumento, id_tipoDocumento, id_alergia) => {
-			dispatch(mostrarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia))
+		mostrarPacienteAlergia: (idPaciente, idAlergia) => {
+			dispatch(mostrarPacienteAlergia(idPaciente, idAlergia))
 		},
 		abrirFormularioCrearPacienteAlergia: () => {
 			dispatch(abrirFormularioCrearPacienteAlergia())
 		},
-		abrirFormularioEditarPacienteAlergia: (nroDocumento, id_tipoDocumento, id_alergia) => {
-			dispatch(abrirFormularioEditarPacienteAlergia(nroDocumento, id_tipoDocumento, id_alergia))
+		abrirFormularioEditarPacienteAlergia: (idPaciente, idAlergia) => {
+			dispatch(abrirFormularioEditarPacienteAlergia(idPaciente, idAlergia))
 		}
 	}
 }
