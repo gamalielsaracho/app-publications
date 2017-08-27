@@ -9,6 +9,10 @@ import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import CalendarioCitaContainer from '../Calendario'
 
+import FieldSelectEspecialidadesContainer from '../../../especialidades/components/FieldSelectEspecialidades'
+
+import FieldSelectPesonales from '../../../usuario/components/FieldSelectPesonales'
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -24,6 +28,11 @@ class Formulario extends Component {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
 		this.renderCargando = this.renderCargando.bind(this)
+	}
+
+	componentWillMount() {
+		this.props.listarEspecialidades()
+		this.props.listarPersonales()
 	}
 
 	enviarFormulario(formProps) {		
@@ -102,9 +111,12 @@ class Formulario extends Component {
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
+								<Field name='id_especialidad' type='text' component={FieldSelectEspecialidadesContainer} listaEspecialidades={this.props.listaEspecialidades} label='Especialidad'/>
 								
-								<Field active={false} name='fecha' type='text' component={renderField} label='Fecha'/>
-
+								<Field name='id_personal' filterBy='medico' type='text' component={FieldSelectPesonales} listaPesonales={this.props.listaPesonales} label='Profesionales'/>
+								
+								<Field name='fecha' type='text' component={renderField} label='Fecha'/>
+								<h1>{ this.props.especialidadValue }</h1>
 								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 								<button type="button" onClick={ this.props.cerrarFormularioCita } className="btn btn-primary btn-space">Cancelar</button>
 							</form>
