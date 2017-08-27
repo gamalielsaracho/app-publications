@@ -1,11 +1,20 @@
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 
 import {
 	crearCita,
 	editarCita,
 	cerrarFormularioCita
 } from '../../actions'
+
+import {
+	listarEspecialidades
+} from '../../../especialidades/actions'
+
+import { 
+	listarPersonales
+	// actualizarFormularioFiltro
+} from '../../../usuario/actions'
 
 import Formulario from './Formulario'
 
@@ -34,7 +43,15 @@ function mapStateToProps(state) {
 		editar: state.cita.editar,
 
 		// Obtener la lista de citas creadas, para ver las fechas.
-		listar: state.cita.listar
+		listar: state.cita.listar,
+
+		// Lista de especialidades para mostrar dentro del select option.
+		listaEspecialidades: state.especialidad.listar,
+
+		// Lista los Médicos/as para mostrar dentro del select option Multiple.
+		listaPesonales: state.personal.listar,
+    	especialidadValue: selector(state, 'id_especialidad')
+
 	}
 }
 
@@ -76,13 +93,41 @@ function mapDispatchToProps(dispatch) {
                     allDay: false
                 }
 			]
+		},
+
+		listarEspecialidades: () => {
+			dispatch(listarEspecialidades())
+		},
+		listarPersonales: () => {
+			dispatch(listarPersonales())
 		}
 	}
 }
 
+// const form = reduxForm({
+// 	form: 'FormularioCita',
+// 	validate
+// })
+
 const form = reduxForm({
-	form: 'FormularioRol',
-	validate
+  form: 'FormularioCita',
+  validate
 })
+
+// Decorate with connect to read form values
+const selector = formValueSelector('FormularioCita') // <-- same as form name
+
+  // state => {
+  //   // can select values individually
+  //   const especialidadValue = selector(state, 'id_especialidad')
+  //   // const hasEmailValue = selector(state, 'hasEmail')
+  //   // const favoriteColorValue = selector(state, 'favoriteColor')
+  //   // or together as a group
+  //   // const { firstName, lastName } = selector(state, 'firstName', 'lastName')
+  //   return {
+  //     especialidadValue
+  //   }
+  // }
+// export default connect()(Formulario)
 
 export default connect(mapStateToProps, mapDispatchToProps)(form(Formulario))
