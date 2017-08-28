@@ -13,11 +13,12 @@ import FieldSelectEspecialidadesContainer from '../../../especialidades/componen
 
 import FieldSelectPesonales from '../../../usuario/components/FieldSelectPesonales'
 
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
+const renderField = ({ input, nombreNodo, label, type, meta: { touched, error, warning } }) => (
+  
   <div>
 	<div className="form-group">
 	 	<label htmlFor={label}>{label}</label>
-    	<input className="form-control" {...input} placeholder={label} type={type}/>
+    	<input className={nombreNodo} {...input} placeholder={label} type={type}/>
 	</div>
     { touched && ((error && <label className="text-danger">{ error }</label>)) }
   </div>
@@ -54,6 +55,8 @@ class Formulario extends Component {
 	}
 
 	render() {
+
+		// console.log(this.props.fechaOtenida)
 		const customStyles = {
 		    content : {
 		  		height: '90vh',
@@ -109,14 +112,17 @@ class Formulario extends Component {
 							]}/>
 							
 						</div>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								<Field name='id_especialidad' type='text' component={FieldSelectEspecialidadesContainer} listaEspecialidades={this.props.listaEspecialidades} label='Especialidad'/>
 								
-								<Field name='id_personal' filterBy='medico' type='text' component={FieldSelectPesonales} listaPesonales={this.props.listaPesonales} label='Profesionales'/>
+								<Field name='id_personal' valoresFiltro={this.props.valoresFiltro} type='text' component={FieldSelectPesonales} listaPesonales={this.props.listaPesonales} label='Profesionales'/>
+								<h3>Fecha: <strong className='fechaNodo'></strong></h3>
+								<h3>Hora: <strong className='horaInicioNodo'></strong></h3>
 								
-								<Field name='fecha' type='text' component={renderField} label='Fecha'/>
-								<h1>{ this.props.especialidadValue }</h1>
+								
+								<h1>Especialidad: { this.props.valoresFiltro.id_especialidad }</h1>
+								<h1>Médico/a: { this.props.valoresFiltro.id_personal }</h1>
 								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 								<button type="button" onClick={ this.props.cerrarFormularioCita } className="btn btn-primary btn-space">Cancelar</button>
 							</form>
@@ -131,6 +137,9 @@ class Formulario extends Component {
 		}
 														
 	}
+								// <Field nombreNodo='fechaNodo' name='fecha' type='text' component={renderField} label='Fecha'/>
+								// <Field nombreNodo='horaInicioNodo' name='inicio' type='text' component={renderField} label='Hora inicio'/>
+								// <Field nombreNodo='horaFinNodo' name='fin' type='text' component={renderField} label='Hora fin'/>
 }
 
 export default Formulario
