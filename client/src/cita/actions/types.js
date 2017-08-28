@@ -34,3 +34,5 @@ export const ELIMINAR_CITA_EXITO = 'eliminair_cita_exito'
 export const ELIMINAR_CITA_FALLO = 'eliminair_cita_fallo'
 
 
+export const OBTENER_FECHA = 'obtener_fecha'
+
