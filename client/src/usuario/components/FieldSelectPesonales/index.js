@@ -1,12 +1,13 @@
 import React from 'react'
 
-function FieldSelectPesonales({ input, filterBy, label, listaPesonales, type, meta: { touched, error, warning } }) {
+function FieldSelectPesonales({ input, valoresFiltro, label, listaPesonales, type, meta: { touched, error, warning } }) {
 	let personales = listaPesonales.personales
 	
 	if(personales) {
-		if(filterBy != null) { // Si no es null, Filtra.
+
+		if(valoresFiltro != null) {
 			personales = personales.filter((i) => {
-					return i.rol.descripcion.toLowerCase().match(filterBy)
+				return i.especialidad.id_especialidad == valoresFiltro.id_especialidad
 			})
 		}
 
