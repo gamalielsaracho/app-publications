@@ -36,8 +36,15 @@ exports.verifyEmailAuth = (correo, callback) => {
 // }
 
 exports.find = (callback) => {
+	let q = `
+		SELECT * FROM personales personal, roles rol, especialidades especialidad
+			WHERE
+				personal.id_rol = rol.id_rol AND
+				personal.id_especialidad = especialidad.id_especialidad
+	`
+
 	var options = {
-		sql: 'SELECT * FROM personales personal, roles rol where personal.id_rol = rol.id_rol', 
+		sql: q, 
 		nestTables: true
 	}
 
