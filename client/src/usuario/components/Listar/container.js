@@ -24,19 +24,6 @@ function mapDispatchToProps(dispatch) {
 		},
 		actualizarFormularioFiltro: (valores) => {
 			dispatch(actualizarFormularioFiltro(valores))
-		},
-		filtrarPersonales: (personales, valores) => {
-			console.log("el apellido es: "+valores.apellidos)
-			
-			personales = personales.filter((dato) => {
-				return dato.personal.apellidos.toLowerCase().match(valores.apellidos) &&
-					dato.personal.nombres.toLowerCase().match(valores.nombres) &&
-					dato.personal.correo.toLowerCase().match(valores.correo)
-			})
-
-			// console.log(personales)
-
-			return personales
 		}
 	}
 }
