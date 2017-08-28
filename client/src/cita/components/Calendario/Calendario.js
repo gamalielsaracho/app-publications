@@ -5,8 +5,24 @@ import fullcalendar from 'fullcalendar'
 import moment from 'moment'
 
 class Calendario extends Component {
+	constructor(props) {
+		super(props)
+		this.renderFechaCita = this.renderFechaCita.bind(this)
+	}
+
+	renderFechaCita(fecha) {
+		if(fecha) {
+			return <div>
+				{ fecha }
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
 
 	componentDidMount() {
+		console.log(this.refs.fecha)
+
 		var dateNow = new Date();
 		var d = dateNow.getDate();
 		var m = dateNow.getMonth();
@@ -30,10 +46,17 @@ class Calendario extends Component {
 				}
 			},
 			dayClick: function(date, jsEvent, view, resourceObj) {
+				// this.props.obtenerFecha(date.format())
+				// this.refs.fecha.textContent = 'date.format()'
 
+				$(".fechaNodo").text(date.format('YYYY-MM-DD'));
+
+				$(".horaInicioNodo").text(date.format('h:mm'));
+				// $(".horaFinNodo").val(date.format('h:mm'));
+
+				// this.props.s = date.format('YYYY-MM-DD')
 		        // alert('Date: ' + date.format('YYYY-MM-DD'));
-		        alert('Date: ' + date.format());
-
+		        // alert('Date: ' + date.format());
 		        // alert('Hora: ' + date.format('h:mm'));
 
 		        // alert('Resource ID: ' + resourceObj.id);
@@ -44,6 +67,7 @@ class Calendario extends Component {
 
 	render() {
 		return <div id="calendar">
+			<h4 className='fecha'></h4>
 		</div>
 	}
 }

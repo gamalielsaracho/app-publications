@@ -1,10 +1,15 @@
 import { connect } from 'react-redux'
 
+import {
+    obtenerFecha
+} from '../../actions'
+
 import Calendario from './Calendario'
 
 function mapStateToProps(state) {
 	return {
-		listar: state.cita.listar
+		listar: state.cita.listar,
+        s: ''
 	}
 }
 
@@ -32,7 +37,11 @@ function mapDispatchToProps(dispatch) {
                     allDay: false
                 }
 			]
-		}
+		},
+        obtenerFecha: (fecha) => {
+            alert('holaaaaa')
+            // dispatch(obtenerFecha(fecha))
+        }
 	}
 }
 
