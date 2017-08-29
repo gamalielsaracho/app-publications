@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
+import jwtDecode from 'jwt-decode'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import FormularioContainer from '../Formulario'
-import MostarContainer from '../Mostrar'
+import MostarVenCitaContainer from '../MostrarVen'
 
 class Listar extends Component {
 	constructor(props) {
@@ -12,6 +14,7 @@ class Listar extends Component {
 		this.renderCitas = this.renderCitas.bind(this)
 		this.renderOptionsByRol = this.renderOptionsByRol.bind(this)
 		this.renderAddButton = this.renderAddButton.bind(this)
+		this.renderFormAndShow = this.renderFormAndShow.bind(this)
 	}
 
 	componentWillMount() {
@@ -27,20 +30,6 @@ class Listar extends Component {
 	}	
 
 	renderOptionsByRol(rol, cita) {
-		// let disabled = true
-		// let mostrarOpcion = false
-		// let editarOpcion = false
-		// let eliminarOpcion = false
-
-		// if(rol == 'medico' || rol == 'enfermeria') {
-		// 	editarOpcion = true
-		// 	eliminarOpcion = true
-		// }else {
-		// 	mostrarOpcion = false
-		// 	editarOpcion = false
-		// 	eliminarOpcion = false
-		// }
-
 		switch(rol) {
 			case 'administracion':
 				return <div>
@@ -56,11 +45,16 @@ class Listar extends Component {
 				</div>
 			case 'medico':
 				return <div>
-					<button type="button" onClick={() => { this.props.mostrarCita(cita.id_cita) }} className="btn btn-info btn-space">Mostrar</button>
+					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
 				</div>
 			case 'enfermeria':
 				return <div>
 					<button type="button" onClick={() => { this.props.mostrarCita(cita.id_cita) }} className="btn btn-info btn-space">Mostrar</button>
+				</div>
+			default:
+				return <div>
 				</div>
 		}
 
@@ -78,10 +72,25 @@ class Listar extends Component {
 		}
 	}
 
+	renderFormAndShow(rol) {
+		if(rol == 'ventanilla') {
+			return <div>
+				<FormularioContainer/>
+				<MostarVenCitaContainer/>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
 	renderCitas(citas) {
-		// console.log(citas)
+
+		let rolUsuario = this.props.rol ? 
+					   	 this.props.rol.descripcion : ''
 
 		return <tbody>
+			{ this.renderFormAndShow(rolUsuario) }
+
 			{
 				citas.map((cita) => {
 					return <tr key={cita.id_cita}>
@@ -90,7 +99,7 @@ class Listar extends Component {
 			            <td>{ cita.hora }</td>
 			            <td>{ cita.pendiente }</td>
 			            <td>
-			            	{ this.renderOptionsByRol('enfermeria', cita) }
+			            	{ this.renderOptionsByRol(rolUsuario, cita) }
 			            </td>
 			        </tr>		
 				})
@@ -102,20 +111,22 @@ class Listar extends Component {
 
 		const { citas, cargando, error } = this.props.listar
 
-		console.log(this.props.listar)
+		// console.log(this.props.listar)
 		
 		if(cargando) {
 			return <Cargando/>
 		} else {
+			let rolUsuario = this.props.rol ? 
+							 this.props.rol.descripcion : '' 
+
+			// console.log('Btb -> '+rolUsuario)
+
 				return <div>
 					<h1 className='text-center'>Citas</h1>
 					
-					<FormularioContainer/>
-					<MostarContainer/>
-
 					<MensajeOerror error={error} mensaje={null}/>
 
-					{ this.renderAddButton('enfermeria') }
+					{ this.renderAddButton(rolUsuario) }
 
 					<br/>
 
