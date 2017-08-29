@@ -1,46 +1,28 @@
 import { connect } from 'react-redux'
 
 import {
-    obtenerFecha
+
 } from '../../actions'
 
 import Calendario from './Calendario'
 
 function mapStateToProps(state) {
 	return {
-		listar: state.cita.listar,
-        s: ''
+        citasFiltradas: state.cita.citasFiltradas
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listaCitasEdited: (citas) => {
-			return [
-				{
-                    title: 'Pedro Raul',
-                    start: '2017-08-21T08:00:00',
-                    end: '2017-08-21T08:30:00',
-                    allDay: false
-                },
-                {
-                    title: 'Rie Motomori',
-                    start: '2017-08-23',
-                    // end: new Date(y, m, 1, 9, 00),
-                    allDay: false
-                },
-                {
-                    title: 'Gamaliel Saracho',
-                    start: '2017-08-23T08:00:00',
-                    end: '2017-08-23T08:30:00',
-                    allDay: false
-                }
-			]
-		},
-        obtenerFecha: (fecha) => {
-            alert('holaaaaa')
-            // dispatch(obtenerFecha(fecha))
+        filtrarCitas: (citas, valores) => {
+            console.log(valores)
+            if(valores.id_personal) {
+                citas = citas.filter((i) => {
+                    return i.id_personal == valores.id_personal[0]
+                })
+            }
+            return citas
         }
 	}
 }
