@@ -159,7 +159,7 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_CITA_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true },
+				mostrar: { cargando: true, abierto: true, cita:{} },
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 

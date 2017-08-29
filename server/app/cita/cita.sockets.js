@@ -38,20 +38,6 @@ export default (io) => {
 				})
 			})
 
-
-			socket.on('mostrar_cita', (data) => {
-				Cita.findById(data, (err, cita) => {
-					if(err) {
-						console.log(err)
-						socket.emit('mostrar_cita', { error: 'Ocurrió un error, intente más tarde.' })
-						return
-					}
-
-					socket.emit('mostrar_cita', cita[0])
-				})
-			})
-
-
 			socket.on('eliminar_cita', (data) => {
 				Cita.delete(data, (err) => {
 					if(err) {
@@ -81,6 +67,21 @@ export default (io) => {
 				})
 			})
 		})
+
+		// Esta acción saco afuera, porque si está dentro de listar_citas,
+		// a la hora de ver una cita, y actualizar la página, No entra
+		// a mostrar_cita, y queda esperando. 
+		socket.on('mostrar_cita', (data) => {
+				Cita.findById(data, (err, cita) => {
+					if(err) {
+						console.log(err)
+						socket.emit('mostrar_cita', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('mostrar_cita', cita[0])
+				})
+			})
 
 
 
