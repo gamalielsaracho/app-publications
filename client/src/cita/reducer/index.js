@@ -29,13 +29,10 @@ import {
 
 	ELIMINAR_CITA_REQUEST,
 	ELIMINAR_CITA_EXITO,
-	ELIMINAR_CITA_FALLO,
-
-	OBTENER_FECHA
+	ELIMINAR_CITA_FALLO
 } from '../actions/types'
 
 const INITIAL_STATE = {
-	fechaCita: '',
 	formulario: {
 		abirtoCrear: false,
 		abirtoEditar: false,
@@ -65,12 +62,6 @@ export default function (state = INITIAL_STATE, action) {
 					cita: {}
 				},
 				mostrar: { abierto: false }
-			})
-
-		case OBTENER_FECHA:
-			console.log(action.payload)
-			return Object.assign({}, state, {
-				fechaCita: action.payload
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CITA_REQUEST:
