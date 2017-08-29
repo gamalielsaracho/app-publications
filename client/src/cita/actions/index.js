@@ -31,9 +31,7 @@ import {
 	// Delete Rol.
 	ELIMINAR_CITA_REQUEST,
 	ELIMINAR_CITA_EXITO,
-	ELIMINAR_CITA_FALLO,
-
-	OBTENER_FECHA
+	ELIMINAR_CITA_FALLO
 } from './types'
 
 import io from 'socket.io-client'
@@ -176,12 +174,6 @@ export function editarCita(datosFormulario) {
 			}
 		})
 
-	}
-}
-
-export function obtenerFecha(fecha) {
-	return (dispatch) => {
-		dispatch({ type: OBTENER_FECHA, payload: fecha })
 	}
 }
 
