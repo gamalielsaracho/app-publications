@@ -49,6 +49,9 @@ import ListarCitasApp from '././cita/components/ListarApp'
 
 import ListarCitasPage from '././cita/pages/ListarCitasPage'
 
+import MostrarCitaAppContainer from '././cita/components/MostrarApp'
+
+
 export default (
 	<Route path='/' component={AppContainer}>
 		<IndexRoute component={HomePage}/>
@@ -75,7 +78,9 @@ export default (
 
 			<Route path='/dashboard/citas' component={ListarCitasApp}>
 				<IndexRoute component={ListarCitasPage}/>
+				<Route path='/dashboard/citas/:idCita' component={MostrarCitaAppContainer}>
 
+				</Route>
 			</Route>
 
 		</Route>
