@@ -9,7 +9,7 @@ class Mostrar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderCargando = this.renderCargando.bind(this)
-		this.renderRol = this.renderRol.bind(this)
+		this.renderCita = this.renderCita.bind(this)
 	}
 
 	renderCargando(cargando) {
@@ -20,10 +20,36 @@ class Mostrar extends Component {
 		}
 	}
 
-	renderRol(rol) {
-		if(rol) {
+	renderCita(dato) {
+		if(dato) {
 			return <div>
-				<p><strong>Nombre:</strong> { rol.descripcion }</p>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+						<p><strong>Fecha:</strong>{ dato.cita.fecha }</p>
+					</div>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+						<p><strong>Hora:</strong>{ dato.cita.hora }</p>
+					</div>
+				</div>
+
+				<h4 className='text-center'>Profesional</h4>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+						<p><strong>Nombre:</strong>{ dato.personal.nombres +' '+ dato.personal.apellidos }</p>
+					</div>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+						<p><strong>Especialidad:</strong>{ dato.especialidad.descripcion }</p>
+					</div>
+				</div>
+
+				<h4 className='text-center'>Paciente</h4>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+						<p><strong>Nombre:</strong>{ dato.paciente.nombres +' '+ dato.paciente.apellidos }</p>
+					</div>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+					</div>
+				</div>
 			</div>
 		} else {
 			return <span></span>
@@ -33,13 +59,13 @@ class Mostrar extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh',
+		  		height: '55vh',
 		  		position: 'none'
 		  	}
 		}
 
 
-		const { cargando, rol, error, abierto } = this.props.mostrar
+		const { cargando, cita, error, abierto } = this.props.mostrar
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
@@ -51,7 +77,7 @@ class Mostrar extends Component {
 				<div className='container'>
 
 					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
+						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarCita() }}></span>
 					</div>
 
 					<div className='row'>
@@ -59,7 +85,7 @@ class Mostrar extends Component {
 							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderRol(rol) }
+							{ this.renderCita(cita) }
 						</div>
 					</div>
 				</div>
