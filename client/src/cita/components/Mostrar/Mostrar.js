@@ -12,6 +12,13 @@ class Mostrar extends Component {
 		this.renderCita = this.renderCita.bind(this)
 	}
 
+	componentWillMount() {
+		console.log('EL ID DE LA CITA ES: '+this.props.idCita)
+		
+		// idCita es pasado a MostarCitaContainer dentro de MostrarApp.
+		this.props.mostrarCita(this.props.idCita)
+	}
+
 	renderCargando(cargando) {
 		if(cargando) {
 			return <Cargando/>
@@ -21,7 +28,7 @@ class Mostrar extends Component {
 	}
 
 	renderCita(dato) {
-		if(dato) {
+		if(dato.cita) {
 			return <div>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
@@ -68,32 +75,19 @@ class Mostrar extends Component {
 		const { cargando, cita, error, abierto } = this.props.mostrar
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
-		
-		if(abierto) {
-			return <ReactModal isOpen={abierto}
-				       	contentLabel="Minimal Modal Example"
-				       	style={customStyles}>
 
-				<div className='container'>
+		console.log(this.props.cita)
 
-					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarCita() }}></span>
-					</div>
+		return <div className='container'>
+			<div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
+					{ this.renderCargando(cargando) }
+					<MensajeOerror error={error} mensaje={null}/>
 
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
-							<MensajeOerror error={error} mensaje={null}/>
-
-							{ this.renderCita(cita) }
-						</div>
-					</div>
+					{ this.renderCita(cita) }
 				</div>
-
-			</ReactModal>
-		} else {
-			return <span></span>
-		}
+			</div>
+		</div>
 
 	}
 }
