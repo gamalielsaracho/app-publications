@@ -3,7 +3,10 @@ import connection from '../../config/connection'
 exports.find = (callback) => {
 
 	let q = `
-		SELECT * FROM citas
+		SELECT * FROM citas cita, personales personal, pacientes paciente
+			WHERE
+				cita.id_personal = personal.id_personal AND
+				cita.id_paciente = paciente.id_paciente
 	`
 	var options = {
 		sql: q, 
@@ -18,13 +21,17 @@ exports.find = (callback) => {
 exports.findById = (data, callback) => {
 
 	let q = `
-		SELECT * FROM citas 
-			WHERE 
-				id_cita = ?
+		SELECT * FROM citas cita, personales personal, pacientes paciente, 
+		especialidades especialidad
+			WHERE
+				cita.id_personal = personal.id_personal AND
+				cita.id_paciente = paciente.id_paciente AND
+				personal.id_especialidad = especialidad.id_especialidad AND
+				cita.id_cita = ?
 	`
 	var options = {
 		sql: q,
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, [data.id_cita], callback)
