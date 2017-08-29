@@ -1,22 +1,22 @@
 import { connect } from 'react-redux'
 
 import {
-	cerrarModalMostrarRol
+	cerrarModalMostrarCita
 } from '../../actions'
 
 import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.rol.mostrar
+		mostrar: state.cita.mostrar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		cerrarModalMostrarRol: () => {
-			dispatch(cerrarModalMostrarRol())
+		cerrarModalMostrarCita: () => {
+			dispatch(cerrarModalMostrarCita())
 		}
 	}
 }
