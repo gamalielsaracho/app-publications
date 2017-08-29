@@ -7,26 +7,23 @@ import moment from 'moment'
 class Calendario extends Component {
 	constructor(props) {
 		super(props)
-		this.renderFechaCita = this.renderFechaCita.bind(this)
-	}
-
-	renderFechaCita(fecha) {
-		if(fecha) {
-			return <div>
-				{ fecha }
-			</div>
-		} else {
-			return <span></span>
-		}
 	}
 
 	componentDidMount() {
-		console.log(this.refs.fecha)
+		let citas = this.props.citas
 
 		var dateNow = new Date();
 		var d = dateNow.getDate();
 		var m = dateNow.getMonth();
 		var y = dateNow.getFullYear();
+
+		if(this.props.valoresFiltro.id_personal) {
+			citas = citas.filter((i) => {
+				return i.id_personal == this.props.valoresFiltro.id_personal[0]
+			})
+		}
+
+		console.log(citas)
 
 		$('#calendar').fullCalendar({
 			lang: 'es',
@@ -48,11 +45,16 @@ class Calendario extends Component {
 			dayClick: function(date, jsEvent, view, resourceObj) {
 				// this.props.obtenerFecha(date.format())
 				// this.refs.fecha.textContent = 'date.format()'
+				// console.log(date.format('mm'))
 
-				$(".fechaNodo").text(date.format('YYYY-MM-DD'));
+				// let hInicio = date.format('h')
+				// let hFin = parseInt(date.format('mm')) + 30
 
-				$(".horaInicioNodo").text(date.format('h:mm'));
-				// $(".horaFinNodo").val(date.format('h:mm'));
+
+				$(".fechaNodo").val(date.format('YYYY-MM-DD'));
+
+				$(".horaInicioNodo").val(date.format('h:mm'));
+				$(".horaFinNodo").val(date.format('h:mm'));
 
 				// this.props.s = date.format('YYYY-MM-DD')
 		        // alert('Date: ' + date.format('YYYY-MM-DD'));
@@ -61,13 +63,13 @@ class Calendario extends Component {
 
 		        // alert('Resource ID: ' + resourceObj.id);
 		    },
-		    events: this.props.citas
+		    events: citas
+
 		})
 	}
 
 	render() {
 		return <div id="calendar">
-			<h4 className='fecha'></h4>
 		</div>
 	}
 }
