@@ -44,6 +44,9 @@ import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
 	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
 
 // CITAS.
+	// Listar.
+import ListarCitasApp from '././cita/components/ListarApp'
+
 import ListarCitasPage from '././cita/pages/ListarCitasPage'
 
 export default (
@@ -62,16 +65,19 @@ export default (
 			<Route path='/areas' component={ListarAreasPage}/>
 			<Route path='/alergias' component={ListarAlergiasPage}/>
 
-			<Route path='/dashboard/citas' component={ListarCitasPage}/>
-
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
 				
-
 				<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
 					<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
 				</Route>
 			</Route>
+
+			<Route path='/dashboard/citas' component={ListarCitasApp}>
+				<IndexRoute component={ListarCitasPage}/>
+
+			</Route>
+
 		</Route>
 
 	</Route>)
