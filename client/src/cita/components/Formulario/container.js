@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 
 import {
+	listarCitas,
 	crearCita,
 	editarCita,
 	cerrarFormularioCita
@@ -54,9 +55,7 @@ function mapStateToProps(state) {
     	valoresFiltro: {
     		id_especialidad: selector(state, 'id_especialidad'),
     		id_personal: selector(state, 'id_personal')
-    	},
-    	fechaOtenida: state.cita.fechaCita
-
+    	}
 	}
 }
 
@@ -106,53 +105,17 @@ function mapDispatchToProps(dispatch) {
 		listarPersonales: () => {
 			dispatch(listarPersonales())
 		},
-
-		filtrarMedicos: (dato, valores) => {
-			// console.log(medicos)
-			// let medicos = dato.personales
-			console.log('Lista')
-			console.log(dato.personales)
-
-			if(valores) {
-				console.log("La especialidad es: "+valores.id_especialidad)
-				
-				dato.personales = dato.personales.filter((i) => {
-					return i.especialidad.id_especialidad != valores.id_especialidad
-				})
-
-			}
-			console.log('Lista NUEVA.')
-			console.log(dato.personales)
-
-			return dato
+		listarCitas: () => {
+			dispatch(listarCitas())
 		}
 	}
 }
-
-// const form = reduxForm({
-// 	form: 'FormularioCita',
-// 	validate
-// })
 
 const form = reduxForm({
   form: 'FormularioCita',
   validate
 })
 
-// Decorate with connect to read form values
-const selector = formValueSelector('FormularioCita') // <-- same as form name
-
-  // state => {
-  //   // can select values individually
-  //   const especialidadValue = selector(state, 'id_especialidad')
-  //   // const hasEmailValue = selector(state, 'hasEmail')
-  //   // const favoriteColorValue = selector(state, 'favoriteColor')
-  //   // or together as a group
-  //   // const { firstName, lastName } = selector(state, 'firstName', 'lastName')
-  //   return {
-  //     especialidadValue
-  //   }
-  // }
-// export default connect()(Formulario)
+const selector = formValueSelector('FormularioCita')
 
 export default connect(mapStateToProps, mapDispatchToProps)(form(Formulario))
