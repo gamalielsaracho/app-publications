@@ -1,6 +1,11 @@
 import { connect } from 'react-redux'
 
 import {
+	// se ejecuta dentro de Mostrar, en componentWillMount
+	// para ver los datos de la cita en una página aparte 
+	// (para médicos, enfermeros y administradores).
+	mostrarCita,
+
 	cerrarModalMostrarCita
 } from '../../actions'
 
@@ -15,6 +20,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+		mostrarCita: (idCita) => {
+			dispatch(mostrarCita(idCita))
+		},
 		cerrarModalMostrarCita: () => {
 			dispatch(cerrarModalMostrarCita())
 		}
