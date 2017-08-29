@@ -17,7 +17,9 @@ class Menu extends Component {
 	}
 
 	isRole(roleToCheck, toRender) {
-		let rolUsuario = 'administracion' // localStorage.
+		// let rolUsuario = 'administracion' // localStorage.
+		let rolUsuario = 'ventanilla'
+		// let rolUsuario = jwtDecode(localStorage.getItem('token')).rol
 
 		console.log(jwtDecode(localStorage.getItem('token')))
 
@@ -44,15 +46,12 @@ class Menu extends Component {
 
 	ventanillaMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/usuarios'>Usuarios (Ven) <span className="badge">14</span></Link></li>
-			<li><Link to='/roles'>Roles (Ven) <span className="badge">1</span></Link></li>
-			<li><Link to='/especialidades'>Especialidades (Ven) <span className="badge">0</span></Link></li>
 			<li><Link to='/ciudades'>Ciudades (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/departamentos'>Departamentos (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/areas'>Areas (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/alergias'>Alergias (Ven) <span className="badge">8</span></Link></li>
-			<li><Link to='/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
-			<li><Link to='/dashboard/citas'>Citas (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/pacientes'>Pacientes (Ven) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/citas'>Citas (Ven) <span className="badge">8</span></Link></li>
 		</ul>
 	}
 
@@ -68,11 +67,9 @@ class Menu extends Component {
 
 	medicinaMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/usuarios'>Usuarios (Medi) <span className="badge">14</span></Link></li>
-			<li><Link to='/roles'>Roles (Medi) <span className="badge">1</span></Link></li>
-			<li><Link to='/especialidades'>Especialidades (Medi) <span className="badge">0</span></Link></li>
-			<li><Link to='/ciudades'>Ciudades (Medi) <span className="badge">8</span></Link></li>
-			<li><Link to='/departamentos'>Departamentos (Medi) <span className="badge">8</span></Link></li>
+			<li><Link to='/alergias'>Alergias (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/citas'>Citas (Adm) <span className="badge">8</span></Link></li>
 		</ul>
 	}
 
@@ -116,6 +113,10 @@ class Menu extends Component {
 				<h4 className='text-center'>{ personal.nombres }</h4>
 						
 				{ this.isRole('administracion', this.adminMenu()) }
+				{ this.isRole('ventanilla', this.ventanillaMenu()) }
+				{ this.isRole('enfermeria', this.enfermeriaMenu()) }
+				{ this.isRole('medico', this.adminMenu()) }
+
 							
 			</div>
 		} else {
