@@ -15,7 +15,11 @@ function mapStateToProps(state) {
 	return {
 		crear: state.cita.crear,
 		listar: state.cita.listar,
-		citas: state.cita.listar.citas
+		citas: state.cita.listar.citas,
+
+		// Rol del usuario logeado, se trae desde el servidor, 
+		// para ocultar contenidos de la vista.
+		rol: state.personal.usuarioEstado.datosToken.rol
 	}
 }
 
