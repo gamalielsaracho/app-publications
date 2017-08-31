@@ -36,6 +36,8 @@ class Listar extends Component {
 			correo: filtro.correo.trim().toLowerCase()
 		}
 
+		// console.log(con)
+
 
 		if(con.nombres.length > 0 || con.apellidos.length > 0 || con.correo.length > 0){
 			personales = this.props.filtrarPersonales(personales, con)
@@ -65,6 +67,9 @@ class Listar extends Component {
 		let filtro = this.props.filtro
 
 		console.log(this.props.listar)
+
+		console.log(this.props.filtro)
+		
 
 		if(cargando) {
 			return <Cargando/>

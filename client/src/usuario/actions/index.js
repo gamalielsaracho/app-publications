@@ -117,7 +117,7 @@ export function listarPersonales() {
 
 export function actualizarFormularioFiltro(valoresInput) {
 	return (dispatch) => {
-		console.log(valoresInput)
+		// console.log(valoresInput)
 		dispatch({ type: ACTUALIZAR_FORMULARIO_FILTRO, valores: valoresInput  })
 	}
 }
