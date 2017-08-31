@@ -15,6 +15,9 @@ import pacienteReducer from '../paciente/reducer'
 import pacienteAlergiaReducer from '../pacienteAlergia/reducer'
 
 import citaReducer from '../cita/reducer'
+import nivelReducer from '../nivel/reducer'
+import preConsultaReducer from '../preconsulta/reducer'
+
 
 const rootReducer = combineReducers({
 	form: formReducer,
@@ -27,7 +30,9 @@ const rootReducer = combineReducers({
 	alergia: alergiaReducer,
 	paciente: pacienteReducer,
 	alergiaPaciente: pacienteAlergiaReducer,
-	cita: citaReducer
+	cita: citaReducer,
+	nivel: nivelReducer,
+	preConsulta: preConsultaReducer
 })
 
 export default rootReducer
