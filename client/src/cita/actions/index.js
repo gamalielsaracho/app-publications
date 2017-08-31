@@ -31,15 +31,17 @@ import {
 	// Delete Rol.
 	ELIMINAR_CITA_REQUEST,
 	ELIMINAR_CITA_EXITO,
-	ELIMINAR_CITA_FALLO
+	ELIMINAR_CITA_FALLO,
+
+	ACTUALIZAR_FORMULARIO_FILTRO
 } from './types'
 
 import io from 'socket.io-client'
 
-var citaSocket = io.connect('http://localhost:3000/cita');
-
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
+
+var citaSocket = io.connect('http://localhost:3000/cita');
 
 export function abrirFormularioCrearCita() {
 	return (dispatch) => {
@@ -82,7 +84,7 @@ export function listarCitas() {
 		citaSocket.emit('listar_citas')
 
 		citaSocket.on('listar_citas', (data) => {
-			console.log(data)
+			// console.log(data)
 
 			if(data.error) {
 				dispatch({ type: LISTAR_CITAS_FALLO, payload: data.error })
@@ -142,7 +144,7 @@ export function mostrarCita(idCita) {
 		})
 
 		citaSocket.on('mostrar_cita', (data) => {
-			// console.log(data)
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: MOSTRAR_CITA_FALLO, payload: data.error })
 			} else {
@@ -174,6 +176,14 @@ export function editarCita(datosFormulario) {
 			}
 		})
 
+	}
+}
+
+export function actualizarFormularioFiltro(valoresInput) {
+	return (dispatch) => {
+		// console.log(valoresInput)
+		
+		dispatch({ type: ACTUALIZAR_FORMULARIO_FILTRO, valores: valoresInput  })
 	}
 }
 
