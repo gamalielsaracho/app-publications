@@ -5,6 +5,8 @@ import ReactModal from 'react-modal'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import Cargando from '../../../app/components/Cargando'
 
+import FormularioPreConsultaContainer from '../../../preconsulta/components/Formulario'
+
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
@@ -76,17 +78,30 @@ class Mostrar extends Component {
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 
-		console.log(this.props.cita)
+		console.log(cita)
 
-		return <div className='container'>
-			<div className='row'>
-				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-					{ this.renderCargando(cargando) }
-					<MensajeOerror error={error} mensaje={null}/>
+		return <div className='row'>
+			<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
+				{ this.renderCargando(cargando) }
+				<MensajeOerror error={error} mensaje={null}/>
 
-					{ this.renderCita(cita) }
+				{ this.renderCita(cita) }
+			</div>
+
+
+			{/* Formulario modal para crear una Pre-consulta.
+			*/}
+			<FormularioPreConsultaContainer/>
+
+			<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+						<button  onClick={this.props.abrirFormularioCrearPreConsulta} className='btn btn-success'>Crear pre-consulta</button>
+					</div>
 				</div>
 			</div>
+			<br/>
+			<br/>
 		</div>
 
 	}

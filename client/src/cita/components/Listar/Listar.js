@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import jwtDecode from 'jwt-decode'
 
@@ -11,14 +12,19 @@ import MostarVenCitaContainer from '../MostrarVen'
 class Listar extends Component {
 	constructor(props) {
 		super(props)
+		this.renderFitros = this.renderFitros.bind(this)
 		this.renderCitas = this.renderCitas.bind(this)
 		this.renderOptionsByRol = this.renderOptionsByRol.bind(this)
 		this.renderAddButton = this.renderAddButton.bind(this)
 		this.renderFormAndShow = this.renderFormAndShow.bind(this)
+
+		// filter.
+		// this.handleChange = this.handleChange.bind(this)
 	}
 
 	componentWillMount() {
 		this.props.listarCitas()
+		this.props.listarPersonales()
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -27,7 +33,17 @@ class Listar extends Component {
 		}else {
 			return false
 		}
-	}	
+	}
+
+	// handleChange(e) {
+	// 	let valoresInputActualizando = {
+	// 		id_personal: ReactDOM.findDOMNode(this.refs.idPersonal).value
+	// 	}
+
+	// 	// console.log(valoresInputActualizando)
+
+	// 	this.props.actualizarFormularioFiltro(valoresInputActualizando)
+	// }
 
 	renderOptionsByRol(rol, cita) {
 		switch(rol) {
@@ -51,13 +67,14 @@ class Listar extends Component {
 				</div>
 			case 'enfermeria':
 				return <div>
-					<button type="button" onClick={() => { this.props.mostrarCita(cita.id_cita) }} className="btn btn-info btn-space">Mostrar</button>
+					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
 				</div>
 			default:
 				return <div>
 				</div>
 		}
-
 	}
 
 	renderAddButton(rol) {
@@ -83,23 +100,67 @@ class Listar extends Component {
 		}
 	}
 
+	renderFitros() {
+		return <div>
+			<h4>Los filtros Aquí.</h4>
+		</div>
+	}
+
+	// <div className='row'>
+	// 					<div className='col-lg-4'>
+	// 						<div className="input-group">
+	// 							<select onChange={this.handleChange} ref='idPersonal' className='form-control'>
+	// 								<option>Médicos/as</option>
+	// 								{
+	// 									this.props.listaPersonales.map((i) => {
+	// 										return <option key={i.personal.id_personal} value={i.personal.id_personal}>
+	// 											{ i.personal.nombres }
+	// 										</option>
+	// 									})
+	// 								}
+	// 							</select>
+	// 						</div>
+	// 					</div>
+	// 					<div className='col-lg-4'>
+							
+	// 					</div>
+	// 				</div>
+
 	renderCitas(citas) {
 
 		let rolUsuario = this.props.rol ? 
 					   	 this.props.rol.descripcion : ''
 
+		let filtro = this.props.filtro
+
+		var dateNow = new Date();
+		var d = dateNow.getDate();
+		var m = dateNow.getMonth();
+		var y = dateNow.getFullYear();
+
+		var p = y+'-0'+m+'-'+d // fecha actual para filtrar.
+
+		let con = { // Condiciones.
+			// id_personal: filtro.id_personal.trim().toLowerCase()
+			fecha: p
+		}
+
+		// if(con.id_personal){
+			// citas = this.props.filtrarCitas(citas, con)
+		// }
+
 		return <tbody>
 			{ this.renderFormAndShow(rolUsuario) }
 
 			{
-				citas.map((cita) => {
-					return <tr key={cita.id_cita}>
-			            <td>{ cita.id_cita }</td>
-			            <td>{ cita.fecha }</td>
-			            <td>{ cita.hora }</td>
-			            <td>{ cita.pendiente }</td>
+				citas.map((i) => {
+					return <tr key={i.cita.id_cita}>
+			            <td>{ i.cita.id_cita }</td>
+			            <td>{ i.cita.fecha }</td>
+			            <td>{ i.cita.hora }</td>
+			            <td>{ i.cita.pendiente }</td>
 			            <td>
-			            	{ this.renderOptionsByRol(rolUsuario, cita) }
+			            	{ this.renderOptionsByRol(rolUsuario, i.cita) }
 			            </td>
 			        </tr>		
 				})
@@ -111,8 +172,12 @@ class Listar extends Component {
 
 		const { citas, cargando, error } = this.props.listar
 
+		let filtro = this.props.filtro
+
 		// console.log(this.props.listar)
+		console.log(this.props.filtro)
 		
+
 		if(cargando) {
 			return <Cargando/>
 		} else {
@@ -129,7 +194,6 @@ class Listar extends Component {
 					{ this.renderAddButton(rolUsuario) }
 
 					<br/>
-
 					<div className='table-responsive'>
 						<table className='table table-striped'>
 							<thead>
@@ -141,6 +205,7 @@ class Listar extends Component {
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
+
 
 							{ this.renderCitas(citas) }
 

@@ -1,4 +1,7 @@
 import { connect } from 'react-redux'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
+
+import { formatDate } from '../../../globalActions'
 
 import {
 	listarCitas,
@@ -6,8 +9,16 @@ import {
 	mostrarCita,
 
 	abrirFormularioCrearCita,
-	abrirFormularioEditarCita
+	abrirFormularioEditarCita,
+
+	// Formulario Filtro, cool.!
+	actualizarFormularioFiltro
 } from '../../actions'
+
+
+import {
+	listarPersonales
+} from '../../../usuario/actions'
 
 import Listar from './Listar'
 
@@ -16,6 +27,10 @@ function mapStateToProps(state) {
 		crear: state.cita.crear,
 		listar: state.cita.listar,
 		citas: state.cita.listar.citas,
+		filtro: state.cita.filtro,
+
+		// Estados para el sistema de filtro.
+		listaPersonales: state.personal.listar.personales,
 
 		// Rol del usuario logeado, se trae desde el servidor, 
 		// para ocultar contenidos de la vista.
@@ -42,7 +57,29 @@ function mapDispatchToProps(dispatch) {
 		},
 		abrirFormularioEditarCita: (idCita) => {
 			dispatch(abrirFormularioEditarCita(idCita))
-		}
+		},
+
+
+		// Funciones para el sistema de filtro.
+		listarPersonales: () => {
+			dispatch(listarPersonales())
+		},
+
+		actualizarFormularioFiltro: (valores) => {
+			// console.log(valores)
+			dispatch(actualizarFormularioFiltro(valores))
+		},
+		filtrarCitas: (citas, valores) => {
+ 			console.log(valores)
+
+ 			citas = citas.filter((i) => {
+ 				console.log(formatDate(i.cita.fecha))
+ 				return formatDate(i.cita.fecha) == valores.fecha
+ 			})
+ 
+ 
+ 			return citas
+ 		}
 	}
 }
 

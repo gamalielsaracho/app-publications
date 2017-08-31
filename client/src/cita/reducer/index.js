@@ -29,7 +29,9 @@ import {
 
 	ELIMINAR_CITA_REQUEST,
 	ELIMINAR_CITA_EXITO,
-	ELIMINAR_CITA_FALLO
+	ELIMINAR_CITA_FALLO,
+
+	ACTUALIZAR_FORMULARIO_FILTRO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -42,6 +44,9 @@ const INITIAL_STATE = {
 		cita: {}
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
+	filtro: {
+		id_personal: ''
+	},
 	listar: { citas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, cita: {}, error: '', abierto: false },
@@ -50,6 +55,19 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		case ACTUALIZAR_FORMULARIO_FILTRO:
+			const { valores } = action
+			
+			// console.log(valores)
+			state = Object.assign({}, state, {
+				filtro: { 
+					id_personal: valores.id_personal
+				}
+			})
+
+			// console.log(state.filtro)
+
+			return state
 
 		case ABRIR_FORMULARIO_CREAR_CITA:
 			return Object.assign({}, state, {
