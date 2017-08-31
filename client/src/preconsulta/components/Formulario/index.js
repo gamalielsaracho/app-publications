@@ -1,0 +1,2 @@
+import FormularioPreConsultaContainer from './container'
+export default FormularioPreConsultaContainer
