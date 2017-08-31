@@ -7,12 +7,16 @@ class Menu extends Component {
 		this.renderLinks = this.renderLinks.bind(this)
 	}
 
-	renderLinks(autenticado, personal) {
+	renderLinks(autenticado, datosToken) {
+		let personal = datosToken.personal
+		let rol = datosToken.rol
+
 		if(autenticado) {
 			return <ul className="nav navbar-nav navbar-right">
 				<li><Link to='/dashboard' className='menu__text-link'>Panel</Link></li>
 				<li><Link to='/perfil' className='menu__text-link'>{ personal.correo }</Link></li>
 				<li onClick={() => { this.props.salirPersonal() }}><a className='menu__text-link'>Salir</a></li>
+				<h4>{ rol.descripcion }</h4>
 			</ul>
 		}else {
 			return <ul className="nav navbar-nav navbar-right">
@@ -45,7 +49,7 @@ class Menu extends Component {
 
 			    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-					{ this.renderLinks(autenticado, datosToken.personal) }
+					{ this.renderLinks(autenticado, datosToken) }
 
 			    </div>
 			  </div>
