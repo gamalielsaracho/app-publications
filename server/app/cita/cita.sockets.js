@@ -8,9 +8,18 @@ export default (io) => {
 		console.log('Cita Conectado.')
 
 		socket.on('listar_citas', () => {
-			
+			// Cita.buscarCitaFechaActual((err, citaDelDia) => {
+			// 	if(err) {
+			// 		console.log(err)
+			// 	}
+
+			// 	console.log("id_cita del paciente X con fecha actual:"+citaDelDia[0].id_cita)
+			// })
+
+
 			function citas() {
 				Cita.find((err, citas) => {
+					// console.log(citas)
 					if(err) {
 						console.log(err)
 					
@@ -73,6 +82,7 @@ export default (io) => {
 		// a mostrar_cita, y queda esperando. 
 		socket.on('mostrar_cita', (data) => {
 				Cita.findById(data, (err, cita) => {
+					console.log(cita)
 					if(err) {
 						console.log(err)
 						socket.emit('mostrar_cita', { error: 'Ocurrió un error, intente más tarde.' })

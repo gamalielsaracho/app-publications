@@ -1,5 +1,15 @@
 import connection from '../../config/connection'
 
+exports.buscarCitaFechaActual = (callback) => {
+	let q = `
+		SELECT id_cita
+		FROM citas
+			WHERE fecha = CURDATE()
+	`
+
+	return connection.query(q, callback)
+}
+
 exports.find = (callback) => {
 
 	let q = `
@@ -10,7 +20,7 @@ exports.find = (callback) => {
 	`
 	var options = {
 		sql: q, 
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, callback)
@@ -19,7 +29,7 @@ exports.find = (callback) => {
 }
 
 exports.findById = (data, callback) => {
-
+	console.log(data)
 	let q = `
 		SELECT * FROM citas cita, personales personal, pacientes paciente, 
 		especialidades especialidad
