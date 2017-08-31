@@ -34,3 +34,5 @@ export const ELIMINAR_CITA_EXITO = 'eliminair_cita_exito'
 export const ELIMINAR_CITA_FALLO = 'eliminair_cita_fallo'
 
 
+	// Actualizar la popiedad value de los inputs para filtrar citas.
+export const ACTUALIZAR_FORMULARIO_FILTRO = 'actualizar_formulario_filtro'
