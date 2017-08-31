@@ -51,6 +51,9 @@ import ListarCitasPage from '././cita/pages/ListarCitasPage'
 
 import MostrarCitaAppContainer from '././cita/components/MostrarApp'
 
+// NIVELES.
+import ListarNivelesPage from '././nivel/pages/ListarNivelesPage'
+
 
 export default (
 	<Route path='/' component={AppContainer}>
@@ -67,6 +70,8 @@ export default (
 			
 			<Route path='/areas' component={ListarAreasPage}/>
 			<Route path='/alergias' component={ListarAlergiasPage}/>
+
+			<Route path='/dashboard/niveles' component={ListarNivelesPage}/>
 
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
