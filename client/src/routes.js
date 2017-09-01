@@ -54,6 +54,8 @@ import MostrarCitaAppContainer from '././cita/components/MostrarApp'
 // NIVELES.
 import ListarNivelesPage from '././nivel/pages/ListarNivelesPage'
 
+// PRE-CONSULTAS.
+import MostrarPreConsultaPage from '././preconsulta/pages/MostrarPreConsultaPage'
 
 export default (
 	<Route path='/' component={AppContainer}>
@@ -84,7 +86,7 @@ export default (
 			<Route path='/dashboard/citas' component={ListarCitasApp}>
 				<IndexRoute component={ListarCitasPage}/>
 				<Route path='/dashboard/citas/:idCita' component={MostrarCitaAppContainer}>
-
+					<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaPage}/>
 				</Route>
 			</Route>
 
