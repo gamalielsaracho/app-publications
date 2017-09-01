@@ -21,3 +21,4 @@ export default mysql.createConnection(dataBase, function(err, connection) {
 
 		return success
 	})
+})
