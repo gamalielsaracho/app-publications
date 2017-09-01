@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import removeAccents from 'remove-accents'
 
 import jwtDecode from 'jwt-decode'
 
@@ -19,9 +20,9 @@ class Menu extends Component {
 	isRole(roleToCheck, toRender) {
 		// let rolUsuario = 'administracion' // localStorage.
 		// let rolUsuario = 'ventanilla'
-		let rolUsuario = jwtDecode(localStorage.getItem('token')).rol
+		let rolUsuario = removeAccents(jwtDecode(localStorage.getItem('token')).rol)
 
-		console.log(jwtDecode(localStorage.getItem('token')))
+		console.log(rolUsuario)
 
 		if(rolUsuario == roleToCheck) {
 			return toRender
