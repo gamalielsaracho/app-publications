@@ -1,7 +1,5 @@
 import mysql from 'mysql'
 
-// console.log('hola desde connection.json')
-
 var dataBase = {
 	host: '127.0.0.1',
 	user: 'root',
@@ -23,14 +21,3 @@ export default mysql.createConnection(dataBase, function(err, connection) {
 
 		return success
 	})
-})
-
-
-
-
-// connection.connect(function(err) {
-
-// 	console.log('connected as id '+connection.threadId)
-// })
-// // 		return connection.query('select * from prestatario WHERE prestamoId = ?', [prestamoId],callback)
-// // 		connection.end()
