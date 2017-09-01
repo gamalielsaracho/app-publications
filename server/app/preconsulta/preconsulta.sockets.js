@@ -7,11 +7,12 @@ export default (io) => {
 
 		console.log('Pre-consulta Conectado.')
 
-		socket.on('listar_preconsultas', () => {
+
+		// socket.on('listar_preconsultas', () => {
 			
 			function preconsultas() {
-				Preconsulta.find((err, preconsultas) => {
-					// console.log(preconsultas)
+				Preconsulta.find((err, preConsultas) => {
+					console.log(preConsultas)
 					if(err) {
 						console.log(err)
 					
@@ -19,7 +20,7 @@ export default (io) => {
 						return
 					}
 
-					preconsultaNsp.emit('listar_preconsultas', { preconsultas: preconsultas })
+					preconsultaNsp.emit('listar_preconsultas', { preConsultas: preConsultas })
 				})
 			}
 		
@@ -27,13 +28,18 @@ export default (io) => {
 
 
 			socket.on('crear_preconsulta', function(data) {
+				console.log(data)
 				Preconsulta.create(data, (err, preconsulta) => {
 					if(err) {
+						console.log(err)
 						socket.emit('crear_preconsulta', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('crear_preconsulta', { mensaje: 'Se agregó exitósamente.' })
+					socket.emit('crear_preconsulta', { 
+						mensaje: 'Se agregó exitósamente.' ,
+						idPreconsultaInsertada: preconsulta.insertId
+					})
 				
 					preconsultas()
 				})
@@ -67,14 +73,14 @@ export default (io) => {
 					preconsultas()
 				})
 			})
-		})
+		// })
 
 		// Esta acción saco afuera, porque si está dentro de listar_preconsultas,
 		// a la hora de ver una preconsulta, y actualizar la página, No entra
 		// a mostrar_preconsulta, y queda esperando. 
 		socket.on('mostrar_preconsulta', (data) => {
 			Preconsulta.findById(data, (err, preconsulta) => {
-				console.log(preconsulta)
+				// console.log(preconsulta)
 				if(err) {
 					console.log(err)
 					socket.emit('mostrar_preconsulta', { error: 'Ocurrió un error, intente más tarde.' })

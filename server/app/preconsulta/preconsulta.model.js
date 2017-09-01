@@ -3,17 +3,42 @@ import connection from '../../config/connection'
 exports.find = (callback) => {
 
 	let q = `
-		SELECT * FROM preconsultas
+		SELECT * FROM preconsultas preconsulta, pacientes paciente,
+		niveles nivel, personales personal
+		WHERE
+			preconsulta.id_paciente = paciente.id_paciente AND
+			preconsulta.id_nivel = nivel.id_nivel AND
+			preconsulta.id_personal = personal.id_personal 
 	`
 	var options = {
 		sql: q, 
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, callback)
 
 	connection.end()
 }
+
+exports.listarPorFechaActualYidPaciente = (data, callback) => {
+
+	let q = `
+		SELECT * FROM preconsultas preconsulta, citas cita
+			WHERE preconsulta.fecha = cita.fecha AND 
+			preconsulta.id_paciente = cita.id_paciente
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, callback)
+
+	connection.end()
+}
+
+// SELECT * FROM preconsultas preconsulta, citas cita WHERE preconsulta.fecha = cita.fecha AND preconsulta.id_paciente = cita.id_paciente
 
 // Para el Historial Clínico de los pacientes.
 // exports.findByIdPaciente = (data, callback) => {
@@ -49,39 +74,13 @@ exports.findById = (data, callback) => {
 	connection.end()
 }
 
-// exports.buscarCitasYagregarPreconsultaCreada = (data, callback) => {
-// 	let qCita = `
-// 		SELECT id_cita
-// 		FROM citas
-// 			WHERE id_paciente = ?,
-// 			fecha = CURDATE()
-// 	`
+exports.create = (data, callback) => {	
 
-// 	let qPreConsuta = `
-// 		UPDATE citas SET id_preconsulta = ? 
-// 			WHERE
-// 				id_cita = ?
-// 	`
-// 	connection.query(qCita, [data.id_paciente], (err, citas) => {
-// 		if(err) {
-// 			console.log(err)
-// 		}
-
-// 		citas.map((cita) => {
-// 			connection.query(qPreConsuta, [data.id_preconsulta, cita[0].id_cita] (err) => {
-// 				if(err) {
-// 					console.log(err)
-// 				}
-
-// 				console.log('La preconsulta se agrego a todas las citas del DÍA.')
-// 			})
-// 		})
-// 	})
-// }
-
-exports.create = (data, callback) => {
-	
-	return connection.query('INSERT INTO preconsultas SET ?', data, callback)
+	let q = `
+		INSERT INTO preconsultas (id_preconsulta, fecha, id_paciente, id_nivel, id_personal)
+			VALUES (null, ?, ?, ?, ?)
+	`
+	return connection.query(q, [data.fecha, data.id_paciente, data.id_nivel, data.id_personal], callback)
 
 	connection.end()
 }
