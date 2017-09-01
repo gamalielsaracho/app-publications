@@ -77,8 +77,10 @@ export function listarPreConsultas() {
 
 		dispatch({ type: LISTAR_PRECONSULTAS_REQUEST })
 
-		preconsultaSocket.on('listar_preconsultas', (data) => {
+		var preconsultaSocket = io.connect('http://localhost:3000/preconsulta');
 
+		preconsultaSocket.on('listar_preconsultas', (data) => {
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: LISTAR_PRECONSULTAS_FALLO, payload: data.error })
 			} else {
@@ -96,14 +98,18 @@ export function crearPreConsulta(datosFormulario) {
 		preconsultaSocket.emit('crear_preconsulta', datosFormulario)
 		
 		preconsultaSocket.on('crear_preconsulta', (data) => {
+			console.log(data)
+
 			if(data.error) {
 				dispatch({ type: CREAR_PRECONSULTA_FALLO, payload: data.error })
 			} else {
+				dispatch(reset('FormularioPreConsulta'))
 				dispatch({ type: CREAR_PRECONSULTA_EXITO, payload: data })
+
+				browserHistory.push(`/dashboard/citas/${datosFormulario.id_cita}/preconsulta/${data.idPreconsultaInsertada}`)
 			}
 		})
 	
-		dispatch(reset('FormularioPreConsulta'))
 	}
 }
 

@@ -9,7 +9,11 @@ class Mostrar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderCargando = this.renderCargando.bind(this)
-		this.renderRol = this.renderRol.bind(this)
+		this.renderPreConsulta = this.renderPreConsulta.bind(this)
+	}
+
+	componentWillMount() {
+		this.props.mostrarPreConsulta(this.props.idPreConsulta)
 	}
 
 	renderCargando(cargando) {
@@ -20,10 +24,10 @@ class Mostrar extends Component {
 		}
 	}
 
-	renderRol(rol) {
-		if(rol) {
+	renderPreConsulta(preConsulta) {
+		if(preConsulta) {
 			return <div>
-				<p><strong>Nombre:</strong> { rol.descripcion }</p>
+				<p><strong>Nombre:</strong> { preConsulta.fecha }</p>
 			</div>
 		} else {
 			return <span></span>
@@ -31,43 +35,21 @@ class Mostrar extends Component {
 	}
 
 	render() {
-		const customStyles = {
-		    content : {
-		  		height: '40vh',
-		  		position: 'none'
-		  	}
-		}
 
+		const { cargando, preConsulta, error, abierto } = this.props.mostrar
 
-		const { cargando, rol, error, abierto } = this.props.mostrar
+		console.log(this.props.mostrar)
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
-		if(abierto) {
-			return <ReactModal isOpen={abierto}
-				       	contentLabel="Minimal Modal Example"
-				       	style={customStyles}>
+		return <div className='row'>
+			<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
+				{ this.renderCargando(cargando) }
+				<MensajeOerror error={error} mensaje={null}/>
 
-				<div className='container'>
-
-					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
-					</div>
-
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
-							<MensajeOerror error={error} mensaje={null}/>
-
-							{ this.renderRol(rol) }
-						</div>
-					</div>
-				</div>
-
-			</ReactModal>
-		} else {
-			return <span></span>
-		}
+				{ this.renderPreConsulta(preConsulta) }
+			</div>
+		</div>
 
 	}
 }

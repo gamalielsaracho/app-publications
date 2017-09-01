@@ -4,8 +4,14 @@ import { Field, reduxForm } from 'redux-form'
 import {
 	crearPreConsulta,
 	editarPreConsulta,
-	cerrarFormularioPreConsulta
+	cerrarFormularioPreConsulta,
+
+	listarPreConsultas
 } from '../../actions'
+
+import {
+	listarNiveles
+} from '../../../nivel/actions'
 
 import Formulario from './Formulario'
 
@@ -31,7 +37,14 @@ function mapStateToProps(state) {
 
 		// Para obtener el error al crear o editar.
 		crear: state.preConsulta.crear,
-		editar: state.preConsulta.editar
+		editar: state.preConsulta.editar,
+
+		// Para mostrar dentro del select option.
+    	listaNiveles: state.nivel.listar,
+
+    	datosToken: state.personal.usuarioEstado.datosToken,
+
+    	listaPreConsultas: state.preConsulta.listar
 	}
 }
 
@@ -49,6 +62,14 @@ function mapDispatchToProps(dispatch) {
 		},
 		editarPreConsulta: (datosFormulario) => {
 			dispatch(editarPreConsulta(datosFormulario))
+		},
+
+		listarNiveles: () => {
+			dispatch(listarNiveles())
+		},
+
+		listarPreConsultas: () => {
+			dispatch(listarPreConsultas())
 		}
 	}
 }

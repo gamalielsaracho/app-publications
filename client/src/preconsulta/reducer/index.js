@@ -45,7 +45,10 @@ const INITIAL_STATE = {
 	listar: { preConsultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, preConsulta: {}, error: '', abierto: false },
-	editar: { cargando: false, mensaje: '', error: '' }
+	editar: { cargando: false, mensaje: '', error: '' },
+	formularioCrearPreConsulta: {
+		abierto: false
+	}
 }
 
 export default function (state = INITIAL_STATE, action) {
