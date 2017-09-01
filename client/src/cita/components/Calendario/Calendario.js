@@ -17,11 +17,11 @@ class Calendario extends Component {
 		var m = dateNow.getMonth();
 		var y = dateNow.getFullYear();
 
-		if(this.props.valoresFiltro.id_personal) {
-			citas = citas.filter((i) => {
-				return i.id_personal == this.props.valoresFiltro.id_personal[0]
-			})
-		}
+		// if(this.props.valoresFiltro.id_personal) {
+		// 	citas = citas.filter((i) => {
+		// 		return i.id_personal == this.props.valoresFiltro.id_personal[0]
+		// 	})
+		// }
 
 		console.log(citas)
 
@@ -63,7 +63,26 @@ class Calendario extends Component {
 
 		        // alert('Resource ID: ' + resourceObj.id);
 		    },
-		    events: citas
+		    events: [
+				{
+                    title: 'Pedro Raul',
+                    start: '2017-08-21T08:00:00',
+                    end: '2017-08-21T08:30:00',
+                    allDay: false
+                },
+                {
+                    title: 'Rie Motomori',
+                    start: '2017-08-23',
+                    // end: new Date(y, m, 1, 9, 00),
+                    allDay: false
+                },
+                {
+                    title: 'Gamaliel Saracho',
+                    start: '2017-08-23T08:00:00',
+                    end: '2017-08-23T08:30:00',
+                    allDay: false
+                }
+			]
 
 		})
 	}

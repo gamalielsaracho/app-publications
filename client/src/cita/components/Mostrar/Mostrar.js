@@ -30,7 +30,7 @@ class Mostrar extends Component {
 	}
 
 	renderCita(dato) {
-		if(dato.cita) {
+		if(dato.cita != undefined) {
 			return <div>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
@@ -90,13 +90,15 @@ class Mostrar extends Component {
 
 
 			{/* Formulario modal para crear una Pre-consulta.
+				pasamos la cita como property para obtener los primary key
+				y pasarle al formProps como unos objetos más.
 			*/}
-			<FormularioPreConsultaContainer/>
+			<FormularioPreConsultaContainer datosCita={cita}/>
 
 			<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-						<button  onClick={this.props.abrirFormularioCrearPreConsulta} className='btn btn-success'>Crear pre-consulta</button>
+						<button  onClick={this.props.abrirFormularioCrearPreConsulta} className='btn btn-success'>Agregar pre-consulta</button>
 					</div>
 				</div>
 			</div>

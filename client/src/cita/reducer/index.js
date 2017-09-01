@@ -165,9 +165,18 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case LISTAR_CITAS_EXITO:
-			return Object.assign({}, state, {
-				listar: { citas: action.payload.citas, cargando: false, error: '' }
+			state = Object.assign({}, state, {
+				listar: { citas: action.payload.citas, cargando: false, error: '' },
+				mostrar: {
+					cargando: false, 
+					cita: {}, error: '', 
+					abierto: false 
+				}
 			})
+
+			console.log(state)
+
+			return state
 
 		case LISTAR_CITAS_FALLO:
 			return Object.assign({}, state, {
