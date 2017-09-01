@@ -32,12 +32,23 @@ exports.findById = (data, callback) => {
 	connection.end()
 }
 
+exports.verifyIfExist = (data, callback) => {
+	let q = `
+		SELECT * FROM niveles 
+			WHERE
+			descripcion = ?
+	`
+	return connection.query(q, [data.descripcion.trim()], callback)
+
+	connection.end()
+}
+
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO niveles (id_nivel, descripcion)
 			VALUES (null, LOWER(?));
 	`
-	return connection.query(q, [data.descripcion], callback)
+	return connection.query(q, [data.descripcion.trim()], callback)
 
 	connection.end()
 }
@@ -50,7 +61,7 @@ exports.update = (data, callback) => {
 				id_nivel = ?
 	`
 
-	return connection.query(q, [data.descripcion, data.id_nivel], callback)
+	return connection.query(q, [data.descripcion.trim(), data.id_nivel], callback)
 
 	connection.end()
 }
