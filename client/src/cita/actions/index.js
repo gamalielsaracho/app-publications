@@ -81,7 +81,7 @@ export function listarCitas() {
 
 		dispatch({ type: LISTAR_CITAS_REQUEST })
 
-		citaSocket.emit('listar_citas')
+		let citaSocket = io.connect('http://localhost:3000/cita')
 
 		citaSocket.on('listar_citas', (data) => {
 			// console.log(data)
