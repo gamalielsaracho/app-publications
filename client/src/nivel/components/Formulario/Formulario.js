@@ -25,7 +25,7 @@ class Formulario extends Component {
 		this.renderCargando = this.renderCargando.bind(this)
 	}
 
-	enviarFormulario(formProps) {		
+	enviarFormulario(formProps) {				
 		console.log(formProps)
 
 		if(this.props.editarContenido) {
@@ -71,10 +71,11 @@ class Formulario extends Component {
 				<div className='container'>
 					<h4 className='text-center'>Formulario nivel</h4>
 
+					<MensajeOerror error={error} mensaje={null}/>
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-							<MensajeOerror error={error} mensaje={null}/>
-							{ this.renderCargando(cargando) }
+						{ this.renderCargando(cargando) }
+
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								

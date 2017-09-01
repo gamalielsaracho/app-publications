@@ -60,6 +60,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					nivel: {}
 				},
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
 				mostrar: { abierto: false }
 			})
 
@@ -73,6 +75,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: true,
 					nivel: {}
 				},
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
 				mostrar: { abierto: false }
 			})
 
