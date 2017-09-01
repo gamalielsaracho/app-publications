@@ -77,7 +77,7 @@ export function listarNiveles() {
 
 		dispatch({ type: LISTAR_NIVELES_REQUEST })
 
-		nivelSocket.emit('listar_niveles')
+		var nivelSocket = io.connect('http://localhost:3000/nivel');
 
 		nivelSocket.on('listar_niveles', (data) => {
 
@@ -98,14 +98,15 @@ export function crearNivel(datosFormulario) {
 		nivelSocket.emit('crear_nivel', datosFormulario)
 
 		nivelSocket.on('crear_nivel', (data) => {
+			// console.log(data)
 			if(data.error) {
 				dispatch({ type: CREAR_NIVEL_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: CREAR_NIVEL_EXITO, payload: data })
+				dispatch(reset('FormularioNivel'))
 			}
 		})
 	
-		dispatch(reset('FormularioNivel'))
 	}
 }
 
