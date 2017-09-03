@@ -9,10 +9,6 @@ import {
 	cerrarModalMostrarCita
 } from '../../actions'
 
-import {
-	abrirFormularioCrearPreConsulta
-} from '../../../preconsulta/actions'
-
 import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
@@ -29,11 +25,6 @@ function mapDispatchToProps(dispatch) {
 		},
 		cerrarModalMostrarCita: () => {
 			dispatch(cerrarModalMostrarCita())
-		},
-
-		// Pre-consulta.
-		abrirFormularioCrearPreConsulta: () => {
-			dispatch(abrirFormularioCrearPreConsulta())
 		}
 	}
 }
