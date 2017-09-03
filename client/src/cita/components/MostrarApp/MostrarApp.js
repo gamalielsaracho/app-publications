@@ -4,24 +4,37 @@ import { Link } from 'react-router'
 import MostarCitaContainer from '../Mostrar'
 
 class MostrarApp extends Component {
+	constructor(props) {
+		super(props)
+		this.renderMenu = this.renderMenu.bind(this)
+	}
+
+	renderMenu(cita) {
+		if(cita.cita != undefined) {
+			if(cita.cita.id_preconsulta != null) {
+				return <li className="nav-item">
+				    <a className="nav-link active">
+				    	<Link to={`/dashboard/citas/${this.props.cita.cita.id_cita}/preconsulta/${this.props.cita.cita.id_preconsulta}`}>Pre-consulta</Link>
+				    </a>
+				</li>
+			} else {
+				return <h3 className='text-center'>Sin Pre-consulta</h3>
+			}
+		} else {
+			return <span></span>
+		}
+	}
+
 	render() {
 		let idCita = this.props.idCita
 		
-			    // <a className="nav-link active">
-			    // 	<Link to={`/dashboard/pacientes/${idCita}/alergias`}>Pre-consulta</Link>
-			    // </a>
 		return <div>
 			<br/>
 			<MostarCitaContainer 
 				idCita={idCita}/>
 
 			<ul className="nav nav-tabs">
-			  <li className="nav-item">
-			    <a className="nav-link">Pre-consulta</a>
-			  </li>
-			  <li className="nav-item">
-			    <a className="nav-link">Consulta</a>
-			  </li>
+				{ this.renderMenu(this.props.cita) }
 			</ul>
 
 			{ this.props.children }
