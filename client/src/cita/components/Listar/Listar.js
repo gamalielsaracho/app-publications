@@ -9,15 +9,19 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 import FormularioContainer from '../Formulario'
 import MostarVenCitaContainer from '../MostrarVen'
 
+import MostrarAgregarPreConsultaContainer from '../MostrarAgregarPreConsulta'
+
 class Listar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderFitros = this.renderFitros.bind(this)
 		this.renderCitas = this.renderCitas.bind(this)
 		this.renderOptionsByRol = this.renderOptionsByRol.bind(this)
 		this.renderAddButton = this.renderAddButton.bind(this)
 		this.renderFormAndShow = this.renderFormAndShow.bind(this)
 
+		this.renderEstadoCita = this.renderEstadoCita.bind(this)
+
+		this.renderEnfermeriaBtns = this.renderEnfermeriaBtns.bind(this)
 		// filter.
 		// this.handleChange = this.handleChange.bind(this)
 	}
@@ -35,6 +39,14 @@ class Listar extends Component {
 		}
 	}
 
+	renderEstadoCita(pendiente) {
+		if(pendiente) {
+			return <p>Pendiente</p>
+		} else {
+			return <p>Realizado</p>
+		}
+	}
+
 	// handleChange(e) {
 	// 	let valoresInputActualizando = {
 	// 		id_personal: ReactDOM.findDOMNode(this.refs.idPersonal).value
@@ -44,6 +56,19 @@ class Listar extends Component {
 
 	// 	this.props.actualizarFormularioFiltro(valoresInputActualizando)
 	// }
+
+	renderEnfermeriaBtns(cita) {
+		if(cita.id_preconsulta == null) {
+			return <button type="button" onClick={() => { this.props.mostrarCitaAgregarPreConsulta(cita.id_cita) }} className="btn btn-success btn-space">
+				Agregar pre-consulta
+			</button>
+			
+		} else {
+			return <Link to={`/dashboard/citas/${cita.id_cita}`}>
+				<button type="button" className="btn btn-info btn-space">Mostrar</button>
+			</Link>
+		}
+	}
 
 	renderOptionsByRol(rol, cita) {
 		switch(rol) {
@@ -67,9 +92,7 @@ class Listar extends Component {
 				</div>
 			case 'enfermeria':
 				return <div>
-					<Link to={`/dashboard/citas/${cita.id_cita}`}>
-						<button type="button" className="btn btn-info btn-space">Mostrar</button>
-					</Link>
+					{ this.renderEnfermeriaBtns(cita) }
 				</div>
 			default:
 				return <div>
@@ -98,12 +121,6 @@ class Listar extends Component {
 		} else {
 			return <span></span>
 		}
-	}
-
-	renderFitros() {
-		return <div>
-			<h4>Los filtros Aquí.</h4>
-		</div>
 	}
 
 	// <div className='row'>
@@ -158,7 +175,7 @@ class Listar extends Component {
 			            <td>{ i.cita.id_cita }</td>
 			            <td>{ i.cita.fecha }</td>
 			            <td>{ i.cita.hora }</td>
-			            <td>{ i.cita.pendiente }</td>
+			            <td>{ this.renderEstadoCita(i.cita.pendiente) }</td>
 			            <td>
 			            	{ this.renderOptionsByRol(rolUsuario, i.cita) }
 			            </td>
@@ -189,6 +206,8 @@ class Listar extends Component {
 				return <div>
 					<h1 className='text-center'>Citas</h1>
 					
+					<MostrarAgregarPreConsultaContainer/>
+
 					<MensajeOerror error={error} mensaje={null}/>
 
 					{ this.renderAddButton(rolUsuario) }
