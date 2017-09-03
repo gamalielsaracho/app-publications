@@ -5,8 +5,6 @@ import ReactModal from 'react-modal'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import Cargando from '../../../app/components/Cargando'
 
-import FormularioPreConsultaContainer from '../../../preconsulta/components/Formulario'
-
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
@@ -31,34 +29,32 @@ class Mostrar extends Component {
 
 	renderCita(dato) {
 		if(dato.cita != undefined) {
-			return <div>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
-						<p><strong>Fecha:</strong>{ dato.cita.fecha }</p>
+			return <div className='container'>
+			
+					<div className='row'>
+						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+							<p><strong>Fecha:</strong>{ dato.cita.fecha }</p>
+						</div>
+						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+							<p><strong>Hora:</strong>{ dato.cita.hora }</p>
+						</div>
 					</div>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
-						<p><strong>Hora:</strong>{ dato.cita.hora }</p>
-					</div>
-				</div>
 
-				<h4 className='text-center'>Profesional</h4>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
-						<p><strong>Nombre:</strong>{ dato.personal.nombres +' '+ dato.personal.apellidos }</p>
-					</div>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
-						<p><strong>Especialidad:</strong>{ dato.especialidad.descripcion }</p>
-					</div>
-				</div>
+					<p><strong>Médico/a:</strong>{ dato.personal.nombres +' '+ dato.personal.apellidos }</p>
+					<p><strong>Especialidad:</strong>{ dato.especialidad.descripcion }</p>
 
-				<h4 className='text-center'>Paciente</h4>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
-						<p><strong>Nombre:</strong>{ dato.paciente.nombres +' '+ dato.paciente.apellidos }</p>
+					<h3 className='text-center'>Paciente</h3>
+					<div className='row'>
+						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+							<p><strong>Nro. documento:</strong>{ dato.paciente.nroDocumento }</p>
+						</div>
+						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+							<p><strong>Nombre:</strong>{ dato.paciente.nombres +' '+ dato.paciente.apellidos }</p>
+						</div>
+						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+							<p><strong>Sexo:</strong>{ dato.paciente.sexo }</p>
+						</div>
 					</div>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
-					</div>
-				</div>
 			</div>
 		} else {
 			return <span></span>
@@ -78,34 +74,23 @@ class Mostrar extends Component {
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 
-		console.log(cita)
+		// console.log(cita)
 
-		return <div className='row'>
-			<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-				{ this.renderCargando(cargando) }
-				<MensajeOerror error={error} mensaje={null}/>
-
-				{ this.renderCita(cita) }
-			</div>
-
-
-			{/* Formulario modal para crear una Pre-consulta.
-				pasamos la cita como property para obtener los primary key
-				y pasarle al formProps como unos objetos más.
-			*/}
-			<FormularioPreConsultaContainer datosCita={cita}/>
-
-			<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-						<button  onClick={this.props.abrirFormularioCrearPreConsulta} className='btn btn-success'>Agregar pre-consulta</button>
-					</div>
+		if(cargando) {
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
+					{ this.renderCargando(cargando) }
 				</div>
 			</div>
-			<br/>
-			<br/>
-		</div>
+		} else {
+			return <div className='row'>
+					<MensajeOerror error={error} mensaje={null}/>
 
+					{ this.renderCita(cita) }
+				<br/>
+				<br/>
+			</div>
+		}
 	}
 }
 
