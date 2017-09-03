@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import $ from 'jquery'
 
 import jwtDecode from 'jwt-decode'
 
@@ -15,14 +16,16 @@ class ListarApp extends Component {
 			</span>
 		} else {
 			return <ul className="nav nav-tabs">
-			  <li className="nav-item">
-			    <a className="nav-link active">
+			  <li role="presentation" className="active">
+			  	<a>
 			    	<Link to='/dashboard/citas'>Listar</Link>
-			    </a>
+			  	</a>
 			  </li>
-			  <li className="nav-item">
-			    <a className="nav-link">Detalle cita</a>
+
+			  <li role="presentation" id='myTabs'>
+			  	<a href="#">Detalle cita</a>
 			  </li>
+			  
 			</ul>
 		}
 	}
