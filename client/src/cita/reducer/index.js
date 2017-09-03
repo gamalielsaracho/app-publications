@@ -31,7 +31,13 @@ import {
 	ELIMINAR_CITA_EXITO,
 	ELIMINAR_CITA_FALLO,
 
-	ACTUALIZAR_FORMULARIO_FILTRO
+	ACTUALIZAR_FORMULARIO_FILTRO,
+
+	MOSTRAR_CITA_AGREGAR_PRECONSULTA_REQUEST,
+	MOSTRAR_CITA_AGREGAR_PRECONSULTA_EXITO,
+	MOSTRAR_CITA_AGREGAR_PRECONSULTA_FALLO,
+
+	CERRAR_MOSTRAR_CITA_AGREGAR_PRECONSULTA
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -50,11 +56,53 @@ const INITIAL_STATE = {
 	listar: { citas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, cita: {}, error: '', abierto: false },
-	editar: { cargando: false, mensaje: '', error: '' }
+	editar: { cargando: false, mensaje: '', error: '' },
+	mostrarCitaAgregarPreConsulta: {
+		cargando: false, cita: {}, error: '', abierto: false
+	}
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		case MOSTRAR_CITA_AGREGAR_PRECONSULTA_REQUEST:
+			return Object.assign({}, state, {
+				mostrarCitaAgregarPreConsulta: {
+					cargando: true,
+					error: '',
+					abierto: true,
+					cita: {}
+				},
+				mostrar: INITIAL_STATE.mostrar
+			})
+
+		case MOSTRAR_CITA_AGREGAR_PRECONSULTA_EXITO:
+			return Object.assign({}, state, {
+				mostrarCitaAgregarPreConsulta: {
+					cargando: false,
+					error: '',
+					abierto: true,
+					cita: action.payload
+				},
+				mostrar: INITIAL_STATE.mostrar
+			})
+
+		case MOSTRAR_CITA_AGREGAR_PRECONSULTA_FALLO:
+			return Object.assign({}, state, {
+				mostrarCitaAgregarPreConsulta: {
+					cargando: false,
+					error: action.payload,
+					abierto: true,
+					cita: {}
+				},
+				mostrar: INITIAL_STATE.mostrar
+			})
+
+		case CERRAR_MOSTRAR_CITA_AGREGAR_PRECONSULTA:
+			return Object.assign({}, state, {
+				mostrarCitaAgregarPreConsulta: INITIAL_STATE.mostrarCitaAgregarPreConsulta,
+				mostrar: INITIAL_STATE.mostrar
+			})
+
 		case ACTUALIZAR_FORMULARIO_FILTRO:
 			const { valores } = action
 			
@@ -161,22 +209,24 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_CITAS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+
+				// ESTO ES IMPORTANTE, PORQUE CUANDO PONGO DENTRO 
+				// DE LISTAR_CITAS_EXITO, CUANDO QUIERO REDIRECCIONAR A
+				// UNA CITA EN ESPECÍFICO, LIMPIA EL ESTADO DE mostrar
+				// Y NO MUESTRA LA CITA.
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 		case LISTAR_CITAS_EXITO:
-			state = Object.assign({}, state, {
+			return Object.assign({}, state, {
 				listar: { citas: action.payload.citas, cargando: false, error: '' },
-				mostrar: {
-					cargando: false, 
-					cita: {}, error: '', 
-					abierto: false 
-				}
+				mostrarCitaAgregarPreConsulta: INITIAL_STATE.mostrarCitaAgregarPreConsulta
 			})
 
-			console.log(state)
+			// console.log(state)
 
-			return state
+			// return state
 
 		case LISTAR_CITAS_FALLO:
 			return Object.assign({}, state, {
@@ -191,6 +241,10 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case MOSTRAR_CITA_EXITO:
+			// console.log('LA CITA ESSSSSSS->>>')
+
+			// console.log(action.payload)
+
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
