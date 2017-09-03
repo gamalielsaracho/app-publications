@@ -12,7 +12,9 @@ import {
 	abrirFormularioEditarCita,
 
 	// Formulario Filtro, cool.!
-	actualizarFormularioFiltro
+	actualizarFormularioFiltro,
+
+	mostrarCitaAgregarPreConsulta
 } from '../../actions'
 
 
@@ -79,6 +81,13 @@ function mapDispatchToProps(dispatch) {
  
  
  			return citas
+ 		},
+
+ 		// Acción para mostrar ventana modal con los datos de una cita
+ 		// y también mostrar una pre-consulta realizada en el día o 
+ 		// si aún no tiene una pre-consulta, entonces lo crea.
+ 		mostrarCitaAgregarPreConsulta: (idCita) => {
+ 			dispatch(mostrarCitaAgregarPreConsulta(idCita))
  		}
 	}
 }
