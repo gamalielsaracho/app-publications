@@ -1,0 +1,2 @@
+import FormularioParametroPreConsultaContainer from './container'
+export default FormularioParametroPreConsultaContainer

@@ -1,0 +1,2 @@
+import ListarParametrosPreConsultaContainer from './container'
+export default ListarParametrosPreConsultaContainer
