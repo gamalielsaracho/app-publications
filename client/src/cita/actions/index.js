@@ -33,7 +33,13 @@ import {
 	ELIMINAR_CITA_EXITO,
 	ELIMINAR_CITA_FALLO,
 
-	ACTUALIZAR_FORMULARIO_FILTRO
+	ACTUALIZAR_FORMULARIO_FILTRO,
+
+	MOSTRAR_CITA_AGREGAR_PRECONSULTA_REQUEST,
+	MOSTRAR_CITA_AGREGAR_PRECONSULTA_EXITO,
+	MOSTRAR_CITA_AGREGAR_PRECONSULTA_FALLO,
+
+	CERRAR_MOSTRAR_CITA_AGREGAR_PRECONSULTA
 } from './types'
 
 import io from 'socket.io-client'
@@ -188,8 +194,33 @@ export function actualizarFormularioFiltro(valoresInput) {
 }
 
 
+export function mostrarCitaAgregarPreConsulta(idCita) {
+	return (dispatch) => {
 
+		dispatch({ type: MOSTRAR_CITA_AGREGAR_PRECONSULTA_REQUEST })
 
+		citaSocket.emit('mostrar_cita', { 
+			id_cita: idCita
+		})
+
+		citaSocket.on('mostrar_cita', (data) => {
+			// console.log('LA CITA ESSSSSSS->>>')
+
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: MOSTRAR_CITA_AGREGAR_PRECONSULTA_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MOSTRAR_CITA_AGREGAR_PRECONSULTA_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+export function cerrarMostrarCitaAgregarPreConsulta() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_MOSTRAR_CITA_AGREGAR_PRECONSULTA })
+	}
+}
 
 
 
