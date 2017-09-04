@@ -60,13 +60,17 @@ exports.listarPorFechaActualYidPaciente = (data, callback) => {
 exports.findById = (data, callback) => {
 
 	let q = `
-		SELECT * FROM preconsultas
-			WHERE
-				id_preconsulta = ? 
+		SELECT * FROM preconsultas preconsulta, pacientes paciente,
+		niveles nivel, personales personal
+		WHERE
+			preconsulta.id_paciente = paciente.id_paciente AND
+			preconsulta.id_nivel = nivel.id_nivel AND
+			preconsulta.id_personal = personal.id_personal AND
+			id_preconsulta = ? 
 	`
 	var options = {
 		sql: q,
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, [data.id_preconsulta], callback)

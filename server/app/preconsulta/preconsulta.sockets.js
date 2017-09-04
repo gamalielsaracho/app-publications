@@ -12,7 +12,7 @@ export default (io) => {
 			
 			function preconsultas() {
 				Preconsulta.find((err, preConsultas) => {
-					console.log(preConsultas)
+					// console.log(preConsultas)
 					if(err) {
 						console.log(err)
 					
