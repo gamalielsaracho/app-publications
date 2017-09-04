@@ -67,8 +67,9 @@ export default (io) => {
 		})
 		 
 		socket.on('mostrar_cita', (data) => {
+			console.log("CITA ID: --> "+data.id_cita)
 			Cita.findById(data, (err, cita) => {
-				console.log(cita)
+				// console.log(cita)
 				if(err) {
 					console.log(err)
 					socket.emit('mostrar_cita', { error: 'Ocurrió un error, intente más tarde.' })
