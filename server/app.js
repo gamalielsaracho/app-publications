@@ -14,6 +14,10 @@ require('././app/pacienteAlergia/pacienteAlergia.sockets')(io)
 require('././app/cita/cita.sockets')(io)
 require('././app/preconsulta/preconsulta.sockets')(io)
 require('././app/nivel/nivel.sockets')(io)
+require('././app/parametroPreConsulta/parametroPreConsulta.sockets')(io)
+
+require('././app/preConsultaParametro/preConsultaParametro.sockets')(io)
+
 
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
