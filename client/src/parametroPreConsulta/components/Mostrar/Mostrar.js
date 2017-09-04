@@ -9,7 +9,7 @@ class Mostrar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderCargando = this.renderCargando.bind(this)
-		this.renderRol = this.renderRol.bind(this)
+		this.renderParametroPreConsulta = this.renderParametroPreConsulta.bind(this)
 	}
 
 	renderCargando(cargando) {
@@ -20,10 +20,16 @@ class Mostrar extends Component {
 		}
 	}
 
-	renderRol(rol) {
-		if(rol) {
+	renderParametroPreConsulta(parametro) {
+		if(parametro) {
+			// console.log(parametro)
+
 			return <div>
-				<p><strong>Nombre:</strong> { rol.descripcion }</p>
+				<p><strong>Nombre:</strong> { parametro.descripcion }</p>
+				<p><strong>Unidad:</strong> { parametro.unidad }</p>
+				<p><strong>Valor normal:</strong> { parametro.valorNormal }</p>
+				<p><strong>Valor alto:</strong> { parametro.valorAlto }</p>
+				<p><strong>Valor bajo:</strong> { parametro.valorBajo }</p>
 			</div>
 		} else {
 			return <span></span>
@@ -39,7 +45,7 @@ class Mostrar extends Component {
 		}
 
 
-		const { cargando, rol, error, abierto } = this.props.mostrar
+		const { cargando, parametro, error, abierto } = this.props.mostrar
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
@@ -51,7 +57,7 @@ class Mostrar extends Component {
 				<div className='container'>
 
 					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
+						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarParametroPreConsulta() }}></span>
 					</div>
 
 					<div className='row'>
@@ -59,7 +65,7 @@ class Mostrar extends Component {
 							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderRol(rol) }
+							{ this.renderParametroPreConsulta(parametro) }
 						</div>
 					</div>
 				</div>

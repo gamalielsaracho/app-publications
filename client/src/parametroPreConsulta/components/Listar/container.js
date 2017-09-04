@@ -15,7 +15,7 @@ function mapStateToProps(state) {
 	return {
 		crear: state.parametroPreConsulta.crear,
 		listar: state.parametroPreConsulta.listar,
-		parametrosPreConsulta: state.parametroPreConsulta.listar.parametrosPreConsulta
+		parametros: state.parametroPreConsulta.listar.parametros
 	}
 }
 

@@ -17,30 +17,30 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.parametrosPreConsulta !== this.props.parametrosPreConsulta) {
+		if(nextProps.parametros !== this.props.parametros) {
 			return true
 		}else {
 			return false
 		}
 	}
 
-	renderParametrosPreConsulta(parametrosPreConsulta) {
-		console.log(parametrosPreConsulta)
+	renderParametrosPreConsulta(parametros) {
+		console.log(parametros)
 		return <tbody>
 			{
-				parametrosPreConsulta.map((i) => {
-					return <tr key={i.id_parametroPreconsulta}>
-			            <td>{ i.id_parametroPreconsulta }</td>
-			            <td>{ i.descripcion }</td>
-			            <td>{ i.unidad }</td>
-			            <td>{ i.valorNormal }</td>
-			            <td>{ i.valorAlto }</td>
-			            <td>{ i.valorBajo }</td>
+				parametros.map((parametro) => {
+					return <tr key={parametro.id_parametroPreconsulta}>
+			            <td>{ parametro.id_parametroPreconsulta }</td>
+			            <td>{ parametro.descripcion }</td>
+			            <td>{ parametro.unidad }</td>
+			            <td>{ parametro.valorNormal }</td>
+			            <td>{ parametro.valorAlto }</td>
+			            <td>{ parametro.valorBajo }</td>
 
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarParametroPreConsulta(i.id_parametroPreconsulta) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarParametroPreConsulta(i.id_parametroPreconsulta) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarParametroPreConsulta(i.id_parametroPreconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarParametroPreConsulta(parametro.id_parametroPreconsulta) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarParametroPreConsulta(parametro.id_parametroPreconsulta) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarParametroPreConsulta(parametro.id_parametroPreconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
@@ -50,7 +50,7 @@ class Listar extends Component {
 
 	render() {
 
-		const { parametrosPreConsulta, cargando, error } = this.props.listar
+		const { parametros, cargando, error } = this.props.listar
 
 		if(cargando) {
 			return <Cargando/>
@@ -85,7 +85,7 @@ class Listar extends Component {
 						    	</tr>
 						    </thead>
 
-							{ this.renderParametrosPreConsulta(parametrosPreConsulta) }
+							{ this.renderParametrosPreConsulta(parametros) }
 
 						</table>
 					</div>

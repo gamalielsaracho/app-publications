@@ -54,7 +54,7 @@ const validate = (values) => {
 function mapStateToProps(state) {
 	return {
 		formulario: state.parametroPreConsulta.formulario,
-		initialValues: state.parametroPreConsulta.formulario.parametroPreConsulta,
+		initialValues: state.parametroPreConsulta.formulario.parametro,
 		enableReinitialize: state.parametroPreConsulta.formulario.iniciarValores,
 		editarContenido: state.parametroPreConsulta.formulario.iniciarValores,
 
