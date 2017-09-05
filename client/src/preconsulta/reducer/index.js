@@ -45,14 +45,12 @@ const INITIAL_STATE = {
 	listar: { preConsultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, preConsulta: {}, error: '', abierto: false },
-	editar: { cargando: false, mensaje: '', error: '' },
-	formularioCrearPreConsulta: {
-		abierto: false
-	}
+	editar: { cargando: false, mensaje: '', error: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		
 		case ABRIR_FORMULARIO_CREAR_PRECONSULTA:
 			return Object.assign({}, state, {
 				formulario: {
