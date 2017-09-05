@@ -37,7 +37,7 @@ class FieldSelectParametrosPre extends Component {
 						</select>
 					</div>
 
-					<button type="button" onClick={this.props.abrirFormularioCrearNivel} className="btn btn-success btn-space btn-sm">
+					<button type="button" onClick={this.props.abrirFormularioCrearParametroPreConsulta} className="btn btn-success btn-space btn-sm">
 						<span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo parametro
 					</button>
 
