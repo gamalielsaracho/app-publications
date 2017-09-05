@@ -1,0 +1,2 @@
+import MostrarPreConsultaAppContainer from './container'
+export default MostrarPreConsultaAppContainer
