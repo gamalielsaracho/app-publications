@@ -6,10 +6,9 @@ import {
 
 import Mostrar from './Mostrar'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
 	return {
-		mostrar: state.preConsulta.mostrar,
-		idPreConsulta: ownProps.idPreConsulta
+		mostrar: state.preConsulta.mostrar
 	}
 }
 
