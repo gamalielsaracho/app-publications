@@ -84,10 +84,47 @@ exports.verifyIfExist = (data, callback) => {
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO preconsultasParametros (id_preconsulta, id_parametroPreconsulta, valor, observaciones)
-			VALUES (null, null, ?, LOWER(?));
+			VALUES (?, ?, ?, LOWER(?));
 	`
-	return connection.query(q, [ data.valor.trim(),
-								 data.observaciones.trim() ], callback)
+	if(data.observaciones) {
+		data.observaciones.trim()
+	}
+	
+	return connection.query(q, [ data.id_preconsulta,
+								 data.id_parametroPreconsulta,
+							     data.valor.trim(),
+								 data.observaciones ], callback)
+
+	connection.end()
+}
+
+exports.findByIdToUpdate = (data, callback) => {
+
+	let q = `
+		SELECT
+			parametro.id_parametroPreconsulta,
+			parametro.descripcion,
+			parametro.unidad,
+
+			preconsultaParametro.id_preconsulta,
+			preconsultaParametro.valor,
+			preconsultaParametro.observaciones
+		FROM  
+			parametrosPreconsulta parametro, 
+			preconsultasParametros preconsultaParametro 
+		WHERE
+			preconsultaParametro.id_parametroPreconsulta = parametro.id_parametroPreconsulta AND
+			preconsultaParametro.id_preconsulta = ? AND
+			preconsultaParametro.id_parametroPreconsulta = ?
+
+	`
+
+	var options = {
+		sql: q,
+		nestTables: false
+	}
+
+	return connection.query(options, [data.id_preconsulta, data.id_parametroPreconsulta], callback)
 
 	connection.end()
 }
@@ -102,8 +139,12 @@ exports.update = (data, callback) => {
 			id_parametroPreconsulta = ?
 	`
 
+	if(data.observaciones) {
+		data.observaciones.trim()
+	}
+
 	return connection.query(q, [ data.valor.trim(),
-								 data.observaciones.trim(),
+								 data.observaciones,
 								 data.id_preconsulta, 
 								 data.id_parametroPreconsulta ], callback)
 
