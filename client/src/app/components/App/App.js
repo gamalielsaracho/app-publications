@@ -7,6 +7,19 @@ class App extends Component {
 		super(props)
 	}
 
+	componentWillMount() {
+		const token = localStorage.getItem('token')
+		// console.log(token)
+
+		if(token) {
+			this.props.verificarTokenPersonal(token)
+			
+			console.log("hola de el punto de entrada.")
+		}else {
+			console.log("no hay token..")
+		}
+	}
+
 	render() {
 		return <div>
 			<MenuContainer/>
