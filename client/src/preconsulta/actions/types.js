@@ -34,4 +34,3 @@ export const ELIMINAR_PRECONSULTA_REQUEST = 'eliminair_preconsulta_request'
 export const ELIMINAR_PRECONSULTA_EXITO = 'eliminair_preconsulta_exito'
 export const ELIMINAR_PRECONSULTA_FALLO = 'eliminair_preconsulta_fallo'
 
-
