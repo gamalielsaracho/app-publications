@@ -42,9 +42,9 @@ function mapStateToProps(state) {
 		// Para mostrar dentro del select option.
     	listaNiveles: state.nivel.listar,
 
-    	datosToken: state.personal.usuarioEstado.datosToken,
+    	datosToken: state.personal.usuarioEstado.datosToken
 
-    	listaPreConsultas: state.preConsulta.listar
+    	// listaPreConsultas: state.preConsulta.listar
 	}
 }
 
@@ -66,11 +66,11 @@ function mapDispatchToProps(dispatch) {
 
 		listarNiveles: () => {
 			dispatch(listarNiveles())
-		},
-
-		listarPreConsultas: () => {
-			dispatch(listarPreConsultas())
 		}
+
+		// listarPreConsultas: () => {
+		// 	dispatch(listarPreConsultas())
+		// }
 	}
 }
 
