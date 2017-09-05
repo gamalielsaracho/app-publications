@@ -17,7 +17,6 @@ import {
 	mostrarCitaAgregarPreConsulta
 } from '../../actions'
 
-
 import {
 	listarPersonales
 } from '../../../usuario/actions'
@@ -36,12 +35,13 @@ function mapStateToProps(state) {
 
 		// Rol del usuario logeado, se trae desde el servidor, 
 		// para ocultar contenidos de la vista.
-		rol: state.personal.usuarioEstado.datosToken.rol
+		usuarioEstado: state.personal.usuarioEstado
+
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-	return {
+	return {		
 		listarCitas: () => {
 			dispatch(listarCitas())
 		},
