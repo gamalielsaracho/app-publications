@@ -13,10 +13,6 @@ import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNi
 import FormularioNivelContainer from '../../../nivel/components/Formulario'
 
 
-// LISTA DE PRE-CONSULTAS.
-import FieldSelectPreConsultasContainer from '../../../preconsulta/components/FieldSelectPreConsultas'
-
-
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -36,7 +32,7 @@ class Formulario extends Component {
 
 	componentWillMount() {
 		this.props.listarNiveles()
-		this.props.listarPreConsultas()
+		// this.props.listarPreConsultas()
 	}
 
 	enviarFormulario(formProps) {
@@ -97,7 +93,7 @@ class Formulario extends Component {
 														
 								
 							// </form>
-			console.log(this.props.listaPreConsultas)
+			// console.log(this.props.listaPreConsultas)
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
 					       	contentLabel="Minimal Modal Example"
@@ -116,12 +112,9 @@ class Formulario extends Component {
 							
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								<div className='form-group'>
-									<label>Pre-consulta realizada en el día</label>
-									<Field name='id_preconsulta' type='text' 
-										component={FieldSelectPreConsultasContainer} 
-										fechaCita={this.props.datosCita.cita.fecha}
-										idPaciente={this.props.datosCita.paciente.id_paciente}
-										listaPreConsultas={this.props.listaPreConsultas} label=''/>
+									<Field name='id_nivel' type='text' 
+										component={FieldSelectNivelesContainer}
+										listaNiveles={this.props.listaNiveles} label='Nivel:'/>
 								</div>
 
 								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
