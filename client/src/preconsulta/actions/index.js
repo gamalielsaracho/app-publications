@@ -106,7 +106,7 @@ export function crearPreConsulta(datosFormulario) {
 				dispatch(reset('FormularioPreConsulta'))
 				dispatch({ type: CREAR_PRECONSULTA_EXITO, payload: data })
 
-				browserHistory.push(`/dashboard/citas/${datosFormulario.id_cita}/preconsulta/${data.idPreconsultaInsertada}`)
+				// browserHistory.push(`/dashboard/citas/${datosFormulario.id_cita}/preconsulta/${data.idPreconsultaInsertada}`)
 			}
 		})
 	
@@ -174,11 +174,6 @@ export function editarPreConsulta(datosFormulario) {
 
 	}
 }
-
-
-
-
-
 
 
 
