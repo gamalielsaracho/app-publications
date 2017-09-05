@@ -38,6 +38,8 @@ export default (io) => {
 					} else {
 						PreConsultaParametro.create(data, (err, parametroPreConsulta) => {
 							if(err) {
+								console.log(err)
+
 								socket.emit('crear_parametroPreConsulta', { error: 'Ocurrió un error, intente más tarde.' })
 								return
 							}
@@ -65,6 +67,19 @@ export default (io) => {
 				})
 			})
 
+			socket.on('mostrar_parametroPreConsulta_editar', (data) => {
+				PreConsultaParametro.findByIdToUpdate(data, (err, parametroPreConsulta) => {
+					// console.log(parametroPreConsulta)
+
+					if(err) {
+						console.log(err)
+						socket.emit('mostrar_parametroPreConsulta_editar', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('mostrar_parametroPreConsulta_editar', parametroPreConsulta[0])
+				})
+			})
 
 			socket.on('editar_parametroPreConsulta', (data) => {						
 				PreConsultaParametro.update(data, (err) => {
