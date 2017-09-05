@@ -71,6 +71,7 @@ class Listar extends Component {
 	}
 
 	renderOptionsByRol(rol, cita) {
+		// alert(rol)
 		switch(rol) {
 			case 'administracion':
 				return <div>
@@ -94,9 +95,7 @@ class Listar extends Component {
 				return <div>
 					{ this.renderEnfermeriaBtns(cita) }
 				</div>
-			default:
-				return <div>
-				</div>
+			
 		}
 	}
 
@@ -145,8 +144,18 @@ class Listar extends Component {
 
 	renderCitas(citas) {
 
-		let rolUsuario = this.props.rol ? 
-					   	 this.props.rol.descripcion : ''
+		// let rolUsuario = this.props.rol ? 
+		// 			   	 this.props.rol.descripcion : ''
+
+		// console.log(this.props.usuarioEstado)
+
+		let rolUsuario
+
+		if(this.props.usuarioEstado.autenticado) {
+			alert('Entroo0oooo')
+			rolUsuario = this.props.usuarioEstado.datosToken.rol.descripcion
+		}
+
 
 		let filtro = this.props.filtro
 
