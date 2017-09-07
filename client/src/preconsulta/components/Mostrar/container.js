@@ -8,7 +8,13 @@ import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.preConsulta.mostrar
+		mostrar: state.preConsulta.mostrar,
+
+		// Para obtener el rol del personal.
+		usuarioEstado: state.personal.usuarioEstado,
+
+		// EL Id de la enfermera que creó la pre-consulta.
+		preConsulta: state.preConsulta.mostrar.preConsulta
 	}
 }
 
