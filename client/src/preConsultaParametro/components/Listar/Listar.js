@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import removeAccents from 'remove-accents'
+import jwtDecode from 'jwt-decode'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -9,7 +11,9 @@ class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderPreConsultaParametros = this.renderPreConsultaParametros.bind(this)
+		this.renderBtnsOpcionesByRolYpersonal = this.renderBtnsOpcionesByRolYpersonal.bind(this)
 	}
+
 
 	// this.props.idPreConsulta -> es pasado como property.
 	componentWillMount() {
@@ -22,9 +26,56 @@ class Listar extends Component {
 		}else {
 			return false
 		}
-	}	
+	}
+
+	renderBtnsOpcionesByRolYpersonal(datosToken, personalPre, i) {
+		// let idPersonalLocal = jwtDecode(localStorage.getItem('token')).id_personal
+		
+		// let idPersonalLocal = 12
+		// console.log(idPersonalLocal)
+		if(personalPre != null) {
+			if(removeAccents(datosToken.rol.descripcion) == 'enfermeria' && datosToken.personal.id_personal == personalPre.personal.id_personal) {
+				return <div>
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.preconsultaParametro.id_preconsulta, i.parametro.id_parametroPreconsulta) }} className="btn btn-warning btn-space">Editar</button>
+					<button type="button" onClick={() => { this.props.eliminarPreConsultaParametro(i.preconsultaParametro.id_preconsulta, i.parametro.id_parametroPreconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
+				</div>
+			} else {
+				return <span></span>
+			}
+		}
+	}
 
 	renderPreConsultaParametros(parametrosPreConsulta) {
+		let datosToken = null
+		let personalPre = null
+
+		let condition = (
+			this.props.preConsulta != undefined && 
+			this.props.usuarioEstado.datosToken.rol != null
+		);
+
+		if(condition) {
+			datosToken = this.props.usuarioEstado.datosToken
+			personalPre = this.props.preConsulta
+			// console.log('El ROL ES DESDE EL SERVER:'+this.props.usuarioEstado.datosToken.rol.descripcion)
+		}
+		// console.log('#### this.props.preConsulta #####')
+		// console.log(personalPre)
+
+		// if() {
+		// 	// console.log('El ROL ES DESDE EL SERVER:'+this.props.usuarioEstado.datosToken.rol.descripcion)
+		// } else {
+		// 	console.log('Nooooooooooo estaaa..!')
+		// }
+
+		// console.log(this.props.preConsulta)
+
+
+
+		// console.log('QQQQQ this.props.usuarioEstado.datosToken')
+
+		// console.log(this.props.usuarioEstado.datosToken.rol)
+
 		// console.log(parametrosPreConsulta)
 		return <tbody>
 			{
@@ -38,9 +89,8 @@ class Listar extends Component {
 			            <td>{ i.preconsultaParametro.observaciones }</td>
 
 			            <td>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.preconsultaParametro.id_preconsulta, i.parametro.id_parametroPreconsulta) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarPreConsultaParametro(i.preconsultaParametro.id_preconsulta, i.parametro.id_parametroPreconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
-			            </td>
+							{ this.renderBtnsOpcionesByRolYpersonal(datosToken, personalPre, i) }
+						</td>
 			        </tr>		
 				})
 			}
@@ -48,8 +98,7 @@ class Listar extends Component {
 	}
 
 	render() {
-
-		const { parametrosPreConsulta, cargando, error } = this.props.listar
+		const { parametrosPreConsulta, cargando, error } = this.props.listar		
 
 		console.log(this.props.listar)
 
