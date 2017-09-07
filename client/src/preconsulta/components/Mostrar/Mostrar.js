@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import removeAccents from 'remove-accents'
 
 import ReactModal from 'react-modal'
 
@@ -13,10 +14,32 @@ class Mostrar extends Component {
 		super(props)
 		this.renderCargando = this.renderCargando.bind(this)
 		this.renderPreConsulta = this.renderPreConsulta.bind(this)
+
+		this.formularioPreConsultaParametroByRol = this.formularioPreConsultaParametroByRol.bind(this)
 	}
 
 	componentWillMount() {
 		this.props.mostrarPreConsulta(this.props.idPreConsulta)
+	}
+
+	formularioPreConsultaParametroByRol(datosToken, personalPre) {
+		// let personal = datosToken.personal
+		// let rol = removeAccents(.rol.descripcion)
+		// let rol = 'medico'
+		if(personalPre != null) {
+			if(removeAccents(datosToken.rol.descripcion) == 'enfermeria' && datosToken.personal.id_personal == personalPre.personal.id_personal) {
+				return <FormularioPreConsultaParametroContainer
+							idPreConsulta={this.props.idPreConsulta}/>
+			} else {
+				return <span></span>
+			}
+		}
+		// console.log('El ROL ES DESDE EL SERVER:'+this.props.usuarioEstado.datosToken.rol.descripcion)
+
+		// if(rol == 'enfermeria') {
+		// } else {
+		// }
+
 	}
 
 	renderCargando(cargando) {
@@ -28,6 +51,19 @@ class Mostrar extends Component {
 	}
 
 	renderPreConsulta(preConsulta) {
+		let datosToken = null
+		let personalPre = null
+
+		let condition = (
+			this.props.preConsulta != undefined && 
+			this.props.usuarioEstado.datosToken.rol != null
+		);
+
+		if(condition) {
+			datosToken = this.props.usuarioEstado.datosToken
+			personalPre = this.props.preConsulta
+		}
+
 		if(preConsulta && preConsulta.personal !== undefined) {
 			return <div className='row'>
 				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
@@ -36,8 +72,7 @@ class Mostrar extends Component {
 					<p><strong>Nivel:</strong>{ preConsulta.nivel.descripcion }</p>				
 				</div>
 				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-					<FormularioPreConsultaParametroContainer
-						idPreConsulta={this.props.idPreConsulta}/>
+					{ this.formularioPreConsultaParametroByRol(datosToken, personalPre) }
 				</div>
 			</div>
 		} else {
