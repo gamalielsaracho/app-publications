@@ -75,6 +75,7 @@ export function verificarTokenPersonal(token) {
 	return (dispatch) => {
 
 		socketPersonal.emit('verificar_token', { token: token })
+		
 		socketPersonal.on('verificar_token', (data) => {
 			if(data.error) {
 				dispatch({ type: VERIFICAR_TOKEN_PERSONAL_FALLO, payload: data.error })

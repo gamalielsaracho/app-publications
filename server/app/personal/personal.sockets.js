@@ -110,6 +110,8 @@ export default (socket, io) => {
 	socket.on('verificar_token', (data) => {
 		const token = data.token
 
+		console.log(token)
+
 		if(!token) {
 			socket.emit('verificar_token', { error: 'Tú no tienes Token, Inicia sessión nuevamente.' })
 			return
