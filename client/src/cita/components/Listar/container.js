@@ -36,7 +36,6 @@ function mapStateToProps(state) {
 		// Rol del usuario logeado, se trae desde el servidor, 
 		// para ocultar contenidos de la vista.
 		usuarioEstado: state.personal.usuarioEstado
-
 	}
 }
 

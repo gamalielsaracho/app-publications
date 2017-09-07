@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import jwtDecode from 'jwt-decode'
+import removeAccents from 'remove-accents'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -72,6 +73,7 @@ class Listar extends Component {
 
 	renderOptionsByRol(rol, cita) {
 		// alert(rol)
+
 		switch(rol) {
 			case 'administracion':
 				return <div>
@@ -95,7 +97,6 @@ class Listar extends Component {
 				return <div>
 					{ this.renderEnfermeriaBtns(cita) }
 				</div>
-			
 		}
 	}
 
@@ -144,17 +145,7 @@ class Listar extends Component {
 
 	renderCitas(citas) {
 
-		// let rolUsuario = this.props.rol ? 
-		// 			   	 this.props.rol.descripcion : ''
-
-		// console.log(this.props.usuarioEstado)
-
-		let rolUsuario
-
-		if(this.props.usuarioEstado.autenticado) {
-			alert('Entroo0oooo')
-			rolUsuario = this.props.usuarioEstado.datosToken.rol.descripcion
-		}
+		let rolUsuario = removeAccents(jwtDecode(localStorage.getItem('token')).rol)
 
 
 		let filtro = this.props.filtro
@@ -207,10 +198,8 @@ class Listar extends Component {
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			let rolUsuario = this.props.rol ? 
-							 this.props.rol.descripcion : '' 
-
-			// console.log('Btb -> '+rolUsuario)
+			
+			let rolUsuario = removeAccents(jwtDecode(localStorage.getItem('token')).rol)
 
 				return <div>
 					<h1 className='text-center'>Citas</h1>
