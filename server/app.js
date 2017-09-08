@@ -18,6 +18,8 @@ require('././app/parametroPreConsulta/parametroPreConsulta.sockets')(io)
 
 require('././app/preConsultaParametro/preConsultaParametro.sockets')(io)
 
+require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
+
 
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
