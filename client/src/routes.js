@@ -61,6 +61,11 @@ import MostrarPreConsultaAppContainer from '././preconsulta/components/MostrarAp
 // PARAMETROS PRE-CONSULTA.
 import ListarParametrosPreConsultaPage from '././parametroPreConsulta/pages/ListarParametrosPreConsultaPage'
 
+
+// UNIDADES PARAMENTRO PRE-CONSULTA.
+import ListarUnidadesParametroPrePage from '././unidadParametroPre/pages/ListarUnidadesParametroPrePage'
+
+
 export default (
 	<Route path='/' component={AppContainer}>
 		<IndexRoute component={HomePage}/>
@@ -81,6 +86,7 @@ export default (
 
 			<Route path='/dashboard/parametros-preconsulta' component={ListarParametrosPreConsultaPage}/>
 
+			<Route path='/dashboard/unidades-parametro-preconsulta' component={ListarUnidadesParametroPrePage}/>
 
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
