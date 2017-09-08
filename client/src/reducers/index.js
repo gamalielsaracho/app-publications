@@ -21,6 +21,7 @@ import preConsultaReducer from '../preconsulta/reducer'
 import parametroPreConsultaReducer from '../parametroPreConsulta/reducer'
 
 import preConsultaParametroReducer from '../preConsultaParametro/reducer'
+import unidadParametroPreReducer from '../unidadParametroPre/reducer'
 
 const rootReducer = combineReducers({
 	form: formReducer,
@@ -38,7 +39,8 @@ const rootReducer = combineReducers({
 	// Los tres relacionados.
 	preConsulta: preConsultaReducer,
 	parametroPreConsulta: parametroPreConsultaReducer,
-	preConsultaParametro: preConsultaParametroReducer
+	preConsultaParametro: preConsultaParametroReducer,
+	unidadParametroPre: unidadParametroPreReducer
 
 })
 
