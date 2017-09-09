@@ -9,7 +9,7 @@ class Mostrar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderCargando = this.renderCargando.bind(this)
-		this.renderRol = this.renderRol.bind(this)
+		this.renderUnidadParametroPre = this.renderUnidadParametroPre.bind(this)
 	}
 
 	renderCargando(cargando) {
@@ -20,10 +20,10 @@ class Mostrar extends Component {
 		}
 	}
 
-	renderRol(rol) {
-		if(rol) {
+	renderUnidadParametroPre(unidad) {
+		if(unidad) {
 			return <div>
-				<p><strong>Nombre:</strong> { rol.descripcion }</p>
+				<p><strong>Nombre:</strong> { unidad.descripcion }</p>
 			</div>
 		} else {
 			return <span></span>
@@ -39,7 +39,7 @@ class Mostrar extends Component {
 		}
 
 
-		const { cargando, rol, error, abierto } = this.props.mostrar
+		const { cargando, unidadParametroPre, error, abierto } = this.props.mostrar
 
 		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
@@ -51,7 +51,7 @@ class Mostrar extends Component {
 				<div className='container'>
 
 					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
+						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarUnidadParametroPre() }}></span>
 					</div>
 
 					<div className='row'>
@@ -59,7 +59,7 @@ class Mostrar extends Component {
 							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderRol(rol) }
+							{ this.renderUnidadParametroPre(unidadParametroPre) }
 						</div>
 					</div>
 				</div>
