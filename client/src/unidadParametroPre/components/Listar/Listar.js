@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FormularioNivelContainer from '../Formulario'
-import MostarContainer from '../Mostrar'
+import FormularioUnidadParametroPreContainer from '../Formulario'
+import MostarUnidadParametroPreContainer from '../Mostrar'
 
 class Listar extends Component {
 	constructor(props) {
@@ -53,8 +53,8 @@ class Listar extends Component {
 				return <div>
 					<h1 className='text-center'>Unidades parametro pre-consulta</h1>
 					
-					<FormularioNivelContainer/>
-					<MostarContainer/>
+					<FormularioUnidadParametroPreContainer/>
+					<MostarUnidadParametroPreContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
 
