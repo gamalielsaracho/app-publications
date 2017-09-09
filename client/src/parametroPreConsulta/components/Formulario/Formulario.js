@@ -8,6 +8,10 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import FieldSelectUnidadesParametroPreContainer from '../../../unidadParametroPre/components/FieldSelectUnidadesParametroPre'
+
+import FormularioUnidadParametroPreContainer from '../../../unidadParametroPre/components/Formulario'
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -23,6 +27,10 @@ class Formulario extends Component {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
 		this.renderCargando = this.renderCargando.bind(this)
+	}
+
+	componentWillMount() {
+		this.props.listarUnidadesParametroPre()
 	}
 
 	enviarFormulario(formProps) {				
@@ -77,9 +85,17 @@ class Formulario extends Component {
 
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 
+
+							<FormularioUnidadParametroPreContainer/>
+
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-								<Field name='unidad' type='text' component={renderField} label='Unidad'/>
+								
+								<Field name='id_unidadParametroPre' type='text' 
+									listaUnidadesParametroPre={this.props.listaUnidadesParametroPre}
+									component={FieldSelectUnidadesParametroPreContainer} 
+									label='Unidad'/>
+								
 								<Field name='valorNormal' type='text' component={renderField} label='Valor normal'/>
 								<Field name='valorAlto' type='text' component={renderField} label='Valor alto'/>
 								<Field name='valorBajo' type='text' component={renderField} label='Valor bajo'/>
