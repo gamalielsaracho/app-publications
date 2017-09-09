@@ -53,11 +53,11 @@ export function abrirFormularioEditarParametroPreConsulta(idParametroPreconsulta
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PARAMETRO_PRECONSULTA_REQUEST })
 
-		parametroPreConsultaSocket.emit('mostrar_parametro', { 
+		parametroPreConsultaSocket.emit('mostrar_parametro_editar', { 
 			id_parametroPreconsulta: idParametroPreconsulta 
 		})
 
-		parametroPreConsultaSocket.on('mostrar_parametro', (data) => {
+		parametroPreConsultaSocket.on('mostrar_parametro_editar', (data) => {
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PARAMETRO_PRECONSULTA_FALLO, payload: data.error })
