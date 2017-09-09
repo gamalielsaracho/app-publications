@@ -64,6 +64,19 @@ export default (io) => {
 			})
 		})
 
+		socket.on('mostrar_parametro_editar', (data) => {
+			ParametroPreConsulta.findByIdToUpdate(data, (err, parametro) => {
+				// console.log(parametro)
+
+				if(err) {
+					console.log(err)
+					socket.emit('mostrar_parametro_editar', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				socket.emit('mostrar_parametro_editar', parametro[0])
+			})
+		})
 
 		socket.on('editar_parametro', (data) => {
 			// ParametroPreConsulta.verifyIfExist(data, (err, parametroExistente) => {
