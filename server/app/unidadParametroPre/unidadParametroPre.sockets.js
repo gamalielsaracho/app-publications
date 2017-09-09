@@ -31,7 +31,7 @@ export default (io) => {
 				}
 
 				if(unidadParametroExistente[0]) {
-						socket.emit('crear_unidadParametroPre', { error: 'Este nivel ya está registrado' })
+						socket.emit('crear_unidadParametroPre', { error: 'Esta unidad de medida ya está registrada' })
 						return
 				} else {
 					UnidadParametroPre.create(data, (err, unidadParametroPre) => {
@@ -71,7 +71,7 @@ export default (io) => {
 				}
 
 				if(unidadParametroExistente[0]) {
-					socket.emit('editar_unidadParametroPre', { error: 'Este nivel ya está registrado' })
+					socket.emit('editar_unidadParametroPre', { error: 'Esta unidad de medida ya está registrada' })
 					return
 				}
 					
