@@ -20,16 +20,16 @@ class Mostrar extends Component {
 		}
 	}
 
-	renderParametroPreConsulta(parametro) {
-		if(parametro) {
-			// console.log(parametro)
+	renderParametroPreConsulta(dato) {
+		if(dato) {
+			// console.log(dato)
 
 			return <div>
-				<p><strong>Nombre:</strong> { parametro.descripcion }</p>
-				<p><strong>Unidad:</strong> { parametro.unidad }</p>
-				<p><strong>Valor normal:</strong> { parametro.valorNormal }</p>
-				<p><strong>Valor alto:</strong> { parametro.valorAlto }</p>
-				<p><strong>Valor bajo:</strong> { parametro.valorBajo }</p>
+				<p><strong>Nombre:</strong> { dato.parametro.descripcion }</p>
+				<p><strong>Unidad:</strong> { dato.unidad.descripcion }</p>
+				<p><strong>Valor normal:</strong> { dato.parametro.valorNormal }</p>
+				<p><strong>Valor alto:</strong> { dato.parametro.valorAlto }</p>
+				<p><strong>Valor bajo:</strong> { dato.parametro.valorBajo }</p>
 			</div>
 		} else {
 			return <span></span>
