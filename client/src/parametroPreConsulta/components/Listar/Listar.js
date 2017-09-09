@@ -25,22 +25,23 @@ class Listar extends Component {
 	}
 
 	renderParametrosPreConsulta(parametros) {
+
 		console.log(parametros)
 		return <tbody>
 			{
-				parametros.map((parametro) => {
-					return <tr key={parametro.id_parametroPreconsulta}>
-			            <td>{ parametro.id_parametroPreconsulta }</td>
-			            <td>{ parametro.descripcion }</td>
-			            <td>{ parametro.unidad }</td>
-			            <td>{ parametro.valorNormal }</td>
-			            <td>{ parametro.valorAlto }</td>
-			            <td>{ parametro.valorBajo }</td>
+				parametros.map((i) => {
+					return <tr key={i.parametro.id_parametroPreconsulta}>
+			            <td>{ i.parametro.id_parametroPreconsulta }</td>
+			            <td>{ i.parametro.descripcion }</td>
+			            <td>{ i.unidad.descripcion }</td>
+			            <td>{ i.parametro.valorNormal }</td>
+			            <td>{ i.parametro.valorAlto }</td>
+			            <td>{ i.parametro.valorBajo }</td>
 
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarParametroPreConsulta(parametro.id_parametroPreconsulta) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarParametroPreConsulta(parametro.id_parametroPreconsulta) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarParametroPreConsulta(parametro.id_parametroPreconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarParametroPreConsulta(i.parametro.id_parametroPreconsulta) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarParametroPreConsulta(i.parametro.id_parametroPreconsulta) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarParametroPreConsulta(i.parametro.id_parametroPreconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
