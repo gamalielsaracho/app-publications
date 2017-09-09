@@ -4,7 +4,9 @@ exports.find = (callback) => {
 
 	let q = `
 		SELECT * FROM unidadesParametroPre
+		ORDER BY id_unidadParametroPre DESC
 	`
+	
 	var options = {
 		sql: q, 
 		nestTables: false
