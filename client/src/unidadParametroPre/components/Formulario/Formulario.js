@@ -29,9 +29,9 @@ class Formulario extends Component {
 		console.log(formProps)
 
 		if(this.props.editarContenido) {
-			this.props.editarNivel(formProps)
+			this.props.editarUnidadParametroPre(formProps)
 		} else {
-			this.props.crearNivel(formProps)
+			this.props.crearUnidadParametroPre(formProps)
 		}
 	}
 
@@ -54,7 +54,7 @@ class Formulario extends Component {
 		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
-			abirtoCrear, abirtoEditar, cargando, nivel 
+			abirtoCrear, abirtoEditar, cargando, unidadParametroPre 
 		} = this.props.formulario
 
 		let error = this.props.formulario.error ? this.props.formulario.error 
@@ -69,7 +69,7 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
-					<h4 className='text-center'>Formulario nivel</h4>
+					<h4 className='text-center'>Formulario unidad parametro pre-consulta</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
 					<div className='row'>
@@ -82,7 +82,7 @@ class Formulario extends Component {
 								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 														
 								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioNivel } className="btn btn-primary btn-space">Cancelar</button>
+								<button type="button" onClick={ this.props.cerrarFormularioUnidadParametroPre } className="btn btn-primary btn-space">Cancelar</button>
 								
 							</form>
 						</div>

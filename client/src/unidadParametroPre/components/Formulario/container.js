@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearNivel,
-	editarNivel,
-	cerrarFormularioNivel
+	crearUnidadParametroPre,
+	editarUnidadParametroPre,
+	cerrarFormularioUnidadParametroPre
 } from '../../actions'
 
 import Formulario from './Formulario'
@@ -14,8 +14,8 @@ const validate = (values) => {
 
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.trim().length < 5) {
-   			errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
+	}else if (values.descripcion.trim().length < 1) {
+   			errors.descripcion = 'Tiene que ser por lo menos 1 characteres.'
 	}
 
 	return errors
@@ -23,37 +23,37 @@ const validate = (values) => {
 
 function mapStateToProps(state) {
 	return {
-		formulario: state.nivel.formulario,
-		initialValues: state.nivel.formulario.nivel,
-		enableReinitialize: state.nivel.formulario.iniciarValores,
-		editarContenido: state.nivel.formulario.iniciarValores,
+		formulario: state.unidadParametroPre.formulario,
+		initialValues: state.unidadParametroPre.formulario.unidadParametroPre,
+		enableReinitialize: state.unidadParametroPre.formulario.iniciarValores,
+		editarContenido: state.unidadParametroPre.formulario.iniciarValores,
 
 		// Para obtener el error al crear o editar.
-		crear: state.nivel.crear,
-		editar: state.nivel.editar
+		crear: state.unidadParametroPre.crear,
+		editar: state.unidadParametroPre.editar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearNivel: (datosFormulario) => {
-			dispatch(crearNivel(datosFormulario))
+		crearUnidadParametroPre: (datosFormulario) => {
+			dispatch(crearUnidadParametroPre(datosFormulario))
 		},
-		cerrarFormularioNivel: () => {
+		cerrarFormularioUnidadParametroPre: () => {
 			// var r = confirm("Está seguro que desea cancelar?");
 		    // if (r == true) {
-				dispatch(cerrarFormularioNivel())
+				dispatch(cerrarFormularioUnidadParametroPre())
 		    // }
 		},
-		editarNivel: (datosFormulario) => {
-			dispatch(editarNivel(datosFormulario))
+		editarUnidadParametroPre: (datosFormulario) => {
+			dispatch(editarUnidadParametroPre(datosFormulario))
 		}
 	}
 }
 
 const form = reduxForm({
-	form: 'FormularioNivel',
+	form: 'FormularioUnidadParametroPre',
 	validate
 })
 
