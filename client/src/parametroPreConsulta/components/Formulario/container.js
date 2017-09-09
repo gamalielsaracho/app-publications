@@ -7,13 +7,12 @@ import {
 	cerrarFormularioParametroPreConsulta
 } from '../../actions'
 
-import Formulario from './Formulario'
+import {
+	listarUnidadesParametroPre
+} from '../../../unidadParametroPre/actions'
 
-// descripcion
-// unidad
-// valorNormal
-// valorAlto
-// valorBajo
+
+import Formulario from './Formulario'
 
 const validate = (values) => {
 	const errors = {}
@@ -22,12 +21,6 @@ const validate = (values) => {
 		errors.descripcion = 'Tienes que introducir una descripción.'
 	}else if (values.descripcion.trim().length < 3) {
    			errors.descripcion = 'Tiene que ser por lo menos 3 characteres.'
-	}
-
-	if(!values.unidad) {
-		errors.unidad = 'Debe contener un valor.'
-	} else if(!values.unidad.trim().length) {
-		errors.unidad = 'Debe contener un valor.'
 	}
 
 	if(!values.valorNormal) {
@@ -60,7 +53,11 @@ function mapStateToProps(state) {
 
 		// Para obtener el error al crear o editar.
 		crear: state.parametroPreConsulta.crear,
-		editar: state.parametroPreConsulta.editar
+		editar: state.parametroPreConsulta.editar,
+
+		// Lista de las Unidades Para pasarle al componente
+		// FieldSelectUnidadesParametroPre.
+		listaUnidadesParametroPre: state.unidadParametroPre.listar
 	}
 }
 
@@ -78,6 +75,12 @@ function mapDispatchToProps(dispatch) {
 		},
 		editarParametroPreConsulta: (datosFormulario) => {
 			dispatch(editarParametroPreConsulta(datosFormulario))
+		},
+
+		// Acción para listar unidades de medidas
+		// y llamar el componentWillMount.
+		listarUnidadesParametroPre: () => {
+			dispatch(listarUnidadesParametroPre())
 		}
 	}
 }
