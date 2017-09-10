@@ -1,6 +1,7 @@
 import UnidadParametroPre from './unidadParametroPre.model'
 
 export default (io) => {
+
 	var unidadParametroPreNsp = io.of('/unidadParametroPre');
 	
 	unidadParametroPreNsp.on('connection', function (socket) {
