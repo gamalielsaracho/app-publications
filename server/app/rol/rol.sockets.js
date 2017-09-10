@@ -1,7 +1,7 @@
 import Rol from './rol.model'
 
 export default (socket, io) => {
-	
+
 		function roles() {
 			Rol.find((err, roles) => {
 				if(err) {
@@ -48,6 +48,8 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_rol', (data) => {
+			Rol.auditoria(data, 'eliminación')
+
 			Rol.delete(data.id_rol, (err) => {
 				if(err) {
 					socket.emit('eliminar_rol', { error: 'Ocurrió un error, intente más tarde.' })
@@ -62,7 +64,10 @@ export default (socket, io) => {
 
 
 		socket.on('editar_rol', (data) => {
-			console.log(data)
+			Rol.auditoria(data, 'actualización')
+
+			// console.log(data)
+
 			Rol.update(data, (err) => {
 				if(err) {
 					socket.emit('editar_rol', { error: 'Ocurrió un error, intente más tarde.' })
