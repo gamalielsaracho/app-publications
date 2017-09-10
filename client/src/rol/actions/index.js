@@ -40,6 +40,8 @@ import { socket } from '../../globalActions'
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
+import jwtDecode from 'jwt-decode'
+
 export function abrirFormularioCrearRol() {
 	return (dispatch) => {
 		dispatch(reset('FormularioRol'))
@@ -115,7 +117,10 @@ export function eliminarRole(idRol) {
 
 		// var socket = io('http://localhost:3000')
 
-		socket.emit('eliminar_rol', { id_rol: idRol })
+		socket.emit('eliminar_rol', { 
+			id_rol: idRol,
+			usuarioLogeado: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		socket.on('eliminar_rol', (data) => {
 			console.log(data)
@@ -155,6 +160,9 @@ export function cerrarModalMostrarRol() {
 
 export function editarRol(datosFormulario) {
 	return (dispatch) => {
+
+		datosFormulario.usuarioLogeado = jwtDecode(localStorage.getItem('token')).id_personal
+
 
 		dispatch({ type: EDITAR_ROL_REQUEST })
 
