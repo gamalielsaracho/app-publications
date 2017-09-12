@@ -28,12 +28,6 @@ exports.update = (data, callback) => {
 	connection.end()
 }
 
-function findByIdAud(idRol, callback) {
-	return connection.query('select * from roles where id_rol = ?', [idRol], callback)
-
-	connection.end()
-}
-
 exports.auditoria = (data, accion) => {
 
 	connection.query('select * from roles where id_rol = ?', [data.id_rol], (err, rol) => {
@@ -70,8 +64,6 @@ exports.auditoria = (data, accion) => {
 			}
 		})
 	})
-
-	// connection.end()
 }
 
 exports.delete = (idRol, callback) => {
