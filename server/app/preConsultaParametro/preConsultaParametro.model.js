@@ -9,19 +9,24 @@ exports.find = (idPreconsulta, callback) => {
 		SELECT
 			parametro.id_parametroPreconsulta,
 			parametro.descripcion,
-			parametro.unidad,
 			parametro.valorNormal,
 			parametro.valorAlto,
 			parametro.valorBajo,
 
+			unidad.descripcion,
+
+			preconsultaParametro.id_preconsultaParametro,
 			preconsultaParametro.id_preconsulta,
+			preconsultaParametro.id_parametroPreconsulta,
 			preconsultaParametro.valor,
 			preconsultaParametro.observaciones
 		FROM  
-			parametrosPreconsulta parametro, 
+			parametrosPreconsulta parametro,
+			unidadesParametroPre unidad,
 			preconsultasParametros preconsultaParametro 
 		WHERE
 			preconsultaParametro.id_parametroPreconsulta = parametro.id_parametroPreconsulta AND
+			parametro.id_unidadParametroPre = unidad.id_unidadParametroPre AND
 			preconsultaParametro.id_preconsulta = ?
 
 	`
@@ -36,27 +41,30 @@ exports.find = (idPreconsulta, callback) => {
 	connection.end()
 }
 
-exports.findById = (data, callback) => {
+exports.findById = (idPreconsultaParametro, callback) => {
 
 	let q = `
 		SELECT
 			parametro.id_parametroPreconsulta,
 			parametro.descripcion,
-			parametro.unidad,
 			parametro.valorNormal,
 			parametro.valorAlto,
 			parametro.valorBajo,
 
+			unidad.descripcion,
+
+			preconsultaParametro.id_preconsultaParametro,
 			preconsultaParametro.id_preconsulta,
 			preconsultaParametro.valor,
 			preconsultaParametro.observaciones
 		FROM  
 			parametrosPreconsulta parametro, 
+			unidadesParametroPre unidad,
 			preconsultasParametros preconsultaParametro 
 		WHERE
 			preconsultaParametro.id_parametroPreconsulta = parametro.id_parametroPreconsulta AND
-			preconsultaParametro.id_preconsulta = ? AND
-			preconsultaParametro.id_parametroPreconsulta = ?
+			parametro.id_unidadParametroPre = unidad.id_unidadParametroPre AND
+			preconsultaParametro.id_preconsultaParametro = ?
 
 	`
 	var options = {
@@ -64,7 +72,7 @@ exports.findById = (data, callback) => {
 		nestTables: true
 	}
 
-	return connection.query(options, [data.id_preconsulta, data.id_parametroPreconsulta], callback)
+	return connection.query(options, [idPreconsultaParametro], callback)
 
 	connection.end()
 }
@@ -83,29 +91,33 @@ exports.verifyIfExist = (data, callback) => {
 
 exports.create = (data, callback) => {
 	let q = `
-		INSERT INTO preconsultasParametros (id_preconsulta, id_parametroPreconsulta, valor, observaciones)
-			VALUES (?, ?, ?, LOWER(?));
+		INSERT INTO preconsultasParametros (id_preconsultaParametro, id_preconsulta, id_parametroPreconsulta, valor, observaciones)
+			VALUES (null, ?, ?, ?, LOWER(?));
 	`
 	if(data.observaciones) {
 		data.observaciones.trim()
 	}
 	
+	if(data.valor) {
+		data.valor = data.valor.toString().trim()
+	}
+	
 	return connection.query(q, [ data.id_preconsulta,
 								 data.id_parametroPreconsulta,
-							     data.valor.trim(),
+							     data.valor,
 								 data.observaciones ], callback)
 
 	connection.end()
 }
 
-exports.findByIdToUpdate = (data, callback) => {
+exports.findByIdToUpdate = (idPreconsultaParametro, callback) => {
 
 	let q = `
 		SELECT
 			parametro.id_parametroPreconsulta,
 			parametro.descripcion,
-			parametro.unidad,
 
+			preconsultaParametro.id_preconsultaParametro,
 			preconsultaParametro.id_preconsulta,
 			preconsultaParametro.valor,
 			preconsultaParametro.observaciones
@@ -114,9 +126,7 @@ exports.findByIdToUpdate = (data, callback) => {
 			preconsultasParametros preconsultaParametro 
 		WHERE
 			preconsultaParametro.id_parametroPreconsulta = parametro.id_parametroPreconsulta AND
-			preconsultaParametro.id_preconsulta = ? AND
-			preconsultaParametro.id_parametroPreconsulta = ?
-
+			preconsultaParametro.id_preconsultaParametro = ?
 	`
 
 	var options = {
@@ -124,43 +134,45 @@ exports.findByIdToUpdate = (data, callback) => {
 		nestTables: false
 	}
 
-	return connection.query(options, [data.id_preconsulta, data.id_parametroPreconsulta], callback)
+	return connection.query(options, [idPreconsultaParametro], callback)
 
 	connection.end()
 }
 
 exports.update = (data, callback) => {
+	// console.log(data)
 	let q = `
 		UPDATE preconsultasParametros SET 
 			valor = ?,
 			observaciones = LOWER(?)
-		WHERE 
-			id_preconsulta = ? AND
-			id_parametroPreconsulta = ?
+		WHERE
+			id_preconsultaParametro = ?
 	`
 
 	if(data.observaciones) {
 		data.observaciones.trim()
 	}
 
-	return connection.query(q, [ data.valor.trim(),
+	if(data.valor) {
+		data.valor = data.valor.toString().trim()
+	}
+
+	return connection.query(q, [ data.valor,
 								 data.observaciones,
-								 data.id_preconsulta, 
-								 data.id_parametroPreconsulta ], callback)
+								 data.id_preconsultaParametro ], callback)
 
 	connection.end()
 }
 
-exports.delete = (data, callback) => {	
+exports.delete = (idPreconsultaParametro, callback) => {	
 
 	let q = `
 		DELETE FROM preconsultasParametros 
 			WHERE
-				id_preconsulta = ? AND
-				id_parametroPreconsulta = ?
+				id_preconsultaParametro = ?
 	`
 
-	return connection.query(q, [data.id_preconsulta, data.id_parametroPreconsulta], callback)
+	return connection.query(q, [idPreconsultaParametro], callback)
 
 	connection.end()
 }
