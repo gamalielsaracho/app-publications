@@ -20,12 +20,24 @@ class Listar extends Component {
 		this.props.listarPreConsultaParametros(this.props.idPreConsulta)
 	}
 
+	// shouldComponentUpdate(nextProps) { 
+	// 	console.log('anterior')
+	// 	console.log(this.props.todos)
+	// 	console.log('suigiente')
+	// 	console.log(nextProps.todos)
+
+	// 	return nextProps.todos !== this.props.todos
+	// }
+
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.parametrosPreConsulta !== this.props.parametrosPreConsulta) {
-			return true
-		}else {
-			return false
-		}
+		console.log("Anterio: -> ")
+		console.log(this.props.parametrosPreConsulta)
+
+		console.log("Siguiente: -> ")
+		console.log(nextProps.parametrosPreConsulta)
+
+		return nextProps.parametrosPreConsulta !== this.props.parametrosPreConsulta
+
 	}
 
 	renderBtnsOpcionesByRolYpersonal(datosToken, personalPre, i) {
@@ -36,8 +48,8 @@ class Listar extends Component {
 		if(personalPre != null) {
 			if(removeAccents(datosToken.rol.descripcion) == 'enfermeria' && datosToken.personal.id_personal == personalPre.personal.id_personal) {
 				return <div>
-					<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.preconsultaParametro.id_preconsulta, i.parametro.id_parametroPreconsulta) }} className="btn btn-warning btn-space">Editar</button>
-					<button type="button" onClick={() => { this.props.eliminarPreConsultaParametro(i.preconsultaParametro.id_preconsulta, i.parametro.id_parametroPreconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-warning btn-space">Editar</button>
+					<button type="button" onClick={() => { this.props.eliminarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-danger btn-space">Eliminar</button>
 				</div>
 			} else {
 				return <span></span>
@@ -46,6 +58,8 @@ class Listar extends Component {
 	}
 
 	renderPreConsultaParametros(parametrosPreConsulta) {
+		console.log(parametrosPreConsulta)
+
 		let datosToken = null
 		let personalPre = null
 
@@ -80,9 +94,9 @@ class Listar extends Component {
 		return <tbody>
 			{
 				parametrosPreConsulta.map((i) => {
-					return <tr key={i.parametro.id_parametroPreconsulta}>
+					return <tr key={i.preconsultaParametro.id_preconsultaParametro}>
 			            <td>{ i.parametro.descripcion }</td>
-			            <td>{ i.preconsultaParametro.valor +' '+i.parametro.unidad }</td>
+			            <td>{ i.preconsultaParametro.valor +' '+i.unidad.descripcion }</td>
 			            <td>{ i.parametro.valorNormal }</td>
 			            <td>{ i.parametro.valorAlto }</td>
 			            <td>{ i.parametro.valorBajo }</td>
@@ -100,7 +114,7 @@ class Listar extends Component {
 	render() {
 		const { parametrosPreConsulta, cargando, error } = this.props.listar		
 
-		console.log(this.props.listar)
+		// console.log(this.props.listar)
 
 		if(cargando) {
 			return <Cargando/>
