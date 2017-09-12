@@ -107,15 +107,21 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_PRECONSULTA_PARAMETRO_EXITO:
-			return Object.assign({}, state, {
+			
+			state = Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje
 				},
+				listar: {
+					parametrosPreConsulta: [ ...state.listar.parametrosPreConsulta, 
+											 action.payload.datoInsertado ]
+				},
 				formulario: { abirtoCrear: false }
-				// listar: { 
-				// 	parametrosPreConsulta: [ ...state.listar.parametrosPreConsulta, action.payload.datoInsertado ]
-				// }
 			})
+
+			// console.log(state)
+
+			return state
 
 		case CREAR_PRECONSULTA_PARAMETRO_FALLO:
 			return Object.assign({}, state, {
@@ -125,6 +131,7 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_PRECONSULTA_PARAMETROS_REQUEST:
 			return Object.assign({}, state, {
+				crear: INITIAL_STATE.crear,
 				listar: { cargando: true, error: '' }
 			})
 
@@ -213,20 +220,28 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case ELIMINAR_PRECONSULTA_PARAMETRO_EXITO:
-			return Object.assign({}, state, {
+					
+			let newList = state.listar.parametrosPreConsulta.filter((i) => {
+				return i.preconsultaParametro.id_preconsultaParametro != action.payload.id_preconsultaParametro
+			})
+
+			state = Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					parametroPreConsulta: action.payload
+					error: ''
+				},
+				listar: {
+					parametrosPreConsulta: newList
 				}
 			})
+
+			return state
 
 		case ELIMINAR_PRECONSULTA_PARAMETRO_FALLO:
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					parametroPreConsulta: {}
+					error: action.payload
 				}
 			})
 
