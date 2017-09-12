@@ -12,11 +12,13 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.1",
+    "chart.js": "^2.6.0",
     "fullcalendar": "^3.4.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "react": "^15.4.2",
+    "react-chartjs": "^0.8.0",
     "react-dom": "^15.4.2",
     "react-modal": "^2.2.1",
     "react-redux": "^5.0.4",
