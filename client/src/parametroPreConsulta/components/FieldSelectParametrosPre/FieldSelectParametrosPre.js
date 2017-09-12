@@ -29,8 +29,8 @@ class FieldSelectParametrosPre extends Component {
 							
 							{
 								parametros.map((i) => {
-									return <option key={i.id_parametroPreconsulta} value={i.id_parametroPreconsulta}>
-										{ i.descripcion }
+									return <option key={i.parametro.id_parametroPreconsulta} value={i.parametro.id_parametroPreconsulta}>
+										{ i.parametro.descripcion }
 									</option>
 								})
 							}
