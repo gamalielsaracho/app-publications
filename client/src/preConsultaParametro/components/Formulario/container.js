@@ -22,8 +22,8 @@ const validate = (values) => {
 
 	if(!values.valor) {
 		errors.valor = 'Obligatorio.'
-	}else if (values.valor.trim() == '') {
-   			errors.valor = 'Obligatorio.'
+	} else if (values.valor.toString().trim() == '') {
+   		errors.valor = 'Obligatorio.'
 	}
 
 	return errors
