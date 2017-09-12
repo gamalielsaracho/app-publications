@@ -1,14 +1,29 @@
 import express from 'express'
+import bodyParser from 'body-parser'
 
 let app = express()
+let routes = require('./app/routes')
+
 let server = require('http').Server(app)
 
 let io = require('socket.io')(server)
 
+app.use(bodyParser.urlencoded({ extended:false }))
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
 	res.sendfile('index.html')
 })
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080")
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials")
+  res.header("Access-Control-Allow-Credentials", true)
+  next()
+})
+
+routes(app)
 
 require('././app/pacienteAlergia/pacienteAlergia.sockets')(io)
 require('././app/cita/cita.sockets')(io)
@@ -16,7 +31,7 @@ require('././app/preconsulta/preconsulta.sockets')(io)
 require('././app/nivel/nivel.sockets')(io)
 require('././app/parametroPreConsulta/parametroPreConsulta.sockets')(io)
 
-require('././app/preConsultaParametro/preConsultaParametro.sockets')(io)
+// require('././app/preConsultaParametro/preConsultaParametro.sockets')(io)
 
 require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
 
