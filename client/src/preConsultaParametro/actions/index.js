@@ -34,13 +34,23 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
+import axios from 'axios'
 
 // PreConsulta x Parametro
-var socketPreConsultaParametro = io.connect('http://localhost:3000/preConsultaParametro');
+// var socketPreConsultaParametro = io.connect('http://localhost:3000/preConsultaParametro');
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
+import {
+	postData,
+	getData,
+	putData,
+	deleteData,
+	errorHandler,
+
+	API_URL
+} from '../../globalActions'
 
 export function abrirFormularioEditarPreConsultaParametro(idPreConsulta, idParametroPreconsulta) {
 	return (dispatch) => {
@@ -52,7 +62,7 @@ export function abrirFormularioEditarPreConsultaParametro(idPreConsulta, idParam
 		})
 
 		socketPreConsultaParametro.on('mostrar_parametroPreConsulta_editar', (data) => {
-			// console.log(data)
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_FALLO, payload: data.error })
 			} else {
@@ -71,67 +81,51 @@ export function cerrarFormularioPreConsultaParametro() {
 export function listarPreConsultaParametros(idPreConsulta) {
 	return (dispatch) => {
 
+		let url = `/parametrospreConsulta/${idPreConsulta}`
+
 		dispatch({ type: LISTAR_PRECONSULTA_PARAMETROS_REQUEST })
 
-
-		socketPreConsultaParametro.emit('listar_parametrosPreConsulta', {
-			id_preconsulta: idPreConsulta
-		})
-
-		socketPreConsultaParametro.on('listar_parametrosPreConsulta', (data) => {
-			console.log(data)
-			if(data.error) {
-				dispatch({ type: LISTAR_PRECONSULTA_PARAMETROS_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: LISTAR_PRECONSULTA_PARAMETROS_EXITO, payload: data })
-			}
-		})
+		getData(LISTAR_PRECONSULTA_PARAMETROS_EXITO, LISTAR_PRECONSULTA_PARAMETROS_FALLO, true, url, dispatch)
 	}
 }
 
 export function crearPreConsultaParametro(datosFormulario) {
 	return (dispatch) => {
 
+		let url = `${API_URL}/parametrospreConsulta/crear`
+
+		console.log(url)
+
 		dispatch({ type: CREAR_PRECONSULTA_PARAMETRO_REQUEST })
 
-		socketPreConsultaParametro.emit('crear_parametroPreConsulta', datosFormulario)
+		axios.post(url, datosFormulario)
+		.then((response) => {
+			var res = response.data
 
-		socketPreConsultaParametro.on('crear_parametroPreConsulta', (data) => {
-			// console.log(data)
-			if(data.error) {
-				dispatch({ type: CREAR_PRECONSULTA_PARAMETRO_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: CREAR_PRECONSULTA_PARAMETRO_EXITO, payload: data })
-				
-				dispatch(reset('FormularioPreConsultaParametro'))
-			}
+			// console.log(res)
+
+			res.datoInsertado = res.parametroPreConsultaAgregado
+
+			dispatch({ type: CREAR_PRECONSULTA_PARAMETRO_EXITO, payload: res })
+
+			dispatch(reset('FormularioPreConsultaParametro'))
 		})
-	
+		.catch((error) => {
+			// console.log(error)
+			errorHandler(dispatch, error.response, CREAR_PRECONSULTA_PARAMETRO_FALLO)
+		})
 	}
 }
 
-export function eliminarPreConsultaParametro(idPreConsulta, idParametroPreconsulta) {
+export function eliminarPreConsultaParametro(idPreconsultaParametro) {
 	return (dispatch) => {
+		let url = `/parametrospreConsulta/${idPreconsultaParametro}/eliminar`
 
 		dispatch({ type: ELIMINAR_PRECONSULTA_PARAMETRO_REQUEST })
 
-		// var socketPreConsultaParametro = io('http://localhost:3000')
+		deleteData(ELIMINAR_PRECONSULTA_PARAMETRO_EXITO, ELIMINAR_PRECONSULTA_PARAMETRO_FALLO, true, url, dispatch)
 
-		socketPreConsultaParametro.emit('eliminar_parametroPreConsulta', {
-			id_preconsulta: idPreConsulta,
-			id_parametroPreconsulta: idParametroPreconsulta
-		})
-
-		socketPreConsultaParametro.on('eliminar_parametroPreConsulta', (data) => {
-
-			if(data.error) {
-				dispatch({ type: ELIMINAR_PRECONSULTA_PARAMETRO_FALLO, payload: data.error })
-			} else {
-				
-				dispatch({ type: ELIMINAR_PRECONSULTA_PARAMETRO_EXITO, payload: data })
-				dispatch(reset('FormularioPreConsultaParametro'))
-			}
-		})
+		dispatch(reset('FormularioPreConsultaParametro'))
 	}
 }
 
