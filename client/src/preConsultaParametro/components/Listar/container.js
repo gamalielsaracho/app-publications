@@ -33,17 +33,17 @@ function mapDispatchToProps(dispatch) {
 		listarPreConsultaParametros: (idPreConsulta) => {
 			dispatch(listarPreConsultaParametros(idPreConsulta))
 		},
-		eliminarPreConsultaParametro: (idPreConsulta, idParametroPreconsulta) => {
+		eliminarPreConsultaParametro: (idPreconsultaParametro) => {
 			var r = confirm("Está seguro que desea eliminar?");
 		    if (r == true) {
-				dispatch(eliminarPreConsultaParametro(idPreConsulta, idParametroPreconsulta))
+				dispatch(eliminarPreConsultaParametro(idPreconsultaParametro))
 		    }
 		},
-		mostrarPreConsultaParametro: (idPreConsulta, idParametroPreconsulta) => {
-			dispatch(mostrarPreConsultaParametro(idPreConsulta, idParametroPreconsulta))
+		mostrarPreConsultaParametro: (idPreconsultaParametro) => {
+			dispatch(mostrarPreConsultaParametro(idPreconsultaParametro))
 		},
-		abrirFormularioEditarPreConsultaParametro: (idPreConsulta, idParametroPreconsulta) => {
-			dispatch(abrirFormularioEditarPreConsultaParametro(idPreConsulta, idParametroPreconsulta))
+		abrirFormularioEditarPreConsultaParametro: (idPreconsultaParametro) => {
+			dispatch(abrirFormularioEditarPreConsultaParametro(idPreconsultaParametro))
 		}
 	}
 }
