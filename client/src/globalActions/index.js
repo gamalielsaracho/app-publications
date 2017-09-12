@@ -1,4 +1,4 @@
-// import axios from 'axios'
+import axios from 'axios'
 
 import io from 'socket.io-client'
 
@@ -16,113 +16,115 @@ export function formatDate(date) {
 	return [year, month, day].join('-');
 }
 
-// export const API_URL = 'http://localhost:3000/api'
+export const API_URL = 'http://localhost:3000/api'
 
-// export function errorHandler(dispatch, error, type) {
-// 	// let mensageError = error.data.error ? error.data.error : error.data
+export function errorHandler(dispatch, error, type) {
+	// let mensageError = error.data.error ? error.data.error : error.data
 
-// 	let mensageError = error.data
-// 	console.log(mensageError)
-// 	if(error.status == 401) {
-// 		mensageError = 'No estas autenticado para hacer Esto.'
-// 	}
+	console.log(error.data)
 
-// 	dispatch({ type: type, payload: mensageError })
-// }
+	// let mensageError = error.data
+	// console.log(mensageError)
 
-// // ....
+	// if(error.status == 401) {
+	// 	mensageError = 'No estas autenticado para hacer Esto.'
+	// }
 
+	dispatch({ type: type, payload: error.data })
+}
 
-// export function postData(action, errorType, isAuthReq, url, dispatch, datos) {
-// 	const requestUrl = API_URL + url
+// ....
 
-// 	let headers = {}
+export function postData(action, errorType, isAuthReq, url, dispatch, datos) {
+	const requestUrl = API_URL + url
 
-// 	if(isAuthReq) {
-// 		headers = {
-// 			headers: { 'Authorization': localStorage.getItem('token') }
-// 		}
-// 	}
+	let headers = {}
 
-// 	axios.post(requestUrl, datos, headers)
-// 	.then((response) => {
-// 		var contenido = response.data
+	if(isAuthReq) {
+		headers = {
+			headers: { 'Authorization': localStorage.getItem('token') }
+		}
+	}
 
-// 		datos.id_rol = contenido.id_rol 
+	axios.post(requestUrl, datos, headers)
+	.then((response) => {
+		// var contenido = response.data
 
-// 		contenido.datoInsertado = datos
-// 		// contenido.datoInsertado.id_rol = contenido.id_rol
+		// datos.id_rol = contenido.id_rol 
 
-// 		console.log(contenido)
+		// contenido.datoInsertado = datos
+		// contenido.datoInsertado.id_rol = contenido.id_rol
 
-// 		dispatch({ type: action, payload: contenido })
-// 	})
-// 	.catch((error) => {
-// 		errorHandler(dispatch, error.response, errorType)
-// 	})
-// }
+		// console.log(contenido)
 
-
-// export function getData(action, errorType, isAuthReq, url, dispatch) {
-// 	const requestUrl = API_URL + url
-
-// 	let headers = {}
-
-// 	if(isAuthReq) {
-// 		headers = {
-// 			headers: { 'Authorization': localStorage.getItem('token') }
-// 		}
-// 	}
-
-// 	axios.get(requestUrl, headers)
-// 	.then((response) => {
-		
-
-// 		dispatch({ type: action, payload: response.data })
-// 	})
-// 	.catch((error) => {
-// 		errorHandler(dispatch, error.response, errorType)
-// 	})
-// }
+		dispatch({ type: action, payload: response.data })
+	})
+	.catch((error) => {
+		errorHandler(dispatch, error.response, errorType)
+	})
+}
 
 
-// export function putData(action, errorType, isAuthReq, url, dispatch, data) {
-// 	const requestUrl = API_URL + url
+export function getData(action, errorType, isAuthReq, url, dispatch) {
+	const requestUrl = API_URL + url
 
-// 	let headers = {}
+	let headers = {}
 
-// 	if(isAuthReq) {
-// 		headers = {
-// 			headers: { 'Authorization': localStorage.getItem('token') }
-// 		}
-// 	}
+	if(isAuthReq) {
+		headers = {
+			headers: { 'Authorization': localStorage.getItem('token') }
+		}
+	}
 
-// 	axios.put(requestUrl, data, headers)
-// 	.then((response) => {
-// 		dispatch({ type: action, payload: response.data })
-// 	})
-// 	.catch((error) => {
-// 		errorHandler(dispatch, error.response, errorType)
-// 	})
-// }
+	axios.get(requestUrl, headers)
+	.then((response) => {
+
+		dispatch({ type: action, payload: response.data })
+	})
+	.catch((error) => {
+		errorHandler(dispatch, error.response, errorType)
+	})
+}
 
 
-// export function deleteData(action, errorType, isAuthReq, url, dispatch) {
-// 	const requestUrl = API_URL + url
+export function putData(action, errorType, isAuthReq, url, dispatch, data) {
+	const requestUrl = API_URL + url
 
-// 	let headers = {}
+	let headers = {}
 
-// 	if(isAuthReq) {
-// 		headers = {
-// 			headers: { 'Authorization': localStorage.getItem('token') }
-// 		}
-// 	}
+	if(isAuthReq) {
+		headers = {
+			headers: { 'Authorization': localStorage.getItem('token') }
+		}
+	}
 
-// 	axios.delete(requestUrl, headers)
-// 	.then((response) => {
-// 		dispatch({ type: action, payload: response.data })
-// 	})
-// 	.catch((error) => {
-// 		errorHandler(dispatch, error.response, errorType)
-// 	})
-// }
+	axios.put(requestUrl, data, headers)
+	.then((response) => {
+		dispatch({ type: action, payload: response.data })
+	})
+	.catch((error) => {
+		errorHandler(dispatch, error.response, errorType)
+	})
+}
+
+
+export function deleteData(action, errorType, isAuthReq, url, dispatch) {
+	const requestUrl = API_URL + url
+
+	let headers = {}
+
+	if(isAuthReq) {
+		headers = {
+			headers: { 'Authorization': localStorage.getItem('token') }
+		}
+	}
+
+	axios.delete(requestUrl, headers)
+	.then((response) => {
+		console.log(response.data)
+		dispatch({ type: action, payload: response.data })
+	})
+	.catch((error) => {
+		errorHandler(dispatch, error.response, errorType)
+	})
+}
