@@ -38,7 +38,7 @@ class Formulario extends Component {
 
 		formProps.id_preconsulta = this.props.idPreConsulta
 		
-		console.log(formProps)
+		// console.log(formProps)
 
 		if(this.props.editarContenido) {
 			this.props.editarPreConsultaParametro(formProps)
