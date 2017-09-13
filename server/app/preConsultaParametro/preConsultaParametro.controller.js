@@ -54,7 +54,7 @@ exports.crear = function(req, res, next) {
 		}
 
 		if(parametroPreConsultaExistente[0]) {
-			return res.json({ error: 'Este paramentro ya está registrado' })
+			return res.status(422).json({ error: 'Este paramentro ya está registrado' })
 		} else {
 			PreConsultaParametro.create(datos, (err, result) => {
 				if(err) {
@@ -110,7 +110,20 @@ exports.editar = function(req, res, next) {
 			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		return res.json({ mensaje: 'Se actualizó exitósamente.' })
+		PreConsultaParametro.findById(datos.id_preconsultaParametro, (err, parametroPreConsulta) => {
+			// console.log(parametroPreConsulta)
+
+			if(err) {
+				console.log(err)
+				return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+			}
+
+			return res.json({ 
+				mensaje: 'Se actualizó exitósamente.',
+				parametroPreConsultaActualizado: parametroPreConsulta[0]
+			})
+		})
+
 	})
 }
 
