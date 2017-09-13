@@ -45,6 +45,7 @@ class Menu extends Component {
 			<li><Link to='/dashboard/niveles'>Niveles (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/parametros-preconsulta'>Parametros pre-consulta (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/unidades-parametro-preconsulta'>Unidades pre-consulta (Adm) <span className="badge">8</span></Link></li>			
+			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Adm) <span className="badge">8</span></Link></li>			
 		</ul>
 	}
 
@@ -71,9 +72,10 @@ class Menu extends Component {
 
 	medicinaMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/alergias'>Alergias (Adm) <span className="badge">8</span></Link></li>
-			<li><Link to='/dashboard/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
-			<li><Link to='/dashboard/citas'>Citas (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/alergias'>Alergias (Med) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/pacientes'>Pacientes (Med) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/citas'>Citas (Med) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Med) <span className="badge">8</span></Link></li>			
 		</ul>
 	}
 
