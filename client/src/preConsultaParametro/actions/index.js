@@ -52,23 +52,13 @@ import {
 	API_URL
 } from '../../globalActions'
 
-export function abrirFormularioEditarPreConsultaParametro(idPreConsulta, idParametroPreconsulta) {
+export function abrirFormularioEditarPreConsultaParametro(idPreconsultaParametro) {
 	return (dispatch) => {
+		let url = `/parametrospreConsulta/${idPreconsultaParametro}/editar`
+
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_REQUEST })
 
-		socketPreConsultaParametro.emit('mostrar_parametroPreConsulta_editar', { 
-			id_preconsulta: idPreConsulta,
-			id_parametroPreconsulta: idParametroPreconsulta
-		})
-
-		socketPreConsultaParametro.on('mostrar_parametroPreConsulta_editar', (data) => {
-			console.log(data)
-			if(data.error) {
-				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_EXITO, payload: data })
-			}
-		})
+		getData(ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_EXITO, ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_FALLO, true, url, dispatch)
 	}
 }
 
@@ -94,7 +84,7 @@ export function crearPreConsultaParametro(datosFormulario) {
 
 		let url = `${API_URL}/parametrospreConsulta/crear`
 
-		console.log(url)
+		// console.log(url)
 
 		dispatch({ type: CREAR_PRECONSULTA_PARAMETRO_REQUEST })
 
@@ -111,7 +101,6 @@ export function crearPreConsultaParametro(datosFormulario) {
 			dispatch(reset('FormularioPreConsultaParametro'))
 		})
 		.catch((error) => {
-			// console.log(error)
 			errorHandler(dispatch, error.response, CREAR_PRECONSULTA_PARAMETRO_FALLO)
 		})
 	}
@@ -159,27 +148,26 @@ export function cerrarModalMostrarPreConsultaParametro() {
 
 export function editarPreConsultaParametro(datosFormulario) {
 	return (dispatch) => {
+		let url = `${API_URL}/parametrospreConsulta/editar`
+
 
 		dispatch({ type: EDITAR_PRECONSULTA_PARAMETRO_REQUEST })
 		
-		socketPreConsultaParametro.emit('editar_parametroPreConsulta', datosFormulario)
+		axios.put(url, datosFormulario)
+		.then((response) => {
+			var res = response.data
 
-		socketPreConsultaParametro.on('editar_parametroPreConsulta', (data) => {
-			if(data.error) {
-				dispatch({ type: EDITAR_PRECONSULTA_PARAMETRO_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: EDITAR_PRECONSULTA_PARAMETRO_EXITO, payload: data })
-			}
+			// console.log(res)
+
+			res.datoActualizado = res.parametroPreConsultaActualizado
+
+			dispatch({ type: EDITAR_PRECONSULTA_PARAMETRO_EXITO, payload: res })
+
+			dispatch(reset('FormularioPreConsultaParametro'))
 		})
-
+		.catch((error) => {
+			// console.log(error)
+			errorHandler(dispatch, error.response, EDITAR_PRECONSULTA_PARAMETRO_FALLO)
+		})
 	}
 }
-
-
-
-
-
-
-
-
-
