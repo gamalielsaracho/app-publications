@@ -21,7 +21,7 @@ export const API_URL = 'http://localhost:3000/api'
 export function errorHandler(dispatch, error, type) {
 	// let mensageError = error.data.error ? error.data.error : error.data
 
-	console.log(error.data)
+	// console.log(error.data.error)
 
 	// let mensageError = error.data
 	// console.log(mensageError)
@@ -30,7 +30,7 @@ export function errorHandler(dispatch, error, type) {
 	// 	mensageError = 'No estas autenticado para hacer Esto.'
 	// }
 
-	dispatch({ type: type, payload: error.data })
+	dispatch({ type: type, payload: error.data.error })
 }
 
 // ....
