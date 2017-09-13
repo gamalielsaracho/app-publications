@@ -65,6 +65,8 @@ import ListarParametrosPreConsultaPage from '././parametroPreConsulta/pages/List
 // UNIDADES PARAMENTRO PRE-CONSULTA.
 import ListarUnidadesParametroPrePage from '././unidadParametroPre/pages/ListarUnidadesParametroPrePage'
 
+// DIAGNOSTICOS.
+import ListarDiagnosticosPage from '././diagnostico/pages/ListarDiagnosticosPage'
 
 export default (
 	<Route path='/' component={AppContainer}>
@@ -87,6 +89,9 @@ export default (
 			<Route path='/dashboard/parametros-preconsulta' component={ListarParametrosPreConsultaPage}/>
 
 			<Route path='/dashboard/unidades-parametro-preconsulta' component={ListarUnidadesParametroPrePage}/>
+
+			<Route path='/dashboard/diagnosticos' component={ListarDiagnosticosPage}/>
+
 
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
