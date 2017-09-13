@@ -193,13 +193,37 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case EDITAR_PRECONSULTA_PARAMETRO_EXITO:
-			return Object.assign({}, state, {
+			// console.log('Datos Actualizados.')
+			// console.log(action.payload.datoActualizado)
+			
+			let nuevaLista = state.listar.parametrosPreConsulta.map((i) => {
+				if(i.preconsultaParametro.id_preconsultaParametro == action.payload.datoActualizado.preconsultaParametro.id_preconsultaParametro) {
+					// console.log('i')
+					// console.log(i)
+
+					i = Object.assign({}, i, {
+						preconsultaParametro: action.payload.datoActualizado.preconsultaParametro
+					})
+				}
+
+				return i
+			})
+
+			console.log('nuevaLista')
+			console.log(nuevaLista)
+
+			state = Object.assign({}, state, {
 				editar: { 
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: { abirtoEditar: false },
+				listar: {
+					parametrosPreConsulta: nuevaLista
+				}
 			})
+
+			return state
 
 		case EDITAR_PRECONSULTA_PARAMETRO_FALLO:
 			return Object.assign({}, state, {
