@@ -3,7 +3,7 @@ import React , { Component } from 'react'
 class MensajeOerror extends Component {
 	render() {
 		const contenido = this.props.mensaje ? this.props.mensaje : this.props.error
-
+		console.log(contenido)
 		var colorContenedor
 
 		if(this.props.mensaje) {
@@ -22,7 +22,7 @@ class MensajeOerror extends Component {
 		}
 
 		if(contenido) {
-			return <div>
+			return <div className='container'>
 				<div className='row center-xs center-sm center-md center-lg'>
 					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 						<div style={styles.contenedor} className='card-panel'>
