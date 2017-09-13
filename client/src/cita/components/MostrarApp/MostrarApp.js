@@ -18,7 +18,7 @@ class MostrarApp extends Component {
 				    </a>
 				</li>
 			} else {
-				return <h3 className='text-center'>Sin Pre-consulta</h3>
+				return <h3 className='text-center'>Sin Pre-consulta (Btn Agregar aquí.)</h3>
 			}
 		} else {
 			return <span></span>
