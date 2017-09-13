@@ -1,0 +1,2 @@
+import FormularioDiagnosticoContainer from './container'
+export default FormularioDiagnosticoContainer
