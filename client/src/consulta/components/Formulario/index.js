@@ -1,2 +1,2 @@
-import FormularioNivelContainer from './container'
-export default FormularioNivelContainer
+import FormularioConsultaContainer from './container'
+export default FormularioConsultaContainer
