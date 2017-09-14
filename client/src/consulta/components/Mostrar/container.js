@@ -1,22 +1,30 @@
 import { connect } from 'react-redux'
 
 import {
-	cerrarModalMostrarRol
+	mostrarConsulta,
+	abrirFormularioEditarConsulta,
+	eliminarConsulta
 } from '../../actions'
 
 import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.rol.mostrar
+		mostrar: state.consulta.mostrar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		cerrarModalMostrarRol: () => {
-			dispatch(cerrarModalMostrarRol())
+		mostrarConsulta: (idConsulta) => {
+			dispatch(mostrarConsulta(idConsulta))
+		},
+		abrirFormularioEditarConsulta: (idConsulta) => {
+			dispatch(abrirFormularioEditarConsulta(idConsulta))
+		},
+		eliminarConsulta: (idConsulta) => {
+			dispatch(eliminarConsulta(idConsulta))
 		}
 	}
 }
