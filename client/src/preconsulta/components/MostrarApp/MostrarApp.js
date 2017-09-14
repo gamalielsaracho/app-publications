@@ -2,54 +2,67 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 
 import jwtDecode from 'jwt-decode'
+import removeAccents from 'remove-accents'
 
 import MostrarPreConsultaContainer from '../Mostrar'
 
 // PreConsulta X Parametro
 import ListarPreConsultaParametrosContainer from '../../../preConsultaParametro/components/Listar'
 
+// Formulario Modal para agregar solo una consulta por pre-consulta.
+import FormularioConsultaContainer from '../../../consulta/components/Formulario'
+
 class MostrarApp extends Component {
 	constructor(props) {
 		super(props)
 		this.renderMenu = this.renderMenu.bind(this)
+		this.renderBtnAgregarConsultaByRol = this.renderBtnAgregarConsultaByRol.bind(this)
+
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
 		this.props.listarConsultas()
 	}
 
-				// return <li className="nav-item">
-				//     <a className="nav-link active">
-				//     	<Link to={`/dashboard/citas/${this.props.cita.cita.id_cita}/preconsulta/${this.props.cita.cita.id_preconsulta}`}>Pre-consulta</Link>
-				//     </a>
-				// </li>
+	renderBtnAgregarConsultaByRol() {
+		if(removeAccents(this.personalLocalSt.rol) == 'medico') {
+			return <button type="button" onClick={ () => { this.props.abrirFormularioCrearConsulta() } }  className="text-center btn btn-success btn-space">Agregar Consulta</button>
+		} else {
+			return <span></span>
+		}
+	}
+
 	renderMenu(listar) {
 		if(listar.cargando) {
-			return <p>cargando..</p>
+			return <p>Cargando..</p>
 		} else {
 			let consultas = listar.consultas
 
-			consultas = consultas.filter((i) => {
-				return i.consulta.id_preconsulta ==  this.props.idPreConsulta && 
-				i.consulta.id_personal == jwtDecode(localStorage.getItem('token')).id_personal
-			})
+			if(this.props.datosCita.cita != undefined) {
+				consultas = consultas.filter((i) => {
+					return i.consulta.id_preconsulta ==  this.props.idPreConsulta && 
+					i.consulta.id_personal == this.props.datosCita.personal.id_personal
+				})
+			}
+
+
+			// console.log('consultas ################# ---->')
+			// console.log(consultas[0])
 
 			if(consultas.length == 0) {
-				return <div className='row'>
-					<button type="button"  className="text-center btn btn-success btn-space">Agregar Consulta</button>
+				return <div>
+					{ this.renderBtnAgregarConsultaByRol() }
 				</div>
-			} else {
+			} else {				
 				return <div>
 					<ul className="nav nav-tabs">
 						<li className="nav-item">
-					    	<a className="nav-link active">Consulta</a>
+				    		<Link to={`/dashboard/citas/${this.props.idCita}/preconsulta/${this.props.idPreConsulta}/consulta/${consultas[0].consulta.id_consulta}`}>Consulta</Link>
 						</li>
 					</ul>
 				</div>
 			}
-
-			console.log('consultas ################# ---->')
-			console.log(consultas)
 		}
 	}
 
@@ -68,7 +81,13 @@ class MostrarApp extends Component {
 
 			<ListarPreConsultaParametrosContainer idPreConsulta={idPreConsulta}/>
 
+			<FormularioConsultaContainer
+				idPreConsulta={idPreConsulta}
+				datosCita={this.props.datosCita}/>
+
 			{ this.renderMenu(this.props.listar) }
+
+
 
 			{ this.props.children }
 
