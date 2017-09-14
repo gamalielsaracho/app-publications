@@ -58,13 +58,13 @@ export function abrirFormularioEditarPaciente(idPaciente) {
 
 		socket.on('mostrar_paciente_editar', (data) => {
 
-			data.fechaNacimiento = formatDate(data.fechaNacimiento)
-
-			console.log(data)
 
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_FALLO, payload: data.error })
 			} else {
+				data.fechaNacimiento = formatDate(data.fechaNacimiento)
+
+				console.log(data)
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_EXITO, payload: data })
 			}
 		})
