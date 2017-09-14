@@ -35,6 +35,7 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
+import { formatDate } from '../../globalActions'
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
@@ -53,13 +54,16 @@ export function abrirFormularioEditarConsulta(idConsulta) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_CONSULTA_REQUEST })
 
-		consultaSocket.emit('mostrar_consulta', { id_consulta: idConsulta })
+		consultaSocket.emit('mostrar_consulta_editar', { id_consulta: idConsulta })
 
-		consultaSocket.on('mostrar_consulta', (data) => {
-			// console.log(data)
+		consultaSocket.on('mostrar_consulta_editar', (data) => {
+			console.log(data)
+			
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_CONSULTA_FALLO, payload: data.error })
 			} else {
+				data.fechaProximaConsulta = formatDate(data.fechaProximaConsulta)
+
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_CONSULTA_EXITO, payload: data })
 			}
 		})
@@ -90,6 +94,26 @@ export function listarConsultas() {
 	}
 }
 
+export function listarConsultasMedico(idPersonal) {
+	return (dispatch) => {
+
+		dispatch({ type: LISTAR_CONSULTAS_REQUEST })
+
+		// var consultaSocket = io.connect('http://localhost:3000/consulta');
+		consultaSocket.emit('listar_consultas_medico', { 
+			id_personal: idPersonal 
+		})
+
+		consultaSocket.on('listar_consultas_medico', (data) => {
+			if(data.error) {
+				dispatch({ type: LISTAR_CONSULTAS_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: LISTAR_CONSULTAS_EXITO, payload: data })
+			}
+		})
+	}
+}
+
 export function crearConsulta(datosFormulario) {
 	return (dispatch) => {
 
@@ -98,12 +122,19 @@ export function crearConsulta(datosFormulario) {
 		consultaSocket.emit('crear_consulta', datosFormulario)
 
 		consultaSocket.on('crear_consulta', (data) => {
+
 			// console.log(data)
+
 			if(data.error) {
 				dispatch({ type: CREAR_CONSULTA_FALLO, payload: data.error })
 			} else {
+				let d = datosFormulario
+				console.log()
 				dispatch({ type: CREAR_CONSULTA_EXITO, payload: data })
 				dispatch(reset('FormularioConsulta'))
+
+
+				browserHistory.push(`/dashboard/citas/${d.id_cita}/preconsulta/${d.id_preconsulta}/consulta/${data.idConsultaInsertada}`)
 			}
 		})
 	
@@ -124,6 +155,8 @@ export function eliminarConsulta(idConsulta) {
 				dispatch({ type: ELIMINAR_CONSULTA_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: ELIMINAR_CONSULTA_EXITO, payload: data })
+				
+				window.history.back();
 			}
 		})
 	}
@@ -166,6 +199,7 @@ export function editarConsulta(datosFormulario) {
 				dispatch({ type: EDITAR_CONSULTA_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: EDITAR_CONSULTA_EXITO, payload: data })
+				// dispatch(mostrarConsulta(datosFormulario.id_consulta))
 			}
 		})
 
