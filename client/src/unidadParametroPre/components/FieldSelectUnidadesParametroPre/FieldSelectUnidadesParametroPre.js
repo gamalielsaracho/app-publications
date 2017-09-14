@@ -11,7 +11,7 @@ class FieldSelectUnidadesParametroPre extends Component {
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
-							<option value=''>Selecionar Unidad de medida</option>
+							<option value=''>Seleccionar Unidad de medida</option>
 							{
 								listaUnidadesParametroPre.unidadesParametroPre.map((unidad) => {
 									return <option key={unidad.id_unidadParametroPre} value={unidad.id_unidadParametroPre}>
