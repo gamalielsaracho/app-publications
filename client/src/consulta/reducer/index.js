@@ -44,7 +44,7 @@ const INITIAL_STATE = {
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { consultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, consulta: {}, error: '', abierto: false },
+	mostrar: { cargando: false, consulta: {}, error: '' },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -61,8 +61,7 @@ export default function (state = INITIAL_STATE, action) {
 					consulta: {}
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				editar: INITIAL_STATE.editar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_REQUEST:
@@ -76,8 +75,7 @@ export default function (state = INITIAL_STATE, action) {
 					consulta: {}
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				editar: INITIAL_STATE.editar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_EXITO:
@@ -89,8 +87,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					consulta: action.payload
-				},
-				mostrar: { abierto: false }
+				}
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_FALLO:
@@ -102,8 +99,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: action.payload,
 					cargando: false,
 					consulta: {}
-				},
-				mostrar: { abierto: false }
+				}
 			})
 
 
@@ -126,7 +122,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_CONSULTA_EXITO:
-			console.log(action.payload.datoInsertado)
+			// console.log(state)
 
 			return Object.assign({}, state, {
 				crear: { 
@@ -146,7 +142,9 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_CONSULTAS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 		case LISTAR_CONSULTAS_EXITO:
@@ -163,7 +161,7 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_CONSULTA_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true },
+				mostrar: { cargando: true },
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
@@ -171,8 +169,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					consulta: action.payload,
-					abierto: true
+					consulta: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
@@ -182,8 +179,7 @@ export default function (state = INITIAL_STATE, action) {
 				mostrar: {
 					cargando: false,
 					consulta: {},
-					error: action.payload,
-					abierto: true
+					error: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
@@ -193,8 +189,7 @@ export default function (state = INITIAL_STATE, action) {
 				mostrar: {
 					cargando: false,
 					consulta: {},
-					error: '',
-					abierto: false
+					error: ''
 				}
 			})
 
@@ -211,7 +206,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case EDITAR_CONSULTA_FALLO:
