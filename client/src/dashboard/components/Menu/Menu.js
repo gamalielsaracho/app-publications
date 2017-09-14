@@ -46,6 +46,7 @@ class Menu extends Component {
 			<li><Link to='/dashboard/parametros-preconsulta'>Parametros pre-consulta (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/unidades-parametro-preconsulta'>Unidades pre-consulta (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Adm) <span className="badge">8</span></Link></li>			
+			<li><Link to='/dashboard/consultas'>Consultas (Adm) <span className="badge">8</span></Link></li>			
 		</ul>
 	}
 
@@ -76,6 +77,7 @@ class Menu extends Component {
 			<li><Link to='/dashboard/pacientes'>Pacientes (Med) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/citas'>Citas (Med) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Med) <span className="badge">8</span></Link></li>			
+			<li><Link to='/dashboard/consultas'>Consultas (Med) <span className="badge">8</span></Link></li>			
 		</ul>
 	}
 
