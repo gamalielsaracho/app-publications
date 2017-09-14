@@ -1,43 +1,31 @@
 import { connect } from 'react-redux'
 
 import {
-	listarNiveles,
-	eliminarNivel,
-	mostrarNivel,
-
-	abrirFormularioCrearNivel,
-	abrirFormularioEditarNivel
+	listarConsultas,
+	listarConsultasMedico,
+	mostrarConsulta
 } from '../../actions'
 
 import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.nivel.crear,
-		listar: state.nivel.listar,
-		niveles: state.nivel.listar.niveles
+		crear: state.consulta.crear,
+		listar: state.consulta.listar,
+		consultas: state.consulta.listar.consultas
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarNiveles: () => {
-			dispatch(listarNiveles())
+		listarConsultas: () => {
+			dispatch(listarConsultas())
 		},
-		eliminarNivel: (idNivel) => {
-			var r = confirm("Está seguro que desea eliminar el rol?");
-		    if (r == true) {
-				dispatch(eliminarNivel(idNivel))
-		    }
+		mostrarConsulta: (idConsulta) => {
+			dispatch(mostrarConsulta(idConsulta))
 		},
-		mostrarNivel: (idNivel) => {
-			dispatch(mostrarNivel(idNivel))
-		},
-		abrirFormularioCrearNivel: () => {
-			dispatch(abrirFormularioCrearNivel())
-		},
-		abrirFormularioEditarNivel: (idNivel) => {
-			dispatch(abrirFormularioEditarNivel(idNivel))
+		listarConsultasMedico: (idPersonal) => {
+			dispatch(listarConsultasMedico(idPersonal))
 		}
 	}
 }
