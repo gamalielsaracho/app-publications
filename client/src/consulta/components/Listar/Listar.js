@@ -1,41 +1,52 @@
 import React, { Component } from 'react'
 
+import jwtDecode from 'jwt-decode'
+import removeAccents from 'remove-accents'
+
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
-
-import FormularioNivelContainer from '../Formulario'
-import MostarContainer from '../Mostrar'
 
 class Listar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderNiveles = this.renderNiveles.bind(this)
+		this.renderConsultas = this.renderConsultas.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
-		this.props.listarNiveles()
+		switch(removeAccents(this.personalLocalSt.rol)) {
+			case 'administracion':
+				this.props.listarConsultas()
+				break
+
+			case 'medico':
+				this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
+				break
+		}
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.niveles !== this.props.niveles) {
+		if(nextProps.consultas !== this.props.consultas) {
 			return true
 		}else {
 			return false
 		}
 	}	
 
-	renderNiveles(niveles) {
+	renderConsultas(consultas) {
 
 		return <tbody>
 			{
-				niveles.map((nivel) => {
-					return <tr key={nivel.id_nivel}>
-			            <td>{ nivel.id_nivel }</td>
-			            <td>{ nivel.descripcion }</td>
+				consultas.map((i) => {
+					return <tr key={i.consulta.id_consulta}>
+			            <td>{ i.consulta.id_consulta }</td>
+			            <td>{ i.paciente.nombres+' '+i.paciente.apellidos }</td>
+			            <td>{ i.consulta.fecha }</td>
+			            <td>{ i.consulta.fechaProximaConsulta }</td>
+			            <td>{ i.diagnostico.descripcion }</td>
+			            <td>{ i.consulta.observacionDiagnostico }</td>
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarNivel(nivel.id_nivel) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarNivel(nivel.id_nivel) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarNivel(nivel.id_nivel) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarConsulta(i.consulta.id_consulta) }} className="btn btn-info btn-space">Mostrar</button>
 			            </td>
 			        </tr>		
 				})
@@ -45,24 +56,16 @@ class Listar extends Component {
 
 	render() {
 
-		const { niveles, cargando, error } = this.props.listar
+		const { consultas, cargando, error } = this.props.listar
 
 		if(cargando) {
 			return <Cargando/>
 		} else {
 				return <div>
-					<h1 className='text-center'>Niveles</h1>
+					<h1 className='text-center'>Consultas</h1>
 					
-					<FormularioNivelContainer/>
-					<MostarContainer/>
-
 					<MensajeOerror error={error} mensaje={null}/>
 
-					<div className='row'>
-						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearNivel } className='btn btn-success'>Agregar</button>
-						</div>
-					</div>
 					<br/>
 
 					<div className='table-responsive'>
@@ -70,12 +73,16 @@ class Listar extends Component {
 							<thead>
 						    	<tr>
 						        	<th>Id</th>
-						        	<th>Nombre</th>
+						        	<th>Paciente</th>
+						        	<th>Fecha</th>
+						        	<th>Próxima consulta</th>
+						        	<th>Diagnóstico</th>
+						        	<th>Observaciones</th>
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
 
-							{ this.renderNiveles(niveles) }
+							{ this.renderConsultas(consultas) }
 
 						</table>
 					</div>
