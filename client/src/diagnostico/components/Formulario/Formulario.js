@@ -69,7 +69,7 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
-					<h4 className='text-center'>Formulario diagnostico</h4>
+					<h4 className='text-center'>Formulario diagnóstico</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
 					<div className='row'>
