@@ -25,7 +25,7 @@ class FieldSelectParametrosPre extends Component {
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
 
-							<option value=''>Selecionar Parametro</option>
+							<option value=''>Seleccionar Parametro</option>
 							
 							{
 								parametros.map((i) => {
