@@ -68,6 +68,14 @@ import ListarUnidadesParametroPrePage from '././unidadParametroPre/pages/ListarU
 // DIAGNOSTICOS.
 import ListarDiagnosticosPage from '././diagnostico/pages/ListarDiagnosticosPage'
 
+// CONSULTA APP.
+import MostrarConsultaAppContainer from '././consulta/components/MostrarApp'
+
+
+// CONSULTAS
+import ListarConsultasPage from '././consulta/pages/ListarConsultasPage'
+
+
 export default (
 	<Route path='/' component={AppContainer}>
 		<IndexRoute component={HomePage}/>
@@ -92,6 +100,8 @@ export default (
 
 			<Route path='/dashboard/diagnosticos' component={ListarDiagnosticosPage}/>
 
+			<Route path='/dashboard/consultas' component={ListarConsultasPage}/>
+
 
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
@@ -105,6 +115,10 @@ export default (
 				<IndexRoute component={ListarCitasPage}/>
 				<Route path='/dashboard/citas/:idCita' component={MostrarCitaAppContainer}>
 					<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaAppContainer}>
+
+						<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaAppContainer}>
+
+						</Route>
 
 					</Route>
 				</Route>
