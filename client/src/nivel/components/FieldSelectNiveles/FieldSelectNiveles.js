@@ -11,7 +11,7 @@ class FieldSelectNiveles extends Component {
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
-							<option value=''>Selecionar nivel</option>
+							<option value=''>Seleccionar nivel</option>
 							{
 								listaNiveles.niveles.map((nivel) => {
 									return <option key={nivel.id_nivel} value={nivel.id_nivel}>
