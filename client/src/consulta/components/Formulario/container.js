@@ -2,10 +2,14 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearNivel,
-	editarNivel,
-	cerrarFormularioNivel
+	crearConsulta,
+	editarConsulta,
+	cerrarFormularioConsulta
 } from '../../actions'
+
+import {
+	listarDiagnosticos
+} from '../../../diagnostico/actions'
 
 import Formulario from './Formulario'
 
@@ -23,37 +27,45 @@ const validate = (values) => {
 
 function mapStateToProps(state) {
 	return {
-		formulario: state.nivel.formulario,
-		initialValues: state.nivel.formulario.nivel,
-		enableReinitialize: state.nivel.formulario.iniciarValores,
-		editarContenido: state.nivel.formulario.iniciarValores,
+		formulario: state.consulta.formulario,
+		initialValues: state.consulta.formulario.consulta,
+		enableReinitialize: state.consulta.formulario.iniciarValores,
+		editarContenido: state.consulta.formulario.iniciarValores,
 
 		// Para obtener el error al crear o editar.
-		crear: state.nivel.crear,
-		editar: state.nivel.editar
+		crear: state.consulta.crear,
+		editar: state.consulta.editar,
+
+		listaDiagnosticos: state.diagnostico.listar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearNivel: (datosFormulario) => {
-			dispatch(crearNivel(datosFormulario))
+		crearConsulta: (datosFormulario) => {
+			dispatch(crearConsulta(datosFormulario))
 		},
-		cerrarFormularioNivel: () => {
+		cerrarFormularioConsulta: () => {
 			// var r = confirm("Está seguro que desea cancelar?");
 		    // if (r == true) {
-				dispatch(cerrarFormularioNivel())
+				dispatch(cerrarFormularioConsulta())
 		    // }
 		},
-		editarNivel: (datosFormulario) => {
-			dispatch(editarNivel(datosFormulario))
+		editarConsulta: (datosFormulario) => {
+			dispatch(editarConsulta(datosFormulario))
+		},
+
+		// Llamar a la acción listarDiagnosticos en componentWillMount
+		// para obtener los diagnosticos.
+		listarDiagnosticos: () => {
+			dispatch(listarDiagnosticos())
 		}
 	}
 }
 
 const form = reduxForm({
-	form: 'FormularioNivel',
+	form: 'FormularioConsulta',
 	validate
 })
 
