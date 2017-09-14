@@ -51,7 +51,7 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div>
-					<h1 className='text-center'>Diagnosticos</h1>
+					<h1 className='text-center'>Diagnósticos</h1>
 					
 					<FormularioDiagnosticoContainer/>
 					<MostarContainer/>
