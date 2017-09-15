@@ -34,7 +34,7 @@ export default (io) => {
 					return
 				}
 
-				consultaNsp.emit('listar_consultas_medico', { consultas: consultas })
+				socket.emit('listar_consultas_medico', { consultas: consultas })
 			})
 
 		})
