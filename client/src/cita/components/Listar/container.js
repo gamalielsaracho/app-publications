@@ -5,6 +5,8 @@ import { formatDate } from '../../../globalActions'
 
 import {
 	listarCitas,
+	listarCitasMedico,
+
 	eliminarCita,
 	mostrarCita,
 
@@ -43,6 +45,9 @@ function mapDispatchToProps(dispatch) {
 	return {		
 		listarCitas: () => {
 			dispatch(listarCitas())
+		},
+		listarCitasMedico: (idPersonal) => {
+			dispatch(listarCitasMedico(idPersonal))
 		},
 		eliminarCita: (idCita) => {
 			var r = confirm("Está seguro que desea eliminar el rol?");
