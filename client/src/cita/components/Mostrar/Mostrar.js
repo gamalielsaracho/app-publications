@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import ReactModal from 'react-modal'
 
+import { formatDate, calcularEdad } from '../../../globalActions'
+
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import Cargando from '../../../app/components/Cargando'
 
@@ -47,9 +49,11 @@ class Mostrar extends Component {
 					<div className='row'>
 						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
 							<p><strong>Nro. documento:</strong>{ dato.paciente.nroDocumento }</p>
+							<p><strong>Dirección:</strong> { dato.paciente.direccion }</p>				
 						</div>
 						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
 							<p><strong>Nombre:</strong>{ dato.paciente.nombres +' '+ dato.paciente.apellidos }</p>
+							<p><strong>Edad:</strong> { calcularEdad(dato.paciente.fechaNacimiento) }</p>
 						</div>
 						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
 							<p><strong>Sexo:</strong>{ dato.paciente.sexo }</p>
