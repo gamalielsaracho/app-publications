@@ -68,12 +68,22 @@ import ListarUnidadesParametroPrePage from '././unidadParametroPre/pages/ListarU
 // DIAGNOSTICOS.
 import ListarDiagnosticosPage from '././diagnostico/pages/ListarDiagnosticosPage'
 
+
+// CONSULTAS APP.
+import ListarConsultasApp from '././consulta/components/ListarApp'
+import ListarConsultasPage from '././consulta/pages/ListarConsultasPage'
+
+				// Con todos los detalles.
 // CONSULTA APP.
 import MostrarConsultaAppContainer from '././consulta/components/MostrarApp'
 
 
-// CONSULTAS
-import ListarConsultasPage from '././consulta/pages/ListarConsultasPage'
+
+// ... 
+import MostrarConsultaRellenandoAppContainer from '././consulta/components/MostrarRellenandoApp'
+
+				// Con pocos detalles.
+// import MostrarConsultaRellenandoContainer from '././consulta/components/MostrarRellenando'
 
 
 export default (
@@ -100,8 +110,12 @@ export default (
 
 			<Route path='/dashboard/diagnosticos' component={ListarDiagnosticosPage}/>
 
-			<Route path='/dashboard/consultas' component={ListarConsultasPage}/>
+			<Route path='/dashboard/consultas' component={ListarConsultasApp}>
+				<IndexRoute component={ListarConsultasPage}/>
+				<Route path='/dashboard/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
 
+				</Route>
+			</Route>
 
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
@@ -116,7 +130,7 @@ export default (
 				<Route path='/dashboard/citas/:idCita' component={MostrarCitaAppContainer}>
 					<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaAppContainer}>
 
-						<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaAppContainer}>
+						<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaRellenandoAppContainer}>
 
 						</Route>
 
