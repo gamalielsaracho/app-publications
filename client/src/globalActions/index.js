@@ -4,6 +4,33 @@ import io from 'socket.io-client'
 
 export let socket = io.connect('http://localhost:3000')
 
+export function calcularEdad(fechaPaciente) {
+	// console.log()
+	var dateNow = new Date()
+	var date = new Date(fechaPaciente)
+
+	var anhoActual = dateNow.getFullYear()
+	var anhoPaciente = date.getFullYear()
+
+	var mesPaciente = date.getMonth() + 1
+
+	// edad del paciente
+	var dato = anhoActual - anhoPaciente
+
+	if(dato == 0) {
+		var cantidadMeses = 12 - mesPaciente
+
+		if(cantidadMeses > 1) {
+			dato = `${cantidadMeses} Meses.`
+		}else {
+			dato = `${cantidadMeses} Mes.`
+		}
+	}
+
+
+	return dato
+}
+
 export function formatDate(date) {
 	var d = new Date(date),
 		month = '' + (d.getMonth() + 1),
