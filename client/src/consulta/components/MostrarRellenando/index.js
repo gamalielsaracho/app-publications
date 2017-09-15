@@ -1,0 +1,2 @@
+import MostrarConsultaRellenandoContainer from './container'
+export default MostrarConsultaRellenandoContainer
