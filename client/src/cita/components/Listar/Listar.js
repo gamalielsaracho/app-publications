@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 
 import jwtDecode from 'jwt-decode'
 import removeAccents from 'remove-accents'
+
+import moment from 'moment'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -12,6 +13,8 @@ import FormularioContainer from '../Formulario'
 import MostarVenCitaContainer from '../MostrarVen'
 
 import MostrarAgregarPreConsultaContainer from '../MostrarAgregarPreConsulta'
+
+import FiltrosCitaContainer from '../Filtros'
 
 class Listar extends Component {
 	constructor(props) {
@@ -24,33 +27,30 @@ class Listar extends Component {
 		this.renderEstadoCita = this.renderEstadoCita.bind(this)
 
 		this.renderEnfermeriaBtns = this.renderEnfermeriaBtns.bind(this)
-		// filter.
-		// this.handleChange = this.handleChange.bind(this)
 
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
-		this.props.listarPersonales()
-
 		switch(removeAccents(this.personalLocalSt.rol)) {
-			case 'administracion':
+			case 'administracion' || 'enfermeria' || 'ventanilla':
 				this.props.listarCitas()
 				break
 
 			case 'medico':
 				this.props.listarCitasMedico(this.personalLocalSt.id_personal)
 				break
+
 		}
 	}
 
-	shouldComponentUpdate(nextProps) {
-		if(nextProps.citas !== this.props.citas) {
-			return true
-		}else {
-			return false
-		}
-	}
+	// shouldComponentUpdate(nextProps) {
+	// 	if(nextProps.citas !== this.props.citas) {
+	// 		return true
+	// 	}else {
+	// 		return false
+	// 	}
+	// }
 
 	renderEstadoCita(pendiente) {
 		if(pendiente) {
@@ -59,16 +59,6 @@ class Listar extends Component {
 			return <p>Realizado</p>
 		}
 	}
-
-	// handleChange(e) {
-	// 	let valoresInputActualizando = {
-	// 		id_personal: ReactDOM.findDOMNode(this.refs.idPersonal).value
-	// 	}
-
-	// 	// console.log(valoresInputActualizando)
-
-	// 	this.props.actualizarFormularioFiltro(valoresInputActualizando)
-	// }
 
 	renderEnfermeriaBtns(cita) {
 		if(cita.id_preconsulta == null) {
@@ -135,47 +125,24 @@ class Listar extends Component {
 		}
 	}
 
-	// <div className='row'>
-	// 					<div className='col-lg-4'>
-	// 						<div className="input-group">
-	// 							<select onChange={this.handleChange} ref='idPersonal' className='form-control'>
-	// 								<option>Médicos/as</option>
-	// 								{
-	// 									this.props.listaPersonales.map((i) => {
-	// 										return <option key={i.personal.id_personal} value={i.personal.id_personal}>
-	// 											{ i.personal.nombres }
-	// 										</option>
-	// 									})
-	// 								}
-	// 							</select>
-	// 						</div>
-	// 					</div>
-	// 					<div className='col-lg-4'>
-							
-	// 					</div>
-	// 				</div>
-
 	renderCitas(citas) {
 
 		let rolUsuario = removeAccents(jwtDecode(localStorage.getItem('token')).rol)
 
-
 		let filtro = this.props.filtro
 
-		var dateNow = new Date();
-		var d = dateNow.getDate();
-		var m = dateNow.getMonth();
-		var y = dateNow.getFullYear();
-
-		var p = y+'-0'+m+'-'+d // fecha actual para filtrar.
+		console.log('EL FILTRO.')
+		console.log(filtro)
 
 		let con = { // Condiciones.
-			// id_personal: filtro.id_personal.trim().toLowerCase()
-			fecha: p
+			cita: {
+				fechaActual: filtro.cita.fechaActual
+			}
 		}
 
+
 		// if(con.id_personal){
-			// citas = this.props.filtrarCitas(citas, con)
+			citas = this.props.filtrarCitas(citas, con)
 		// }
 
 		return <tbody>
@@ -201,11 +168,7 @@ class Listar extends Component {
 
 		const { citas, cargando, error } = this.props.listar
 
-		let filtro = this.props.filtro
-
-		// console.log(this.props.listar)
-		console.log(this.props.filtro)
-		
+		// let filtro = this.props.filtro
 
 		if(cargando) {
 			return <Cargando/>
@@ -216,11 +179,14 @@ class Listar extends Component {
 				return <div>
 					<h1 className='text-center'>Citas</h1>
 					
+					<FiltrosCitaContainer/>
+
 					<MostrarAgregarPreConsultaContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
 
 					{ this.renderAddButton(rolUsuario) }
+
 
 					<br/>
 					<div className='table-responsive'>
