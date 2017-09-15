@@ -35,7 +35,7 @@ export const ELIMINAR_CITA_FALLO = 'eliminair_cita_fallo'
 
 
 	// Actualizar la popiedad value de los inputs para filtrar citas.
-export const ACTUALIZAR_FORMULARIO_FILTRO = 'actualizar_formulario_filtro'
+export const ACTUALIZAR_FORMULARIO_CITA_FILTRO = 'actualizar_formulario_cita_filtro'
 
 export const MOSTRAR_CITA_AGREGAR_PRECONSULTA_REQUEST = 'mostrar_cita_agregar_preconsulta_request'
 export const MOSTRAR_CITA_AGREGAR_PRECONSULTA_EXITO = 'mostrar_cita_agregar_preconsulta_exito'

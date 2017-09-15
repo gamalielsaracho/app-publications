@@ -33,7 +33,7 @@ import {
 	ELIMINAR_CITA_EXITO,
 	ELIMINAR_CITA_FALLO,
 
-	ACTUALIZAR_FORMULARIO_FILTRO,
+	ACTUALIZAR_FORMULARIO_CITA_FILTRO,
 
 	MOSTRAR_CITA_AGREGAR_PRECONSULTA_REQUEST,
 	MOSTRAR_CITA_AGREGAR_PRECONSULTA_EXITO,
@@ -209,7 +209,7 @@ export function actualizarFormularioFiltro(valoresInput) {
 	return (dispatch) => {
 		// console.log(valoresInput)
 		
-		dispatch({ type: ACTUALIZAR_FORMULARIO_FILTRO, valores: valoresInput  })
+		dispatch({ type: ACTUALIZAR_FORMULARIO_CITA_FILTRO, valores: valoresInput  })
 	}
 }
 
