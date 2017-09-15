@@ -1,52 +1,40 @@
-// import { connect } from 'react-redux'
-// import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { connect } from 'react-redux'
 
-// import {
+import {
+	// Formulario Filtro, cool.!
+	actualizarFormularioFiltro
+} from '../../actions'
 
-// } from '../../actions'
-
-// import {
-// 	listarEspecialidades
-// } from '../../../especialidades/actions'
-
-// import {
-// 	listarPersonales
-// } from '../../../usuario/actions'
-
-// import Filtros from './Filtros'
-
-// function mapStateToProps(state) {
-// 	return {
-
-// 		// Lista de especialidades para mostrar dentro del select option.
-// 		listaEspecialidades: state.especialidad.listar,
-
-// 		// Lista los Médicos/as para mostrar dentro del select option Multiple.
-// 		listaPesonales: state.personal.listar,
-
-//     	valoresCitaFiltro: {
-//     		hola: selector(state, 'hola')
-//     	}
-// 	}
-// }
+import {
+	listarPersonales
+} from '../../../usuario/actions'
 
 
-// function mapDispatchToProps(dispatch) {
-// 	return {
-// 		listarEspecialidades: () => {
-// 			dispatch(listarEspecialidades())
-// 		},
-// 		listarPersonales: () => {
-// 			dispatch(listarPersonales())
-// 		}
-// 	}
-// }
+import Filtros from './Filtros'
 
-// const form = reduxForm({
-//   form: 'FormularioFiltrosCita'
-// })
+function mapStateToProps(state) {
+	return {
 
-// export const selector = formValueSelector('FormularioFiltrosCita')
-// // console.log(selector(state.cita.valoresCitaFiltro, 'hola'))
 
-// export default connect(mapStateToProps, mapDispatchToProps)(form(Filtros))
+		// Estados para el sistema de filtro.
+		// Lista los Médicos/as para mostrar dentro del select option Multiple.
+		listaPersonales: state.personal.listar.personales,
+
+		filtro: state.cita.filtro		
+	}
+}
+
+
+function mapDispatchToProps(dispatch) {
+	return {
+		listarPersonales: () => {
+			dispatch(listarPersonales())
+		},
+		actualizarFormularioFiltro: (valores) => {
+			// console.log(valores)
+			dispatch(actualizarFormularioFiltro(valores))
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filtros)
