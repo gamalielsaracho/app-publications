@@ -19,6 +19,30 @@ exports.find = (callback) => {
 	connection.end()
 }
 
+exports.findListByIdPersonal = (idPersonal, callback) => {
+
+	let q = `
+		SELECT * 
+			FROM 
+				citas cita, 
+				personales personal,
+				pacientes paciente
+			WHERE
+				cita.id_personal = personal.id_personal AND
+				cita.id_paciente = paciente.id_paciente AND
+				cita.id_personal = ?
+	`
+	
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, [idPersonal], callback)
+
+	connection.end()
+}
+
 exports.findById = (data, callback) => {
 	// console.log(data)
 	let q = `
