@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 
+import moment from 'moment'
+
 import { formatDate } from '../../../globalActions'
 
 import {
@@ -13,15 +15,9 @@ import {
 	abrirFormularioCrearCita,
 	abrirFormularioEditarCita,
 
-	// Formulario Filtro, cool.!
-	actualizarFormularioFiltro,
 
 	mostrarCitaAgregarPreConsulta
 } from '../../actions'
-
-import {
-	listarPersonales
-} from '../../../usuario/actions'
 
 import Listar from './Listar'
 
@@ -30,10 +26,7 @@ function mapStateToProps(state) {
 		crear: state.cita.crear,
 		listar: state.cita.listar,
 		citas: state.cita.listar.citas,
-		filtro: state.cita.filtro,
-
-		// Estados para el sistema de filtro.
-		listaPersonales: state.personal.listar.personales,
+		filtro: state.cita.filtro,		
 
 		// Rol del usuario logeado, se trae desde el servidor, 
 		// para ocultar contenidos de la vista.
@@ -67,20 +60,13 @@ function mapDispatchToProps(dispatch) {
 
 
 		// Funciones para el sistema de filtro.
-		listarPersonales: () => {
-			dispatch(listarPersonales())
-		},
-
-		actualizarFormularioFiltro: (valores) => {
-			// console.log(valores)
-			dispatch(actualizarFormularioFiltro(valores))
-		},
 		filtrarCitas: (citas, valores) => {
- 			console.log(valores)
+ 			// console.log(valores)
 
  			citas = citas.filter((i) => {
- 				console.log(formatDate(i.cita.fecha))
- 				return formatDate(i.cita.fecha) == valores.fecha
+	 			// console.log('FECHA ACTUAL-> '+valores.cita.fechaActual+' FECHA CITA -> '+moment(i.cita.fecha).format('YYYY-MM-DD'))
+
+ 				return moment(i.cita.fecha).format('YYYY-MM-DD') == valores.cita.fechaActual
  			})
  
  
