@@ -85,10 +85,20 @@ exports.findById = (data, callback) => {
 			FROM 
 				consultas consulta,
 				diagnosticos diagnostico,
-				personales personal
+				personales personal,
+				pacientes paciente,
+
+				preconsultas preconsulta,
+				personales personalEnfermeria,
+				niveles nivel
 			WHERE
 				consulta.id_personal = personal.id_personal AND
 				consulta.id_diagnostico = diagnostico.id_diagnostico AND
+				consulta.id_paciente = paciente.id_paciente AND
+
+				consulta.id_preconsulta = preconsulta.id_preconsulta AND
+				preconsulta.id_personal = personalEnfermeria.id_personal AND
+				preconsulta.id_nivel = nivel.id_nivel AND
 				id_consulta = ?
 	`
 
