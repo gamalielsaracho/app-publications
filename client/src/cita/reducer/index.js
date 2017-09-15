@@ -31,7 +31,7 @@ import {
 	ELIMINAR_CITA_EXITO,
 	ELIMINAR_CITA_FALLO,
 
-	ACTUALIZAR_FORMULARIO_FILTRO,
+	ACTUALIZAR_FORMULARIO_CITA_FILTRO,
 
 	MOSTRAR_CITA_AGREGAR_PRECONSULTA_REQUEST,
 	MOSTRAR_CITA_AGREGAR_PRECONSULTA_EXITO,
@@ -39,6 +39,8 @@ import {
 
 	CERRAR_MOSTRAR_CITA_AGREGAR_PRECONSULTA
 } from '../actions/types'
+
+import moment from 'moment'
 
 const INITIAL_STATE = {
 	formulario: {
@@ -51,7 +53,23 @@ const INITIAL_STATE = {
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	filtro: {
-		id_personal: ''
+		cita: {
+			fechaDesde: '',
+			fechaHasta: '',
+			fechaActual: moment().format('YYYY-MM-DD'),
+			pendiente: 1
+		},
+		paciente: {
+			nroDocumento: '',
+			id_tipoDocumento: '',
+			nombres: '',
+			apellidos: '',
+			sexo: '',
+			edad: ''
+		},
+		personal: {
+			id_personal: ''
+		}
 	},
 	listar: { citas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
@@ -103,17 +121,31 @@ export default function (state = INITIAL_STATE, action) {
 				mostrar: INITIAL_STATE.mostrar
 			})
 
-		case ACTUALIZAR_FORMULARIO_FILTRO:
+		case ACTUALIZAR_FORMULARIO_CITA_FILTRO:
 			const { valores } = action
 			
 			// console.log(valores)
 			state = Object.assign({}, state, {
-				filtro: { 
-					id_personal: valores.id_personal
+				filtro: {
+					cita: {
+						fechaDesde: valores.cita.fechaDesde,
+						fechaHasta: valores.cita.fechaHasta,
+						fechaActual: moment().format('YYYY-MM-DD'),
+						pendiente: valores.cita.pendiente
+					},
+					paciente: {
+						nroDocumento: valores.paciente.nroDocumento,
+						id_tipoDocumento: valores.paciente.id_tipoDocumento,
+						nombres: valores.paciente.nombres,
+						apellidos: valores.paciente.apellidos,
+						sexo: valores.paciente.sexo,
+						edad: valores.paciente.edad
+					},
+					personal: {
+						id_personal: valores.personal.id_personal
+					}
 				}
 			})
-
-			// console.log(state.filtro)
 
 			return state
 
@@ -219,7 +251,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case LISTAR_CITAS_EXITO:
-			return Object.assign({}, state, {
+			return state = Object.assign({}, state, {
 				listar: { citas: action.payload.citas, cargando: false, error: '' },
 				mostrarCitaAgregarPreConsulta: INITIAL_STATE.mostrarCitaAgregarPreConsulta
 			})
