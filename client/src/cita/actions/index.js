@@ -101,6 +101,26 @@ export function listarCitas() {
 	}
 }
 
+export function listarCitasMedico(idPersonal) {
+	return (dispatch) => {
+
+		dispatch({ type: LISTAR_CITAS_REQUEST })
+
+		// let citaSocket = io.connect('http://localhost:3000/cita')
+		citaSocket.emit('listar_citas_medico', { 
+			id_personal: idPersonal 
+		})
+
+		citaSocket.on('listar_citas_medico', (data) => {
+			if(data.error) {
+				dispatch({ type: LISTAR_CITAS_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: LISTAR_CITAS_EXITO, payload: data })
+			}
+		})
+	}
+}
+
 export function crearCita(datosFormulario) {
 	return (dispatch) => {
 
