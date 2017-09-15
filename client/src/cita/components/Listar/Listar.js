@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
+
 import jwtDecode from 'jwt-decode'
 import removeAccents from 'remove-accents'
 
@@ -25,11 +26,22 @@ class Listar extends Component {
 		this.renderEnfermeriaBtns = this.renderEnfermeriaBtns.bind(this)
 		// filter.
 		// this.handleChange = this.handleChange.bind(this)
+
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
-		this.props.listarCitas()
 		this.props.listarPersonales()
+
+		switch(removeAccents(this.personalLocalSt.rol)) {
+			case 'administracion':
+				this.props.listarCitas()
+				break
+
+			case 'medico':
+				this.props.listarCitasMedico(this.personalLocalSt.id_personal)
+				break
+		}
 	}
 
 	shouldComponentUpdate(nextProps) {
