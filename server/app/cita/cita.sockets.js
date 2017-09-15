@@ -23,6 +23,20 @@ export default (io) => {
 		
 		citas()
 
+		// Lista de citas para los médicos/as.
+		socket.on('listar_citas_medico', (data) => {
+			Cita.findListByIdPersonal(data.id_personal, (err, citas) => {
+				// console.log(citas)
+				if(err) {
+					console.log(err)
+					
+					socket.emit('listar_citas_medico', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+					return
+				}
+
+				socket.emit('listar_citas_medico', { citas: citas })
+			})
+		})
 
 		socket.on('crear_cita', function(data) {
 			Cita.create(data, (err, cita) => {
