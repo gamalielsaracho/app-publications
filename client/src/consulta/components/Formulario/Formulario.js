@@ -40,23 +40,24 @@ class Formulario extends Component {
 		this.props.listarDiagnosticos()
 	}
 
-	enviarFormulario(formProps) {				
-		formProps.fecha = new Date()
-
-		formProps.id_preconsulta = parseInt(this.props.idPreConsulta)
-		// El id del personal Logeado (Médico/a).
-		formProps.id_personal = this.personalLocalSt.id_personal
-
-		formProps.id_paciente = this.props.datosCita.cita.id_paciente
-
-		// Para pasarle a push y redireccionar a la consulta creada.
-		formProps.id_cita = this.props.datosCita.cita.id_cita
+	enviarFormulario(formProps) {
 
 		// console.log(formProps)
 		
 		if(this.props.editarContenido) {
 			this.props.editarConsulta(formProps)
 		} else {
+			formProps.fecha = new Date()
+			formProps.id_preconsulta = parseInt(this.props.idPreConsulta)
+			
+			// El id del personal Logeado (Médico/a).
+			formProps.id_personal = this.personalLocalSt.id_personal
+			
+			formProps.id_paciente = this.props.datosCita.cita.id_paciente
+
+			// Para pasarle a push y redireccionar a la consulta creada.
+			formProps.id_cita = this.props.datosCita.cita.id_cita
+
 			this.props.crearConsulta(formProps)
 		}
 	}
