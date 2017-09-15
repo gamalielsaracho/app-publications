@@ -6,6 +6,9 @@ import removeAccents from 'remove-accents'
 
 import MostrarConsultaContainer from '../Mostrar'
 
+// Formulario Modal para EDITAR una consulta.
+import FormularioConsultaContainer from '../../../consulta/components/Formulario'
+
 class MostrarApp extends Component {
 	constructor(props) {
 		super(props)
@@ -71,6 +74,8 @@ class MostrarApp extends Component {
 
 			<MostrarConsultaContainer 
 				idConsulta = {this.props.idConsulta}/>
+
+			<FormularioConsultaContainer/>
 
 			{/*  
 				{ this.renderMenu(this.props.listar) }
