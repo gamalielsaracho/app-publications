@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import jwtDecode from 'jwt-decode'
 import removeAccents from 'remove-accents'
@@ -46,7 +47,9 @@ class Listar extends Component {
 			            <td>{ i.diagnostico.descripcion }</td>
 			            <td>{ i.consulta.observacionDiagnostico }</td>
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarConsulta(i.consulta.id_consulta) }} className="btn btn-info btn-space">Mostrar</button>
+			            	<Link to={`/dashboard/consultas/${i.consulta.id_consulta}`}>
+								<button type="button" className="btn btn-info btn-space">Mostrar</button>
+							</Link>
 			            </td>
 			        </tr>		
 				})
