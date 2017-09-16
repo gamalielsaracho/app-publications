@@ -78,12 +78,14 @@ import ListarConsultasPage from '././consulta/pages/ListarConsultasPage'
 import MostrarConsultaAppContainer from '././consulta/components/MostrarApp'
 
 
-
-// ... 
+// ... Para cuando el médico realize la consulta.
 import MostrarConsultaRellenandoAppContainer from '././consulta/components/MostrarRellenandoApp'
 
-				// Con pocos detalles.
-// import MostrarConsultaRellenandoContainer from '././consulta/components/MostrarRellenando'
+
+
+				// Módulo farmacia.
+import ListarNombresMedicamentosPage from '././nombreMedicamento/pages/ListarNombresMedicamentosPage'
+import ListarPresentacionesPage from '././presentacion/pages/ListarPresentacionesPage'
 
 
 export default (
@@ -137,6 +139,11 @@ export default (
 					</Route>
 				</Route>
 			</Route>
+
+
+			{/* Módulo farmacia. */}
+			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
+			<Route path='/dashboard/presentaciones' component={ListarPresentacionesPage}/>
 
 		</Route>
 
