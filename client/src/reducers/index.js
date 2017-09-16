@@ -30,6 +30,8 @@ import consultaReducer from '../consulta/reducer'
 // Farmacia.
 import nombreMedicamentoReducer from '../nombreMedicamento/reducer'
 import presentacionReducer from '../presentacion/reducer'
+import tipoConsumoReducer from '../tipoConsumo/reducer'
+import dosisReducer from '../dosis/reducer'
 
 
 const rootReducer = combineReducers({
@@ -58,7 +60,9 @@ const rootReducer = combineReducers({
 	
 	// Farmacia.
 	nombreMedicamento: nombreMedicamentoReducer,
-	presentacion: presentacionReducer
+	presentacion: presentacionReducer,
+	tipoConsumo: tipoConsumoReducer,
+	dosis: dosisReducer
 })
 
 export default rootReducer
