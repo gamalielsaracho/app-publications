@@ -37,10 +37,11 @@ exports.verifyEmailAuth = (correo, callback) => {
 
 exports.find = (callback) => {
 	let q = `
-		SELECT * FROM personales personal, roles rol, especialidades especialidad
+		SELECT * FROM 
+				personales personal, 
+				roles rol
 			WHERE
-				personal.id_rol = rol.id_rol AND
-				personal.id_especialidad = especialidad.id_especialidad
+				personal.id_rol = rol.id_rol
 	`
 
 	var options = {
