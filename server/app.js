@@ -44,6 +44,10 @@ require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
 // Farmacia.
 require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
 require('././app/presentacion/presentacion.sockets')(io)
+require('././app/tipoConsumo/tipoConsumo.sockets')(io)
+require('././app/dosis/dosis.sockets')(io)
+
+
 
 
 io.on('connection', function (socket) {
