@@ -35,9 +35,15 @@ require('././app/diagnostico/diagnostico.sockets')(io)
 require('././app/consulta/consulta.sockets')(io)
 
 
+// AJAX.
 // require('././app/preConsultaParametro/preConsultaParametro.sockets')(io)
 
 require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
+
+
+// Farmacia.
+require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
+require('././app/presentacion/presentacion.sockets')(io)
 
 
 io.on('connection', function (socket) {
