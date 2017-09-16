@@ -83,11 +83,8 @@ class Menu extends Component {
 
 	farmaciaMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/usuarios'>Usuarios (Farm) <span className="badge">14</span></Link></li>
-			<li><Link to='/roles'>Roles (Farm) <span className="badge">1</span></Link></li>
-			<li><Link to='/especialidades'>Especialidades (Farm) <span className="badge">0</span></Link></li>
-			<li><Link to='/ciudades'>Ciudades (Farm) <span className="badge">8</span></Link></li>
-			<li><Link to='/departamentos'>Departamentos (Farm) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Farm)</Link></li>
+			<li><Link to='/dashboard/presentaciones'> presentaciones (Farm)</Link></li>
 		</ul>
 	}
 
@@ -124,7 +121,8 @@ class Menu extends Component {
 				{ this.isRole('ventanilla', this.ventanillaMenu()) }
 				{ this.isRole('enfermeria', this.enfermeriaMenu()) }
 				{ this.isRole('medico', this.medicinaMenu()) }
-							
+				{ this.isRole('farmacia', this.farmaciaMenu()) }
+
 			</div>
 		} else {
 			return <span></span>
