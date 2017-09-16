@@ -1,0 +1,2 @@
+import ListarPresentacionesContainer from './container'
+export default ListarPresentacionesContainer

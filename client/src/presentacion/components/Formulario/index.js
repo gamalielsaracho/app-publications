@@ -1,0 +1,2 @@
+import FormularioPresentacionContainer from './container'
+export default FormularioPresentacionContainer

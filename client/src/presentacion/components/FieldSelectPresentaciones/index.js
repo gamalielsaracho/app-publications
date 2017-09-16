@@ -1,0 +1,2 @@
+import FieldSelectPresentacionesContainer from './container'
+export default FieldSelectPresentacionesContainer
