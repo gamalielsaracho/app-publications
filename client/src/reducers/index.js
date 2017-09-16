@@ -27,6 +27,11 @@ import diagnosticoReducer from '../diagnostico/reducer'
 
 import consultaReducer from '../consulta/reducer'
 
+// Farmacia.
+import nombreMedicamentoReducer from '../nombreMedicamento/reducer'
+import presentacionReducer from '../presentacion/reducer'
+
+
 const rootReducer = combineReducers({
 	form: formReducer,
 	personal: personalReducer,
@@ -40,6 +45,7 @@ const rootReducer = combineReducers({
 	alergiaPaciente: pacienteAlergiaReducer,
 	cita: citaReducer,
 	nivel: nivelReducer,
+
 	// Los tres relacionados.
 	preConsulta: preConsultaReducer,
 	parametroPreConsulta: parametroPreConsultaReducer,
@@ -47,7 +53,12 @@ const rootReducer = combineReducers({
 	unidadParametroPre: unidadParametroPreReducer,
 
 	diagnostico: diagnosticoReducer,
-	consulta: consultaReducer
+	consulta: consultaReducer,
+
+	
+	// Farmacia.
+	nombreMedicamento: nombreMedicamentoReducer,
+	presentacion: presentacionReducer
 })
 
 export default rootReducer
