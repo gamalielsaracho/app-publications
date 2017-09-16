@@ -1,0 +1,2 @@
+import FormularioTipoConsumoContainer from './container'
+export default FormularioTipoConsumoContainer
