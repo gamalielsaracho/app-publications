@@ -46,8 +46,8 @@ require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
 require('././app/presentacion/presentacion.sockets')(io)
 require('././app/tipoConsumo/tipoConsumo.sockets')(io)
 require('././app/dosis/dosis.sockets')(io)
-
-
+require('././app/unidadMedidaMedicamento/unidadMedidaMedicamento.sockets')(io)
+require('././app/farmaceutica/farmaceutica.sockets')(io)
 
 
 io.on('connection', function (socket) {
