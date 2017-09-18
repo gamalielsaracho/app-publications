@@ -38,6 +38,7 @@ export default (io) => {
 				} else {
 					Dosis.create(data, (err, dosis) => {
 						if(err) {
+							console.log(err)
 							socket.emit('crear_dosis', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
