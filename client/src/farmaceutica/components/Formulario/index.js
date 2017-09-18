@@ -1,0 +1,2 @@
+import FormularioFarmaceuticaContainer from './container'
+export default FormularioFarmaceuticaContainer

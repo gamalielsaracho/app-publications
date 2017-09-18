@@ -1,0 +1,2 @@
+import FieldSelectFarmaceuticasContainer from './container'
+export default FieldSelectFarmaceuticasContainer
