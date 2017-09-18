@@ -88,6 +88,8 @@ import ListarNombresMedicamentosPage from '././nombreMedicamento/pages/ListarNom
 import ListarPresentacionesPage from '././presentacion/pages/ListarPresentacionesPage'
 import ListarTiposConsumosPage from '././tipoConsumo/pages/ListarTiposConsumosPage'
 import ListarDosisPage from '././dosis/pages/ListarDosisPage'
+import ListarUnidadesMedicamentosPage from '././unidadMedidaMedicamento/pages/ListarUnidadesMedicamentosPage'
+import ListarFarmaceuticasPage from '././farmaceutica/pages/ListarFarmaceuticasPage'
 
 
 export default (
@@ -148,7 +150,8 @@ export default (
 			<Route path='/dashboard/presentaciones' component={ListarPresentacionesPage}/>
 			<Route path='/dashboard/tipos-consumos' component={ListarTiposConsumosPage}/>
 			<Route path='/dashboard/dosis' component={ListarDosisPage}/>
-
+			<Route path='/dashboard/unidades-medicamentos' component={ListarUnidadesMedicamentosPage}/>
+			<Route path='/dashboard/farmaceuticas' component={ListarFarmaceuticasPage}/>
 
 		</Route>
 
