@@ -1,0 +1,2 @@
+import MostarUnidadMedicamentoContainer from './container'
+export default MostarUnidadMedicamentoContainer
