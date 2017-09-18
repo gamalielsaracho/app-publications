@@ -84,9 +84,11 @@ class Menu extends Component {
 	farmaciaMenu() {
 		return <ul className="nav nav-sidebar">
 			<li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Farm)</Link></li>
-			<li><Link to='/dashboard/presentaciones'> presentaciones (Farm)</Link></li>
-			<li><Link to='/dashboard/tipos-consumos'> Tipos consumos (Farm)</Link></li>
-			<li><Link to='/dashboard/dosis'>Dosis (Farm)</Link></li>			
+			<li><Link to='/dashboard/presentaciones'>presentaciones (Farm)</Link></li>
+			<li><Link to='/dashboard/tipos-consumos'>Tipos consumos (Farm)</Link></li>
+			<li><Link to='/dashboard/dosis'>Dosis (Farm)</Link></li>					
+			<li><Link to='/dashboard/unidades-medicamentos'>Unidades de medida (Farm)</Link></li>			
+			<li><Link to='/dashboard/farmaceuticas'>Farmacéuticas (Farm)</Link></li>			
 		</ul>
 	}	
 
