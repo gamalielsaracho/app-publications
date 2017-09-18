@@ -38,6 +38,7 @@ export default (io) => {
 				} else {
 					NombreMedicamento.create(data, (err, nombreMedicamento) => {
 						if(err) {
+							console.log(err)
 							socket.emit('crear_nombreMedicamento', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
