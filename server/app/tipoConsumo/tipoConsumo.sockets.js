@@ -38,6 +38,7 @@ export default (io) => {
 				} else {
 					TipoConsumo.create(data, (err, tipoConsumo) => {
 						if(err) {
+							console.log(err)
 							socket.emit('crear_tipoConsumo', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
