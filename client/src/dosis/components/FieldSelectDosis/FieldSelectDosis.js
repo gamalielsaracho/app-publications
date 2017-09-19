@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+import FormularioDosisContainer from '../Formulario'
+
+
 class FieldSelectDosis extends Component {
 	render() {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
@@ -9,7 +12,7 @@ class FieldSelectDosis extends Component {
 		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
-				
+				<FormularioDosisContainer/>
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
