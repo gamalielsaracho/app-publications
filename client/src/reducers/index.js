@@ -34,6 +34,10 @@ import tipoConsumoReducer from '../tipoConsumo/reducer'
 import dosisReducer from '../dosis/reducer'
 import unidadMedidaMedicamentoReducer from '../unidadMedidaMedicamento/reducer'
 import farmaceuticaReducer from '../farmaceutica/reducer'
+import proveedorReducer from '../proveedor/reducer'
+import accionReducer from '../accion/reducer'
+import medicamentoReducer from '../medicamento/reducer'
+
 
 
 const rootReducer = combineReducers({
@@ -66,7 +70,10 @@ const rootReducer = combineReducers({
 	tipoConsumo: tipoConsumoReducer,
 	dosis: dosisReducer,
 	unidadMedicamento: unidadMedidaMedicamentoReducer,
-	farmaceutica: farmaceuticaReducer
+	farmaceutica: farmaceuticaReducer,
+	proveedor: proveedorReducer,
+	accion: accionReducer,
+	medicamento: medicamentoReducer
 
 })
 
