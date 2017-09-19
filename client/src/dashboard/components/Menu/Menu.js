@@ -89,6 +89,10 @@ class Menu extends Component {
 			<li><Link to='/dashboard/dosis'>Dosis (Farm)</Link></li>					
 			<li><Link to='/dashboard/unidades-medicamentos'>Unidades de medida (Farm)</Link></li>			
 			<li><Link to='/dashboard/farmaceuticas'>Farmacéuticas (Farm)</Link></li>			
+			<li><Link to='/dashboard/proveedores'>Proveedores (Farm)</Link></li>			
+			{ /* Agregar solamente. si piden. */}
+			{ /* <li><Link to='/dashboard/acciones'>Acciones (Farm)</Link></li> */}		
+			<li><Link to='/dashboard/medicamentos'>Medicamentos (Farm)</Link></li>			
 		</ul>
 	}	
 
