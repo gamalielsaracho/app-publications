@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+
+import FormularioTipoConsumoContainer from '../Formulario'
+
 class FieldSelectTiposConsumos extends Component {
 	render() {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
@@ -10,13 +13,14 @@ class FieldSelectTiposConsumos extends Component {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
+				<FormularioTipoConsumoContainer/>
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
 							<option value=''>Seleccionar tipo de consumo</option>
 							{
 								listar.tiposConsumos.map((tipo) => {
-									return <option key={tipo.id_tipoConsumo} value={nivel.id_tipoConsumo}>
+									return <option key={tipo.id_tipoConsumo} value={tipo.id_tipoConsumo}>
 										{ tipo.descripcion }
 									</option>
 								})
