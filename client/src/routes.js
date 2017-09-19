@@ -90,6 +90,10 @@ import ListarTiposConsumosPage from '././tipoConsumo/pages/ListarTiposConsumosPa
 import ListarDosisPage from '././dosis/pages/ListarDosisPage'
 import ListarUnidadesMedicamentosPage from '././unidadMedidaMedicamento/pages/ListarUnidadesMedicamentosPage'
 import ListarFarmaceuticasPage from '././farmaceutica/pages/ListarFarmaceuticasPage'
+import ListarProveedoresPage from '././proveedor/pages/ListarProveedoresPage'
+// Agregar solamente. si piden.
+// import ListarAccionesPage from '././accion/pages/ListarAccionesPage'
+import ListarMedicamentosPage from '././medicamento/pages/ListarMedicamentosPage'
 
 
 export default (
@@ -152,6 +156,10 @@ export default (
 			<Route path='/dashboard/dosis' component={ListarDosisPage}/>
 			<Route path='/dashboard/unidades-medicamentos' component={ListarUnidadesMedicamentosPage}/>
 			<Route path='/dashboard/farmaceuticas' component={ListarFarmaceuticasPage}/>
+			<Route path='/dashboard/proveedores' component={ListarProveedoresPage}/>
+			{/* Agregar solamente. si piden. (Acciones). */}
+			{/* <Route path='/dashboard/acciones' component={ListarAccionesPage}/> */}
+			<Route path='/dashboard/medicamentos' component={ListarMedicamentosPage}/>
 
 		</Route>
 
