@@ -3,7 +3,7 @@ import React , { Component } from 'react'
 class MensajeOerror extends Component {
 	render() {
 		const contenido = this.props.mensaje ? this.props.mensaje : this.props.error
-		console.log(contenido)
+		// console.log(contenido)
 		var colorContenedor
 
 		if(this.props.mensaje) {
