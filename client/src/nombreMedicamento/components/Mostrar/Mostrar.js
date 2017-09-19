@@ -23,7 +23,8 @@ class Mostrar extends Component {
 	renderNombreMedicamento(nombreMedicamento) {
 		if(nombreMedicamento) {
 			return <div>
-				<p><strong>Nombre:</strong> { nombreMedicamento.descripcion }</p>
+				<p><strong>Nombre comercial:</strong> { nombreMedicamento.descripcion }</p>
+				<p><strong>Nombre genérico:</strong> { nombreMedicamento.nombreGenerico }</p>				
 			</div>
 		} else {
 			return <span></span>
