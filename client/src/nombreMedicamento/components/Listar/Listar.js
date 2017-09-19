@@ -32,6 +32,8 @@ class Listar extends Component {
 					return <tr key={nombre.id_nombreMedicamento}>
 			            <td>{ nombre.id_nombreMedicamento }</td>
 			            <td>{ nombre.descripcion }</td>
+			            <td>{ nombre.nombreGenerico }</td>
+
 			            <td>
 							<button type="button" onClick={() => { this.props.mostrarNombreMedicamento(nombre.id_nombreMedicamento) }} className="btn btn-info btn-space">Mostrar</button>
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarNombreMedicamento(nombre.id_nombreMedicamento) }} className="btn btn-warning btn-space">Editar</button>
@@ -70,7 +72,8 @@ class Listar extends Component {
 							<thead>
 						    	<tr>
 						        	<th>Id</th>
-						        	<th>Nombre</th>
+						        	<th>Nombre comercial</th>
+						        	<th>Nombre genérico</th>
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
