@@ -48,7 +48,7 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_rol', (data) => {
-			Rol.auditoria(data, 'eliminación')
+			// Rol.auditoria(data, 'eliminación')
 
 			Rol.delete(data.id_rol, (err) => {
 				if(err) {
@@ -64,7 +64,7 @@ export default (socket, io) => {
 
 
 		socket.on('editar_rol', (data) => {
-			Rol.auditoria(data, 'actualización')
+			// Rol.auditoria(data, 'actualización')
 
 			// console.log(data)
 
