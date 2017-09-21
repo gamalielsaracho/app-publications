@@ -12,7 +12,7 @@ class MostrarApp extends Component {
 			<MostarPacienteContainer 
 				idPaciente={idPaciente}/>
 
-			<h3 className='text-center'>Historial Clínica</h3>
+			<h3 className='text-center'>Historial Clínico</h3>
 			<ul className="nav nav-tabs">
 			  <li className="nav-item">
 			    <a className="nav-link active">
@@ -23,10 +23,7 @@ class MostrarApp extends Component {
 			    <a className="nav-link">Consultas</a>
 			  </li>
 			  <li className="nav-item">
-			    <a className="nav-link">Dignosticos</a>
-			  </li>
-			  <li className="nav-item">
-			    <a className="nav-link">Medicamentos retirados</a>
+			    <a className="nav-link">Analisis Realizados</a>
 			  </li>
 			</ul>
 

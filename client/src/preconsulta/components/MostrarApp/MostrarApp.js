@@ -70,6 +70,7 @@ class MostrarApp extends Component {
 
 		// id de la pre-consulta desde la url.
 		let idPreConsulta = this.props.idPreConsulta
+			// console.log(idPreConsulta)
 
 		return <div>
 			<br/>
@@ -78,7 +79,6 @@ class MostrarApp extends Component {
 
 			{/*  
 			*/}
-
 			<ListarPreConsultaParametrosContainer idPreConsulta={idPreConsulta}/>
 
 			<FormularioConsultaContainer
