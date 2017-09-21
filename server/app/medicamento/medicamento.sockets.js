@@ -38,11 +38,15 @@ export default (io) => {
 				// } else {
 					Medicamento.create(data, (err, medicamento) => {
 						if(err) {
+							console.log(err)
 							socket.emit('crear_medicamento', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('crear_medicamento', { mensaje: 'Se agregó exitósamente.' })
+						socket.emit('crear_medicamento', { 
+							mensaje: 'Se agregó exitósamente.',
+							idMedicamentoInsertado: medicamento.insertId
+						})
 						
 						medicamentos()
 					})
@@ -62,6 +66,20 @@ export default (io) => {
 				socket.emit('eliminar_medicamento', { mensaje: 'Se Eliminó exitósamente.' })
 
 				medicamentos()
+			})
+		})
+
+		socket.on('mostrar_medicamento_editar', (data) => {
+			Medicamento.findByIdToUpdate(data, (err, medicamento) => {
+				// console.log(medicamento)
+
+				if(err) {
+					console.log(err)
+					socket.emit('mostrar_medicamento_editar', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				socket.emit('mostrar_medicamento_editar', medicamento[0])
 			})
 		})
 
@@ -86,6 +104,18 @@ export default (io) => {
 					}
 
 					socket.emit('editar_medicamento', { mensaje: 'Se actualizó exitósamente.' })
+
+					// Volvemos a busrcar el medicamento editado
+					// para emitir los cambios.
+					Medicamento.findById(data, (err, medicamento) => {
+						if(err) {
+							console.log(err)
+							socket.emit('mostrar_medicamento', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+
+						socket.emit('mostrar_medicamento', medicamento[0])
+					})
 					
 					medicamentos()
 				})
