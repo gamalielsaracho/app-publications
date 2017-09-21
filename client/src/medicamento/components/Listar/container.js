@@ -15,7 +15,11 @@ function mapStateToProps(state) {
 	return {
 		crear: state.medicamento.crear,
 		listar: state.medicamento.listar,
-		medicamentos: state.medicamento.listar.medicamentos
+		medicamentos: state.medicamento.listar.medicamentos,
+
+		// Para hacer render del formulario solamente cuando esté abierto.
+		formulario: state.medicamento.formulario
+
 	}
 }
 

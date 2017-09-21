@@ -67,11 +67,11 @@ class Formulario extends Component {
 	enviarFormulario(formProps) {				
 		console.log(formProps)
 
-		// if(this.props.editarContenido) {
-		// 	this.props.editarMedicamento(formProps)
-		// } else {
-		// 	this.props.crearMedicamento(formProps)
-		// }
+		if(this.props.editarContenido) {
+			this.props.editarMedicamento(formProps)
+		} else {
+			this.props.crearMedicamento(formProps)
+		}
 	}
 
 	renderCargando(cargando) {
@@ -85,8 +85,18 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '60vh',
-		  		position: 'none'
+			posit: 'absolute',
+			    top: '40px',
+			    left: '0px',
+			    right: '0px',
+			    bottom: '40px',
+			    border: '1px solid #ccc',
+			    background: '#fff',
+			    overflow: 'auto',
+			    WebkitOverflowScrolling: 'touch',
+			    borderRadius: '4px',
+			    outline: 'none',
+			    padding: '20px'
 		  	}
 		}
 
@@ -118,19 +128,19 @@ class Formulario extends Component {
 
 						<form onSubmit={handleSubmit(this.enviarFormulario)}>
 							<div className='row'>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
 									<Field name='id_nombreMedicamento' 
 										type='text' component={FieldSelectNombresMedicamentosContainer} 
 										listar={this.props.listarNombresMedicamentos}
 										label='Nombre Medicamento'/>
 								</div>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-									<Field name='id_dosis'
-										type='text' component={FieldSelectDosisContainer}
-										listar={this.props.listarDosis}
-										label='Dosis'/>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
+									<Field name='id_presentacion'
+										type='text' component={FieldSelectPresentacionesContainer}
+										listar={this.props.listarPresentaciones}
+										label='Presentación'/>
 								</div>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
 									<Field name='id_tipoConsumo'
 										type='text' component={FieldSelectTiposConsumosContainer} 
 										listar={this.props.listarTiposConsumos}
@@ -139,32 +149,32 @@ class Formulario extends Component {
 							</div>
 																						
 							<div className='row'>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
 									<Field name='id_farmaceutica'
 										type='text' component={FieldSelectFarmaceuticasContainer}
 										listar={this.props.listarFarmaceuticas}
 										label='Farmacéutica'/>
 								</div>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
+									<Field name='id_dosis'
+										type='text' component={FieldSelectDosisContainer}
+										listar={this.props.listarDosis}
+										label='Dosis'/>
+								</div>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
 									<Field name='id_unidadMedidaMedicamento'
 										type='text' component={FieldSelectUnidadesMedicamentosContainer} 
 										listar={this.props.listarUnidadesMedicamentos}
 										label='Unidad de medida'/>
 								</div>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-									<Field name='id_presentacion'
-										type='text' component={FieldSelectPresentacionesContainer}
-										listar={this.props.listarPresentaciones}
-										label='Presentación'/>
-								</div>
 							</div>
 
 							<div className='row'>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
-									<Field name='stockMinimo' type='text' component={renderField} label='Stock mínimo'/>
-								</div>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-3'>
 									<Field name='cantidadFarmaceutica' type='text' component={renderField} label='Cantidad x Unidad'/>
+								</div>
+								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-3'>
+									<Field name='stockMinimo' type='text' component={renderField} label='Stock mínimo'/>
 								</div>
 							</div>
 

@@ -53,11 +53,11 @@ export function abrirFormularioEditarMedicamento(idMedicamento) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_MEDICAMENTO_REQUEST })
 
-		medicamentoSocket.emit('mostrar_medicamento', { 
+		medicamentoSocket.emit('mostrar_medicamento_editar', { 
 			id_medicamento: idMedicamento 
 		})
 
-		medicamentoSocket.on('mostrar_medicamento', (data) => {
+		medicamentoSocket.on('mostrar_medicamento_editar', (data) => {
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_MEDICAMENTO_FALLO, payload: data.error })
@@ -106,6 +106,7 @@ export function crearMedicamento(datosFormulario) {
 			} else {
 				dispatch({ type: CREAR_MEDICAMENTO_EXITO, payload: data })
 				dispatch(reset('FormularioMedicamento'))
+				browserHistory.push(`/dashboard/medicamentos/${data.idMedicamentoInsertado}`)
 			}
 		})
 	
@@ -128,6 +129,8 @@ export function eliminarMedicamento(idMedicamento) {
 				dispatch({ type: ELIMINAR_MEDICAMENTO_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: ELIMINAR_MEDICAMENTO_EXITO, payload: data })
+				browserHistory.push(`/dashboard/medicamentos/`)
+				// window.location.assign("https://www.w3schools.com")
 			}
 		})
 	}

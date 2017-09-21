@@ -8,26 +8,52 @@ import Cargando from '../../../app/components/Cargando'
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
-		this.renderRol = this.renderRol.bind(this)
+		this.renderMedicamento = this.renderMedicamento.bind(this)
 	}
 
-	// componentWillUnmount() {
-	// 	console.log("se desmonto Mostrar.!")
-	// }
-
-	renderCargando(cargando) {
-		if(cargando) {
-			return <Cargando/>
-		} else {
-			return <span></span>
-		}
+	componentWillMount() {
+		this.props.mostrarMedicamento(this.props.idMedicamento)
 	}
-
-	renderRol(rol) {
-		if(rol) {
+	
+	renderMedicamento(i) {
+		if(i) {
 			return <div>
-				<p><strong>Nombre:</strong> { rol.descripcion }</p>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
+						<p><strong>Nombre Medicamento/a:</strong>{ i.nombreMedicamento.descripcion }</p>
+						<p><strong>Tipo consumo:</strong>{ i.tipoConsumo.descripcion }</p>				
+					</div>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
+						<p><strong>Dosis:</strong>{ i.dosis.valor }</p>				
+						<p><strong>Presentación:</strong>{ i.presentacion.descripcion }</p>
+					</div>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
+						<p><strong>Unidad de medida:</strong>{ i.unidad.descripcion }</p>				
+						<p><strong>Cantidad x Unidad:</strong>{ i.medicamento.cantidadFarmaceutica }</p>				
+					</div>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
+						<p><strong>Stock mínimo:</strong>{ i.medicamento.stockMinimo }</p>				
+					</div>
+				</div>
+
+				<h3>Farmacéutica</h3>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<p><strong>Nombre:</strong>{ i.farmaceutica.nombre }</p>				
+					</div>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<p><strong>Dirección:</strong>{ i.farmaceutica.direccion }</p>				
+					</div>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<p><strong>Telefono:</strong>{ i.farmaceutica.telefono }</p>				
+					</div>
+				</div>
+
+				<div className='row'>
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarMedicamento(i.medicamento.id_medicamento) }} className="btn btn-warning btn-space">Editar</button>
+					<button type="button" onClick={() => { this.props.eliminarMedicamento(i.medicamento.id_medicamento) }} className="btn btn-danger btn-space">Eliminar</button>
+				</div>
+
 			</div>
 		} else {
 			return <span></span>
@@ -35,42 +61,19 @@ class Mostrar extends Component {
 	}
 
 	render() {
-		const customStyles = {
-		    content : {
-		  		height: '40vh',
-		  		position: 'none'
-		  	}
-		}
-
-
-		const { cargando, rol, error, abierto } = this.props.mostrar
+		const { cargando, medicamento, error, abierto } = this.props.mostrar
 		
-		if(abierto) {
-			return <ReactModal isOpen={abierto}
-				       	contentLabel="Minimal Modal Example"
-				       	style={customStyles}>
-
-				<div className='container'>
-
-					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
-					</div>
-
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
-							<MensajeOerror error={error} mensaje={null}/>
-
-							{ this.renderRol(rol) }
-						</div>
-					</div>
-				</div>
-
-			</ReactModal>
+		if(cargando) {
+			return <Cargando/>
 		} else {
-			return <span></span>
-		}
+			return <div>
+				<div>
+					<MensajeOerror error={error} mensaje={null}/>
 
+					{ this.renderMedicamento(medicamento) }
+				</div>
+			</div>
+		}
 	}
 }
 

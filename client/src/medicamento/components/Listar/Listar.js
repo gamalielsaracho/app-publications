@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FormularioNivelContainer from '../Formulario'
-import FormularioMedicamentoContainer from '../Mostrar'
+import FormularioMedicamentoContainer from '../Formulario'
 
 class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderMedicamentos = this.renderMedicamentos.bind(this)
+		this.renderFormularioMedicamento = this.renderFormularioMedicamento.bind(this)
+
+	}
+
+	renderFormularioMedicamento() {
+		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
+			return <FormularioMedicamentoContainer/>
+		} else {
+			return <span></span>
+		}
 	}
 
 	componentWillMount() {
@@ -17,7 +27,13 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.medicamentos !== this.props.medicamentos) {
+		if((nextProps.medicamentos !== this.props.medicamentos) || (nextProps.formulario !==  this.props.formulario)) {
+			// console.log('ESTADO DE FORMULARIO ANTERIOR.')
+			// console.log(this.props.formulario)
+
+			// console.log('ESTADO DE FORMULARIO SIGUIENTE.')
+			// console.log(nextProps.formulario)
+
 			return true
 		}else {
 			return false
@@ -40,9 +56,9 @@ class Listar extends Component {
 			            <td>{ i.tipoConsumo.descripcion }</td>
 
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarMedicamento(i.medicamento.id_medicamento) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarMedicamento(i.medicamento.id_medicamento) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarMedicamento(i.medicamento.id_medicamento) }} className="btn btn-danger btn-space">Eliminar</button>
+			            	<Link to={`/dashboard/medicamentos/${i.medicamento.id_medicamento}`}>
+								<button type="button" className="btn btn-info btn-space">Mostrar</button>
+							</Link>
 			            </td>
 			        </tr>		
 				})
@@ -60,8 +76,7 @@ class Listar extends Component {
 				return <div>
 					<h1 className='text-center'>Medicamentos</h1>
 					
-					<FormularioNivelContainer/>
-					<FormularioMedicamentoContainer/>
+					{ this.renderFormularioMedicamento() }
 
 					<MensajeOerror error={error} mensaje={null}/>
 

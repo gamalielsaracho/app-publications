@@ -33,16 +33,49 @@ import {
 } from '../../../presentacion/actions'
 
 
-
 import Formulario from './Formulario'
+
+// id_nombreMedicamento
+// id_presentacion
+// id_tipoConsumo
+// id_farmaceutica
+// id_dosis
+// id_unidadMedidaMedicamento
+// cantidadFarmaceutica
+// stockMinimo
 
 const validate = (values) => {
 	const errors = {}
 
-	if(!values.descripcion) {
-		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.trim().length < 5) {
-   			errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
+	if(!values.id_nombreMedicamento) {
+		errors.id_nombreMedicamento = 'Tienes que introducir un nombre.'
+	}
+
+	if(!values.id_presentacion) {
+		errors.id_presentacion = 'Tienes que introducir una presentación.'
+	}
+
+	if(!values.id_tipoConsumo) {
+		errors.id_tipoConsumo = 'Tienes que introducir un tipo.'
+	}
+
+	if(!values.id_farmaceutica) {
+		errors.id_farmaceutica = 'Tienes que introducir una farmacéutica.'
+	}
+
+	if(!values.id_dosis) {
+		errors.id_dosis = 'Tienes que introducir una dosis.'
+	}
+
+	if(!values.id_unidadMedidaMedicamento) {
+		errors.id_unidadMedidaMedicamento = 'Tienes que introducir una medida.'
+	}
+
+
+	if(!values.stockMinimo) {
+		errors.stockMinimo = 'Stock Mínimo obligatorio.'
+	}else if (values.stockMinimo.trim().length < 1) {
+   			errors.stockMinimo = 'Stock Mínimo obligatorio..'
 	}
 
 	return errors

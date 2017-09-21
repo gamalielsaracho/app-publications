@@ -1,22 +1,30 @@
 import { connect } from 'react-redux'
 
 import {
-	cerrarModalMostrarRol
+	mostrarMedicamento,
+	abrirFormularioEditarMedicamento,
+	eliminarMedicamento
 } from '../../actions'
 
 import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.rol.mostrar
+		mostrar: state.medicamento.mostrar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		cerrarModalMostrarRol: () => {
-			dispatch(cerrarModalMostrarRol())
+		abrirFormularioEditarMedicamento: (idMedicamento) => {
+			dispatch(abrirFormularioEditarMedicamento(idMedicamento))
+		},
+		eliminarMedicamento: (idMedicamento) => {
+			dispatch(eliminarMedicamento(idMedicamento))
+		},
+		mostrarMedicamento: (idMedicamento) => {
+			dispatch(mostrarMedicamento(idMedicamento))
 		}
 	}
 }
