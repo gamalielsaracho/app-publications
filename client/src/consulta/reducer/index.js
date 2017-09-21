@@ -143,7 +143,6 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_CONSULTAS_REQUEST:
 			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' },
-
 				mostrar: INITIAL_STATE.mostrar
 			})
 

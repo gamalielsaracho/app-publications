@@ -10,11 +10,8 @@ function mapStateToProps(state, ownProps) {
 	return {
 		idConsulta: ownProps.params.idConsulta,
 
-		// obtenemos los datos de la cita que se está mostrando
-		// para pasarle a FormularioConsultaContainer con el objetivo de
-		// obtener id_paciente y pasarle a el objecto formProps del 
-		// formulario. (VER)
-		datosCita: state.cita.mostrar.cita
+		// guardamos todos los parametros de la url en el objeto urls.
+		urlsParams: ownProps.params
 	}
 }
 

@@ -44,8 +44,6 @@ class Listar extends Component {
 			            <td>{ i.paciente.nombres+' '+i.paciente.apellidos }</td>
 			            <td>{ i.consulta.fecha }</td>
 			            <td>{ i.consulta.fechaProximaConsulta }</td>
-			            <td>{ i.diagnostico.descripcion }</td>
-			            <td>{ i.consulta.observacionDiagnostico }</td>
 			            <td>
 			            	<Link to={`/dashboard/consultas/${i.consulta.id_consulta}`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
@@ -79,8 +77,6 @@ class Listar extends Component {
 						        	<th>Paciente</th>
 						        	<th>Fecha</th>
 						        	<th>Próxima consulta</th>
-						        	<th>Diagnóstico</th>
-						        	<th>Observaciones</th>
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>

@@ -35,16 +35,12 @@ class Mostrar extends Component {
 				// console.log(calcularEdad(dato.paciente.fechaNacimiento))
 
 				return <div>
-					<h4 className='text-center'></h4>
+					<h4 className='text-center'>Consulta</h4>
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<p><strong>Médico/a:</strong>{ dato.personal.nombres +' '+ dato.personal.apellidos }</p>
 							<p><strong>Fecha:</strong>{ formatDate(dato.consulta.fecha) }</p>
 							<p><strong>Fecha próxima consulta:</strong>{ formatDate(dato.consulta.fechaProximaConsulta) }</p>
-						</div>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							<p><strong>Diagnóstico:</strong>{ dato.diagnostico.descripcion }</p>				
-							<p><strong>Observaciones:</strong>{ dato.consulta.observacionDiagnostico }</p>				
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<button onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>

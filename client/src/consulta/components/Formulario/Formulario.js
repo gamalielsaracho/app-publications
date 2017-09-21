@@ -11,11 +11,6 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-// DIAGNOSTICO.
-import FieldSelectDiagnosticosContainer from '../../../diagnostico/components/FieldSelectDiagnosticos'
-import FormularioDiagnosticoContainer from '../../../diagnostico/components/Formulario'
-
-
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -36,13 +31,8 @@ class Formulario extends Component {
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
-	componentWillMount() {
-		this.props.listarDiagnosticos()
-	}
-
 	enviarFormulario(formProps) {
 
-		// console.log(formProps)
 		
 		if(this.props.editarContenido) {
 			this.props.editarConsulta(formProps)
@@ -58,6 +48,7 @@ class Formulario extends Component {
 			// Para pasarle a push y redireccionar a la consulta creada.
 			formProps.id_cita = this.props.datosCita.cita.id_cita
 
+			// console.log(formProps)
 			this.props.crearConsulta(formProps)
 		}
 	}
@@ -113,18 +104,9 @@ class Formulario extends Component {
 					<div className='row'>
 						{ this.renderCargando(cargando) }
 
-						<FormularioDiagnosticoContainer/>
-
 						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
 								<div className='row'>
-									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-										<Field name='id_diagnostico' type='text'
-											component={FieldSelectDiagnosticosContainer}
-											listaDiagnosticos={this.props.listaDiagnosticos}
-											label='Diagnóstico'/>
-										<Field name='observacionDiagnostico' type='text' component={this.renderFieldTextArea} label='Observaciones'/>
-									</div>
 									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 										<Field name='fechaProximaConsulta' type='date' component={renderField} label='Fecha próxima consulta'/>
 									</div>
