@@ -58,7 +58,7 @@ class Listar extends Component {
 	}
 
 	renderPreConsultaParametros(parametrosPreConsulta) {
-		console.log(parametrosPreConsulta)
+		// console.log(parametrosPreConsulta)
 
 		let datosToken = null
 		let personalPre = null
