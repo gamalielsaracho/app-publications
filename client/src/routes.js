@@ -32,6 +32,9 @@ import ListarAreasPage from '././area/pages/ListarAreasPage'
 // ALERGIAS.
 import ListarAlergiasPage from '././alergia/pages/ListarAlergiasPage'
 
+
+
+
 // PACIENTES
 		// Listar.
 import ListarPacienteApp from '././paciente/components/ListarApp'
@@ -42,6 +45,7 @@ import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
 	
 	// PACIENTE ALERGIAS.
 	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
+
 
 // CITAS.
 	// Listar.
@@ -81,6 +85,9 @@ import MostrarConsultaAppContainer from '././consulta/components/MostrarApp'
 // ... Para cuando el médico realize la consulta.
 import MostrarConsultaRellenandoAppContainer from '././consulta/components/MostrarRellenandoApp'
 
+// Para listar los diagnósticos por consulta. 
+import ListarConsultaDiagnosticosPage from '././diagnosticoConsulta/pages/ListarConsultaDiagnosticosPage'
+
 
 
 				// Módulo farmacia.
@@ -93,7 +100,19 @@ import ListarFarmaceuticasPage from '././farmaceutica/pages/ListarFarmaceuticasP
 import ListarProveedoresPage from '././proveedor/pages/ListarProveedoresPage'
 // Agregar solamente. si piden.
 // import ListarAccionesPage from '././accion/pages/ListarAccionesPage'
+	
+	// LISTAR MEDICAMENTOS APP.
+import ListarMedicamentosApp from '././medicamento/components/ListarApp'
 import ListarMedicamentosPage from '././medicamento/pages/ListarMedicamentosPage'
+	
+	// MOSTRAR MEDICAMENTO APP.
+import MostrarMedicamentoAppContainer from '././medicamento/components/MostrarApp'
+
+	// LISTAR LOTES-MEDICAMENTOS APP.
+import ListarLotesMedicamentosAppContainer from '././loteMedicamento/components/ListarApp'
+import ListarLotesMedicamentosPage from '././loteMedicamento/pages/ListarLotesMedicamentosPage'
+
+import MostrarLoteMedicamentoAppContainer from '././loteMedicamento/components/MostrarApp'
 
 
 export default (
@@ -124,6 +143,7 @@ export default (
 				<IndexRoute component={ListarConsultasPage}/>
 				<Route path='/dashboard/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
 
+					<Route path='/dashboard/consultas/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosPage}/>
 				</Route>
 			</Route>
 
@@ -141,7 +161,8 @@ export default (
 					<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaAppContainer}>
 
 						<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaRellenandoAppContainer}>
-
+							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/diagnosticos' 
+								component={ListarConsultaDiagnosticosPage}/>
 						</Route>
 
 					</Route>
@@ -159,8 +180,18 @@ export default (
 			<Route path='/dashboard/proveedores' component={ListarProveedoresPage}/>
 			{/* Agregar solamente. si piden. (Acciones). */}
 			{/* <Route path='/dashboard/acciones' component={ListarAccionesPage}/> */}
-			<Route path='/dashboard/medicamentos' component={ListarMedicamentosPage}/>
+			
+			<Route path='/dashboard/medicamentos' component={ListarMedicamentosApp}>
+				<IndexRoute component={ListarMedicamentosPage}/>
 
+				<Route path='/dashboard/medicamentos/:idMedicamento' component={MostrarMedicamentoAppContainer}/>
+			</Route>
+
+			
+			<Route path='/dashboard/lotes-medicamentos' component={ListarLotesMedicamentosAppContainer}>
+				<IndexRoute component={ListarLotesMedicamentosPage}/>
+				<Route path='/dashboard/lotes-medicamentos/:idLoteMedicamento' component={MostrarLoteMedicamentoAppContainer}/>
+			</Route>
 		</Route>
 
 	</Route>)
