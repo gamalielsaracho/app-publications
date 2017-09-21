@@ -52,6 +52,8 @@ require('././app/proveedor/proveedor.sockets')(io)
 // Agregar solamente. si piden.
 // require('././app/accion/accion.sockets')(io)
 require('././app/medicamento/medicamento.sockets')(io)
+require('././app/loteMedicamento/loteMedicamento.sockets')(io)
+
 
 
 io.on('connection', function (socket) {
