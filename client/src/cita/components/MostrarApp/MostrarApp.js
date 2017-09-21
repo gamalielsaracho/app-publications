@@ -10,6 +10,7 @@ class MostrarApp extends Component {
 	}
 
 	renderMenu(cita) {
+		// console.log(cita)
 		if(cita.cita != undefined) {
 			if(cita.cita.id_preconsulta != null) {
 				return <li className="nav-item">
