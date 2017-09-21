@@ -18,7 +18,6 @@ exports.find = (callback) => {
 				medicamento.id_unidadMedidaMedicamento = unidad.id_unidadMedidaMedicamento AND
 				medicamento.id_presentacion = presentacion.id_presentacion
 	`
-				// farmaceuticas farmaceutica,
 
 	var options = {
 		sql: q, 
@@ -33,13 +32,29 @@ exports.find = (callback) => {
 exports.findById = (data, callback) => {
 
 	let q = `
-		SELECT * FROM medicamentos 
+		SELECT * 
+			FROM 
+				medicamentos medicamento,
+				nombresMedicamentos nombreMedicamento,
+				dosis dosis,
+				tiposConsumo tipoConsumo,
+				unidadesMedidasMedicamentos unidad,
+				presentaciones presentacion,
+				farmaceuticas farmaceutica
+
 			WHERE
+				medicamento.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento AND
+				medicamento.id_dosis = dosis.id_dosis AND
+				medicamento.id_tipoConsumo = tipoConsumo.id_tipoConsumo AND
+				medicamento.id_unidadMedidaMedicamento = unidad.id_unidadMedidaMedicamento AND
+				medicamento.id_presentacion = presentacion.id_presentacion AND
+				medicamento.id_farmaceutica = farmaceutica.id_farmaceutica AND
 				id_medicamento = ?
 	`
+
 	var options = {
 		sql: q,
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, [data.id_medicamento], callback)
@@ -73,6 +88,11 @@ exports.create = (data, callback) => {
 		) VALUES (null, LOWER(?), LOWER(?), LOWER(?), LOWER(?), 
 			      LOWER(?), LOWER(?), LOWER(?), LOWER(?))
 	`
+
+	if(data.cantidadFarmaceutica) {
+		data.cantidadFarmaceutica.trim()
+	}
+
 	return connection.query(q, [ data.id_nombreMedicamento,
 								 data.id_dosis,
 								 data.stockMinimo.trim(),
@@ -80,7 +100,25 @@ exports.create = (data, callback) => {
 								 data.id_farmaceutica,
 								 data.id_unidadMedidaMedicamento,
 								 data.id_presentacion,
-								 data.cantidadFarmaceutica.trim() ], callback)
+								 data.cantidadFarmaceutica ], callback)
+
+	connection.end()
+}
+
+exports.findByIdToUpdate = (data, callback) => {
+
+	let q = `
+		SELECT * FROM medicamentos
+			WHERE
+				id_medicamento = ?
+	`
+
+	var options = {
+		sql: q,
+		nestTables: false
+	}
+
+	return connection.query(options, [data.id_medicamento], callback)
 
 	connection.end()
 }
@@ -100,6 +138,10 @@ exports.update = (data, callback) => {
 				id_medicamento = ?
 	`
 
+	if(data.cantidadFarmaceutica) {
+		data.cantidadFarmaceutica.trim()
+	}
+
 	return connection.query(q, [ data.id_nombreMedicamento,
 								 data.id_dosis,
 								 data.stockMinimo.trim(),
@@ -107,7 +149,7 @@ exports.update = (data, callback) => {
 								 data.id_farmaceutica,
 								 data.id_unidadMedidaMedicamento,
 								 data.id_presentacion,
-								 data.cantidadFarmaceutica.trim(),
+								 data.cantidadFarmaceutica,
 								 data.id_medicamento ], callback)
 
 	connection.end()
