@@ -1,2 +1,2 @@
-import FieldSelectNivelesContainer from './container'
-export default FieldSelectNivelesContainer
+import FieldSelectProveedoresContainer from './container'
+export default FieldSelectProveedoresContainer
