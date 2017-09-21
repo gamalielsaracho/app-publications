@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import FormularioProveedorContainer from '../Formulario'
+
 class FieldSelectProveedores extends Component {
 	render() {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
@@ -10,6 +12,8 @@ class FieldSelectProveedores extends Component {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
+				<FormularioProveedorContainer/>
+
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
