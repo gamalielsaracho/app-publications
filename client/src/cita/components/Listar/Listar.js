@@ -32,8 +32,17 @@ class Listar extends Component {
 	}
 
 	componentWillMount() {
+				console.log('entrooooo medico -> '+removeAccents(this.personalLocalSt.rol))
 		switch(removeAccents(this.personalLocalSt.rol)) {
-			case 'administracion' || 'enfermeria' || 'ventanilla':
+			case 'ventanilla':
+				this.props.listarCitas()
+				break
+				
+			case 'administracion':
+				this.props.listarCitas()
+				break
+
+			case 'enfermeria':
 				this.props.listarCitas()
 				break
 
@@ -132,7 +141,7 @@ class Listar extends Component {
 		let filtro = this.props.filtro
 
 		console.log('EL FILTRO.')
-		console.log(filtro)
+		console.log(citas)
 
 		let con = { // Condiciones.
 			cita: {
