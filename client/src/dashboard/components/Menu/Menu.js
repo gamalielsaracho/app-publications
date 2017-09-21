@@ -93,6 +93,8 @@ class Menu extends Component {
 			{ /* Agregar solamente. si piden. */}
 			{ /* <li><Link to='/dashboard/acciones'>Acciones (Farm)</Link></li> */}		
 			<li><Link to='/dashboard/medicamentos'>Medicamentos (Farm)</Link></li>			
+			<li><Link to='/dashboard/lotes-medicamentos'>Lotes (Farm)</Link></li>			
+
 		</ul>
 	}	
 
