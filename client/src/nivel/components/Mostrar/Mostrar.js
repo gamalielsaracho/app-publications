@@ -8,25 +8,16 @@ import Cargando from '../../../app/components/Cargando'
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
-		this.renderRol = this.renderRol.bind(this)
+		this.renderNivel = this.renderNivel.bind(this)
 	}
 
-	renderCargando(cargando) {
+	renderNivel(nivel, cargando) {
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			return <span></span>
-		}
-	}
-
-	renderRol(rol) {
-		if(rol) {
 			return <div>
-				<p><strong>Nombre:</strong> { rol.descripcion }</p>
+				<p><strong>Nombre:</strong> { nivel.descripcion }</p>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 
@@ -39,9 +30,7 @@ class Mostrar extends Component {
 		}
 
 
-		const { cargando, rol, error, abierto } = this.props.mostrar
-
-		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
+		const { cargando, nivel, error, abierto } = this.props.mostrar
 		
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
@@ -51,15 +40,14 @@ class Mostrar extends Component {
 				<div className='container'>
 
 					<div className='row end-lg end-md end-sm end-xs'>
-						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarRol() }}></span>
+						<span className='icon-cross' onClick={() => { this.props.cerrarModalMostrarNivel() }}></span>
 					</div>
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderRol(rol) }
+							{ this.renderNivel(nivel, cargando) }
 						</div>
 					</div>
 				</div>
