@@ -24,7 +24,6 @@ import preConsultaParametroReducer from '../preConsultaParametro/reducer'
 import unidadParametroPreReducer from '../unidadParametroPre/reducer'
 
 import diagnosticoReducer from '../diagnostico/reducer'
-import diagnosticoConsultaReducer from '../diagnosticoConsulta/reducer'
 
 import consultaReducer from '../consulta/reducer'
 
@@ -39,6 +38,12 @@ import proveedorReducer from '../proveedor/reducer'
 import accionReducer from '../accion/reducer'
 import medicamentoReducer from '../medicamento/reducer'
 import loteMedicamentoReducer from '../loteMedicamento/reducer'
+
+
+// Laboratorio
+import tipoExamenReducer from '../tipoExamen/reducer'
+import unidadAnalisisReducer from '../unidadAnalisis/reducer'
+import parametroAnalisisReducer from '../parametroAnalisis/reducer'
 
 
 const rootReducer = combineReducers({
@@ -62,7 +67,6 @@ const rootReducer = combineReducers({
 	unidadParametroPre: unidadParametroPreReducer,
 
 	diagnostico: diagnosticoReducer,
-	diagnosticoConsulta: diagnosticoConsultaReducer,
 	consulta: consultaReducer,
 
 	
@@ -76,7 +80,13 @@ const rootReducer = combineReducers({
 	proveedor: proveedorReducer,
 	accion: accionReducer,
 	medicamento: medicamentoReducer,
-	loteMedicamento: loteMedicamentoReducer
+	loteMedicamento: loteMedicamentoReducer,
+
+
+	// Laboratorio
+	tipoExamen: tipoExamenReducer,
+	unidadAnalisis: unidadAnalisisReducer,
+	parametroAnalisis: parametroAnalisisReducer
 
 })
 
