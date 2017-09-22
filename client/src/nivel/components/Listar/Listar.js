@@ -4,7 +4,7 @@ import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import FormularioNivelContainer from '../Formulario'
-import MostarContainer from '../Mostrar'
+import MostarNivelContainer from '../Mostrar'
 
 class Listar extends Component {
 	constructor(props) {
@@ -54,7 +54,7 @@ class Listar extends Component {
 					<h1 className='text-center'>Niveles</h1>
 					
 					<FormularioNivelContainer/>
-					<MostarContainer/>
+					<MostarNivelContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
 
