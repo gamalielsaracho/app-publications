@@ -1,0 +1,2 @@
+import FormularioTipoExamenContainer from './container'
+export default FormularioTipoExamenContainer
