@@ -84,11 +84,6 @@ class MostrarApp extends Component {
 			<br/>
 			<ul className="nav nav-tabs">
 				<li className="nav-item">
-				    <Link to={`/dashboard/consultas/${this.props.urlsParams.idConsulta}/diagnosticos`}>
-				    	Diagnósticos
-				    </Link>
-				</li>
-				<li className="nav-item">
 				    <Link to={`/dashboard`}>Tratamientos</Link>
 				</li>
 				<li className="nav-item">

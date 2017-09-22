@@ -13,22 +13,18 @@ class MostrarRellenandoApp extends Component {
 	}
 
 	render() {
-				
+		// /dashboard/citas/${this.props.urlsParams.idCita}/preconsulta/${this.props.urlsParams.idPreConsulta}/consulta/${this.props.urlsParams.idConsulta}/diagnosticos
+		
 		return <div>
 			<br/>
 
 			<MostrarConsultaRellenandoContainer 
 				idConsulta = {this.props.idConsulta}/>
-
+				
 			<br/>
 			<ul className="nav nav-tabs">
 				<li className="nav-item">
-				    <Link to={`/dashboard/citas/${this.props.urlsParams.idCita}/preconsulta/${this.props.urlsParams.idPreConsulta}/consulta/${this.props.urlsParams.idConsulta}/diagnosticos`}>
-				    	Diagnósticos
-				    </Link>
-				</li>
-				<li className="nav-item">
-				    <Link to={`/dashboard`}>Tratamientos</Link>
+				    <Link to={`/dashboard`}>Tratamiento</Link>
 				</li>
 				<li className="nav-item">
 				    <Link to={`/dashboard`}>Medicamentos Solicitados</Link>

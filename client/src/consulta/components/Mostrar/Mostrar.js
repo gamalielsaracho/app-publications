@@ -43,6 +43,10 @@ class Mostrar extends Component {
 							<p><strong>Fecha próxima consulta:</strong>{ formatDate(dato.consulta.fechaProximaConsulta) }</p>
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+							<p><strong>Diagnóstico:</strong>{ dato.diagnostico.descripcion }</p>
+							<p><strong>Observaciones: </strong>{ dato.consulta.observacionDiagnostico }</p>
+						</div>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<button onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
 							<button onClick={ () => { this.props.eliminarConsulta(dato.consulta.id_consulta) } } className='btn btn-danger btn-space'>Eliminar</button>
 						</div>

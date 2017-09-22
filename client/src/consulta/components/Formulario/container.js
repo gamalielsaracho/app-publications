@@ -7,6 +7,10 @@ import {
 	cerrarFormularioConsulta
 } from '../../actions'
 
+import {
+	listarDiagnosticos
+} from '../../../diagnostico/actions'
+
 import Formulario from './Formulario'
 
 const validate = (values) => {
@@ -30,7 +34,10 @@ function mapStateToProps(state) {
 
 		// Para obtener el error al crear o editar.
 		crear: state.consulta.crear,
-		editar: state.consulta.editar
+		editar: state.consulta.editar,
+
+		// Datos para el select option.
+		listarDiagnosticos: state.diagnostico.listar
 	}
 }
 
@@ -48,7 +55,12 @@ function mapDispatchToProps(dispatch) {
 		},
 		editarConsulta: (datosFormulario) => {
 			dispatch(editarConsulta(datosFormulario))
-		}
+		},
+
+		// Funciones para obtener los datos y pasale al select option.
+		listarDiagnosticosFuncion: () => {
+			dispatch(listarDiagnosticos())
+		} 
 	}
 }
 

@@ -11,6 +11,8 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import FieldSelectDiagnosticosContainer from '../../../diagnostico/components/FieldSelectDiagnosticos'
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -29,6 +31,10 @@ class Formulario extends Component {
 		this.renderFieldTextArea = this.renderFieldTextArea.bind(this)
 
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+	}
+
+	componentWillMount() {
+		this.props.listarDiagnosticosFuncion()
 	}
 
 	enviarFormulario(formProps) {
@@ -109,6 +115,15 @@ class Formulario extends Component {
 								<div className='row'>
 									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 										<Field name='fechaProximaConsulta' type='date' component={renderField} label='Fecha próxima consulta'/>
+									</div>
+									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+										<Field name='id_diagnostico' type='text' 
+											component={FieldSelectDiagnosticosContainer}
+											listar={this.props.listarDiagnosticos}
+											label='Diagnóstico'/>
+									</div>
+									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+										<Field name='observacionDiagnostico' type='textarea' component={this.renderFieldTextArea} label='Observaciones'/>
 									</div>
 								</div>
 								
