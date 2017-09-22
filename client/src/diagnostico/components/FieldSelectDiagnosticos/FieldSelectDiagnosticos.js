@@ -4,11 +4,11 @@ import Cargando from '../../../app/components/Cargando'
 
 class FieldSelectDiagnosticos extends Component {
 	render() {
-		const { input, label, listaDiagnosticos, type, meta: { touched, error, warning } } = this.props
+		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
-		let diagnosticos = listaDiagnosticos.diagnosticos
-
-		if(diagnosticos) {
+		if(listar.cargando) {
+			return <p>Cargando diagnósticos</p>
+		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 					
@@ -17,7 +17,7 @@ class FieldSelectDiagnosticos extends Component {
 						<select {...input} name={name} className='form-control'>
 							<option value=''>Seleccionar diagnóstico</option>
 							{
-								diagnosticos.map((diagnostico) => {
+								listar.diagnosticos.map((diagnostico) => {
 									return <option key={diagnostico.id_diagnostico} value={diagnostico.id_diagnostico}>
 										{ diagnostico.descripcion }
 									</option>
@@ -33,8 +33,6 @@ class FieldSelectDiagnosticos extends Component {
 				    { touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 }
