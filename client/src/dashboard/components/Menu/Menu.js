@@ -47,6 +47,22 @@ class Menu extends Component {
 			<li><Link to='/dashboard/unidades-parametro-preconsulta'>Unidades pre-consulta (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/consultas'>Consultas (Adm) <span className="badge">8</span></Link></li>			
+		
+
+			{ /* FARMACIA. */}
+			<h3>Farmacia</h3>
+			<li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Adm)</Link></li>
+			<li><Link to='/dashboard/presentaciones'>presentaciones (Adm)</Link></li>
+			<li><Link to='/dashboard/tipos-consumos'>Tipos consumos (Adm)</Link></li>
+			<li><Link to='/dashboard/dosis'>Dosis (Adm)</Link></li>					
+			<li><Link to='/dashboard/unidades-medicamentos'>Unidades de medida (Adm)</Link></li>			
+			<li><Link to='/dashboard/farmaceuticas'>Farmacéuticas (Adm)</Link></li>			
+			<li><Link to='/dashboard/proveedores'>Proveedores (Adm)</Link></li>			
+			{ /* Agregar solamente. si piden. */}
+			{ /* <li><Link to='/dashboard/acciones'>Acciones (Adm)</Link></li> */}		
+			<li><Link to='/dashboard/medicamentos'>Medicamentos (Adm)</Link></li>			
+			<li><Link to='/dashboard/lotes-medicamentos'>Lotes (Adm)</Link></li>			
+
 		</ul>
 	}
 
@@ -100,11 +116,9 @@ class Menu extends Component {
 
 	laboratorioMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/usuarios'>Usuarios (Lap) <span className="badge">14</span></Link></li>
-			<li><Link to='/roles'>Roles (Lap) <span className="badge">1</span></Link></li>
-			<li><Link to='/especialidades'>Especialidades (Lap) <span className="badge">0</span></Link></li>
-			<li><Link to='/ciudades'>Ciudades (Lap) <span className="badge">8</span></Link></li>
-			<li><Link to='/departamentos'>Departamentos (Lap) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Lap) <span className="badge">14</span></Link></li>
+			<li><Link to='/dashboard/unidades-analisis'>Unidades (Lap) <span className="badge">14</span></Link></li>
+			<li><Link to='/dashboard/parametros-analisis'>Parametros (Lap) <span className="badge">14</span></Link></li>
 		</ul>
 	}
 
@@ -132,6 +146,7 @@ class Menu extends Component {
 				{ this.isRole('enfermeria', this.enfermeriaMenu()) }
 				{ this.isRole('medico', this.medicinaMenu()) }
 				{ this.isRole('farmacia', this.farmaciaMenu()) }
+				{ this.isRole('laboratorio', this.laboratorioMenu()) }
 
 			</div>
 		} else {
