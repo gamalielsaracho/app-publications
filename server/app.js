@@ -56,6 +56,12 @@ require('././app/loteMedicamento/loteMedicamento.sockets')(io)
 
 
 
+// Laboratorio
+require('././app/tipoExamen/tipoExamen.sockets')(io)
+require('././app/unidadAnalisis/unidadAnalisis.sockets')(io)
+require('././app/parametroAnalisis/parametroAnalisis.sockets')(io)
+
+
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
 	
