@@ -1,0 +1,2 @@
+import ListarUnidadesAnalisisContainer from './container'
+export default ListarUnidadesAnalisisContainer

@@ -1,0 +1,2 @@
+import FieldSelectUnidadesAnalisisContainer from './container'
+export default FieldSelectUnidadesAnalisisContainer

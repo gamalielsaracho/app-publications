@@ -1,0 +1,2 @@
+import FormularioUnidadAnalisisContainer from './container'
+export default FormularioUnidadAnalisisContainer
