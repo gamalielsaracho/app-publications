@@ -44,6 +44,7 @@ import loteMedicamentoReducer from '../loteMedicamento/reducer'
 import tipoExamenReducer from '../tipoExamen/reducer'
 import unidadAnalisisReducer from '../unidadAnalisis/reducer'
 import parametroAnalisisReducer from '../parametroAnalisis/reducer'
+import tipoAnalisisReducer from '../tipoAnalisis/reducer'
 
 
 const rootReducer = combineReducers({
@@ -86,7 +87,8 @@ const rootReducer = combineReducers({
 	// Laboratorio
 	tipoExamen: tipoExamenReducer,
 	unidadAnalisis: unidadAnalisisReducer,
-	parametroAnalisis: parametroAnalisisReducer
+	parametroAnalisis: parametroAnalisisReducer,
+	tipoAnalisis: tipoAnalisisReducer
 
 })
 
