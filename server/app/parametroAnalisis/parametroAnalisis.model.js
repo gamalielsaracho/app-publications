@@ -3,11 +3,18 @@ import connection from '../../config/connection'
 exports.find = (callback) => {
 
 	let q = `
-		SELECT * FROM parametrosAnalisis
+		SELECT * 
+			FROM 
+				parametrosAnalisis parametro,
+				tiposexamenes tipoExamen,
+				unidadesanalisis unidad
+			WHERE
+				parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
+				parametro.id_unidadAnalisis = unidad.id_unidadAnalisis
 	`
 	var options = {
 		sql: q, 
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, callback)
