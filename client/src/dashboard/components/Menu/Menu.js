@@ -119,6 +119,7 @@ class Menu extends Component {
 			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Lap) <span className="badge">14</span></Link></li>
 			<li><Link to='/dashboard/unidades-analisis'>Unidades (Lap) <span className="badge">14</span></Link></li>
 			<li><Link to='/dashboard/parametros-analisis'>Parametros (Lap) <span className="badge">14</span></Link></li>
+			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Lap) <span className="badge">14</span></Link></li>
 		</ul>
 	}
 
