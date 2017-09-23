@@ -1,0 +1,2 @@
+import MostrarTipoAnalisisAppContainer from './container'
+export default MostrarTipoAnalisisAppContainer
