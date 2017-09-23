@@ -9,7 +9,7 @@ export default (io) => {
 
 		function parametros() {
 			ParametroPreConsulta.find((err, parametros) => {
-				console.log(parametros)
+				// console.log(parametros)
 				if(err) {
 					console.log(err)
 					
