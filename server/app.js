@@ -60,7 +60,7 @@ require('././app/loteMedicamento/loteMedicamento.sockets')(io)
 require('././app/tipoExamen/tipoExamen.sockets')(io)
 require('././app/unidadAnalisis/unidadAnalisis.sockets')(io)
 require('././app/parametroAnalisis/parametroAnalisis.sockets')(io)
-
+require('././app/tipoAnalisis/tipoAnalisis.sockets')(io)
 
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
