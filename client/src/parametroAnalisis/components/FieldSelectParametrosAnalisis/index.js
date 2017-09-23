@@ -1,0 +1,2 @@
+import FieldSelectParametrosAnalisisContainer from './container'
+export default FieldSelectParametrosAnalisisContainer

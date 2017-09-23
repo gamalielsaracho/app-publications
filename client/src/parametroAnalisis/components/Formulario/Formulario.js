@@ -101,7 +101,7 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
-					<h4 className='text-center'>Formulario nivel</h4>
+					<h4 className='text-center'>Formulario parametro análisis</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
 					

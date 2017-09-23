@@ -29,9 +29,9 @@ const validate = (values) => {
    			errors.descripcion = 'Tienes que introducir una descripción.'
 	}
 
-	if(!values.id_unidadAnalisis) {
-		errors.id_unidadAnalisis = 'Unidad de medida obligatorio.'
-	}
+	// if(!values.id_unidadAnalisis) {
+	// 	errors.id_unidadAnalisis = 'Unidad de medida obligatorio.'
+	// }
 
 	if(!values.id_tipoExamen) {
 		errors.id_tipoExamen = 'Tipo de examen obligatorio.'
