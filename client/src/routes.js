@@ -103,7 +103,13 @@ import ListarTiposExamenesPage from '././tipoExamen/pages/ListarTiposExamenesPag
 import ListarUnidadesAnalisisPage from '././unidadAnalisis/pages/ListarUnidadesAnalisisPage'
 import ListarParametrosAnalisisPage from '././parametroAnalisis/pages/ListarParametrosAnalisisPage'
 
-	
+	// LISTAR TIPOS DE ANALISIS APP.
+import ListarTiposAnalisisApp from '././tipoAnalisis/components/ListarApp'
+import ListarTiposAnalisisPage from '././tipoAnalisis/pages/ListarTiposAnalisisPage'
+
+	// MOSTRAR TIPO DE ANALISIS APP.
+import MostrarTipoAnalisisAppContainer from '././tipoAnalisis/components/MostrarApp'
+
 
 	// LISTAR MEDICAMENTOS APP.
 import ListarMedicamentosApp from '././medicamento/components/ListarApp'
@@ -198,6 +204,13 @@ export default (
 			<Route path='/dashboard/tipos-examenes' component={ListarTiposExamenesPage}/>
 			<Route path='/dashboard/unidades-analisis' component={ListarUnidadesAnalisisPage}/>
 			<Route path='/dashboard/parametros-analisis' component={ListarParametrosAnalisisPage}/>
+
+			
+			<Route path='/dashboard/tipos-analisis' component={ListarTiposAnalisisApp}>
+				<IndexRoute component={ListarTiposAnalisisPage}/>
+				<Route path='/dashboard/tipos-analisis/:idTipoAnalisis' component={MostrarTipoAnalisisAppContainer}>
+				</Route>
+			</Route>
 
 		</Route>
 
