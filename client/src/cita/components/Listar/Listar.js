@@ -32,7 +32,6 @@ class Listar extends Component {
 	}
 
 	componentWillMount() {
-				console.log('entrooooo medico -> '+removeAccents(this.personalLocalSt.rol))
 		switch(removeAccents(this.personalLocalSt.rol)) {
 			case 'ventanilla':
 				this.props.listarCitas()
