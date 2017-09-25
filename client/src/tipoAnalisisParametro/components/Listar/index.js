@@ -1,0 +1,2 @@
+import ListarTipoAnalisisParametrosContainer from './container'
+export default ListarTipoAnalisisParametrosContainer

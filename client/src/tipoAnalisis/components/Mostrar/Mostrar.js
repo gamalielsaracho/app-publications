@@ -20,7 +20,7 @@ class Mostrar extends Component {
 			return <Cargando/>
 		} else if (tipoAnalisis){
 			return <div>
-				<p><strong>Nombre:</strong> { tipoAnalisis.descripcion }</p>
+				<h2>{ tipoAnalisis.descripcion }</h2>
 			</div>
 		}
 	}
@@ -38,7 +38,7 @@ class Mostrar extends Component {
 		
 			return <div className=''>
 				<div className='row'>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 						<MensajeOerror error={error} mensaje={null}/>
 
 						{ this.renderTipoAnalisis(tipoAnalisis, cargando) }

@@ -1,0 +1,2 @@
+import FormularioTipoAnalisisParametroContainer from './container'
+export default FormularioTipoAnalisisParametroContainer

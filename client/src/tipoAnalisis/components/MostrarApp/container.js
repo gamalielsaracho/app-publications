@@ -11,7 +11,7 @@ function mapStateToProps(state, ownProps) {
 		idTipoAnalisis: ownProps.params.idTipoAnalisis,
 
 		// guardamos todos los parametros de la url en el objeto urls.
-		urlsParams: ownProps.params
+		urls: ownProps.params
 	}
 }
 
