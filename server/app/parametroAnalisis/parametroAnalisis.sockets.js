@@ -65,6 +65,18 @@ export default (io) => {
 			})
 		})
 
+		socket.on('mostrar_parametroAnalisis_editar', (data) => {
+			ParametroAnalisis.findByIdToEdit(data, (err, parametroAnalisis) => {
+				if(err) {
+					console.log(err)
+					socket.emit('mostrar_parametroAnalisis_editar', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				socket.emit('mostrar_parametroAnalisis_editar', parametroAnalisis[0])
+			})
+		})
+
 
 		socket.on('editar_parametroAnalisis', (data) => {
 			// ParametroAnalisis.verifyIfExist(data, (err, nivelExistente) => {
