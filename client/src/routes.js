@@ -101,16 +101,27 @@ import ListarProveedoresPage from '././proveedor/pages/ListarProveedoresPage'
 // Módulo laboratorio.
 import ListarTiposExamenesPage from '././tipoExamen/pages/ListarTiposExamenesPage'
 import ListarUnidadesAnalisisPage from '././unidadAnalisis/pages/ListarUnidadesAnalisisPage'
+
 import ListarParametrosAnalisisPage from '././parametroAnalisis/pages/ListarParametrosAnalisisPage'
+	
+	// MOSTRAR PARAMETRO ANALISIS APP.
+import MostrarParametroAnalisisAppContainer from '././parametroAnalisis/components/MostrarApp'
 
 	// LISTAR TIPOS DE ANALISIS APP.
 import ListarTiposAnalisisApp from '././tipoAnalisis/components/ListarApp'
 import ListarTiposAnalisisPage from '././tipoAnalisis/pages/ListarTiposAnalisisPage'
-
+	
 	// MOSTRAR TIPO DE ANALISIS APP.
 import MostrarTipoAnalisisAppContainer from '././tipoAnalisis/components/MostrarApp'
 
+// LISTAR (TIPO ANALISIS X PARAMETROS).
+import ListarTipoAnalisisParametrosContainer from '././tipoAnalisisParametro/components/Listar'
 
+
+
+
+
+// ===================================================================
 	// LISTAR MEDICAMENTOS APP.
 import ListarMedicamentosApp from '././medicamento/components/ListarApp'
 import ListarMedicamentosPage from '././medicamento/pages/ListarMedicamentosPage'
@@ -206,9 +217,13 @@ export default (
 			<Route path='/dashboard/parametros-analisis' component={ListarParametrosAnalisisPage}/>
 
 			
+
 			<Route path='/dashboard/tipos-analisis' component={ListarTiposAnalisisApp}>
 				<IndexRoute component={ListarTiposAnalisisPage}/>
 				<Route path='/dashboard/tipos-analisis/:idTipoAnalisis' component={MostrarTipoAnalisisAppContainer}>
+					<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros' component={ListarTipoAnalisisParametrosContainer}/>
+					
+					<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros/:idParametroAnalisis' component={MostrarParametroAnalisisAppContainer}/>
 				</Route>
 			</Route>
 
