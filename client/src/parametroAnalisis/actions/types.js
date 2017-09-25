@@ -26,8 +26,6 @@ export const MOSTRAR_PARAMETRO_ANALISIS_REQUEST = 'mostrar_parametro_analisis_re
 export const MOSTRAR_PARAMETRO_ANALISIS_EXITO = 'mostrar_parametro_analisis_exito'
 export const MOSTRAR_PARAMETRO_ANALISIS_FALLO = 'mostrar_parametro_analisis_fallo'
 
-export const CERRAR_MODAL_MOSTRAR_PARAMETRO_ANALISIS = 'cerrar_modal_mostrar_parametro_analisis'
-
 // DELETE.
 export const ELIMINAR_PARAMETRO_ANALISIS_REQUEST = 'eliminair_parametro_analisis_request'
 export const ELIMINAR_PARAMETRO_ANALISIS_EXITO = 'eliminair_parametro_analisis_exito'

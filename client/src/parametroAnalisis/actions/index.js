@@ -21,8 +21,6 @@ import {
 	MOSTRAR_PARAMETRO_ANALISIS_EXITO,
 	MOSTRAR_PARAMETRO_ANALISIS_FALLO,
 
-	CERRAR_MODAL_MOSTRAR_PARAMETRO_ANALISIS,
-
 	// Editar Rol.
 	EDITAR_PARAMETRO_ANALISIS_REQUEST,
 	EDITAR_PARAMETRO_ANALISIS_EXITO,
@@ -53,11 +51,11 @@ export function abrirFormularioEditarParametroAnalisis(idParametroAnalisis) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PARAMETRO_ANALISIS_REQUEST })
 
-		parametroAnalisisSocket.emit('mostrar_parametroAnalisis', { 
+		parametroAnalisisSocket.emit('mostrar_parametroAnalisis_editar', { 
 			id_parametroAnalisis: idParametroAnalisis 
 		})
 
-		parametroAnalisisSocket.on('mostrar_parametroAnalisis', (data) => {
+		parametroAnalisisSocket.on('mostrar_parametroAnalisis_editar', (data) => {
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PARAMETRO_ANALISIS_FALLO, payload: data.error })
@@ -153,12 +151,6 @@ export function mostrarParametroAnalisis(idParametroAnalisis) {
 	}
 }
 
-
-export function cerrarModalMostrarParametroAnalisis() {
-	return (dispatch) => {
-		dispatch({ type: CERRAR_MODAL_MOSTRAR_PARAMETRO_ANALISIS })
-	}
-}
 
 export function editarParametroAnalisis(datosFormulario) {
 	return (dispatch) => {

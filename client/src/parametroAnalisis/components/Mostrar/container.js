@@ -1,22 +1,22 @@
 import { connect } from 'react-redux'
 
 import {
-	cerrarModalMostrarNivel
+	mostrarParametroAnalisis
 } from '../../actions'
 
 import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.nivel.mostrar
+		mostrar: state.parametroAnalisis.mostrar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		cerrarModalMostrarNivel: () => {
-			dispatch(cerrarModalMostrarNivel())
+		mostrarParametroAnalisis: (idParametroAnalisis) => {
+			dispatch(mostrarParametroAnalisis(idParametroAnalisis))
 		}
 	}
 }

@@ -15,8 +15,6 @@ import {
 	MOSTRAR_PARAMETRO_ANALISIS_EXITO,
 	MOSTRAR_PARAMETRO_ANALISIS_FALLO,
 
-	CERRAR_MODAL_MOSTRAR_PARAMETRO_ANALISIS,
-
 	// Editar parametroAnalisis.
 		// form to edit parametroAnalisis.
 	ABRIR_FORMULARIO_EDITAR_PARAMETRO_ANALISIS_REQUEST,
@@ -44,7 +42,7 @@ const INITIAL_STATE = {
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { parametrosAnalisis:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, parametroAnalisis: null, error: '', abierto: false },
+	mostrar: { cargando: false, parametroAnalisis: null, error: '' },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -61,8 +59,7 @@ export default function (state = INITIAL_STATE, action) {
 					parametroAnalisis: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				editar: INITIAL_STATE.editar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PARAMETRO_ANALISIS_REQUEST:
@@ -76,8 +73,7 @@ export default function (state = INITIAL_STATE, action) {
 					parametroAnalisis: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				editar: INITIAL_STATE.editar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PARAMETRO_ANALISIS_EXITO:
@@ -89,8 +85,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					parametroAnalisis: action.payload
-				},
-				mostrar: { abierto: false }
+				}
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PARAMETRO_ANALISIS_FALLO:
@@ -102,8 +97,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: action.payload,
 					cargando: false,
 					parametroAnalisis: null
-				},
-				mostrar: { abierto: false }
+				}
 			})
 
 
@@ -163,7 +157,7 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_PARAMETRO_ANALISIS_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true },
+				mostrar: { cargando: true },
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
@@ -171,8 +165,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					parametroAnalisis: action.payload,
-					abierto: true
+					parametroAnalisis: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
@@ -182,22 +175,10 @@ export default function (state = INITIAL_STATE, action) {
 				mostrar: {
 					cargando: false,
 					parametroAnalisis: null,
-					error: action.payload,
-					abierto: true
+					error: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
-
-		case CERRAR_MODAL_MOSTRAR_PARAMETRO_ANALISIS:
-			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					parametroAnalisis: null,
-					error: '',
-					abierto: false
-				}
-			})
-
 
 		// EDITAR.
 		case EDITAR_PARAMETRO_ANALISIS_REQUEST:

@@ -16,18 +16,18 @@ class FieldSelectParametrosAnalisis extends Component {
 		}
 	}
 
-	shouldComponentUpdate(nextProps) {
-		let condition = (
-			nextProps.parametrosAnalisis !== this.props.parametrosAnalisis ||
-			nextProps.formulario !== this.props.formulario
-		)
+	// shouldComponentUpdate(nextProps) {
+	// 	let condition = (
+	// 		nextProps.parametrosAnalisis !== this.props.parametrosAnalisis ||
+	// 		nextProps.formulario !== this.props.formulario
+	// 	)
 
-		if(condition) {
-			return true
-		}else {
-			return false
-		}
-	}
+	// 	if(condition) {
+	// 		return true
+	// 	}else {
+	// 		return false
+	// 	}
+	// }
 
 	render() {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
@@ -38,16 +38,20 @@ class FieldSelectParametrosAnalisis extends Component {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 
-				{ this.props.renderParametroAnalisisFormulario() }				
+				{ this.renderParametroAnalisisFormulario() }				
 
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
 							<option value=''>Seleccionar parametro</option>
 							{
-								listar.parametrosAnalisis.map((parametro) => {
-									return <option key={parametro.id_parametroAnalisis} value={parametro.id_parametroAnalisis}>
-										{ parametro.descripcion }
+								listar.parametrosAnalisis.map((i) => {
+									return <option key={i.parametro.id_parametroAnalisis} value={i.parametro.id_parametroAnalisis}>
+										{ 
+											i.parametro.descripcion+' | '+
+											i.tipoExamen.descripcion+' | '+
+											i.unidad.descripcion
+										}
 									</option>
 								})
 							}
