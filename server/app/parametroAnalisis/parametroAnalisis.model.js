@@ -25,13 +25,20 @@ exports.find = (callback) => {
 exports.findById = (data, callback) => {
 
 	let q = `
-		SELECT * FROM parametrosAnalisis 
-			WHERE
-				id_parametroAnalisis = ?
+		SELECT
+			* 
+		FROM 
+			parametrosAnalisis parametro,
+			tiposexamenes tipoExamen,
+			unidadesanalisis unidad			 
+		WHERE
+			parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
+			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
+			id_parametroAnalisis = ?
 	`
 	var options = {
 		sql: q,
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, [data.id_parametroAnalisis], callback)
@@ -60,6 +67,23 @@ exports.create = (data, callback) => {
 	return connection.query(q, [ data.descripcion.trim(),
 							 	 data.id_unidadAnalisis,
 							 	 data.id_tipoExamen ], callback)
+
+	connection.end()
+}
+
+exports.findByIdToEdit = (data, callback) => {
+
+	let q = `
+		SELECT * FROM parametrosAnalisis 
+			WHERE
+				id_parametroAnalisis = ?
+	`
+	var options = {
+		sql: q,
+		nestTables: false
+	}
+
+	return connection.query(options, [data.id_parametroAnalisis], callback)
 
 	connection.end()
 }
