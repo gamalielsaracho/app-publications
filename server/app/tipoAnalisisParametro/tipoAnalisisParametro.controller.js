@@ -49,8 +49,10 @@ exports.crear = function(req, res, next) {
 	TipoAnalisisParametro.verifyIfExist(datosVerificar, (err, parametroExistente) => {
 		if(err) {
 			console.log(err)
-			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
+
+		// console.log(parametroExistente[0])
 
 		if(parametroExistente[0]) {
 			return res.status(422).json({ error: 'Este paramentro ya está registrado' })
@@ -58,7 +60,7 @@ exports.crear = function(req, res, next) {
 			TipoAnalisisParametro.create(datos, (err, result) => {
 				if(err) {
 					console.log(err)
-					return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+					return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 				}
 
 				TipoAnalisisParametro.findById(result.insertId, (err, parametroTipoAnalisis) => {
@@ -66,13 +68,13 @@ exports.crear = function(req, res, next) {
 
 					if(err) {
 						console.log(err)
-						return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+						return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 					}
 
 					return res.json({ 
 						mensaje: 'Se agregó exitósamente.',
 						parametroTipoAnalisisAgregado: parametroTipoAnalisis[0]
-					})
+					})					
 				})
 
 			})
