@@ -42,7 +42,7 @@ exports.findById = (idTipoAnalisisParametro, callback) => {
 			parametroAnalisis.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			parametroAnalisis.id_tipoExamen = tipoExamen.id_tipoExamen AND
 			tipoAnalisisParametro.id_parametroAnalisis = parametroAnalisis.id_parametroAnalisis AND
-			tipoAnalisisParametro.id_tipoAnalisis = ?
+			tipoAnalisisParametro.id_tipoAnalisisParametro = ?
 	`
 
 	var options = {
@@ -56,6 +56,8 @@ exports.findById = (idTipoAnalisisParametro, callback) => {
 }
 
 exports.verifyIfExist = (data, callback) => {
+	// console.log(data)
+	// ESTO DA ERROR VER...
 	let q = `
 		SELECT * FROM tiposanalisisparametros 
 			WHERE
