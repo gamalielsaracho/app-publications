@@ -79,7 +79,7 @@ export function crearTipoAnalisisParametro(datosFormulario) {
 		.then((response) => {
 			var res = response.data
 
-			// console.log(res)
+			console.log(res)
 
 			res.datoInsertado = res.parametroTipoAnalisisAgregado
 
@@ -88,6 +88,8 @@ export function crearTipoAnalisisParametro(datosFormulario) {
 			dispatch(reset('FormularioTipoAnalisisParametro'))
 		})
 		.catch((error) => {
+			// console.log(error)
+
 			errorHandler(dispatch, error.response, CREAR_TIPO_ANALISIS_PARAMETRO_FALLO)
 		})
 	}

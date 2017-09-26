@@ -71,12 +71,12 @@ export default function (state = INITIAL_STATE, action) {
 				},
 				listar: {
 					parametrosTipoAnalisis: [ ...state.listar.parametrosTipoAnalisis, 
-											 action.payload.parametroTipoAnalisisAgregado ]
+											 action.payload.datoInsertado ]
 				},
 				formulario: { abirtoCrear: false }
 			})
 
-			// console.log(state)
+			// console.log(state.listar)
 
 			return state
 

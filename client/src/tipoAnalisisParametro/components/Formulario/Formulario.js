@@ -33,6 +33,7 @@ class Formulario extends Component {
 		// dentro de ListarTipoAnalisisParametrosContainer.
 		formProps.id_tipoAnalisis = this.props.idTipoAnalisis
 		
+		// console.log(formProps)
 		this.props.crearTipoAnalisisParametro(formProps)
 	}
 
