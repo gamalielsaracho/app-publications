@@ -1,14 +1,19 @@
 import { connect } from 'react-redux'
 
 import {
-	mostrarParametroAnalisis
+	mostrarParametroAnalisis,
+	abrirFormularioEditarParametroAnalisis
 } from '../../actions'
 
 import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.parametroAnalisis.mostrar
+		mostrar: state.parametroAnalisis.mostrar,
+
+		// estado del formulario para hacer render.
+		// unicamente si se abre.
+		formulario: state.parametroAnalisis.formulario
 	}
 }
 
@@ -17,6 +22,9 @@ function mapDispatchToProps(dispatch) {
 	return {
 		mostrarParametroAnalisis: (idParametroAnalisis) => {
 			dispatch(mostrarParametroAnalisis(idParametroAnalisis))
+		},
+		abrirFormularioEditarParametroAnalisis: (idParametroAnalisis) => {
+			dispatch(abrirFormularioEditarParametroAnalisis(idParametroAnalisis))
 		}
 	}
 }

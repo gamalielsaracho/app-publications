@@ -160,6 +160,7 @@ export function editarParametroAnalisis(datosFormulario) {
 		parametroAnalisisSocket.emit('editar_parametroAnalisis', datosFormulario)
 
 		parametroAnalisisSocket.on('editar_parametroAnalisis', (data) => {
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: EDITAR_PARAMETRO_ANALISIS_FALLO, payload: data.error })
 			} else {
