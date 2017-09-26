@@ -98,7 +98,17 @@ export default (io) => {
 					}
 
 					socket.emit('editar_parametroAnalisis', { mensaje: 'Se actualizó exitósamente.' })
-					
+
+					ParametroAnalisis.findById(data, (err, parametroAnalisis) => {
+						if(err) {
+							console.log(err)
+							socket.emit('mostrar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+
+						socket.emit('mostrar_parametroAnalisis', parametroAnalisis[0])
+					})
+
 					parametrosAnalisis()
 				})
 			// })
