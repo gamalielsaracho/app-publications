@@ -35,7 +35,7 @@ class Listar extends Component {
 			            <td>{ i.tipoExamen.descripcion }</td>
 			            
 			            <td>
-			            	<Link to={`/dashboard/tipos-analisis/${i.tipoAnalisisParametro.id_tipoAnalisis}/parametros/${i.tipoAnalisisParametro.id_parametroAnalisis}`}>
+			            	<Link to={`/dashboard/tipos-analisis/${i.tipoAnalisisParametro.id_tipoAnalisis}/parametros/${i.tipoAnalisisParametro.id_parametroAnalisis}/referencias`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
 							<button type="button" onClick={() => { this.props.eliminarTipoAnalisisParametro(i.tipoAnalisisParametro.id_tipoAnalisisParametro) }} className="btn btn-danger btn-space">Eliminar</button>
