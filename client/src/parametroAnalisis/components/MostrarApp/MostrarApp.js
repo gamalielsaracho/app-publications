@@ -36,11 +36,8 @@ class MostrarApp extends Component {
 			<br/>
 			<ul className="nav nav-tabs">
 				<li className="nav-item nav-link" className={activeList}>
-				    <Link to={`/dashboard`}>Valores de referencia</Link>
+				    <Link to={`/dashboard/tipos-analisis/${this.props.urls.idTipoAnalisis}/parametros/${this.props.urls.idParametroAnalisis}/referencias`}>Valores de referencia</Link>
 			  	</li>
-				<li className="nav-item nav-link" className={activeShow}>
-			    	<a className="nav-link">Detalle referencia</a>
-				</li>
 			</ul>
 
 			{ this.props.children }
