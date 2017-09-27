@@ -2,7 +2,6 @@ import connection from '../../config/connection'
 
 // TIPOS ANALISIS X PARAMETROS ANALISIS.
 exports.find = (idTipoAnalisis, callback) => {
-
 	let q = `
 		SELECT
 			*
@@ -16,6 +15,8 @@ exports.find = (idTipoAnalisis, callback) => {
 			parametroAnalisis.id_tipoExamen = tipoExamen.id_tipoExamen AND
 			tipoAnalisisParametro.id_parametroAnalisis = parametroAnalisis.id_parametroAnalisis AND
 			tipoAnalisisParametro.id_tipoAnalisis = ?
+
+			ORDER BY tipoAnalisisParametro.id_tipoAnalisisParametro DESC
 	`
 	
 	var options = {
