@@ -56,6 +56,7 @@ exports.crear = function(req, res, next) {
 		mesesMinimos: req.body.mesesMinimos,
 		anosMinimos: req.body.anosMinimos,
 		sexo: req.body.sexo,
+		general: req.body.general,
 		id_parametroAnalisis: req.body.id_parametroAnalisis
 	}
 
@@ -64,15 +65,15 @@ exports.crear = function(req, res, next) {
 	let datosVerificar = {}
 	datosVerificar.id_parametroAnalisis = datos.id_parametroAnalisis
 
-	Referencia.verifyIfExist(datosVerificar, (err, referenciaExistente) => {
-		if(err) {
-			console.log(err)
-			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
-		}
+	// Referencia.verifyIfExist(datosVerificar, (err, referenciaExistente) => {
+	// 	if(err) {
+	// 		console.log(err)
+	// 		return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
+	// 	}
 
-		if(referenciaExistente[0]) {
-			return res.status(422).json({ error: 'Esta referencia ya está registrada' })
-		} else {
+	// 	if(referenciaExistente[0]) {
+		// 	return res.status(422).json({ error: 'Esta referencia ya está registrada' })
+		// } else {
 			Referencia.create(datos, (err, result) => {
 				if(err) {
 					console.log(err)
@@ -93,8 +94,8 @@ exports.crear = function(req, res, next) {
 				})
 
 			})
-		}
-	})
+	// 	}
+	// })
 }
 
 exports.mostrarParaEditar = function(req, res, next) {
@@ -106,12 +107,18 @@ exports.mostrarParaEditar = function(req, res, next) {
 			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
+		// para el formulario.
+		if(referencia[0].sexo == '') {
+			referencia[0].sexo = 'true'
+		}
+
 		return res.json(referencia[0])
 	})
 }
 
 exports.editar = function(req, res, next) {
 	let datos = {
+		id_referencia: req.body.id_referencia,
 		diasMaximos: req.body.diasMaximos,
 		mesesMaximos: req.body.mesesMaximos,
 		anosMaximos: req.body.anosMaximos,
@@ -120,6 +127,7 @@ exports.editar = function(req, res, next) {
 		diasMinimos: req.body.diasMinimos,
 		mesesMinimos: req.body.mesesMinimos,
 		anosMinimos: req.body.anosMinimos,
+		general: req.body.general,
 		sexo: req.body.sexo
 	}
 
