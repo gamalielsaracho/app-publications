@@ -59,25 +59,25 @@ exports.findById = (idReferencia, callback) => {
 	connection.end()
 }
 
-exports.verifyIfExist = (data, callback) => {
-	let q = `
-		SELECT * FROM referencias 
-			WHERE
-				id_parametroAnalisis = ?
-	`
-	return connection.query(q, [ data.id_parametroAnalisis ], callback)
+// exports.verifyIfExist = (data, callback) => {
+// 	let q = `
+// 		SELECT * FROM referencias 
+// 			WHERE
+// 				id_parametroAnalisis = ?
+// 	`
+// 	return connection.query(q, [ data.id_parametroAnalisis ], callback)
 
-	connection.end()
-}
+// 	connection.end()
+// }
 
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO referencias (
 			id_referencia, diasMaximos, mesesMaximos, anosMaximos, superior,
-			inferior, diasMinimos, mesesMinimos, anosMinimos, sexo, 
+			inferior, diasMinimos, mesesMinimos, anosMinimos, sexo, general,
 			id_parametroAnalisis
 		)
-			VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`
 	
 	return connection.query(q, [ data.diasMaximos,
@@ -89,6 +89,7 @@ exports.create = (data, callback) => {
 								 data.mesesMinimos,
 								 data.anosMinimos,
 								 data.sexo,
+								 data.general,
 								 data.id_parametroAnalisis ], callback)
 
 	connection.end()
@@ -126,7 +127,8 @@ exports.update = (data, callback) => {
 			diasMinimos = ?,
 			mesesMinimos = ?,
 			anosMinimos = ?,
-			sexo = ?
+			sexo = ?,
+			general = ?
 		WHERE
 			id_referencia = ?
 	`
@@ -140,6 +142,7 @@ exports.update = (data, callback) => {
 								 data.mesesMinimos,
 								 data.anosMinimos,
 								 data.sexo,
+								 data.general,
 								 data.id_referencia ], callback)
 
 	connection.end()
