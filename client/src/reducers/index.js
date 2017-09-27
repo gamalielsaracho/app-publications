@@ -46,6 +46,7 @@ import unidadAnalisisReducer from '../unidadAnalisis/reducer'
 import parametroAnalisisReducer from '../parametroAnalisis/reducer'
 import tipoAnalisisReducer from '../tipoAnalisis/reducer'
 import tipoAnalisisParametroReducer from '../tipoAnalisisParametro/reducer'
+import referenciaReducer from '../referencia/reducer'
 
 
 const rootReducer = combineReducers({
@@ -90,7 +91,8 @@ const rootReducer = combineReducers({
 	unidadAnalisis: unidadAnalisisReducer,
 	parametroAnalisis: parametroAnalisisReducer,
 	tipoAnalisis: tipoAnalisisReducer,
-	tipoAnalisisParametro: tipoAnalisisParametroReducer
+	tipoAnalisisParametro: tipoAnalisisParametroReducer,
+	referencia: referenciaReducer
 
 })
 
