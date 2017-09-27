@@ -107,6 +107,8 @@ import ListarParametrosAnalisisPage from '././parametroAnalisis/pages/ListarPara
 	// MOSTRAR PARAMETRO ANALISIS APP.
 import MostrarParametroAnalisisAppContainer from '././parametroAnalisis/components/MostrarApp'
 
+import ListarReferenciasContainer from '././referencia/components/Listar'
+
 	// LISTAR TIPOS DE ANALISIS APP.
 import ListarTiposAnalisisApp from '././tipoAnalisis/components/ListarApp'
 import ListarTiposAnalisisPage from '././tipoAnalisis/pages/ListarTiposAnalisisPage'
@@ -223,7 +225,9 @@ export default (
 				<Route path='/dashboard/tipos-analisis/:idTipoAnalisis' component={MostrarTipoAnalisisAppContainer}>
 					<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros' component={ListarTipoAnalisisParametrosContainer}/>
 					
-					<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros/:idParametroAnalisis' component={MostrarParametroAnalisisAppContainer}/>
+					<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros/:idParametroAnalisis' component={MostrarParametroAnalisisAppContainer}>
+						<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros/:idParametroAnalisis/referencias' component={ListarReferenciasContainer}/>						
+					</Route>
 				</Route>
 			</Route>
 
