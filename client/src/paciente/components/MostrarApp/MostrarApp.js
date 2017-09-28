@@ -23,7 +23,14 @@ class MostrarApp extends Component {
 			    <a className="nav-link">Consultas</a>
 			  </li>
 			  <li className="nav-item">
-			    <a className="nav-link">Analisis Realizados</a>
+			    <a className="nav-link active">
+			    	<Link to={`/dashboard/pacientes/${idPaciente}/analisis-solicitados`}>
+			    		Análisis Solicitados
+			    	</Link>
+			    </a>
+			  </li>
+			  <li className="nav-item">
+			    <a className="nav-link">Análisis Realizados</a>
 			  </li>
 			</ul>
 
