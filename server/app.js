@@ -62,6 +62,10 @@ require('././app/unidadAnalisis/unidadAnalisis.sockets')(io)
 require('././app/parametroAnalisis/parametroAnalisis.sockets')(io)
 require('././app/tipoAnalisis/tipoAnalisis.sockets')(io)
 
+		// Análisis
+require('././app/analisisSolicitado/analisisSolicitado.sockets')(io)
+
+
 io.on('connection', function (socket) {
 	console.log('Un usuario Conectado INICIO.!')
 	
