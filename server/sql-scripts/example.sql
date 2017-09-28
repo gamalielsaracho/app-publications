@@ -7,6 +7,7 @@ SELECT
     WHERE me.id_nombreMedicamento = nombreMe.id_nombreMedicamento 
     
     
+  SELECT * FROM referencias ref, tiposanalisisparametros tipPa WHERE tipPa.id_tipoAnalisis = 1 AND tipPa.id_parametroAnalisis = ref.id_parametroAnalisis
  
     
     
