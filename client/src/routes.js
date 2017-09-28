@@ -46,6 +46,10 @@ import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
 	// PACIENTE ALERGIAS.
 	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
 
+// ANÁLISIS SOLICITADOS APP.
+import ListarAppAnalisisSolicitadosContainer from '././analisisSolicitado/components/ListarApp'
+import ListarAnalisisSolicitadosContainer from '././analisisSolicitado/components/Listar'
+
 
 // CITAS.
 	// Listar.
@@ -168,13 +172,24 @@ export default (
 				</Route>
 			</Route>
 
+
+
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
 				
 				<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
 					<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
+					
+					<Route path='/dashboard/pacientes/:idPaciente/analisis-solicitados' component={ListarAppAnalisisSolicitadosContainer}>
+						<IndexRoute component={ListarAnalisisSolicitadosContainer}/>
+						
+					</Route>
+
 				</Route>
 			</Route>
+
+
+
 
 			<Route path='/dashboard/citas' component={ListarCitasApp}>
 				<IndexRoute component={ListarCitasPage}/>
