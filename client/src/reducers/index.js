@@ -48,6 +48,9 @@ import tipoAnalisisReducer from '../tipoAnalisis/reducer'
 import tipoAnalisisParametroReducer from '../tipoAnalisisParametro/reducer'
 import referenciaReducer from '../referencia/reducer'
 
+		// Análisis. 
+import analisisSolicitadoReducer from '../analisisSolicitado/reducer'
+
 
 const rootReducer = combineReducers({
 	form: formReducer,
@@ -92,7 +95,10 @@ const rootReducer = combineReducers({
 	parametroAnalisis: parametroAnalisisReducer,
 	tipoAnalisis: tipoAnalisisReducer,
 	tipoAnalisisParametro: tipoAnalisisParametroReducer,
-	referencia: referenciaReducer
+	referencia: referenciaReducer,
+
+	// Análisis.
+	analisisSolicitado: analisisSolicitadoReducer
 
 })
 
