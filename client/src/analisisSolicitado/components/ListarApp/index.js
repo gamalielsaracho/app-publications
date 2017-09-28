@@ -1,0 +1,2 @@
+import ListarAppAnalisisSolicitadosContainer from './container'
+export default ListarAppAnalisisSolicitadosContainer

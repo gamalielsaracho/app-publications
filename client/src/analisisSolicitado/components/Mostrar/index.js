@@ -1,0 +1,2 @@
+import MostarParametroAnalisisContainer from './container'
+export default MostarParametroAnalisisContainer

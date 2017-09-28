@@ -1,0 +1,2 @@
+import MostrarParametroAnalisisAppContainer from './container'
+export default MostrarParametroAnalisisAppContainer
