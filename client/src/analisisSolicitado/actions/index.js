@@ -33,6 +33,7 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
+import moment from 'moment'
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
@@ -47,6 +48,7 @@ export function abrirFormularioCrearAnalisisSolicitado() {
 	}
 }
 
+
 export function abrirFormularioEditarAnalisisSolicitado(idAnalisisSolicitado) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_ANALISIS_SOLICITADO_REQUEST })
@@ -60,17 +62,21 @@ export function abrirFormularioEditarAnalisisSolicitado(idAnalisisSolicitado) {
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_ANALISIS_SOLICITADO_FALLO, payload: data.error })
 			} else {
+				data.fechaArealizar = moment(data.fechaArealizar).format('YYYY-MM-DD')
+				
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_ANALISIS_SOLICITADO_EXITO, payload: data })
 			}
 		})
 	}
 }
 
+
 export function cerrarFormularioAnalisisSolicitado() {
 	return (dispatch) => {
 		dispatch({ type: CERRAR_FORMULARIO_ANALISIS_SOLICITADO })
 	}
 }
+
 
 export function listarAnalisisSolicitados() {
 	return (dispatch) => {
@@ -89,6 +95,7 @@ export function listarAnalisisSolicitados() {
 		})
 	}
 }
+
 
 // Para el historial Clínico.
 export function listarAnalisisSolicitadosPorIdPaciente(IdPaciente) {
@@ -114,7 +121,6 @@ export function listarAnalisisSolicitadosPorIdPaciente(IdPaciente) {
 }
 
 
-
 export function crearAnalisisSolicitado(datosFormulario) {
 	return (dispatch) => {
 
@@ -135,7 +141,8 @@ export function crearAnalisisSolicitado(datosFormulario) {
 	}
 }
 
-export function eliminarAnalisisSolicitado(idAnalisisSolicitado) {
+
+export function eliminarAnalisisSolicitado(idAnalisisSolicitado, urlToRedirect) {
 	return (dispatch) => {
 		// alert(idAnalisisSolicitado)
 
@@ -151,6 +158,8 @@ export function eliminarAnalisisSolicitado(idAnalisisSolicitado) {
 				dispatch({ type: ELIMINAR_ANALISIS_SOLICITADO_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: ELIMINAR_ANALISIS_SOLICITADO_EXITO, payload: data })
+				
+				browserHistory.push(urlToRedirect)
 			}
 		})
 	}
@@ -160,9 +169,13 @@ export function eliminarAnalisisSolicitado(idAnalisisSolicitado) {
 export function mostrarAnalisisSolicitado(idAnalisisSolicitado) {
 	return (dispatch) => {
 		dispatch({ type: MOSTRAR_ANALISIS_SOLICITADO_REQUEST })
+		// let condition = {}
 
-		analisisSolicitadoSocket.emit('mostrar_analisisSolicitado', { 
-			id_analisisSolicitado: idAnalisisSolicitado 
+		// condition.showBy = showBy
+		// condition.id_data = idData
+
+		analisisSolicitadoSocket.emit('mostrar_analisisSolicitado', {
+			id_analisisSolicitado: idAnalisisSolicitado
 		})
 
 		analisisSolicitadoSocket.on('mostrar_analisisSolicitado', (data) => {
