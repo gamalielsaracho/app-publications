@@ -9,10 +9,12 @@ exports.findByIdPaciente = (IdPaciente, callback) => {
 			FROM 
 				analisisSolicitados analisisSolicitado,
 				consultas consulta,
-				personales personal
+				personales personal,
+				especialidades especialidad
 			WHERE
 				analisisSolicitado.id_consulta = consulta.id_consulta AND
 				consulta.id_personal = personal.id_personal AND
+				personal.id_especialidad = especialidad.id_especialidad AND
 				consulta.id_paciente = ?
 	`
 
@@ -33,10 +35,13 @@ exports.find = (callback) => {
 			FROM 
 				analisisSolicitados analisisSolicitado,
 				consultas consulta,
-				personales personal 
+				personales personal,
+				especialidades especialidad
 			WHERE
 				analisisSolicitado.id_consulta = consulta.id_consulta AND
-				consulta.id_personal = personal.id_personal
+				consulta.id_personal = personal.id_personal AND
+				personal.id_especialidad = especialidad.id_especialidad
+
 	`
 	var options = {
 		sql: q, 
@@ -49,18 +54,20 @@ exports.find = (callback) => {
 }
 
 exports.findById = (data, callback) => {
-
+	
 	let q = `
 		SELECT
 			* 
 		FROM 
 			analisisSolicitados analisisSolicitado,
 			consultas consulta,
-			personales personal
+			personales personal,
+			especialidades especialidad
 		WHERE
 			analisisSolicitado.id_consulta = consulta.id_consulta AND
 			consulta.id_personal = personal.id_personal AND
-			id_analisisSolicitado = ?
+			personal.id_especialidad = especialidad.id_especialidad AND
+			analisisSolicitado.id_analisisSolicitado = ?
 	`
 
 	var options = {
@@ -72,6 +79,7 @@ exports.findById = (data, callback) => {
 
 	connection.end()
 }
+
 
 exports.verifyIfExist = (data, callback) => {
 	let q = `
@@ -88,11 +96,11 @@ exports.verifyIfExist = (data, callback) => {
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO analisisSolicitados (
-			id_analisisSolicitado, fecha, hora, id_consulta
+			id_analisisSolicitado, fechaArealizar, id_consulta
 		)
-			VALUES (null, now(), ?, ?);
+			VALUES (null, ?, ?);
 	`
-	return connection.query(q, [ data.hora,
+	return connection.query(q, [ data.fechaArealizar,
 							 	 data.id_consulta ], callback)
 
 	connection.end()
@@ -118,16 +126,14 @@ exports.findByIdToEdit = (data, callback) => {
 exports.update = (data, callback) => {
 	let q = `
 		UPDATE analisisSolicitados SET 
-			fecha = ?,
-			hora = ?,
+			fechaArealizar = ?,
 			muestrasObtenidas = ?,
 			pendiente = ?
 		WHERE 
 			id_analisisSolicitado = ?
 	`
 
-	return connection.query(q, [ data.fecha,
-								 data.hora,
+	return connection.query(q, [ data.fechaArealizar,
 								 data.muestrasObtenidas,
 								 data.pendiente,
 								 data.id_analisisSolicitado ], callback)
