@@ -2,18 +2,10 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearParametroAnalisis,
-	editarParametroAnalisis,
-	cerrarFormularioParametroAnalisis
+	crearAnalisisSolicitado,
+	editarAnalisisSolicitado,
+	cerrarFormularioAnalisisSolicitado
 } from '../../actions'
-
-import {
-	listarUnidadesAnalisis
-} from '../../../unidadAnalisis/actions'
-
-import {
-	listarTiposExamenes
-} from '../../../tipoExamen/actions'
 
 import Formulario from './Formulario'
 
@@ -41,50 +33,37 @@ const validate = (values) => {
 
 function mapStateToProps(state) {
 	return {
-		formulario: state.parametroAnalisis.formulario,
-		initialValues: state.parametroAnalisis.formulario.parametroAnalisis,
-		enableReinitialize: state.parametroAnalisis.formulario.iniciarValores,
-		editarContenido: state.parametroAnalisis.formulario.iniciarValores,
+		formulario: state.analisisSolicitado.formulario,
+		initialValues: state.analisisSolicitado.formulario.analisisSolicitado,
+		enableReinitialize: state.analisisSolicitado.formulario.iniciarValores,
+		editarContenido: state.analisisSolicitado.formulario.iniciarValores,
 
 		// Para obtener el error al crear o editar.
-		crear: state.parametroAnalisis.crear,
-		editar: state.parametroAnalisis.editar,
-
-		// Para listar los datos en select option.
-		listarUnidadesAnalisis: state.unidadAnalisis.listar,
-		listarTiposExamenes: state.tipoExamen.listar
+		crear: state.analisisSolicitado.crear,
+		editar: state.analisisSolicitado.editar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearParametroAnalisis: (datosFormulario) => {
-			dispatch(crearParametroAnalisis(datosFormulario))
+		crearAnalisisSolicitado: (datosFormulario) => {
+			dispatch(crearAnalisisSolicitado(datosFormulario))
 		},
-		cerrarFormularioParametroAnalisis: () => {
+		cerrarFormularioAnalisisSolicitado: () => {
 			// var r = confirm("Está seguro que desea cancelar?");
 		    // if (r == true) {
-				dispatch(cerrarFormularioParametroAnalisis())
+				dispatch(cerrarFormularioAnalisisSolicitado())
 		    // }
 		},
-		editarParametroAnalisis: (datosFormulario) => {
-			dispatch(editarParametroAnalisis(datosFormulario))
-		},
-
-
-		// Para listar los datos en select option.
-		listarUnidadesAnalisisFuncion: () => {
-			dispatch(listarUnidadesAnalisis())
-		},
-		listarTiposExamenesFuncion: () => {
-			dispatch(listarTiposExamenes())
+		editarAnalisisSolicitado: (datosFormulario) => {
+			dispatch(editarAnalisisSolicitado(datosFormulario))
 		}
 	}
 }
 
 const form = reduxForm({
-	form: 'FormularioParametroAnalisis',
+	form: 'FormularioAnalisisSolicitado',
 	validate
 })
 
