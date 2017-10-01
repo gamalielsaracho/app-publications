@@ -63,6 +63,14 @@ class Menu extends Component {
 			<li><Link to='/dashboard/medicamentos'>Medicamentos (Adm)</Link></li>			
 			<li><Link to='/dashboard/lotes-medicamentos'>Lotes (Adm)</Link></li>			
 
+
+			<h3>Laboratorio</h3>
+			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Adm) </Link></li>
+			<li><Link to='/dashboard/unidades-analisis'>Unidades (Adm) </Link></li>
+			<li><Link to='/dashboard/parametros-analisis'>Parametros (Adm) </Link></li>
+			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Adm) </Link></li>
+			
+			<li><Link to='/dashboard/solicitudes-laboratorio'>Solicitudes (Adm) </Link></li>
 		</ul>
 	}
 
@@ -116,10 +124,12 @@ class Menu extends Component {
 
 	laboratorioMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Lap) <span className="badge">14</span></Link></li>
-			<li><Link to='/dashboard/unidades-analisis'>Unidades (Lap) <span className="badge">14</span></Link></li>
-			<li><Link to='/dashboard/parametros-analisis'>Parametros (Lap) <span className="badge">14</span></Link></li>
-			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Lap) <span className="badge">14</span></Link></li>
+			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Lap)</Link></li>
+			<li><Link to='/dashboard/unidades-analisis'>Unidades (Lap)</Link></li>
+			<li><Link to='/dashboard/parametros-analisis'>Parametros (Lap)</Link></li>
+			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Lap)</Link></li>
+			
+			<li><Link to='/dashboard/solicitudes-laboratorio'>Solicitudes (Lap)</Link></li>
 		</ul>
 	}
 
