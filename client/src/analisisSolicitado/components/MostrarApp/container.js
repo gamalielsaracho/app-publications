@@ -7,7 +7,7 @@ import MostrarApp from './MostrarApp'
 
 function mapStateToProps(state, ownProps) {
 	return {
-		idParametroAnalisis: ownProps.params.idParametroAnalisis,
+		// idAnalisisSolicitado: ownProps.params.idAnalisisSolicitado,
 
 		// guardamos todos los parametros de la url en el objeto urls.
 		urls: ownProps.params
