@@ -1,2 +1,2 @@
-import FormularioParametroAnalisisContainer from './container'
-export default FormularioParametroAnalisisContainer
+import FormularioAnalisisSolicitadoContainer from './container'
+export default FormularioAnalisisSolicitadoContainer
