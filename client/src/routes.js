@@ -46,9 +46,12 @@ import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
 	// PACIENTE ALERGIAS.
 	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
 
-// ANÁLISIS SOLICITADOS APP.
+// LISTAR ANÁLISIS SOLICITADOS APP.
 import ListarAppAnalisisSolicitadosContainer from '././analisisSolicitado/components/ListarApp'
 import ListarAnalisisSolicitadosContainer from '././analisisSolicitado/components/Listar'
+
+// MOSTRAR ANÁLISIS SOLICITADO APP.
+import MostrarAnalisisSolicitadoAppContainer from '././analisisSolicitado/components/MostrarApp'
 
 
 // CITAS.
@@ -174,21 +177,23 @@ export default (
 
 
 
+			{/* Historial clínico. */}
 			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
 				<IndexRoute component={ListarPacientesPage}/>
 				
 				<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
 					<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
 					
-					<Route path='/dashboard/pacientes/:idPaciente/analisis-solicitados' component={ListarAppAnalisisSolicitadosContainer}>
+					<Route path='/dashboard/pacientes/:idPaciente/solicitudes-laboratorio' component={ListarAppAnalisisSolicitadosContainer}>
 						<IndexRoute component={ListarAnalisisSolicitadosContainer}/>
 						
+						<Route path='/dashboard/pacientes/:idPaciente/solicitudes-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
+
+						</Route>
 					</Route>
 
 				</Route>
 			</Route>
-
-
 
 
 			<Route path='/dashboard/citas' component={ListarCitasApp}>
@@ -197,8 +202,10 @@ export default (
 					<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaAppContainer}>
 
 						<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaRellenandoAppContainer}>
+							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
+							
+							</Route>
 						</Route>
-
 					</Route>
 				</Route>
 			</Route>
@@ -233,7 +240,14 @@ export default (
 			<Route path='/dashboard/unidades-analisis' component={ListarUnidadesAnalisisPage}/>
 			<Route path='/dashboard/parametros-analisis' component={ListarParametrosAnalisisPage}/>
 
-			
+
+			<Route path='/dashboard/solicitudes-laboratorio' component={ListarAppAnalisisSolicitadosContainer}>
+				<IndexRoute component={ListarAnalisisSolicitadosContainer}/>
+				<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
+
+				</Route>
+			</Route>
+
 
 			<Route path='/dashboard/tipos-analisis' component={ListarTiposAnalisisApp}>
 				<IndexRoute component={ListarTiposAnalisisPage}/>
