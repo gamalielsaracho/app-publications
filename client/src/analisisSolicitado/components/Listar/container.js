@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import {
+	listarAnalisisSolicitados,
 	listarAnalisisSolicitadosPorIdPaciente,
-	eliminarAnalisisSolicitado,
 	mostrarAnalisisSolicitado,
 
 	abrirFormularioEditarAnalisisSolicitado
@@ -26,14 +26,11 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+		listarAnalisisSolicitados: () => {
+			dispatch(listarAnalisisSolicitados())
+		},
 		listarAnalisisSolicitadosPorIdPaciente: (idPaciente) => {
 			dispatch(listarAnalisisSolicitadosPorIdPaciente(idPaciente))
-		},
-		eliminarAnalisisSolicitado: (idAnalisisSolicitado) => {
-			var r = confirm("Está seguro que desea eliminar ?");
-		    if (r == true) {
-				dispatch(eliminarAnalisisSolicitado(idAnalisisSolicitado))
-		    }
 		},
 		mostrarAnalisisSolicitado: (idAnalisisSolicitado) => {
 			dispatch(mostrarAnalisisSolicitado(idAnalisisSolicitado))
