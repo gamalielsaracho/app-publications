@@ -1,2 +1,2 @@
-import MostrarParametroAnalisisAppContainer from './container'
-export default MostrarParametroAnalisisAppContainer
+import MostrarAnalisisSolicitadoAppContainer from './container'
+export default MostrarAnalisisSolicitadoAppContainer
