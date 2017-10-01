@@ -113,6 +113,7 @@ export default (io) => {
 
 					socket.emit('editar_analisisSolicitado', { mensaje: 'Se actualizó exitósamente.' })
 
+					// VER.!
 					AnalisisSolicitado.findById(data, (err, analisisSolicitado) => {
 						if(err) {
 							console.log(err)
@@ -131,7 +132,7 @@ export default (io) => {
 		
 		socket.on('mostrar_analisisSolicitado', (data) => {
 			AnalisisSolicitado.findById(data, (err, analisisSolicitado) => {
-				// console.log(analisisSolicitado)
+				// console.log(analisisSolicitado[0])
 
 				if(err) {
 					console.log(err)
