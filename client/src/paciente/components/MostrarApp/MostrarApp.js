@@ -24,8 +24,8 @@ class MostrarApp extends Component {
 			  </li>
 			  <li className="nav-item">
 			    <a className="nav-link active">
-			    	<Link to={`/dashboard/pacientes/${idPaciente}/analisis-solicitados`}>
-			    		Análisis Solicitados
+			    	<Link to={`/dashboard/pacientes/${idPaciente}/solicitudes-laboratorio`}>
+			    		Solicitudes laboratorio
 			    	</Link>
 			    </a>
 			  </li>
@@ -33,7 +33,7 @@ class MostrarApp extends Component {
 			    <a className="nav-link">Análisis Realizados</a>
 			  </li>
 			</ul>
-
+			<br/>
 			{ this.props.children }
 
 		</div>
