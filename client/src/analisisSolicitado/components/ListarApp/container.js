@@ -9,7 +9,7 @@ function mapStateToProps(state, ownProps) {
 	// console.log('ownProps ------------>')
 	// console.log(ownProps)
 	return {
-		uls: ownProps.params
+		urls: ownProps.params
 	}
 }
 
