@@ -7,15 +7,6 @@ import _ from 'lodash'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import 
-	FieldSelectUnidadesAnalisisContainer 
-from '../../../unidadAnalisis/components/FieldSelectUnidadesAnalisis'
-
-import 
-	FieldSelectTiposExamenesContainer 
-from '../../../tipoExamen/components/FieldSelectTiposExamenes'
-
-
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -33,19 +24,18 @@ class Formulario extends Component {
 		this.renderFormulario = this.renderFormulario.bind(this)
 	}
 
-	componentWillMount() {
-		this.props.listarUnidadesAnalisisFuncion()
-		this.props.listarTiposExamenesFuncion()
-	}
-
 	enviarFormulario(formProps) {				
-		// console.log(formProps)
+		// urls es pasado como property al ser llamado
+		// lo cual tiene todos los parametros de la url para obtener 
+		// id_consulta y poder guardarlo.
 
 		if(this.props.editarContenido) {
-			this.props.editarParametroAnalisis(formProps)
+			this.props.editarAnalisisSolicitado(formProps)
 		} else {
-			this.props.crearParametroAnalisis(formProps)
+			formProps.id_consulta = this.props.urls.idConsulta
+			this.props.crearAnalisisSolicitado(formProps)
 		}
+		console.log(formProps)
 	}
 
 	renderFormulario(cargando) {
@@ -57,20 +47,10 @@ class Formulario extends Component {
 			return <div className='row'>
 				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>
-						<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-						
-						<Field name='id_unidadAnalisis' type='text' 
-							component={FieldSelectUnidadesAnalisisContainer}
-							listar={this.props.listarUnidadesAnalisis}
-							label='Unidad'/>
-
-						<Field name='id_tipoExamen' type='text' 
-							component={FieldSelectTiposExamenesContainer}
-							listar={this.props.listarTiposExamenes}
-							label='Tipo de Examen'/>
+						<Field name='fechaArealizar' type='date' component={renderField} label='Fecha a realizar'/>
 														
 						<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-						<button type="button" onClick={ this.props.cerrarFormularioParametroAnalisis } className="btn btn-primary btn-space">Cancelar</button>
+						<button type="button" onClick={ this.props.cerrarFormularioAnalisisSolicitado } className="btn btn-primary btn-space">Cancelar</button>
 					</form>
 				</div>
 			</div>
@@ -80,13 +60,13 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '70vh',
+		  		height: '40vh',
 		  		position: 'none'
 		  	}
 		}
 		
 		const { 
-			abirtoCrear, abirtoEditar, cargando, parametroAnalisis 
+			abirtoCrear, abirtoEditar, cargando, analisisSolicitado 
 		} = this.props.formulario
 
 		let error = this.props.formulario.error ? this.props.formulario.error 
@@ -101,7 +81,7 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
-					<h4 className='text-center'>Formulario parametro análisis</h4>
+					<h4 className='text-center'>Formulario Solicitud laboratorio</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
 					
