@@ -31,7 +31,7 @@ class Mostrar extends Component {
 	renderConsulta(dato) {
 		if(dato) {
 			if(dato.consulta != undefined) {
-				console.log(dato)
+				// console.log(dato)
 				// console.log(calcularEdad(dato.paciente.fechaNacimiento))
 
 				return <div>

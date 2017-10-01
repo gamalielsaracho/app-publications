@@ -2,22 +2,27 @@ import { connect } from 'react-redux'
 
 import MostrarApp from './MostrarApp'
 
-// import {
-// } from '../../../consulta/actions'
+import {
+	listarAnalisisSolicitados
+} from '../../../analisisSolicitado/actions'
 
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
 	return {
 		idConsulta: ownProps.params.idConsulta,
 
+		listar: state.analisisSolicitado.listar,
+
 		// guardamos todos los parametros de la url en el objeto urls.
-		urlsParams: ownProps.params
+		urls: ownProps.params
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		
+		listarAnalisisSolicitados: () => {
+			dispatch(listarAnalisisSolicitados())
+		}
 	}
 }
 
