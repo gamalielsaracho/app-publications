@@ -1,2 +1,2 @@
-import MostarParametroAnalisisContainer from './container'
-export default MostarParametroAnalisisContainer
+import MostarAnalisisSolicitadoContainer from './container'
+export default MostarAnalisisSolicitadoContainer
