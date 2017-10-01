@@ -12,62 +12,67 @@ import FormularioConsultaContainer from '../../../consulta/components/Formulario
 class MostrarApp extends Component {
 	constructor(props) {
 		super(props)
-		// this.renderMenu = this.renderMenu.bind(this)
-		// this.renderBtnAgregarConsultaByRol = this.renderBtnAgregarConsultaByRol.bind(this)
-
+		this.renderLinkSolicitudLaboratorio = this.renderLinkSolicitudLaboratorio.bind(this)
+		this.renderBtnAgregarConsultaByRol = this.renderBtnAgregarConsultaByRol.bind(this)
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
-	// componentWillMount() {
-	// 	this.props.listarConsultas()
-	// }
+	componentWillMount() {
+		this.props.listarAnalisisSolicitados()
+	}
 
-	// renderBtnAgregarConsultaByRol() {
-	// 	if(removeAccents(this.personalLocalSt.rol) == 'medico') {
-	// 		return <button type="button" onClick={ () => { this.props.abrirFormularioCrearConsulta() } }  className="text-center btn btn-success btn-space">Agregar Consulta</button>
-	// 	} else {
-	// 		return <span></span>
-	// 	}
-	// }
+	renderBtnAgregarConsultaByRol() {
 
-	// renderMenu(listar) {
-	// 	if(listar.cargando) {
-	// 		return <p>cargando..</p>
-	// 	} else {
-	// 		let consultas = listar.consultas
+		let rol = removeAccents(this.personalLocalSt.rol)
+		let idPersonal = this.personalLocalSt.id_personal
 
-	// 		consultas = consultas.filter((i) => {
-	// 			return i.consulta.id_preconsulta ==  this.props.idPreConsulta && 
-	// 			i.consulta.id_personal == this.personalLocalSt.id_personal
-	// 		})
+		if(rol == 'administracion' || rol == 'medico') {
+			return <button type="button" onClick={ () => { this.props.abrirFormularioCrearAnalisisSolicitado() } } className="text-center btn btn-success btn-space">Crear Solicitud para laboratorio</button>
+		} else {
+			return <span></span>
+		}
+	}
 
-	// 		// console.log('consultas ################# ---->')
-	// 		// console.log(consultas)
+	renderLinkSolicitudLaboratorio(activeSolicitudLaboratorio) {
+		const { analisisSolicitados, cargando, error } = this.props.listar
 
-	// 		if(consultas.length == 0) {
-	// 			return <div>
-	// 				{ this.renderBtnAgregarConsultaByRol() }
-	// 			</div>
-	// 		} else {
-	// 			// return <li className="nav-item">
-	// 			//     <a className="nav-link active">
-	// 			//     </a>
-	// 			// </li>
-	// 			return <div>
-	// 				<ul className="nav nav-tabs">
-	// 					<li className="nav-item">
-	// 			    		<Link to={`/dashboard/citas/${this.props.cita.cita.id_cita}/preconsulta/${this.props.cita.cita.id_preconsulta}`}>Consulta</Link>
-	// 					</li>
-	// 				</ul>
-	// 			</div>
-	// 		}
-	// 	}
-	// }
+		if(cargando) {
+			return <p>Cargando..</p>
+		} else {
+
+			let solicitudesLaboratorio = analisisSolicitados
+
+			solicitudesLaboratorio = solicitudesLaboratorio.filter((i) => {
+				return i.analisisSolicitado.id_consulta ==  this.props.urls.idConsulta
+			})
+
+
+			if(solicitudesLaboratorio.length == 0) {
+				return <div>
+					{ this.renderBtnAgregarConsultaByRol() }
+				</div>
+			} else {			
+				return <div>
+					<ul className="nav nav-tabs">
+						<li className="nav-item nav-link" className={activeSolicitudLaboratorio}>
+						    <Link to={`/dashboard`}>Solicitud laboratorio</Link>
+						</li>
+					</ul>
+				</div>
+			}
+		}
+	}
 
 	render() {
+		let activeDiagnosticos
+		let activeTratamientos
+		let activeSolicitudLaboratorio
 
-		// id de la pre-consulta desde la url.
-		// let idPreConsulta = this.props.idPreConsulta
+		if(this.props.urls.idAnalisisSolicitado) {
+			activeSolicitudLaboratorio = 'active'
+			activeDiagnosticos = ''
+			activeTratamientos = ''
+		}
 
 		return <div>
 			<br/>
@@ -77,21 +82,15 @@ class MostrarApp extends Component {
 
 			<FormularioConsultaContainer/>
 
-			{/*  
-				{ this.renderMenu(this.props.listar) }
-			*/}
-
 			<br/>
 			<ul className="nav nav-tabs">
-				<li className="nav-item">
-				    <Link to={`/dashboard`}>Tratamientos</Link>
+				<li className="nav-item nav-link" className={activeDiagnosticos}>
+				    <Link to={`/dashboard`}>HACER LOS DIAGNÓSTICOS</Link>
 				</li>
-				<li className="nav-item">
-				    <Link to={`/dashboard`}>Medicamentos Solicitados</Link>
+				<li className="nav-item nav-link" className={activeTratamientos}>
+				    <Link to={`/dashboard`}>Tratamientos (HACER)</Link>
 				</li>
-				<li className="nav-item">
-				    <Link to={`/dashboard`}>Analisis Solicitados</Link>
-				</li>
+				{ this.renderLinkSolicitudLaboratorio(activeSolicitudLaboratorio) }
 			</ul>
 
 			{ this.props.children }
