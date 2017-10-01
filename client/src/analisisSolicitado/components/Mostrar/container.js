@@ -1,30 +1,37 @@
 import { connect } from 'react-redux'
 
 import {
-	mostrarParametroAnalisis,
-	abrirFormularioEditarParametroAnalisis
+	eliminarAnalisisSolicitado,
+	mostrarAnalisisSolicitado,
+	abrirFormularioEditarAnalisisSolicitado
 } from '../../actions'
 
 import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.parametroAnalisis.mostrar,
+		mostrar: state.analisisSolicitado.mostrar,
 
 		// estado del formulario para hacer render.
 		// unicamente si se abre.
-		formulario: state.parametroAnalisis.formulario
+		formulario: state.analisisSolicitado.formulario
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		mostrarParametroAnalisis: (idParametroAnalisis) => {
-			dispatch(mostrarParametroAnalisis(idParametroAnalisis))
+		mostrarAnalisisSolicitado: (idAnalisisSolicitado) => {
+			dispatch(mostrarAnalisisSolicitado(idAnalisisSolicitado))
 		},
-		abrirFormularioEditarParametroAnalisis: (idParametroAnalisis) => {
-			dispatch(abrirFormularioEditarParametroAnalisis(idParametroAnalisis))
+		abrirFormularioEditarAnalisisSolicitado: (idAnalisisSolicitado) => {
+			dispatch(abrirFormularioEditarAnalisisSolicitado(idAnalisisSolicitado))
+		},
+		eliminarAnalisisSolicitado: (idAnalisisSolicitado, urlToRedirect) => {
+			var r = confirm("Está seguro que desea eliminar ?");
+		    if (r == true) {
+				dispatch(eliminarAnalisisSolicitado(idAnalisisSolicitado, urlToRedirect))
+		    }
 		}
 	}
 }
