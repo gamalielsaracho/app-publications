@@ -28,16 +28,8 @@ class Mostrar extends Component {
 		}
 	}
 
-	renderSexo(mujer) {
-		if(mujer) {
-			return <span>Femenino</span> 
-		} else {
-			return <span>Masculino</span>
-		}
-	}
-
 	renderPaciente(paciente) {
-		console.log(paciente)
+		// console.log(paciente)
 
 		if(paciente) {
 			return <div >
@@ -47,7 +39,7 @@ class Mostrar extends Component {
 				<p><strong>Apellidos:</strong> { paciente.pa.apellidos }</p>
 				<p><strong>Fecha de nacimiento:</strong> { formatDate(paciente.pa.fechaNacimiento) }</p>
 				<p><strong>Dirección:</strong> { paciente.pa.direccion }</p>
-				<p><strong>Sexo:</strong>{ this.renderSexo(paciente.pa.mujer) }</p>
+				<p><strong>Sexo:</strong>{ paciente.pa.sexo }</p>
 				<p><strong>Area:</strong> { paciente.area.descripcion }</p>
 				<p><strong>Ciudad:</strong> { paciente.ciudad.descripcion }</p>
 				
