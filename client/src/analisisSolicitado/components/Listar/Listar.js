@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
+import moment from 'moment'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -7,13 +9,38 @@ class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderAnalisisSolicitados = this.renderAnalisisSolicitados.bind(this)
+		this.renderEstado = this.renderEstado.bind(this)
 	}
 
 	componentWillMount() {
-		this.props.listarAnalisisSolicitadosPorIdPaciente(this.props.urls.idPaciente)
+		if(this.props.urls.idPaciente) {
+			this.props.listarAnalisisSolicitadosPorIdPaciente(this.props.urls.idPaciente)
+		} else {
+			this.props.listarAnalisisSolicitados()
+		}
+	}
+
+	renderEstado(pendiente) {
+		if(pendiente) {
+			return <p>Pendiente</p>
+		} else {
+			return <p>Realizado</p>
+		}
 	}
 
 	renderAnalisisSolicitados(analisisSolicitados) {
+		let dataUrl = ''
+
+		// Esto es para ver verificar los parametros y así poder 
+		// redireccionar en una url en específico deacuerdo en donde 
+		// esté parado el usuario.
+		
+		if(this.props.urls.idPaciente) {
+			dataUrl = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio`
+		} else {
+			dataUrl = `/dashboard/solicitudes-laboratorio`
+		}
+		// console.log(analisisSolicitados)
 		// if(analisisSolicitados) {
 			// <button type="button" onClick={() => { this.props.mostrarParametroAnalisis(i.parametro.id_parametroAnalisis) }} className="btn btn-info btn-space">Mostrar</button>
 			
@@ -22,9 +49,17 @@ class Listar extends Component {
 					analisisSolicitados.map((i) => {
 						return <tr key={i.analisisSolicitado.id_analisisSolicitado}>
 				            <td>{ i.analisisSolicitado.id_analisisSolicitado }</td>
+				            <td>{ moment(i.analisisSolicitado.fechaArealizar).format('LL') }</td>
 				            <td>
-								<button type="button" onClick={() => { this.props.abrirFormularioEditarAnalisisSolicitado(i.analisisSolicitado.id_analisisSolicitado) }} className="btn btn-warning btn-space">Editar</button>
-								<button type="button" onClick={() => { this.props.eliminarAnalisisSolicitado(i.analisisSolicitado.id_analisisSolicitado) }} className="btn btn-danger btn-space">Eliminar</button>
+				            	{ this.renderEstado(i.analisisSolicitado.pendiente) }
+				            </td>
+				            <td>{ i.personal.nombres+' '+i.personal.apellidos }</td>
+				            <td>{ i.especialidad.descripcion }</td>
+
+				            <td>
+				            	<Link to={`${dataUrl}/${i.analisisSolicitado.id_analisisSolicitado}`}>
+									<button type="button" className="btn btn-info btn-space">Mostrar</button>
+								</Link>
 				            </td>
 				        </tr>
 					})
@@ -45,7 +80,7 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div>
-					<h1 className='text-center'>Análisis solicitados</h1>
+					<h1 className='text-center'>Solicitudes laboratorio</h1>
 					
 					<MensajeOerror error={error} mensaje={null}/>
 
@@ -53,9 +88,11 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Nombre</th>
-						        	<th>Tipo de examen</th>
-						        	<th>Unidad de medida</th>
+						        	<th>Id</th>
+						        	<th>Fecha</th>
+						        	<th>Estado</th>
+						        	<th>Solicitante</th>
+						        	<th>Especialidad</th>
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
