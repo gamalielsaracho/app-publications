@@ -26,21 +26,24 @@ export default (io) => {
 		analisisLista()
 
 
-		socket.on('mostrar_por_IdanalisisSolicitado', (data) => {
+		socket.on('mostrar_por_idAnalisisSolicitado', (data) => {
+
 			Analisis.findByIdanalisisSolicitado(data, (err, analisis) => {
 				// console.log(analisis)
 
 				if(err) {
 					console.log(err)
-					socket.emit('mostrar_por_IdanalisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
+					socket.emit('mostrar_por_idAnalisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('mostrar_por_IdanalisisSolicitado', analisis[0])
+				socket.emit('mostrar_por_idAnalisisSolicitado', analisis)
 			})
 		})
 
+
 		socket.on('crear_analisis', function(data) {
+			// console.log(data)
 			Analisis.verifyIfExist(data, (err, analisisExistente) => {
 				if(err) {
 					console.log(err)
@@ -48,27 +51,34 @@ export default (io) => {
 					return
 				}
 
+				console.log(analisisExistente[0])
+
 				if(analisisExistente[0]) {
 						socket.emit('crear_analisis', { error: 'Solo está permitido crear un analisis por cada solicitud.' })
 						return
 				} else {
-					Analisis.create(data, (err, analisis) => {
+					Analisis.create(data, (err, result) => {
 						if(err) {
 							console.log(err)
 							socket.emit('crear_analisis', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('crear_analisis', { mensaje: 'Se agregó exitósamente.' })
+						socket.emit('crear_analisis', { 
+							// para redireccionar al análisis que creó. 
+							id_analisis: result.insertId,
+							id_analisisSolicitado: data.id_analisisSolicitado,
+							mensaje: 'Se agregó exitósamente.' 
+						})
 						
 						Analisis.findByIdanalisisSolicitado(data, (err, analisis) => {
 							if(err) {
 								console.log(err)
-								socket.emit('mostrar_por_IdanalisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
+								socket.emit('mostrar_por_idAnalisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
 								return
 							}
 
-							socket.emit('mostrar_por_IdanalisisSolicitado', analisis[0])
+							socket.emit('mostrar_por_idAnalisisSolicitado', analisis)
 						})
 
 						analisisLista()
@@ -87,6 +97,16 @@ export default (io) => {
 				}
 
 				socket.emit('eliminar_analisis', { mensaje: 'Se Eliminó exitósamente.' })
+
+				Analisis.findByIdanalisisSolicitado(data, (err, analisis) => {
+					if(err) {
+						console.log(err)
+						socket.emit('mostrar_por_idAnalisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('mostrar_por_idAnalisisSolicitado', analisis)
+				})
 
 				analisisLista()
 			})
