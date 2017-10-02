@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import removeAccents from 'remove-accents'
 import jwtDecode from 'jwt-decode'
 
@@ -12,6 +13,9 @@ class Listar extends Component {
 		super(props)
 		this.renderAnalisisSolicitadoTipos = this.renderAnalisisSolicitadoTipos.bind(this)
 		this.renderBtnsOpcionesByRolYpersonal = this.renderBtnsOpcionesByRolYpersonal.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+
+		this.renderFormularioByRolYpersonal = this.renderFormularioByRolYpersonal.bind(this)
 	}
 
 	// this.props.idAnalisisSolicitado -> es pasado como property.
@@ -24,36 +28,43 @@ class Listar extends Component {
 	}
 
 	renderBtnsOpcionesByRolYpersonal(i) {
-		
-		// if(personalPre != null) {
-		// 	if(removeAccents(datosToken.rol.descripcion) == 'enfermeria' && datosToken.personal.id_personal == personalPre.personal.id_personal) {
-				return <div>
-					<button type="button" onClick={() => { this.props.eliminarAnalisisSolicitadoTipo(i.analisisSolicitadoTipo.id_analisisSolicitadoTipo) }} className="btn btn-danger btn-sm btn-space">
-						<span className="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Eliminar
-					</button>
-				</div>
-		// 	} else {
-		// 		return <span></span>
-		// 	}
-		// }
+		let rol = removeAccents(this.personalLocalSt.rol)
+		let idPersonal = this.personalLocalSt.id_personal
+
+		if((rol == 'administracion') || (rol == 'medico' && idPersonal == i.consulta.id_personal)) {
+			return <div>
+				<button type="button" onClick={() => { this.props.eliminarAnalisisSolicitadoTipo(i.analisisSolicitadoTipo.id_analisisSolicitadoTipo) }} className="btn btn-danger btn-sm btn-space">
+					<span className="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Eliminar
+				</button>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderFormularioByRolYpersonal() {
+		let rol = removeAccents(this.personalLocalSt.rol)
+		let idPersonal = this.personalLocalSt.id_personal
+
+		const { cargando, analisisSolicitado, error } = this.props.mostrar
+
+		if(!cargando && analisisSolicitado) {
+				if(analisisSolicitado.personal.id_personal) {
+					if((rol == 'administracion') || (rol == 'medico' && idPersonal == analisisSolicitado.personal.id_personal)) {
+						return <div>
+							<FormularioAnalisisSolicitadoTipoContainer
+								idAnalisisSolicitado={this.props.idAnalisisSolicitado}/>
+							<br/>
+						</div>
+					} else {
+						return <span></span>
+					}
+				}
+		}
 	}
 
 	renderAnalisisSolicitadoTipos(analisisSolicitadoTipos) {
-		console.log(analisisSolicitadoTipos)
-
-		let datosToken = null
-		let personalPre = null
-
-		// let condition = (
-		// 	this.props.preConsulta != undefined && 
-		// 	this.props.usuarioEstado.datosToken.rol != null
-		// );
-
-		// if(condition) {
-		// 	datosToken = this.props.usuarioEstado.datosToken
-		// 	personalPre = this.props.preConsulta
-		// }
-
+		// console.log(analisisSolicitadoTipos)
 
 		return <div>
 			{
@@ -61,7 +72,7 @@ class Listar extends Component {
 					return <tr key={i.analisisSolicitadoTipo.id_analisisSolicitadoTipo}>
 						<br/>
 						<br/>
-			            <td>{ i.tipoAnalisis.descripcion }</td>
+			            <td><li>{ i.tipoAnalisis.descripcion }</li></td>
 			            <td>
 							{ this.renderBtnsOpcionesByRolYpersonal(i) }
 						</td>
@@ -84,9 +95,8 @@ class Listar extends Component {
 
 				<MensajeOerror error={error} mensaje={null}/>
 
-				<FormularioAnalisisSolicitadoTipoContainer
-					idAnalisisSolicitado={this.props.idAnalisisSolicitado}/>
-				<br/>
+				{ this.renderFormularioByRolYpersonal() }
+
 				{ this.renderAnalisisSolicitadoTipos(analisisSolicitadoTipos) }
 			</div>
 		}
