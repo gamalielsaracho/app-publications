@@ -1,0 +1,2 @@
+import FormularioAnalisisSolicitadoTipoContainer from './container'
+export default FormularioAnalisisSolicitadoTipoContainer

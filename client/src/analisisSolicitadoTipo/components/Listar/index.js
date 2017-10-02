@@ -1,0 +1,2 @@
+import ListarAnalisisSolicitadoTiposContainer from './container'
+export default ListarAnalisisSolicitadoTiposContainer
