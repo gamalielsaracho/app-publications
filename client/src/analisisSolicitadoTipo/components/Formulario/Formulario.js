@@ -50,17 +50,19 @@ class Formulario extends Component {
 			</div>
 			<br/>
 			<div className='row'>
-				<form onSubmit={handleSubmit(this.enviarFormulario)} className='form-inline'>
-					<div className='form-group'>
-						<Field name='id_tipoAnalisis' type='text' 
-							component={FieldSelectTiposAnalisisContainer} 
-							listar={this.props.listarTiposAnalisis}
-							label=''/>
-					</div>
-					<div className='form-group'>
-						<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-					</div>
-				</form>
+				<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
+					<form onSubmit={handleSubmit(this.enviarFormulario)} className='form-inline'>
+						<div className='form-group'>
+							<Field name='id_tipoAnalisis' type='text' 
+								component={FieldSelectTiposAnalisisContainer} 
+								listar={this.props.listarTiposAnalisis}
+								label=''/>
+						</div>
+						<div className='form-group'>
+							<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+						</div>
+					</form>
+				</div>
 			</div>
 
 		</div>
