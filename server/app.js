@@ -64,6 +64,7 @@ require('././app/tipoAnalisis/tipoAnalisis.sockets')(io)
 
 		// Análisis
 require('././app/analisisSolicitado/analisisSolicitado.sockets')(io)
+require('././app/analisis/analisis.sockets')(io)
 
 
 io.on('connection', function (socket) {
