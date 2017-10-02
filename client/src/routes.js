@@ -54,6 +54,9 @@ import ListarAnalisisSolicitadosContainer from '././analisisSolicitado/component
 import MostrarAnalisisSolicitadoAppContainer from '././analisisSolicitado/components/MostrarApp'
 
 
+import MostrarAnalisisAppContainer from '././analisis/components/MostrarApp'
+
+
 // CITAS.
 	// Listar.
 import ListarCitasApp from '././cita/components/ListarApp'
@@ -116,6 +119,7 @@ import MostrarParametroAnalisisAppContainer from '././parametroAnalisis/componen
 
 import ListarReferenciasContainer from '././referencia/components/Listar'
 
+
 	// LISTAR TIPOS DE ANALISIS APP.
 import ListarTiposAnalisisApp from '././tipoAnalisis/components/ListarApp'
 import ListarTiposAnalisisPage from '././tipoAnalisis/pages/ListarTiposAnalisisPage'
@@ -125,8 +129,6 @@ import MostrarTipoAnalisisAppContainer from '././tipoAnalisis/components/Mostrar
 
 // LISTAR (TIPO ANALISIS X PARAMETROS).
 import ListarTipoAnalisisParametrosContainer from '././tipoAnalisisParametro/components/Listar'
-
-
 
 
 
@@ -244,7 +246,9 @@ export default (
 			<Route path='/dashboard/solicitudes-laboratorio' component={ListarAppAnalisisSolicitadosContainer}>
 				<IndexRoute component={ListarAnalisisSolicitadosContainer}/>
 				<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
+					<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis' component={MostrarAnalisisAppContainer}>
 
+					</Route>
 				</Route>
 			</Route>
 
