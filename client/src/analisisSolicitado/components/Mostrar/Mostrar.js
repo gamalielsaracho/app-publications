@@ -12,6 +12,9 @@ import Cargando from '../../../app/components/Cargando'
 // Formulario Modal para EDITAR un analisis solicitado.
 import FormularioAnalisisSolicitadoContainer from '../Formulario'
 
+import ListarAnalisisSolicitadoTiposContainer from '../../../analisisSolicitadoTipo/components/Listar'
+
+
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
@@ -58,7 +61,7 @@ class Mostrar extends Component {
 		}
 
 		if(rol == 'administracion' || (rol == 'medico' && personal.id_personal == idPersonal)) {
-			return <div className='container'>
+			return <div className='row'>
 				<button onClick={ () => { this.props.abrirFormularioEditarAnalisisSolicitado(this.props.urls.idAnalisisSolicitado) } } className='btn btn-warning btn-space'>Editar</button>
 				<button onClick={ () => { this.props.eliminarAnalisisSolicitado(this.props.urls.idAnalisisSolicitado, urlToRedirect) } } className='btn btn-danger btn-space'>Eliminar</button>
 			</div>
@@ -80,13 +83,15 @@ class Mostrar extends Component {
 
 						<p><strong>Médico/a:</strong>{ ' '+dato.personal.nombres+' '+dato.personal.apellidos }</p>
 						<p><strong>Especialidad:</strong>{ ' '+dato.especialidad.descripcion }</p>
+
+						{ this.renderOptionsByRol(dato.personal) }
 					</div>
 
 					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-						<h3>Lista de tipos de análisis solicitados</h3>
+						<ListarAnalisisSolicitadoTiposContainer
+							idAnalisisSolicitado = {this.props.urls.idAnalisisSolicitado}/>
 					</div>
 					
-					{ this.renderOptionsByRol(dato.personal) }
 				</div>
 			} else {
 				return <span></span>
