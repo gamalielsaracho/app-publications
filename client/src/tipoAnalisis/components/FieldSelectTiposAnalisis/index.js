@@ -1,0 +1,2 @@
+import FieldSelectTiposAnalisisContainer from './container'
+export default FieldSelectTiposAnalisisContainer
