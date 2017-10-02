@@ -5,10 +5,13 @@ import preConsultaParametroRoutes from './preConsultaParametro/preConsultaParame
 import tipoAnalisisParametroRoutes from './tipoAnalisisParametro/tipoAnalisisParametro.routes'
 import referenciaRoutes from './referencia/referencia.routes'
 
+import analisisSolicitadoTipoRoutes from './analisisSolicitadoTipo/analisisSolicitadoTipo.routes'
+
 export default (app) => {
 	// usuarioRoutes(app)
 	// rolRoutes(app)
 	preConsultaParametroRoutes(app)
 	tipoAnalisisParametroRoutes(app)
 	referenciaRoutes(app)
+	analisisSolicitadoTipoRoutes(app)
 }
