@@ -50,6 +50,7 @@ import referenciaReducer from '../referencia/reducer'
 
 		// Análisis. 
 import analisisSolicitadoReducer from '../analisisSolicitado/reducer'
+import analisisSolicitadoTipoReducer from '../analisisSolicitadoTipo/reducer'
 
 
 const rootReducer = combineReducers({
@@ -98,7 +99,8 @@ const rootReducer = combineReducers({
 	referencia: referenciaReducer,
 
 	// Análisis.
-	analisisSolicitado: analisisSolicitadoReducer
+	analisisSolicitado: analisisSolicitadoReducer,
+	analisisSolicitadoTipo: analisisSolicitadoTipoReducer
 
 })
 
