@@ -38,13 +38,17 @@ exports.find = (callback) => {
 exports.findById = (data, callback) => {
 
 	let q = `
-		SELECT * FROM analisis 
-			WHERE
-				id_analisis = ?
+		SELECT * 
+		FROM 
+			analisis ana,
+			personales personal
+		WHERE
+			ana.id_personal = personal.id_personal AND
+			ana.id_analisis = ?
 	`
 	var options = {
 		sql: q,
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, [data.id_analisis], callback)
@@ -56,7 +60,7 @@ exports.findByIdanalisisSolicitado = (data, callback) => {
 
 	let q = `
 		SELECT
-			id_analisisSolicitado
+			id_analisis
 		FROM 
 			analisis 
 		WHERE
@@ -88,8 +92,7 @@ exports.create = (data, callback) => {
 		INSERT INTO analisis (id_analisis, fecha, id_analisisSolicitado, id_personal)
 			VALUES (null, now(), ?, ?);
 	`
-	return connection.query(q, [ data.fecha,
-								 data.id_analisisSolicitado,
+	return connection.query(q, [ data.id_analisisSolicitado,
 								 data.id_personal ], callback)
 
 	connection.end()
