@@ -8,9 +8,13 @@ exports.find = (idAnalisisSolicitado, callback) => {
 			*
 		FROM
 			analisissolicitadostipos analisisSolicitadoTipo,
-			tiposanalisis tipoAnalisis
+			tiposanalisis tipoAnalisis,
+			analisisSolicitados analisisSolicitado,
+			consultas consulta 
 		WHERE
 			analisisSolicitadoTipo.id_tipoAnalisis = tipoAnalisis.id_tipoAnalisis AND
+			analisisSolicitadoTipo.id_analisisSolicitado = analisisSolicitado.id_analisisSolicitado AND
+			analisisSolicitado.id_consulta = consulta.id_consulta AND
 			analisisSolicitadoTipo.id_analisisSolicitado = ?
 	`
 
@@ -31,9 +35,13 @@ exports.findById = (idAnalisisSolicitadoTipo, callback) => {
 			*
 		FROM
 			analisissolicitadostipos analisisSolicitadoTipo,
-			tiposanalisis tipoAnalisis
+			tiposanalisis tipoAnalisis,
+			analisisSolicitados analisisSolicitado,
+			consultas consulta 
 		WHERE
 			analisisSolicitadoTipo.id_tipoAnalisis = tipoAnalisis.id_tipoAnalisis AND
+			analisisSolicitadoTipo.id_analisisSolicitado = analisisSolicitado.id_analisisSolicitado AND
+			analisisSolicitado.id_consulta = consulta.id_consulta AND
 			analisisSolicitadoTipo.id_analisisSolicitadoTipo = ?
 	`
 
