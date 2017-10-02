@@ -11,7 +11,10 @@ function mapStateToProps(state) {
 	return {
 		crear: state.analisisSolicitadoTipo.crear,
 		listar: state.analisisSolicitadoTipo.listar,
-		analisisSolicitadoTipos: state.analisisSolicitadoTipo.listar.analisisSolicitadoTipos
+		analisisSolicitadoTipos: state.analisisSolicitadoTipo.listar.analisisSolicitadoTipos,
+	
+		// para obtener el id del médico que creo la solicitud para laboratorio.
+		mostrar: state.analisisSolicitado.mostrar
 	}
 }
 
