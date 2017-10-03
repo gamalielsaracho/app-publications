@@ -7,10 +7,11 @@ exports.find = (idAnalisis, callback) => {
 		SELECT
 			*
 		FROM
-			analisistipos
+			analisistipos analisisTipo,
+			tiposanalisis tipoAnalisis
 		WHERE
-			id_analisis = ?
-
+			analisisTipo.id_tipoAnalisis = tipoAnalisis.id_tipoAnalisis  AND
+			analisisTipo.id_analisis = ?
 	`
 	
 	var options = {
@@ -29,9 +30,11 @@ exports.findById = (idAnalisisTipo, callback) => {
 		SELECT
 			*
 		FROM  
-			analisistipos
+			analisistipos analisisTipo,
+			tiposanalisis tipoAnalisis
 		WHERE
-			id_analisisTipo = ?
+			analisisTipo.id_tipoAnalisis = tipoAnalisis.id_tipoAnalisis  AND
+			analisisTipo.id_analisisTipo = ?
 
 	`
 	var options = {
