@@ -52,6 +52,7 @@ import referenciaReducer from '../referencia/reducer'
 import analisisSolicitadoReducer from '../analisisSolicitado/reducer'
 import analisisSolicitadoTipoReducer from '../analisisSolicitadoTipo/reducer'
 import analisisReducer from '../analisis/reducer'
+import analisisTipoReducer from '../analisisTipo/reducer'
 
 
 const rootReducer = combineReducers({
@@ -102,7 +103,8 @@ const rootReducer = combineReducers({
 	// Análisis.
 	analisisSolicitado: analisisSolicitadoReducer,
 	analisisSolicitadoTipo: analisisSolicitadoTipoReducer,
-	analisis: analisisReducer
+	analisis: analisisReducer,
+	analisisTipo: analisisTipoReducer
 })
 
 export default rootReducer
