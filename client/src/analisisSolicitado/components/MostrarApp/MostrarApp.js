@@ -60,7 +60,7 @@ class MostrarApp extends Component {
 				if(rol == 'administracion' || rol == 'laboratorio') {
 					return <ul className="nav nav-tabs">
 						<li className="nav-item nav-link" className={detalleAnalisis}>
-							<Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}`}>Análisis</Link>
+							<Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/analisis-tipos`}>Análisis</Link>
 						</li>
 						<li className="nav-item nav-link" className={detalleGeneral}>
 					    	<Link to={`/dashboard`}>Detalle general de análisis ya realizados</Link>
