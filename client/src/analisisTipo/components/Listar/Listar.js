@@ -7,6 +7,9 @@ import jwtDecode from 'jwt-decode'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import FormularioAnalisisTipoContainer from '../Formulario'
+
+
 class Listar extends Component {
 	constructor(props) {
 		super(props)
@@ -29,7 +32,7 @@ class Listar extends Component {
 					return <tr key={i.analisisTipo.id_analisisTipo}>
 			            <td>{ i.tipoAnalisis.descripcion }</td>
 			            <td>
-							<Link to={`/dashboard/consultas/${i.analisisTipo.id_analisisTipo}`}>
+							<Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${this.props.urls.idAnalisis}/analisis-tipos/${i.analisisTipo.id_analisisTipo}`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
 
@@ -55,6 +58,13 @@ class Listar extends Component {
 					<MensajeOerror error={error} mensaje={null}/>
 
 					<br/>
+					<div className='row'>
+						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+							<button onClick={ this.props.abrirFormularioCrearAnalisisTipo } className='btn btn-success'>Agregar</button>
+						</div>
+					</div>
+
+					<FormularioAnalisisTipoContainer urls={this.props.urls}/>
 
 					<div className='table-responsive'>
 						<table className='table table-striped'>
