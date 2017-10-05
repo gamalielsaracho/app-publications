@@ -1,22 +1,23 @@
 import { connect } from 'react-redux'
 
 import {
-	cerrarModalMostrarPacienteAlergia
+	mostrarAnalisisTipo
 } from '../../actions'
 
 import Mostrar from './Mostrar'
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
-		mostrar: state.alergiaPaciente.mostrar
+		mostrar: state.analisisTipo.mostrar,
+		urls: ownProps.params
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		cerrarModalMostrarPacienteAlergia: () => {
-			dispatch(cerrarModalMostrarPacienteAlergia())
+		mostrarAnalisisTipo: (idAnalisisTipo) => {
+			dispatch(mostrarAnalisisTipo(idAnalisisTipo))
 		}
 	}
 }
