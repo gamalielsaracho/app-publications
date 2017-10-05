@@ -20,15 +20,16 @@ class MostrarApp extends Component {
 	// }
 
 	render() {
-		let activeDiagnosticos = true
-		let activeTratamientos = true
-		let activeSolicitudLaboratorio = true
+		let activeAnalisisTipos = true
+		let activeAnalisisTipoDetalle = true
 
-		// if(this.props.urls.idAnalisisSolicitado) {
-		// 	activeSolicitudLaboratorio = 'active'
-		// 	activeDiagnosticos = ''
-		// 	activeTratamientos = ''
-		// }
+		if(this.props.urls.idAnalisisTipo) {
+			activeAnalisisTipoDetalle = 'active'
+			activeAnalisisTipos = ''
+		} else {
+			activeAnalisisTipoDetalle = ''
+			activeAnalisisTipos = 'active'
+		}
 
 		return <div>
 			<br/>
@@ -39,10 +40,10 @@ class MostrarApp extends Component {
 
 			<br/>
 			<ul className="nav nav-tabs">
-				<li className="nav-item nav-link" className={activeDiagnosticos}>
-				    <Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${this.props.urls.idAnalisis}/tipos-analisis`}>Tipos de análisis</Link>
+				<li className="nav-item nav-link" className={activeAnalisisTipos}>
+				    <Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${this.props.urls.idAnalisis}/analisis-tipos`}>Tipos de análisis</Link>
 				</li>
-				<li className="nav-item nav-link" className={activeTratamientos}>
+				<li className="nav-item nav-link" className={activeAnalisisTipoDetalle}>
 				    <Link to={`/dashboard`}>Detalle tipo de análisis</Link>
 				</li>
 			</ul>
