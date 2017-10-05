@@ -2,14 +2,13 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearPreConsultaParametro,
-	editarPreConsultaParametro,
-	cerrarFormularioPreConsultaParametro
+	crearAnalisisTipo,
+	cerrarFormularioAnalisisTipo
 } from '../../actions'
 
 import {
-	listarParametrosPreConsulta
-} from '../../../parametroPreConsulta/actions'
+	listarTiposAnalisis
+} from '../../../tipoAnalisis/actions'
 
 import Formulario from './Formulario'
 
@@ -31,18 +30,13 @@ const validate = (values) => {
 
 function mapStateToProps(state) {
 	return {
-		formulario: state.preConsultaParametro.formulario,
-		initialValues: state.preConsultaParametro.formulario.parametroPreConsulta,
-		enableReinitialize: state.preConsultaParametro.formulario.iniciarValores,
-		editarContenido: state.preConsultaParametro.formulario.iniciarValores,
+		formulario: state.analisisTipo.formulario,
 
 		// Para obtener el error al crear o editar.
-		crear: state.preConsultaParametro.crear,
-		editar: state.preConsultaParametro.editar,
+		crear: state.analisisTipo.crear,
 
-		// Lista de los parametros para pasarle al componente 
-		// FieldSelectParametrosPre como propiedad.
-		listaParametros: state.parametroPreConsulta.listar
+		// Lista de los tipos de análisis para mostrar dentro del select option.
+		listarTiposAnalisis: state.tipoAnalisis.listar
 
 	}
 }
@@ -50,25 +44,22 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearPreConsultaParametro: (datosFormulario) => {
-			dispatch(crearPreConsultaParametro(datosFormulario))
+		crearAnalisisTipo: (datosFormulario) => {
+			dispatch(crearAnalisisTipo(datosFormulario))
 		},
-		editarPreConsultaParametro: (datosFormulario) => {
-			dispatch(editarPreConsultaParametro(datosFormulario))
-		},
-		cerrarFormularioPreConsultaParametro: () => {
-			dispatch(cerrarFormularioPreConsultaParametro())
+		cerrarFormularioAnalisisTipo: () => {
+			dispatch(cerrarFormularioAnalisisTipo())
 		},
 
 		// Llamar dentro de componentWillMount, para listar los parametros.
-		listarParametrosPreConsulta: () => {
-			dispatch(listarParametrosPreConsulta())
+		listarTiposAnalisisFuncion: () => {
+			dispatch(listarTiposAnalisis())
 		}
 	}
 }
 
 const form = reduxForm({
-	form: 'FormularioPreConsultaParametro',
+	form: 'FormularioAnalisisTipo',
 	validate
 })
 
