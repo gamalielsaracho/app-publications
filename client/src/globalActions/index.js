@@ -105,7 +105,7 @@ export function getData(action, errorType, isAuthReq, url, dispatch) {
 
 	axios.get(requestUrl, headers)
 	.then((response) => {
-
+		// console.log(response.data)
 		dispatch({ type: action, payload: response.data })
 	})
 	.catch((error) => {
