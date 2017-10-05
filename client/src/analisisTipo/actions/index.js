@@ -113,7 +113,7 @@ export function eliminarAnalisisTipo(idAnalisisTipo) {
 
 export function mostrarAnalisisTipo(idAnalisisTipo) {
 	return (dispatch) => {
-		let url = `/analisisTipos/${idAnalisisTipo}`
+		let url = `/analisisTipos/${idAnalisisTipo}/mostrar`
 
 		dispatch({ type: MOSTRAR_ANALISIS_TIPO_REQUEST })
 
