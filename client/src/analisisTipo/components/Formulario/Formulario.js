@@ -5,9 +5,9 @@ import ReactModal from 'react-modal'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FieldSelectParametrosPreContainer from '../../../parametroPreConsulta/components/FieldSelectParametrosPre'
+import FieldSelectTiposAnalisisContainer from '../../../tipoAnalisis/components/FieldSelectTiposAnalisis'
 
-import FormularioParametroPreConsultaContainer from '../../../parametroPreConsulta/components/Formulario'
+// import FormularioParametroPreConsultaContainer from '../../../parametroPreConsulta/components/Formulario'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -23,70 +23,22 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
-
-		this.renderFieldTextArea = this.renderFieldTextArea.bind(this)
-		this.renderFieldSelectParametrosPre = this.renderFieldSelectParametrosPre.bind(this)
-		this.renderBtnCancelar = this.renderBtnCancelar.bind(this)
 	}
 
 	componentWillMount() {
-		this.props.listarParametrosPreConsulta()
+		this.props.listarTiposAnalisisFuncion()
 	}
 
 	enviarFormulario(formProps) {
 
-		formProps.id_preconsulta = this.props.idPreConsulta
+		// urls es pasado como property al ser llamado.
+		formProps.id_analisis = this.props.urls.idAnalisis
 		
-		// console.log(formProps)
+		console.log(formProps)
 
-		if(this.props.editarContenido) {
-			this.props.editarPreConsultaParametro(formProps)
-		} else {
-
-			this.props.crearPreConsultaParametro(formProps)
-		}
+		this.props.crearAnalisisTipo(formProps)
 	}
 
-	renderFieldTextArea({ input, label, type, meta: { touched, error, warning } }) {
-		return <div>
-			<div className="form-group">
-			 	<label htmlFor={label}>{label}</label>
-		    	<textarea className="form-control" {...input} placeholder={label} type={type}>
-		    	</textarea>
-			</div>
-		    { touched && ((error && <label className="text-danger">{ error }</label>)) }
-		</div>
-	}
-
-	renderFieldSelectParametrosPre(listaParametros, paramentro) {
-		if(!this.props.editarContenido) {
-			return <div>
-				<Field name='id_parametroPreconsulta' type='text' 
-								component={FieldSelectParametrosPreContainer}
-								listaParametros={listaParametros} 
-								label='Paramentro'/>
-			</div>
-		} else {
-			return <p><strong>Paramentro:</strong> { paramentro.descripcion }</p>
-		}
-	}
-
-	renderBtnCancelar() {
-		if(this.props.editarContenido) {
-			return <button type="button" onClick={ this.props.cerrarFormularioPreConsultaParametro } className="btn btn-primary btn-space">Cancelar</button>
-		} else {
-			return <span></span>
-		}
-	}
-
-	renderCargando(cargando) {
-		if(cargando) {
-			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
 
 	render() {
 		const customStyles = {
@@ -99,48 +51,43 @@ class Formulario extends Component {
 		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
-			abirtoCrear, abirtoEditar, cargando, parametroPreConsulta 
+			abirtoCrear 
 		} = this.props.formulario
 		
-		let error = this.props.formulario.error ? this.props.formulario.error 
-			: this.props.crear.error ? this.props.crear.error : this.props.editar.error 
+		let error = this.props.crear.error ? this.props.crear.error : '' 
 
-		console.log(error)
+		// console.log(error)
 
-		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
+		if(abirtoCrear) {
+			return <ReactModal isOpen={abirtoCrear}
+					       	contentLabel="Minimal Modal Example"
+					       	style={customStyles}>
 
-		return <div>
-			<div className='row'>
-				<MensajeOerror error={error} mensaje={null}/>
-				{ this.renderCargando(cargando) }
-			</div>
-
-			<div className='row'>
-
-				<FormularioParametroPreConsultaContainer/>
-
-				<form onSubmit={handleSubmit(this.enviarFormulario)}>
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-8'>
-							{ this.renderFieldSelectParametrosPre(this.props.listaParametros, parametroPreConsulta) }
-						</div>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
-							<Field name='valor' type='text' component={renderField} label='Valor'/>
-						</div>
-					</div>
+				<div className='container'>
+					<h4 className='text-center'>Formulario tipo de análisis</h4>
 
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-8'>
-							<Field name='observaciones' type='textarea' component={this.renderFieldTextArea} label='Observaciones'/>
+						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+							<MensajeOerror error={error} mensaje={null}/>
+
+							<form onSubmit={handleSubmit(this.enviarFormulario)}>
+								
+								<Field name='id_tipoAnalisis' type='text'
+									component={FieldSelectTiposAnalisisContainer}
+									listar={this.props.listarTiposAnalisis}
+									label='Tipos de análisis'/>
+														
+								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+								<button type="button" onClick={ this.props.cerrarFormularioAnalisisTipo } className="btn btn-primary btn-space">Cancelar</button>
+								
+							</form>
 						</div>
 					</div>
-																	
-					<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-					{ this.renderBtnCancelar() }
-				</form>
-			</div>
-
-		</div>
+				</div>
+			</ReactModal>
+		} else {
+			return <span></span>
+		}
 	}
 }
 
