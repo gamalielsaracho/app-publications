@@ -9,7 +9,11 @@ import Mostrar from './Mostrar'
 function mapStateToProps(state, ownProps) {
 	return {
 		mostrar: state.analisisTipo.mostrar,
-		urls: ownProps.params
+		urls: ownProps.params,
+
+		// Obtenemos el estado de la solicitud de laboratorio,
+		// para quitar los datos del paciente (fechaNacimiento, sexo).
+		mostrarAnalisisSolicitado: state.analisisSolicitado.mostrar
 	}
 }
 
