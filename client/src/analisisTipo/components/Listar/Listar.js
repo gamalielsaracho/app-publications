@@ -57,12 +57,12 @@ class Listar extends Component {
 					
 					<MensajeOerror error={error} mensaje={null}/>
 
-					<br/>
 					<div className='row'>
 						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
 							<button onClick={ this.props.abrirFormularioCrearAnalisisTipo } className='btn btn-success'>Agregar</button>
 						</div>
 					</div>
+					<br/>
 
 					<FormularioAnalisisTipoContainer urls={this.props.urls}/>
 

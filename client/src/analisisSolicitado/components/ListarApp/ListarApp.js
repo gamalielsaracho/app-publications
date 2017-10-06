@@ -17,7 +17,7 @@ class ListarApp extends Component {
 			dataUrl = `/dashboard/solicitudes-laboratorio`
 		}
 
-		console.log(dataUrl)
+		// console.log(dataUrl)
 		if(this.props.urls.idAnalisisSolicitado) {
 			activeList = ''
 			activeShow = 'active'

@@ -47,7 +47,8 @@ class MostrarApp extends Component {
 				    <Link to={`/dashboard`}>Detalle tipo de análisis</Link>
 				</li>
 			</ul>
-
+			<br/>
+			
 			{ this.props.children }
 		</div>
 	}

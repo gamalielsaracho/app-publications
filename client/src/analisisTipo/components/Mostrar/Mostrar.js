@@ -26,18 +26,21 @@ class Mostrar extends Component {
 		if(cargando) {
 			return <Cargando/>
 		} else if (dato && !this.props.mostrarAnalisisSolicitado.cargando && this.props.mostrarAnalisisSolicitado.analisisSolicitado) {
-			return <div className='row'>
-				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-					<h3><strong>Nombre:</strong> { dato.tipoAnalisis.descripcion }</h3>
+			return <div>
+				<h3 className='text-center'><strong>Nombre:</strong> { dato.tipoAnalisis.descripcion }</h3>
+				
+				<div className='row'>
+					<div className='col-xs-12 col-sm-7 col-md-6 col-lg-6'>
+						<FormularioAnalisisTipoReferenciaContainer
+							idTipoAnalisis = { dato.analisisTipo.id_tipoAnalisis }
+							analisisSolicitadoDatos = { this.props.mostrarAnalisisSolicitado.analisisSolicitado }
+							urls = { this.props.urls }/>
+					</div>
+					<div className='col-xs-12 col-sm-7 col-md-6 col-lg-6'>
+						<ListarAnalisisTipoReferenciasContainer
+							analisisTipoDatos = {dato}/>
+					</div>
 				</div>
-				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-					<FormularioAnalisisTipoReferenciaContainer
-						idTipoAnalisis = { dato.analisisTipo.id_tipoAnalisis }
-						analisisSolicitadoDatos = { this.props.mostrarAnalisisSolicitado.analisisSolicitado }/>
-				</div>
-			
-				<ListarAnalisisTipoReferenciasContainer
-					analisisTipoDatos = {dato}/>
 			</div>
 		}
 	}
@@ -50,6 +53,14 @@ class Mostrar extends Component {
 			<MensajeOerror error={error} mensaje={null}/>
 
 			{ this.renderAnalisisTipo(analisisTipo, cargando) }
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
 		</div>
 
 	}
