@@ -27,6 +27,77 @@ exports.listarPorParametroAnalisis = function(req, res, next) {
 	})
 }
 
+
+exports.listarReferenciasParaInsertar = function(req, res, next) {
+	let dato = {
+		fechaNacimiento: req.params.fechaNacimiento,
+		sexo: req.params.sexo,
+		id_tipoAnalisis: req.params.idTipoAnalisis
+	}
+
+	var dateNow = new Date() 
+	var datePaciente = new Date(dato.fechaNacimiento)
+
+	var anhoActual = dateNow.getFullYear()
+	var mesActual = dateNow.getMonth() + 1
+	var diaActual = dateNow.getDay()
+
+
+	// var diaActual = dateNow.getFullYear()
+
+	var anhoPaciente = datePaciente.getFullYear()
+	var mesPaciente = datePaciente.getMonth() + 1
+	var diaPaciente = datePaciente.getDay()
+
+
+	// edad del paciente
+	var cantidadAnhos = anhoActual - anhoPaciente
+	var cantidadMeses = 12 - mesPaciente
+
+	var cantidadMesesRecienNacido = mesActual - mesPaciente
+
+	if(cantidadMesesRecienNacido == 0) {
+		var cantidadDias =  diaActual - diaPaciente
+	}
+
+	// let condition
+
+	if(cantidadAnhos) {
+		cantidadMeses = null
+		cantidadDias = null
+	} else {
+		if(cantidadMeses) {
+			cantidadAnhos = null
+			cantidadDias = null
+		} else {
+			cantidadMeses = null
+			cantidadAnhos = null
+		}
+	}
+
+	let referenciasFiltradas = []
+	Referencia.findListToInsert(dato, (err, referencias) => {
+		referenciasFiltradas = referencias
+
+		if(err) {
+			console.log(err)
+			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
+		}
+
+		// referenciasFiltradas = referenciasFiltradas.filter((i) => {
+		// 	return (i.general == true || i.sexo == dato.sexo || 
+		// 		(i.anosMinimos < cantidadAnhos && cantidadAnhos <i.anosMaximos) ||
+		// 		(i.mesesMinimos < cantidadMeses && cantidadMeses <i.mesesMaximos) ||
+		// 		(i.diasMinimos < cantidadDias && cantidadDias <i.diasMaximos)
+		// 	)
+
+		// })
+
+		return res.json({ referencias: referenciasFiltradas })
+	})
+}
+
+
 exports.mostrar = function(req, res, next) {
 
 	let idReferencia = req.params.idReferencia
