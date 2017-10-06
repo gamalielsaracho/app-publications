@@ -9,6 +9,10 @@ import {
 	LISTAR_REFERENCIAS_EXITO,
 	LISTAR_REFERENCIAS_FALLO,
 
+	LISTAR_REFERENCIAS_FILTRADAS_REQUEST,
+	LISTAR_REFERENCIAS_FILTRADAS_EXITO,
+	LISTAR_REFERENCIAS_FILTRADAS_FALLO,
+
 	// Create rol.
 	CREAR_REFERENCIA_REQUEST,
 	CREAR_REFERENCIA_EXITO,
@@ -87,10 +91,9 @@ export function listarReferenciasPorTipoAnalisisEdadYsexo(idTipoAnalisis, fechaN
 
 		let url = `/referencias/${idTipoAnalisis}/${fechaNacimiento}/${sexo}/filtradas`
 
+		dispatch({ type: LISTAR_REFERENCIAS_FILTRADAS_REQUEST })
 
-		dispatch({ type: LISTAR_REFERENCIAS_REQUEST })
-
-		getData(LISTAR_REFERENCIAS_EXITO, LISTAR_REFERENCIAS_FALLO, true, url, dispatch)
+		getData(LISTAR_REFERENCIAS_FILTRADAS_EXITO, LISTAR_REFERENCIAS_FILTRADAS_FALLO, true, url, dispatch)
 	}
 }
 

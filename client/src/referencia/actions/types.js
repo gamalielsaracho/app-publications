@@ -1,4 +1,9 @@
 // FIND.
+export const LISTAR_REFERENCIAS_FILTRADAS_REQUEST = 'listar_referencias_filtradas_request'
+export const LISTAR_REFERENCIAS_FILTRADAS_EXITO = 'listar_referencias_filtradas_exito'
+export const LISTAR_REFERENCIAS_FILTRADAS_FALLO = 'listar_referencias_filtradas_fallo'
+
+
 export const LISTAR_REFERENCIAS_REQUEST = 'listar_referencias_request'
 export const LISTAR_REFERENCIAS_EXITO = 'listar_referencias_exito'
 export const LISTAR_REFERENCIAS_FALLO = 'listar_referencias_fallo'
