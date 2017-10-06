@@ -1,0 +1,27 @@
+// FIND.
+export const LISTAR_ANALISIS_TIPO_REFERENCIAS_REQUEST = 'listar_analisis_tipo_referencias_request'
+export const LISTAR_ANALISIS_TIPO_REFERENCIAS_EXITO = 'listar_analisis_tipo_referencias_exito'
+export const LISTAR_ANALISIS_TIPO_REFERENCIAS_FALLO = 'listar_analisis_tipo_referencias_fallo'
+
+// EDIT.
+export const ABRIR_FORMULARIO_EDITAR_ANALISIS_TIPO_REFERENCIA_REQUEST = 'abrir_formulario_editar_analisis_tipo_referencia_request'
+export const ABRIR_FORMULARIO_EDITAR_ANALISIS_TIPO_REFERENCIA_EXITO = 'abrir_formulario_editar_analisis_tipo_referencia_exito'
+export const ABRIR_FORMULARIO_EDITAR_ANALISIS_TIPO_REFERENCIA_FALLO = 'abrir_formulario_editar_analisis_tipo_referencia_fallo'
+
+	export const EDITAR_ANALISIS_TIPO_REFERENCIA_REQUEST = 'edit_analisis_tipo_referencia_request'
+	export const EDITAR_ANALISIS_TIPO_REFERENCIA_EXITO = 'edit_analisis_tipo_referencia_exito'
+	export const EDITAR_ANALISIS_TIPO_REFERENCIA_FALLO = 'edit_analisis_tipo_referencia_fallo'
+
+// CREATE.
+	export const CREAR_ANALISIS_TIPO_REFERENCIA_REQUEST = 'crear_analisis_tipo_referencia_request'
+	export const CREAR_ANALISIS_TIPO_REFERENCIA_EXITO = 'crear_analisis_tipo_referencia_exito'
+	export const CREAR_ANALISIS_TIPO_REFERENCIA_FALLO = 'crear_analisis_tipo_referencia_fallo'
+
+export const CERRAR_FORMULARIO_ANALISIS_TIPO_REFERENCIA = 'cerrar_formulario_analisis_tipo_referencia'
+
+// DELETE.
+export const ELIMINAR_ANALISIS_TIPO_REFERENCIA_REQUEST = 'eliminair_analisis_tipo_referencia_request'
+export const ELIMINAR_ANALISIS_TIPO_REFERENCIA_EXITO = 'eliminair_analisis_tipo_referencia_exito'
+export const ELIMINAR_ANALISIS_TIPO_REFERENCIA_FALLO = 'eliminair_analisis_tipo_referencia_fallo'
+
+

@@ -1,0 +1,2 @@
+import FormularioAnalisisTipoReferenciaContainer from './container'
+export default FormularioAnalisisTipoReferenciaContainer
