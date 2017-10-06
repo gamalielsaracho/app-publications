@@ -82,6 +82,19 @@ export function listarReferencias(idParametroAnalisis) {
 	}
 }
 
+export function listarReferenciasPorTipoAnalisisEdadYsexo(idTipoAnalisis, fechaNacimiento, sexo) {
+	return (dispatch) => {
+
+		let url = `/referencias/${idTipoAnalisis}/${fechaNacimiento}/${sexo}/filtradas`
+
+
+		dispatch({ type: LISTAR_REFERENCIAS_REQUEST })
+
+		getData(LISTAR_REFERENCIAS_EXITO, LISTAR_REFERENCIAS_FALLO, true, url, dispatch)
+	}
+}
+
+
 export function crearReferencia(datosFormulario) {
 	return (dispatch) => {
 
