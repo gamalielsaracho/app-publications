@@ -4,6 +4,10 @@ export default (app) => {
 	app.route('/api/referencias')
 	   .get(referenciaCtrl.listar)
 
+	 // idTipoAnalisis -> hemograma, orina, etc..
+	app.route('/api/referencias/:idTipoAnalisis/:fechaNacimiento/:sexo/filtradas')
+	   .get(referenciaCtrl.listarReferenciasParaInsertar)
+
 	app.route('/api/referencias/:idParametroAnalisis')
 	   .get(referenciaCtrl.listarPorParametroAnalisis)
 
