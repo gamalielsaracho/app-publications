@@ -4,7 +4,7 @@ export default (app) => {
 	app.route('/api/analisisTipos/:idAnalisis')
 	   .get(analisisTipoCtrl.listar)
 
-	app.route('/api/analisisTipos/:idAnalisisTipo')
+	app.route('/api/analisisTipos/:idAnalisisTipo/mostrar')
 	   .get(analisisTipoCtrl.mostrar)
 
 	app.route('/api/analisisTipos/crear')
