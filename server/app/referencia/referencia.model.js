@@ -18,6 +18,35 @@ exports.find = (callback) => {
 	connection.end()
 }
 
+
+exports.findListToInsert = (data, callback) => {
+
+	let q = `
+  		SELECT
+  			*
+  		FROM 
+  			referencias ref,
+  			tiposanalisisparametros tipPa,
+
+  			parametrosAnalisis parametro
+  		WHERE 
+  			tipPa.id_tipoAnalisis = ? AND
+  			tipPa.id_parametroAnalisis = ref.id_parametroAnalisis AND
+
+  			ref.id_parametroAnalisis = parametro.id_parametroAnalisis
+	`
+	
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, [ data.id_tipoAnalisis ], callback)
+
+	connection.end()
+}
+
+
 exports.findByIdParametroAnalisis = (idParametroAnalisis, callback) => {
 
 	let q = `
