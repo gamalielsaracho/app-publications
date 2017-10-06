@@ -24,8 +24,7 @@ exports.find = (idAnalisis, callback) => {
 	connection.end()
 }
 
-exports.findById = (idAnalisisTipo, callback) => {
-
+exports.findById = (idAnalisisTipo, callback) => {	
 	let q = `
 		SELECT
 			*
@@ -37,6 +36,7 @@ exports.findById = (idAnalisisTipo, callback) => {
 			analisisTipo.id_analisisTipo = ?
 
 	`
+
 	var options = {
 		sql: q,
 		nestTables: true
