@@ -21,11 +21,11 @@ exports.mostrar = function(req, res, next) {
 	let idAnalisisTipo = req.params.idAnalisisTipo
 
 	AnalisisTipo.findById(idAnalisisTipo, (err, analisisTipo) => {
-		// console.log(analisisTipo)
 
 		if(err) {
 			console.log(err)
-			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+			res.json({ error: 'Ocurrió un error, intente más tarde.' })
+			return
 		}
 
 		return res.json(analisisTipo[0])
