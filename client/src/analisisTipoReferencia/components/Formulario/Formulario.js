@@ -30,6 +30,8 @@ class Formulario extends Component {
 	}
 
 	componentWillMount() {
+		// analisisSolicitadoDatos es pasado como property al ser llamado dentro
+		// de MostarAnalisisTipoContainer.
 		let paciente = this.props.analisisSolicitadoDatos.paciente
 
 		this.props.listarReferenciasPorTipoAnalisisEdadYsexo(this.props.idTipoAnalisis, paciente.fechaNacimiento, paciente.sexo)
@@ -37,8 +39,13 @@ class Formulario extends Component {
 
 	enviarFormulario(formProps) {
 
-		// formProps.id_preconsulta = this.props.idPreConsulta
-		
+		formProps.id_tipoAnalisis = this.props.idTipoAnalisis
+		formProps.id_analisisTipo = this.props.urls.idAnalisisTipo
+		formProps.id_analisis = this.props.urls.idAnalisis
+
+		// urls es parasado como property al ser llamado 
+		// dentro de MostarAnalisisTipoContainer. 
+
 		// console.log(formProps)
 
 		if(this.props.editarContenido) {
@@ -50,45 +57,51 @@ class Formulario extends Component {
 	}
 
 	
-	renderFieldSelectParametrosPre(listaParametros, paramentro) {
-				// <Field name='id_parametroPreconsulta' type='text' 
-				// 				component={FieldSelectParametrosPreContainer}
-				// 				listaParametros={listaParametros} 
-				// 				label='Paramentro'/>
+	renderFieldSelectParametrosPre(listarReferencias, dato) {
 		if(!this.props.editarContenido) {
 			return <div>
-				hola mundo
+				<Field name='id_referencia' type='text' 
+					component={FieldSelectReferenciasContainer}
+					listar={listarReferencias} 
+					label='Paramentros'/>
 			</div>
 		} else {
-			return <p><strong>Paramentro:</strong> { paramentro.descripcion }</p>
+			if(dato) {
+				// console.log(dato)
+				return <p><strong>Paramentro:</strong>{ dato.descripcion }</p>
+			} else {
+				return <span></span>
+			}
 		}
 	}
 
-	renderFormulario(cargando) {
+	renderFormulario(cargando, analisisTipoReferencia) {
 		if(cargando) {
 			return <Cargando/>
 		} else {
 			const { handleSubmit, pristine, reset, submitting } = this.props		
 
-			return <form onSubmit={handleSubmit(this.enviarFormulario)}>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-6 col-md-4 col-lg-8'>
-						<h3>Select Option.</h3>
+			return <div className='container'>
+				<form onSubmit={handleSubmit(this.enviarFormulario)}>
+					<div className='row'>
+						<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7'>
+							{ this.renderFieldSelectParametrosPre(this.props.listarReferenciasFiltradas, analisisTipoReferencia) }
+						</div>
+						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+							<Field name='valor' type='text' component={renderField} label='Resultado'/>
+						</div>
 					</div>
-					<div className='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
-						<Field name='valor' type='text' component={renderField} label='Valor'/>
-					</div>
-				</div>
-																	
-				<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-				{ this.renderBtnCancelar() }
-			</form>
+																		
+					<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+					{ this.renderBtnCancelar() }
+				</form>
+			</div>
 		}
 	}
 
 	renderBtnCancelar() {
 		if(this.props.editarContenido) {
-			return <button type="button" onClick={ this.props.cerrarFormularioPreConsultaParametro } className="btn btn-primary btn-space">Cancelar</button>
+			return <button type="button" onClick={ this.props.cerrarFormularioAnalisisTipoReferencia } className="btn btn-primary btn-space">Cancelar</button>
 		} else {
 			return <span></span>
 		}
@@ -112,7 +125,7 @@ class Formulario extends Component {
 			</div>
 
 			<div className='row'>
-				{ this.renderFormulario(cargando) }
+				{ this.renderFormulario(cargando, analisisTipoReferencia) }
 			</div>
 
 		</div>
