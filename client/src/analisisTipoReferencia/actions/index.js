@@ -93,6 +93,7 @@ export function crearAnalisisTipoReferencia(datosFormulario) {
 			dispatch(reset('FormularioAnalisisTipoReferencia'))
 		})
 		.catch((error) => {
+			// console.log(error)
 			errorHandler(dispatch, error.response, CREAR_ANALISIS_TIPO_REFERENCIA_FALLO)
 		})
 	}

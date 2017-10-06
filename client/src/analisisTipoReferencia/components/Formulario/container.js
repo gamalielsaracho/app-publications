@@ -42,7 +42,7 @@ function mapStateToProps(state) {
 
 		// Lista de los parametros para pasarle al componente 
 		// FieldSelectReferencias como propiedad.
-		listarReferencias: state.referencia.listar
+		listarReferenciasFiltradas: state.referencia.listarFiltradas
 
 	}
 }
