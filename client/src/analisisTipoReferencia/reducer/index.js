@@ -58,7 +58,6 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_ANALISIS_TIPO_REFERENCIA_EXITO:
-			console.log(action.payload)
 			return Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
@@ -70,8 +69,8 @@ export default function (state = INITIAL_STATE, action) {
 				},
 
 				// Limpia los estados de error.
-				editar: { error: '' },
-				crear: { error: '' }
+				editar: INITIAL_STATE.editar,
+				crear: INITIAL_STATE.crear
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_ANALISIS_TIPO_REFERENCIA_FALLO:
@@ -89,8 +88,7 @@ export default function (state = INITIAL_STATE, action) {
 
 		case CERRAR_FORMULARIO_ANALISIS_TIPO_REFERENCIA:
 			return Object.assign({}, state, {
-				formulario: INITIAL_STATE.formulario,
-				mostrar: { abierto: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 
@@ -101,7 +99,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_ANALISIS_TIPO_REFERENCIA_EXITO:
-			
+
 			state = Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje
@@ -110,7 +108,7 @@ export default function (state = INITIAL_STATE, action) {
 					analisisTipoReferencias: [ ...state.listar.analisisTipoReferencias, 
 											 action.payload.datoInsertado ]
 				},
-				formulario: { abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 			// console.log(state)
@@ -127,7 +125,9 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_ANALISIS_TIPO_REFERENCIAS_REQUEST:
 			return Object.assign({}, state, {
 				crear: INITIAL_STATE.crear,
-				listar: { cargando: true, error: '' }
+				editar: INITIAL_STATE.editar,
+				listar: { cargando: true, error: '' },
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case LISTAR_ANALISIS_TIPO_REFERENCIAS_EXITO:
