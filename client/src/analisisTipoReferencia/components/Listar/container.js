@@ -14,7 +14,6 @@ function mapStateToProps(state) {
 		crear: state.analisisTipoReferencia.crear,
 		listar: state.analisisTipoReferencia.listar,
 		analisisTipoReferencias: state.analisisTipoReferencia.listar.analisisTipoReferencias
-	
 	}
 }
 

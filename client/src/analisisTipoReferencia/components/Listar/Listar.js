@@ -34,8 +34,8 @@ class Listar extends Component {
 
 		if((rol == 'administracion') || (rol == 'laboratorio' && idPersonal == i.analisis.id_personal)) {
 			return <div>
-				<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia) }} className="btn btn-warning btn-space">Editar</button>
-				<button type="button" onClick={() => { this.props.eliminarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia) }} className="btn btn-danger btn-space">Eliminar</button>
+				<button type="button" onClick={() => { this.props.abrirFormularioEditarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia) }} className="btn btn-warning btn-sm btn-space">Editar</button>
+				<button type="button" onClick={() => { this.props.eliminarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia) }} className="btn btn-danger btn-sm btn-space">Eliminar</button>
 			</div>
 		} else {
 			return <span></span>
@@ -76,14 +76,12 @@ class Listar extends Component {
 						
 					<MensajeOerror error={error} mensaje={null}/>
 
-					<br/>
-
 					<div className='table-responsive'>
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
 						        	<th>Parametro</th>
-						        	<th>Valor</th>
+						        	<th>Resultado</th>
 						        	<th>Unidad</th>
 						        	<th>Inferior</th>
 						        	<th>Superior</th>
