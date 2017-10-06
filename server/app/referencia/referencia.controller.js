@@ -84,14 +84,14 @@ exports.listarReferenciasParaInsertar = function(req, res, next) {
 			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		// referenciasFiltradas = referenciasFiltradas.filter((i) => {
-		// 	return (i.general == true || i.sexo == dato.sexo || 
-		// 		(i.anosMinimos < cantidadAnhos && cantidadAnhos <i.anosMaximos) ||
-		// 		(i.mesesMinimos < cantidadMeses && cantidadMeses <i.mesesMaximos) ||
-		// 		(i.diasMinimos < cantidadDias && cantidadDias <i.diasMaximos)
-		// 	)
+		referenciasFiltradas = referenciasFiltradas.filter((i) => {
+			return (i.ref.general == true || i.ref.sexo == dato.sexo || 
+				(i.ref.anosMinimos < cantidadAnhos && cantidadAnhos <i.ref.anosMaximos) ||
+				(i.ref.mesesMinimos < cantidadMeses && cantidadMeses <i.ref.mesesMaximos) ||
+				(i.ref.diasMinimos < cantidadDias && cantidadDias <i.ref.diasMaximos)
+			)
 
-		// })
+		})
 
 		return res.json({ referencias: referenciasFiltradas })
 	})
