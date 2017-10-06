@@ -36,7 +36,8 @@ export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
 	    case ABRIR_FORMULARIO_CREAR_ANALISIS_TIPO:
 	    	return Object.assign({}, state, {
-				formulario: { abirtoCrear: true }
+				formulario: { abirtoCrear: true },
+				crear: INITIAL_STATE.crear
 			})
 
 		case CERRAR_FORMULARIO_ANALISIS_TIPO:
