@@ -5,6 +5,10 @@ import {
 	LISTAR_REFERENCIAS_EXITO,
 	LISTAR_REFERENCIAS_FALLO,
 
+	LISTAR_REFERENCIAS_FILTRADAS_REQUEST,
+	LISTAR_REFERENCIAS_FILTRADAS_EXITO,
+	LISTAR_REFERENCIAS_FILTRADAS_FALLO,
+
 	CREAR_REFERENCIA_REQUEST,
 	CREAR_REFERENCIA_EXITO,
 	CREAR_REFERENCIA_FALLO,
@@ -41,6 +45,7 @@ const INITIAL_STATE = {
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { referencias:[], cargando: false, error: '' },
+	listarFiltradas: { referencias:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, referencia: null, error: '' },
 	editar: { cargando: false, mensaje: '', error: '' }
@@ -154,6 +159,22 @@ export default function (state = INITIAL_STATE, action) {
 				listar: { error: action.payload, referencias:[], cargando: false }
 			})
 
+
+		case LISTAR_REFERENCIAS_FILTRADAS_REQUEST:
+			return Object.assign({}, state, {
+				crear: INITIAL_STATE.crear,
+				listarFiltradas: { cargando: true, error: '' }
+			})
+
+		case LISTAR_REFERENCIAS_FILTRADAS_EXITO:
+			return Object.assign({}, state, {
+				listarFiltradas: { referencias: action.payload.referencias, cargando: false, error: '' }
+			})
+
+		case LISTAR_REFERENCIAS_FILTRADAS_FALLO:
+			return Object.assign({}, state, {
+				listarFiltradas: { error: action.payload, referencias:[], cargando: false }
+			})
 
 		// MOSTRAR.
 		case MOSTRAR_REFERENCIA_REQUEST:

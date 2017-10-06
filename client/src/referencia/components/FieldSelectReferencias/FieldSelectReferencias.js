@@ -10,6 +10,9 @@ class FieldSelectReferencias extends Component {
 		if(listar.cargando) {
 			return <p>Cargando parametros..</p>
 		} else {
+			// console.log('LAS REFERENCIAS FILTRADAS...- >')
+			// console.log(listar.referencias)
+			
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
