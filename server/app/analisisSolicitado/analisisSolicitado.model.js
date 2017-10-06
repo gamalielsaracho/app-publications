@@ -9,10 +9,12 @@ exports.findByIdPaciente = (IdPaciente, callback) => {
 			FROM 
 				analisisSolicitados analisisSolicitado,
 				consultas consulta,
+				pacientes paciente,
 				personales personal,
 				especialidades especialidad
 			WHERE
 				analisisSolicitado.id_consulta = consulta.id_consulta AND
+				consulta.id_paciente = paciente.id_paciente AND
 				consulta.id_personal = personal.id_personal AND
 				personal.id_especialidad = especialidad.id_especialidad AND
 				consulta.id_paciente = ?
@@ -35,10 +37,12 @@ exports.find = (callback) => {
 			FROM 
 				analisisSolicitados analisisSolicitado,
 				consultas consulta,
+				pacientes paciente,
 				personales personal,
 				especialidades especialidad
 			WHERE
 				analisisSolicitado.id_consulta = consulta.id_consulta AND
+				consulta.id_paciente = paciente.id_paciente AND
 				consulta.id_personal = personal.id_personal AND
 				personal.id_especialidad = especialidad.id_especialidad
 
@@ -61,10 +65,12 @@ exports.findById = (data, callback) => {
 		FROM 
 			analisisSolicitados analisisSolicitado,
 			consultas consulta,
+			pacientes paciente,
 			personales personal,
 			especialidades especialidad
 		WHERE
 			analisisSolicitado.id_consulta = consulta.id_consulta AND
+			consulta.id_paciente = paciente.id_paciente AND
 			consulta.id_personal = personal.id_personal AND
 			personal.id_especialidad = especialidad.id_especialidad AND
 			analisisSolicitado.id_analisisSolicitado = ?
