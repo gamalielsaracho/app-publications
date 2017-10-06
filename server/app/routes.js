@@ -7,6 +7,8 @@ import referenciaRoutes from './referencia/referencia.routes'
 
 import analisisSolicitadoTipoRoutes from './analisisSolicitadoTipo/analisisSolicitadoTipo.routes'
 import analisisTipoRoutes from './analisisTipo/analisisTipo.routes'
+import analisisTipoReferenciaRoutes from './analisisTipoReferencia/analisisTipoReferencia.routes'
+
 
 export default (app) => {
 	// usuarioRoutes(app)
@@ -16,4 +18,5 @@ export default (app) => {
 	referenciaRoutes(app)
 	analisisSolicitadoTipoRoutes(app)
 	analisisTipoRoutes(app)
+	analisisTipoReferenciaRoutes(app)
 }
