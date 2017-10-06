@@ -59,7 +59,7 @@ exports.create = (data, callback) => {
 			id_referencia,
 			valor
 		)
-		VALUES (null, ?, ?, ?, ?, ?)
+		VALUES (null, ?, ?, ?, ?, LOWER(?))
 	`
 	if(data.valor) {
 		data.valor = data.valor.toString().trim()
@@ -81,12 +81,14 @@ exports.findById = (idAnalisisTipoAnalisisReferencia, callback) => {
 			*
 		FROM  
 			analisisTiposReferencias analisisTipoReferencia,
+			analisis analisis,
 			referencias referencia,
 			parametrosAnalisis parametro,
 			unidadesAnalisis unidad,
 			tiposExamenes tipoExamen
 		WHERE
 			analisisTipoReferencia.id_referencia = referencia.id_referencia AND
+			analisisTipoReferencia.id_analisis = analisis.id_analisis AND
 			referencia.id_parametroAnalisis = parametro.id_parametroAnalisis  AND
 			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
@@ -96,7 +98,7 @@ exports.findById = (idAnalisisTipoAnalisisReferencia, callback) => {
 
 	var options = {
 		sql: q,
-		nestTables: false
+		nestTables: true
 	}
 
 	return connection.query(options, [idAnalisisTipoAnalisisReferencia], callback)
@@ -110,8 +112,12 @@ exports.findByIdToUpdate = (idAnalisisTipoAnalisisReferencia, callback) => {
 		SELECT
 			*
 		FROM  
-			analisisTiposReferencias
+			analisisTiposReferencias analisisTipoReferencia,
+			referencias referencia,
+			parametrosAnalisis parametro
 		WHERE
+			analisisTipoReferencia.id_referencia = referencia.id_referencia AND
+			referencia.id_parametroAnalisis = parametro.id_parametroAnalisis  AND
 			id_analisisTipoAnalisisReferencia = ?
 	`
 
