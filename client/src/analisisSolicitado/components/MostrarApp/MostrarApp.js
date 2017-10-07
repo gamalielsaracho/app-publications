@@ -92,13 +92,10 @@ class MostrarApp extends Component {
 		}
 
 		return <div>
-			<br/>
 			<MostarAnalisisSolicitadoContainer
 				urls = { this.props.urls }/>
-
-				{ this.renderMenuByRol() }
-
 			<br/>
+			{ this.renderMenuByRol() }
 
 			{ this.props.children }
 		</div>
