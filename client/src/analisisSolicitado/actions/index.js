@@ -58,6 +58,8 @@ export function abrirFormularioEditarAnalisisSolicitado(idAnalisisSolicitado) {
 		})
 
 		analisisSolicitadoSocket.on('mostrar_analisisSolicitado_editar', (data) => {
+			data.pendiente = data.pendiente.toString()
+			
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_ANALISIS_SOLICITADO_FALLO, payload: data.error })
