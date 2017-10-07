@@ -91,7 +91,7 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 			return <div>
-				<h4 className='text-center'>Análisis solicitados</h4>
+				<h3 className='text-center'>Análisis solicitados</h3>
 
 				<MensajeOerror error={error} mensaje={null}/>
 
