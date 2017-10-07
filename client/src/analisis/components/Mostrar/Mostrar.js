@@ -38,9 +38,9 @@ class Mostrar extends Component {
 				</div>
 
 				{/*  */}
-				<div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>	
 					<button onClick={ () => { this.props.eliminarAnalisis(urlToRedirect, analisis.ana.id_analisis) } } className='btn btn-danger btn-space'>Eliminar</button>
-				</div>
+				</div>				
 			</div>
 		}
 	}
