@@ -84,10 +84,10 @@ class Formulario extends Component {
 			return <div className='container'>
 				<form onSubmit={handleSubmit(this.enviarFormulario)}>
 					<div className='row'>
-						<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7'>
+						<div className='col-xs-12 col-sm-5 col-md-5 col-lg-7'>
 							{ this.renderFieldSelectParametrosPre(this.props.listarReferenciasFiltradas, analisisTipoReferencia) }
 						</div>
-						<div className='col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+						<div className='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
 							<Field name='valor' type='text' component={renderField} label='Resultado'/>
 						</div>
 					</div>
