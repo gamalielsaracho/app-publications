@@ -61,7 +61,7 @@ export function crearAnalisis(datosObtenidos) {
 			if(data.error) {
 				dispatch({ type: CREAR_ANALISIS_FALLO, payload: data.error })
 			} else {
-				browserHistory.push(`/dashboard/solicitudes-laboratorio/${data.id_analisisSolicitado}/analisis/${data.id_analisis}`)
+				browserHistory.push(`/dashboard/solicitudes-laboratorio/${data.id_analisisSolicitado}/analisis/${data.id_analisis}/analisis-tipos`)
 
 				dispatch({ type: CREAR_ANALISIS_EXITO, payload: data })
 			}
