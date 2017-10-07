@@ -28,15 +28,15 @@ class Mostrar extends Component {
 		} else if (dato && !this.props.mostrarAnalisisSolicitado.cargando && this.props.mostrarAnalisisSolicitado.analisisSolicitado) {
 			return <div>
 				<h3 className='text-center'><strong>Nombre:</strong> { dato.tipoAnalisis.descripcion }</h3>
-				
+
 				<div className='row'>
-					<div className='col-xs-12 col-sm-7 col-md-6 col-lg-6'>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-4'>
 						<FormularioAnalisisTipoReferenciaContainer
 							idTipoAnalisis = { dato.analisisTipo.id_tipoAnalisis }
 							analisisSolicitadoDatos = { this.props.mostrarAnalisisSolicitado.analisisSolicitado }
 							urls = { this.props.urls }/>
 					</div>
-					<div className='col-xs-12 col-sm-7 col-md-6 col-lg-6'>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-7'>
 						<ListarAnalisisTipoReferenciasContainer
 							analisisTipoDatos = {dato}/>
 					</div>
