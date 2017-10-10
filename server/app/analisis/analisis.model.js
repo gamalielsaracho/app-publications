@@ -20,6 +20,38 @@ import connection from '../../config/connection'
 // 	connection.end()
 // }
 
+
+exports.preview = (data, callback) => {
+
+	let q = `
+		SELECT * 
+		FROM
+			analisisSolicitados solicitudLaboratorio,
+			consultas consulta,
+			pacientes paciente,
+			analisis analisis,
+			personales medico,
+			especialidades especialidad,
+			personales bioquimica
+		WHERE
+			solicitudLaboratorio.id_consulta = consulta.id_consulta AND
+			consulta.id_personal = medico.id_personal AND
+			medico.id_especialidad = especialidad.id_especialidad AND
+			consulta.id_paciente = paciente.id_paciente AND
+			analisis.id_personal = bioquimica.id_personal AND
+
+			analisis.id_analisis = ?
+	`
+	var options = {
+		sql: q,
+		nestTables: true
+	}
+
+	return connection.query(options, [data.id_analisis], callback)
+
+	connection.end()
+}
+
 exports.find = (callback) => {
 
 	let q = `
