@@ -11,6 +11,10 @@ import {
 	MOSTRAR_ANALISIS_EXITO,
 	MOSTRAR_ANALISIS_FALLO,
 
+	MOSTRAR_ANALISIS_VISTA_PREVIA_REQUEST,
+	MOSTRAR_ANALISIS_VISTA_PREVIA_EXITO,
+	MOSTRAR_ANALISIS_VISTA_PREVIA_FALLO,
+
 	MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_REQUEST,
 	MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_EXITO,
 	MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_FALLO,
@@ -26,7 +30,8 @@ const INITIAL_STATE = {
 	},
 	listar: { analisisLista:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, analisis: null, error: '' }
+	mostrar: { cargando: false, analisis: null, error: '' },
+	vistaPrevia: { cargando: false, analisis: null, error: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -113,6 +118,30 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_ANALISIS_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
+					cargando: false,
+					analisis: null,
+					error: action.payload
+				}
+			})
+
+
+		// VISTA-PREVIA. 
+		case MOSTRAR_ANALISIS_VISTA_PREVIA_REQUEST:
+			return Object.assign({}, state, {
+				vistaPrevia: { cargando: true }
+			})
+
+		case MOSTRAR_ANALISIS_VISTA_PREVIA_EXITO:
+			return Object.assign({}, state, {
+				vistaPrevia: {
+					cargando: false,
+					analisis: action.payload
+				}
+			})
+
+		case MOSTRAR_ANALISIS_VISTA_PREVIA_FALLO:
+			return Object.assign({}, state, {
+				vistaPrevia: {
 					cargando: false,
 					analisis: null,
 					error: action.payload
