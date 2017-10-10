@@ -9,6 +9,9 @@ import analisisSolicitadoTipoRoutes from './analisisSolicitadoTipo/analisisSolic
 import analisisTipoRoutes from './analisisTipo/analisisTipo.routes'
 import analisisTipoReferenciaRoutes from './analisisTipoReferencia/analisisTipoReferencia.routes'
 
+// Vista previa.
+import analisisRoutes from './analisis/analisis.routes'
+
 
 export default (app) => {
 	// usuarioRoutes(app)
@@ -19,4 +22,7 @@ export default (app) => {
 	analisisSolicitadoTipoRoutes(app)
 	analisisTipoRoutes(app)
 	analisisTipoReferenciaRoutes(app)
+
+	// Vista previa.
+	analisisRoutes(app)
 }
