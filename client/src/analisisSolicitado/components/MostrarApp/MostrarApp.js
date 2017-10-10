@@ -13,11 +13,33 @@ class MostrarApp extends Component {
 	constructor(props) {
 		super(props)
 		this.renderMenuByRol = this.renderMenuByRol.bind(this)
+		this.renderLinkDetalleGral = this.renderLinkDetalleGral.bind(this)
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
 		this.props.mostrarmostrarAnalisisPorIdAnalisisSolicitado(this.props.urls.idAnalisisSolicitado)
+	}
+
+	renderLinkDetalleGral(idAnalisis, detalleGeneral, url) {
+		// Obtenemos el estado mostrar de mostrarAnalisisSolicitado.
+		const { cargando, analisisSolicitado, error } = this.props.mostrarAnalisisSolicitado
+
+		let solicitud = analisisSolicitado
+
+		// Si No está caragando y solicitud es distinto a null.
+		if(!cargando && solicitud) { // Si estas condition se cumple.
+			// Preguntar si la solicitud está pendiente.
+			if(solicitud.analisisSolicitado.pendiente) {
+				return <span></span>
+			} else {
+				// Si no está pendiente, muestro el link para mostrar el detalle
+				// gral de todos los análisis realizados.
+				return <li className="nav-item nav-link" className={detalleGeneral}>
+					<Link to={`${url}`}>Detalle general de análisis ya realizados</Link>
+				</li>
+			}
+		}
 	}
 
 	renderMenuByRol() {
@@ -58,19 +80,28 @@ class MostrarApp extends Component {
 				// console.log(analisis[0])
 
 				if(rol == 'administracion' || rol == 'laboratorio') {
-					return <ul className="nav nav-tabs">
-						<li className="nav-item nav-link" className={detalleAnalisis}>
-							<Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/analisis-tipos`}>Análisis</Link>
-						</li>
-						<li className="nav-item nav-link" className={detalleGeneral}>
-					    	<Link to={`/dashboard`}>Detalle general de análisis ya realizados</Link>
-						</li>
-					</ul>
+					
+					if(this.props.urls.idPaciente) {
+						let url = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+
+						return <ul className="nav nav-tabs no-print-data">
+							{ this.renderLinkDetalleGral(analisis[0].id_analisis, detalleGeneral, url) }
+						</ul>
+					} else {
+						let url = `/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+						
+						return <ul className="nav nav-tabs no-print-data">
+							<li className="nav-item nav-link" className={detalleAnalisis}>
+								<Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/analisis-tipos`}>Análisis</Link>
+							</li>
+							{ this.renderLinkDetalleGral(analisis[0].id_analisis, detalleGeneral, url) }
+						</ul>
+					}
 				} else {
-					return <ul className="nav nav-tabs">
-						<li className="nav-item nav-link" className={detalleGeneral}>
-					    	<Link to={`/dashboard`}>Detalle general de análisis ya realizados</Link>
-						</li>
+					let url = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+					
+					return <ul className="nav nav-tabs no-print-data">
+						{ this.renderLinkDetalleGral(analisis[0].id_analisis, detalleGeneral, url) }
 					</ul>
 				}
 

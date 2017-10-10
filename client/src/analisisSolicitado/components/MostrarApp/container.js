@@ -14,7 +14,12 @@ function mapStateToProps(state, ownProps) {
 		mostrarByIdAnalisisSolicitado: state.analisis.mostrarByIdAnalisisSolicitado,
 
 		// guardamos todos los parametros de la url en el objeto urls.
-		urls: ownProps.params
+		urls: ownProps.params,
+
+		// Obtenemos el estado de la solicitud de laboratorio para 
+		// ver si está pendiente, (y así mostrar o no el menú de 
+		// detalle general).
+		mostrarAnalisisSolicitado: state.analisisSolicitado.mostrar
 	}
 }
 
