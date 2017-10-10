@@ -14,6 +14,11 @@ export const MOSTRAR_ANALISIS_REQUEST = 'mostrar_analisis_request'
 export const MOSTRAR_ANALISIS_EXITO = 'mostrar_analisis_exito'
 export const MOSTRAR_ANALISIS_FALLO = 'mostrar_analisis_fallo'
 
+// vista Previa.
+export const MOSTRAR_ANALISIS_VISTA_PREVIA_REQUEST = 'mostrar_analisis_vista_previa_request'
+export const MOSTRAR_ANALISIS_VISTA_PREVIA_EXITO = 'mostrar_analisis_vista_previa_exito'
+export const MOSTRAR_ANALISIS_VISTA_PREVIA_FALLO = 'mostrar_analisis_vista_previa_fallo'
+
 
 export const MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_REQUEST = 'mostrar_analisis_por_id_analisis_solicitado_request'
 export const MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_EXITO = 'mostrar_analisis_por_id_analisis_solicitado_exito'

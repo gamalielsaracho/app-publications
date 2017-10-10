@@ -13,6 +13,10 @@ import {
 	MOSTRAR_ANALISIS_EXITO,
 	MOSTRAR_ANALISIS_FALLO,
 
+	MOSTRAR_ANALISIS_VISTA_PREVIA_REQUEST,
+	MOSTRAR_ANALISIS_VISTA_PREVIA_EXITO,
+	MOSTRAR_ANALISIS_VISTA_PREVIA_FALLO,
+
 	MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_REQUEST,
 	MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_EXITO,
 	MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_FALLO,
@@ -103,6 +107,24 @@ export function mostrarAnalisis(idAnalisis) {
 				dispatch({ type: MOSTRAR_ANALISIS_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: MOSTRAR_ANALISIS_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+
+export function mostrarAnalisisVistaPrevia(idAnalisis) {
+	return (dispatch) => {
+		dispatch({ type: MOSTRAR_ANALISIS_VISTA_PREVIA_REQUEST })
+
+		analisisSocket.emit('mostrar_analisis_vista_previa', { id_analisis: idAnalisis })
+
+		analisisSocket.on('mostrar_analisis_vista_previa', (data) => {
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: MOSTRAR_ANALISIS_VISTA_PREVIA_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MOSTRAR_ANALISIS_VISTA_PREVIA_EXITO, payload: data })
 			}
 		})
 	}
