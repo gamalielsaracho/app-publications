@@ -46,6 +46,9 @@ import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
 	// PACIENTE ALERGIAS.
 	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
 
+
+
+
 // LISTAR ANÁLISIS SOLICITADOS APP.
 import ListarAppAnalisisSolicitadosContainer from '././analisisSolicitado/components/ListarApp'
 import ListarAnalisisSolicitadosContainer from '././analisisSolicitado/components/Listar'
@@ -61,6 +64,9 @@ import ListarAnalisisTiposContainer from '././analisisTipo/components/Listar'
 
 // MOSTRAR ANÁLISIS X TIPOS.
 import MostarAnalisisTipoContainer from '././analisisTipo/components/Mostrar'
+
+import MostrarVistaPreviaContainer from '././analisis/components/MostrarVistaPrevia'
+
 
 
 // CITAS.
@@ -196,7 +202,7 @@ export default (
 						<IndexRoute component={ListarAnalisisSolicitadosContainer}/>
 						
 						<Route path='/dashboard/pacientes/:idPaciente/solicitudes-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
-
+							<Route path='/dashboard/pacientes/:idPaciente/solicitudes-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
 						</Route>
 					</Route>
 
@@ -252,10 +258,13 @@ export default (
 			<Route path='/dashboard/solicitudes-laboratorio' component={ListarAppAnalisisSolicitadosContainer}>
 				<IndexRoute component={ListarAnalisisSolicitadosContainer}/>
 				<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
+					<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
+					
 					<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis' component={MostrarAnalisisAppContainer}>
 						<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/analisis-tipos' component={ListarAnalisisTiposContainer}/>
 
 						<Route path='/dashboard/solicitudes-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/analisis-tipos/:idAnalisisTipo' component={MostarAnalisisTipoContainer}/>
+						
 					</Route>
 				</Route>
 			</Route>
