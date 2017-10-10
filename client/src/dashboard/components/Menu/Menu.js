@@ -143,7 +143,7 @@ class Menu extends Component {
 		console.log(rol)
 
 		if(personal) {
-			return <div className='col-sm-3 col-md-2 back-green'>
+			return <div className='col-sm-3 col-md-2 back-green no-print-data'>
 				<div className='row center-xs center-sm center-md center-lg'>
 					<div className='col-xs-4 col-sm-6 col-md-6 col-lg-6'>
 						<br/>

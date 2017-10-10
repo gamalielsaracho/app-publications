@@ -123,7 +123,7 @@ class Mostrar extends Component {
 
 		const { cargando, analisisSolicitado, error } = this.props.mostrar
 		
-		return <div className=''>
+		return <div className='no-print-data'>
 			<MensajeOerror error={error} mensaje={null}/>
 
 			{ this.renderAnalisisSolicitado(analisisSolicitado, cargando) }

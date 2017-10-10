@@ -27,7 +27,7 @@ class ListarApp extends Component {
 		}
 
 		return <div>
-			<ul className="nav nav-tabs">
+			<ul className="nav nav-tabs no-print-data">
 			  <li className="nav-item nav-link" className={activeList}>
 			    	<Link to={dataUrl}>Listar</Link>
 			  </li>
