@@ -1,2 +1,2 @@
-import FormularioPreConsultaParametroContainer from './container'
-export default FormularioPreConsultaParametroContainer
+import FormularioSintomaConsultaContainer from './container'
+export default FormularioSintomaConsultaContainer

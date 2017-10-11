@@ -1,49 +1,49 @@
 import { connect } from 'react-redux'
 
 import {
-	listarPreConsultaParametros,
-	eliminarPreConsultaParametro,
-	mostrarPreConsultaParametro,
-
-	abrirFormularioEditarPreConsultaParametro
+	listarConsultaSintomas,
+	eliminarConsultaSintoma,
+	abrirFormularioCrearConsultaSintoma,
+	abrirFormularioEditarConsultaSintoma
 } from '../../actions'
 
 import Listar from './Listar'
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
-		// No se poner porque idPreConsulta le pasamos como property
-		// al llamalo dentro de MostrarCitaApp
-		// idPreConsulta: ownProps.idPreConsulta,
+		crear: state.consultaSintoma.crear,
+		listar: state.consultaSintoma.listar,
+		sintomasConsulta: state.consultaSintoma.listar.sintomasConsulta,
 
-		crear: state.preConsultaParametro.crear,
-		listar: state.preConsultaParametro.listar,
-		parametrosPreConsulta: state.preConsultaParametro.listar.parametrosPreConsulta,
-	
-		// Para obtener el rol del personal.
-		usuarioEstado: state.personal.usuarioEstado,
+		// Obtenemos el estado de la consulta para poder tener el id del
+		// personal que creó la consulta.
+		mostrarConsulta: state.consulta.mostrar,
 
-		// EL Id de la enfermera que creó la pre-consulta.
-		preConsulta: state.preConsulta.mostrar.preConsulta
+		// guardamos todos los parametros de la url en el objeto urls.
+		urls: ownProps.params,
+
+		// Obtenemos el estado del formulario, para ver si esta abierto
+		// y hacer render del mismo. 
+		formulario: state.consultaSintoma.formulario
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarPreConsultaParametros: (idPreConsulta) => {
-			dispatch(listarPreConsultaParametros(idPreConsulta))
+		listarConsultaSintomas: (idConsulta) => {
+			dispatch(listarConsultaSintomas(idConsulta))
 		},
-		eliminarPreConsultaParametro: (idPreconsultaParametro) => {
-			var r = confirm("Está seguro que desea eliminar?");
+		eliminarConsultaSintoma: (idConsultaSintoma) => {
+			var r = confirm("Está seguro que desea eliminar ?");
 		    if (r == true) {
-				dispatch(eliminarPreConsultaParametro(idPreconsultaParametro))
+				dispatch(eliminarConsultaSintoma(idConsultaSintoma))
 		    }
 		},
-		mostrarPreConsultaParametro: (idPreconsultaParametro) => {
-			dispatch(mostrarPreConsultaParametro(idPreconsultaParametro))
+		abrirFormularioCrearConsultaSintoma: () => {
+			dispatch(abrirFormularioCrearConsultaSintoma())
 		},
-		abrirFormularioEditarPreConsultaParametro: (idPreconsultaParametro) => {
-			dispatch(abrirFormularioEditarPreConsultaParametro(idPreconsultaParametro))
+		abrirFormularioEditarConsultaSintoma: (idConsultaSintoma) => {
+			dispatch(abrirFormularioEditarConsultaSintoma(idConsultaSintoma))
 		}
 	}
 }

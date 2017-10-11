@@ -2,14 +2,14 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearPreConsultaParametro,
-	editarPreConsultaParametro,
-	cerrarFormularioPreConsultaParametro
+	crearConsultaSintoma,
+	editarConsultaSintoma,
+	cerrarFormularioConsultaSintoma
 } from '../../actions'
 
 import {
-	listarParametrosPreConsulta
-} from '../../../parametroPreConsulta/actions'
+	listarSintomas
+} from '../../../sintoma/actions'
 
 import Formulario from './Formulario'
 
@@ -31,44 +31,43 @@ const validate = (values) => {
 
 function mapStateToProps(state) {
 	return {
-		formulario: state.preConsultaParametro.formulario,
-		initialValues: state.preConsultaParametro.formulario.parametroPreConsulta,
-		enableReinitialize: state.preConsultaParametro.formulario.iniciarValores,
-		editarContenido: state.preConsultaParametro.formulario.iniciarValores,
+		formulario: state.consultaSintoma.formulario,
+		initialValues: state.consultaSintoma.formulario.sintomaConsulta,
+		enableReinitialize: state.consultaSintoma.formulario.iniciarValores,
+		editarContenido: state.consultaSintoma.formulario.iniciarValores,
 
 		// Para obtener el error al crear o editar.
-		crear: state.preConsultaParametro.crear,
-		editar: state.preConsultaParametro.editar,
+		crear: state.consultaSintoma.crear,
+		editar: state.consultaSintoma.editar,
 
-		// Lista de los parametros para pasarle al componente 
-		// FieldSelectParametrosPre como propiedad.
-		listaParametros: state.parametroPreConsulta.listar
-
+		// Listar todos los síntomas para mostrarlo dentro del select option. 
+		listarSintomas: state.sintoma.listar
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearPreConsultaParametro: (datosFormulario) => {
-			dispatch(crearPreConsultaParametro(datosFormulario))
+		crearConsultaSintoma: (datosFormulario) => {
+			dispatch(crearConsultaSintoma(datosFormulario))
 		},
-		editarPreConsultaParametro: (datosFormulario) => {
-			dispatch(editarPreConsultaParametro(datosFormulario))
+		editarConsultaSintoma: (datosFormulario) => {
+			dispatch(editarConsultaSintoma(datosFormulario))
 		},
-		cerrarFormularioPreConsultaParametro: () => {
-			dispatch(cerrarFormularioPreConsultaParametro())
+		cerrarFormularioConsultaSintoma: () => {
+			dispatch(cerrarFormularioConsultaSintoma())
 		},
 
-		// Llamar dentro de componentWillMount, para listar los parametros.
-		listarParametrosPreConsulta: () => {
-			dispatch(listarParametrosPreConsulta())
+		// Función que es llamado dentro de componentWillMount.
+		// para listar los síntomas.
+		listarSintomasFuncion: () => {
+			dispatch(listarSintomas())
 		}
 	}
 }
 
 const form = reduxForm({
-	form: 'FormularioPreConsultaParametro',
+	form: 'FormularioConsultaSintoma',
 	validate
 })
 

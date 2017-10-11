@@ -1,36 +1,31 @@
 import {
 
-	ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_REQUEST,
-	ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_EXITO,
-	ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_FALLO,
+	ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_REQUEST,
+	ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_EXITO,
+	ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_FALLO,
 
-	LISTAR_PRECONSULTA_PARAMETROS_REQUEST,
-	LISTAR_PRECONSULTA_PARAMETROS_EXITO,
-	LISTAR_PRECONSULTA_PARAMETROS_FALLO,
+	LISTAR_CONSULTA_SINTOMAS_REQUEST,
+	LISTAR_CONSULTA_SINTOMAS_EXITO,
+	LISTAR_CONSULTA_SINTOMAS_FALLO,
 
 	// Create rol.
-	CREAR_PRECONSULTA_PARAMETRO_REQUEST,
-	CREAR_PRECONSULTA_PARAMETRO_EXITO,
-	CREAR_PRECONSULTA_PARAMETRO_FALLO,
+	ABRIR_FORMULARIO_CREAR_CONSULTA_SINTOMA,
 
-	CERRAR_FORMULARIO_PRECONSULTA_PARAMETRO,
+	CREAR_CONSULTA_SINTOMA_REQUEST,
+	CREAR_CONSULTA_SINTOMA_EXITO,
+	CREAR_CONSULTA_SINTOMA_FALLO,
 
-	// Show rol.
-	MOSTRAR_PRECONSULTA_PARAMETRO_REQUEST,
-	MOSTRAR_PRECONSULTA_PARAMETRO_EXITO,
-	MOSTRAR_PRECONSULTA_PARAMETRO_FALLO,
-
-	CERRAR_MODAL_MOSTRAR_PRECONSULTA_PARAMETRO,
+	CERRAR_FORMULARIO_CONSULTA_SINTOMA,
 
 	// Editar Rol.
-	EDITAR_PRECONSULTA_PARAMETRO_REQUEST,
-	EDITAR_PRECONSULTA_PARAMETRO_EXITO,
-	EDITAR_PRECONSULTA_PARAMETRO_FALLO,
+	EDITAR_CONSULTA_SINTOMA_REQUEST,
+	EDITAR_CONSULTA_SINTOMA_EXITO,
+	EDITAR_CONSULTA_SINTOMA_FALLO,
 
 	// Delete Rol.
-	ELIMINAR_PRECONSULTA_PARAMETRO_REQUEST,
-	ELIMINAR_PRECONSULTA_PARAMETRO_EXITO,
-	ELIMINAR_PRECONSULTA_PARAMETRO_FALLO
+	ELIMINAR_CONSULTA_SINTOMA_REQUEST,
+	ELIMINAR_CONSULTA_SINTOMA_EXITO,
+	ELIMINAR_CONSULTA_SINTOMA_FALLO
 } from './types'
 
 import io from 'socket.io-client'
@@ -52,41 +47,49 @@ import {
 	API_URL
 } from '../../globalActions'
 
-export function abrirFormularioEditarPreConsultaParametro(idPreconsultaParametro) {
+export function abrirFormularioCrearConsultaSintoma() {
 	return (dispatch) => {
-		let url = `/parametrospreConsulta/${idPreconsultaParametro}/editar`
+		dispatch(reset('FormularioConsultaSintoma'))
 
-		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_REQUEST })
-
-		getData(ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_EXITO, ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_FALLO, true, url, dispatch)
+		dispatch({ type: ABRIR_FORMULARIO_CREAR_DEPARTAMENTO })
 	}
 }
 
-export function cerrarFormularioPreConsultaParametro() {
+export function abrirFormularioEditarConsultaSintoma(idConsultaSintoma) {
 	return (dispatch) => {
-		dispatch({ type: CERRAR_FORMULARIO_PRECONSULTA_PARAMETRO })
+		let url = `/consultasintomas/${idConsultaSintoma}/editar`
+
+		dispatch({ type: ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_REQUEST })
+
+		getData(ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_EXITO, ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_FALLO, true, url, dispatch)
 	}
 }
 
-export function listarPreConsultaParametros(idPreConsulta) {
+export function cerrarFormularioConsultaSintoma() {
 	return (dispatch) => {
-
-		let url = `/parametrospreConsulta/${idPreConsulta}`
-
-		dispatch({ type: LISTAR_PRECONSULTA_PARAMETROS_REQUEST })
-
-		getData(LISTAR_PRECONSULTA_PARAMETROS_EXITO, LISTAR_PRECONSULTA_PARAMETROS_FALLO, true, url, dispatch)
+		dispatch({ type: CERRAR_FORMULARIO_CONSULTA_SINTOMA })
 	}
 }
 
-export function crearPreConsultaParametro(datosFormulario) {
+export function listarConsultaSintomas(idConsulta) {
 	return (dispatch) => {
 
-		let url = `${API_URL}/parametrospreConsulta/crear`
+		let url = `/consultasintomas/${idConsulta}`
+
+		dispatch({ type: LISTAR_CONSULTA_SINTOMAS_REQUEST })
+
+		getData(LISTAR_CONSULTA_SINTOMAS_EXITO, LISTAR_CONSULTA_SINTOMAS_FALLO, true, url, dispatch)
+	}
+}
+
+export function crearConsultaSintoma(datosFormulario) {
+	return (dispatch) => {
+
+		let url = `${API_URL}/consultasintomas/crear`
 
 		// console.log(url)
 
-		dispatch({ type: CREAR_PRECONSULTA_PARAMETRO_REQUEST })
+		dispatch({ type: CREAR_CONSULTA_SINTOMA_REQUEST })
 
 		axios.post(url, datosFormulario)
 		.then((response) => {
@@ -94,64 +97,37 @@ export function crearPreConsultaParametro(datosFormulario) {
 
 			// console.log(res)
 
-			res.datoInsertado = res.parametroPreConsultaAgregado
+			res.datoInsertado = res.sintomaConsultaAgregado
 
-			dispatch({ type: CREAR_PRECONSULTA_PARAMETRO_EXITO, payload: res })
+			dispatch({ type: CREAR_CONSULTA_SINTOMA_EXITO, payload: res })
 
-			dispatch(reset('FormularioPreConsultaParametro'))
+			dispatch(reset('FormularioConsultaSintoma'))
 		})
 		.catch((error) => {
-			errorHandler(dispatch, error.response, CREAR_PRECONSULTA_PARAMETRO_FALLO)
+			errorHandler(dispatch, error.response, CREAR_CONSULTA_SINTOMA_FALLO)
 		})
 	}
 }
 
-export function eliminarPreConsultaParametro(idPreconsultaParametro) {
+export function eliminarConsultaSintoma(idConsultaSintoma) {
 	return (dispatch) => {
-		let url = `/parametrospreConsulta/${idPreconsultaParametro}/eliminar`
+		let url = `/consultasintomas/${idConsultaSintoma}/eliminar`
 
-		dispatch({ type: ELIMINAR_PRECONSULTA_PARAMETRO_REQUEST })
+		dispatch({ type: ELIMINAR_CONSULTA_SINTOMA_REQUEST })
 
-		deleteData(ELIMINAR_PRECONSULTA_PARAMETRO_EXITO, ELIMINAR_PRECONSULTA_PARAMETRO_FALLO, true, url, dispatch)
+		deleteData(ELIMINAR_CONSULTA_SINTOMA_EXITO, ELIMINAR_CONSULTA_SINTOMA_FALLO, true, url, dispatch)
 
-		dispatch(reset('FormularioPreConsultaParametro'))
+		dispatch(reset('FormularioConsultaSintoma'))
 	}
 }
 
 
-export function mostrarPreConsultaParametro(idPreConsulta, idParametroPreconsulta) {
+export function editarConsultaSintoma(datosFormulario) {
 	return (dispatch) => {
-		dispatch({ type: MOSTRAR_PRECONSULTA_PARAMETRO_REQUEST })
-
-		socketPreConsultaParametro.emit('mostrar_parametroPreConsulta', {
-			id_preconsulta: idPreConsulta,
-			id_parametroPreconsulta: idParametroPreconsulta
-		})
-
-		socketPreConsultaParametro.on('mostrar_parametroPreConsulta', (data) => {
-			// console.log(data)
-			if(data.error) {
-				dispatch({ type: MOSTRAR_PRECONSULTA_PARAMETRO_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: MOSTRAR_PRECONSULTA_PARAMETRO_EXITO, payload: data })
-			}
-		})
-	}
-}
+		let url = `${API_URL}/consultasintomas/editar`
 
 
-export function cerrarModalMostrarPreConsultaParametro() {
-	return (dispatch) => {
-		dispatch({ type: CERRAR_MODAL_MOSTRAR_PRECONSULTA_PARAMETRO })
-	}
-}
-
-export function editarPreConsultaParametro(datosFormulario) {
-	return (dispatch) => {
-		let url = `${API_URL}/parametrospreConsulta/editar`
-
-
-		dispatch({ type: EDITAR_PRECONSULTA_PARAMETRO_REQUEST })
+		dispatch({ type: EDITAR_CONSULTA_SINTOMA_REQUEST })
 		
 		axios.put(url, datosFormulario)
 		.then((response) => {
@@ -159,15 +135,15 @@ export function editarPreConsultaParametro(datosFormulario) {
 
 			// console.log(res)
 
-			res.datoActualizado = res.parametroPreConsultaActualizado
+			res.datoActualizado = res.sintomaConsultaActualizado
 
-			dispatch({ type: EDITAR_PRECONSULTA_PARAMETRO_EXITO, payload: res })
+			dispatch({ type: EDITAR_CONSULTA_SINTOMA_EXITO, payload: res })
 
-			dispatch(reset('FormularioPreConsultaParametro'))
+			dispatch(reset('FormularioConsultaSintoma'))
 		})
 		.catch((error) => {
 			// console.log(error)
-			errorHandler(dispatch, error.response, EDITAR_PRECONSULTA_PARAMETRO_FALLO)
+			errorHandler(dispatch, error.response, EDITAR_CONSULTA_SINTOMA_FALLO)
 		})
 	}
 }

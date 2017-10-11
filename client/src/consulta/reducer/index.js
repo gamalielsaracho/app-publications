@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		consulta: {}
+		consulta: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { consultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, consulta: {}, error: '' },
+	mostrar: { cargando: false, consulta: null, error: '' },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,7 +58,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					consulta: {}
+					consulta: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar
@@ -72,7 +72,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					consulta: {}
+					consulta: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar
@@ -98,7 +98,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					consulta: {}
+					consulta: null
 				}
 			})
 
@@ -111,7 +111,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					consulta: {}
+					consulta: null
 				}
 			})
 
@@ -177,7 +177,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					consulta: {},
+					consulta: null,
 					error: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
@@ -187,7 +187,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					consulta: {},
+					consulta: null,
 					error: ''
 				}
 			})

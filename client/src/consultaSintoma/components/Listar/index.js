@@ -1,2 +1,2 @@
-import ListarPreConsultaParametrosContainer from './container'
-export default ListarPreConsultaParametrosContainer
+import ListarSintomasConsultaContainer from './container'
+export default ListarSintomasConsultaContainer

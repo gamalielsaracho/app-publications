@@ -1,34 +1,30 @@
 import {
 
-	LISTAR_PRECONSULTA_PARAMETROS_REQUEST,
-	LISTAR_PRECONSULTA_PARAMETROS_EXITO,
-	LISTAR_PRECONSULTA_PARAMETROS_FALLO,
+	LISTAR_CONSULTA_SINTOMAS_REQUEST,
+	LISTAR_CONSULTA_SINTOMAS_EXITO,
+	LISTAR_CONSULTA_SINTOMAS_FALLO,
 
-	CREAR_PRECONSULTA_PARAMETRO_REQUEST,
-	CREAR_PRECONSULTA_PARAMETRO_EXITO,
-	CREAR_PRECONSULTA_PARAMETRO_FALLO,
+	ABRIR_FORMULARIO_CREAR_CONSULTA_SINTOMA,
 
-	CERRAR_FORMULARIO_PRECONSULTA_PARAMETRO,
+	CREAR_CONSULTA_SINTOMA_REQUEST,
+	CREAR_CONSULTA_SINTOMA_EXITO,
+	CREAR_CONSULTA_SINTOMA_FALLO,
 
-	MOSTRAR_PRECONSULTA_PARAMETRO_REQUEST,
-	MOSTRAR_PRECONSULTA_PARAMETRO_EXITO,
-	MOSTRAR_PRECONSULTA_PARAMETRO_FALLO,
+	CERRAR_FORMULARIO_CONSULTA_SINTOMA,
 
-	CERRAR_MODAL_MOSTRAR_PRECONSULTA_PARAMETRO,
-
-	// Editar parametroPreConsulta.
+	// Editar sintomaConsulta.
 		// form to edit.
-	ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_REQUEST,
-	ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_EXITO,
-	ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_FALLO,
+	ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_REQUEST,
+	ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_EXITO,
+	ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_FALLO,
 
-	EDITAR_PRECONSULTA_PARAMETRO_REQUEST,
-	EDITAR_PRECONSULTA_PARAMETRO_EXITO,
-	EDITAR_PRECONSULTA_PARAMETRO_FALLO,
+	EDITAR_CONSULTA_SINTOMA_REQUEST,
+	EDITAR_CONSULTA_SINTOMA_EXITO,
+	EDITAR_CONSULTA_SINTOMA_FALLO,
 
-	ELIMINAR_PRECONSULTA_PARAMETRO_REQUEST,
-	ELIMINAR_PRECONSULTA_PARAMETRO_EXITO,
-	ELIMINAR_PRECONSULTA_PARAMETRO_FALLO
+	ELIMINAR_CONSULTA_SINTOMA_REQUEST,
+	ELIMINAR_CONSULTA_SINTOMA_EXITO,
+	ELIMINAR_CONSULTA_SINTOMA_FALLO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -38,19 +34,30 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		parametroPreConsulta: {}
+		sintomaConsulta: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
-	listar: { parametrosPreConsulta:[], cargando: false, error: '' },
+	listar: { sintomasConsulta:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, parametroPreConsulta: {}, error: '', abierto: false },
+	mostrar: { cargando: false, sintomaConsulta: null, error: '' },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		case ABRIR_FORMULARIO_CREAR_CONSULTA_SINTOMA:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: true,
+					abirtoEditar: false,
+					iniciarValores: false,
+					error: '',
+					cargando: false,
+					departamento: null
+				}
+			})
 
-		case ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_REQUEST:
+		case ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_REQUEST:
 			return Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
@@ -58,13 +65,11 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					parametroPreConsulta: {}
-				},
-				mostrar: { abierto: false }
+					sintomaConsulta: null
+				}
 			})
 
-		case ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_EXITO:
-			console.log(action.payload)
+		case ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_EXITO:
 			return Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
@@ -72,16 +77,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: false,
-					parametroPreConsulta: action.payload
+					sintomaConsulta: action.payload
 				},
-				mostrar: { abierto: false },
 
 				// Limpia los estados de error.
-				editar: { error: '' },
-				crear: { error: '' }
+				editar: INITIAL_STATE.editar,
+				crear: INITIAL_STATE.crear
 			})
 
-		case ABRIR_FORMULARIO_EDITAR_PRECONSULTA_PARAMETRO_FALLO:
+		case ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_FALLO:
 			return Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
@@ -89,143 +93,97 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					parametroPreConsulta: {}
-				},
-				mostrar: { abierto: false }
+					sintomaConsulta: null
+				}
 			})
 
-		case CERRAR_FORMULARIO_PRECONSULTA_PARAMETRO:
+		case CERRAR_FORMULARIO_CONSULTA_SINTOMA:
 			return Object.assign({}, state, {
-				formulario: INITIAL_STATE.formulario,
-				mostrar: { abierto: false }
+				formulario: INITIAL_STATE.formulario
 			})
+			
 
-		// CREATE parametroPreConsulta.
-		case CREAR_PRECONSULTA_PARAMETRO_REQUEST:
+		// CREATE sintomaConsulta.
+		case CREAR_CONSULTA_SINTOMA_REQUEST:
 			return Object.assign({}, state, {
 				crear: { cargando: true }
 			})
 
-		case CREAR_PRECONSULTA_PARAMETRO_EXITO:
+		case CREAR_CONSULTA_SINTOMA_EXITO:
 			
 			state = Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje
 				},
 				listar: {
-					parametrosPreConsulta: [ ...state.listar.parametrosPreConsulta, 
+					sintomasConsulta: [ ...state.listar.sintomasConsulta, 
 											 action.payload.datoInsertado ]
 				},
-				formulario: { abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 			// console.log(state)
 
 			return state
 
-		case CREAR_PRECONSULTA_PARAMETRO_FALLO:
+		case CREAR_CONSULTA_SINTOMA_FALLO:
 			return Object.assign({}, state, {
 				crear: { error: action.payload }
 			})
 
 		// LISTAR.
-		case LISTAR_PRECONSULTA_PARAMETROS_REQUEST:
+		case LISTAR_CONSULTA_SINTOMAS_REQUEST:
 			return Object.assign({}, state, {
 				crear: INITIAL_STATE.crear,
 				listar: { cargando: true, error: '' }
 			})
 
 
-		case LISTAR_PRECONSULTA_PARAMETROS_EXITO:
+		case LISTAR_CONSULTA_SINTOMAS_EXITO:
 			return Object.assign({}, state, {
-				listar: { parametrosPreConsulta: action.payload.parametrosPreConsulta, cargando: false, error: '' }
+				listar: { sintomasConsulta: action.payload.sintomasConsulta, cargando: false, error: '' }
 			})
 
 
-		case LISTAR_PRECONSULTA_PARAMETROS_FALLO:
+		case LISTAR_CONSULTA_SINTOMAS_FALLO:
 			return Object.assign({}, state, {
-				listar: { error: action.payload, parametrosPreConsulta:[], cargando: false }
-			})
-
-		// MOSTRAR.
-		case MOSTRAR_PRECONSULTA_PARAMETRO_REQUEST:
-			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
-			})
-
-		case MOSTRAR_PRECONSULTA_PARAMETRO_EXITO:
-			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					parametroPreConsulta: action.payload,
-					abierto: true
-				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
-			})
-
-		case MOSTRAR_PRECONSULTA_PARAMETRO_FALLO:
-			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					parametroPreConsulta: {},
-					error: action.payload,
-					abierto: true
-				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
-			})
-
-		case CERRAR_MODAL_MOSTRAR_PRECONSULTA_PARAMETRO:
-			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					parametroPreConsulta: {},
-					error: '',
-					abierto: false
-				}
+				listar: { error: action.payload, sintomasConsulta:[], cargando: false }
 			})
 
 
 		// EDITAR.
-		case EDITAR_PRECONSULTA_PARAMETRO_REQUEST:
+		case EDITAR_CONSULTA_SINTOMA_REQUEST:
 			return Object.assign({}, state, {
 				editar: { cargando: true }
 			})
 
-		case EDITAR_PRECONSULTA_PARAMETRO_EXITO:
-			// console.log('Datos Actualizados.')
-			// console.log(action.payload.datoActualizado)
-			
-			let nuevaLista = state.listar.parametrosPreConsulta.map((i) => {
-				if(i.preconsultaParametro.id_preconsultaParametro == action.payload.datoActualizado.preconsultaParametro.id_preconsultaParametro) {
-					// console.log('i')
-					// console.log(i)
+		case EDITAR_CONSULTA_SINTOMA_EXITO:
+
+			let nuevaLista = state.listar.sintomasConsulta.map((i) => {
+				if(i.consultaSintoma.id_consultaSintoma == action.payload.datoActualizado.consultaSintoma.id_consultaSintoma) {
 
 					i = Object.assign({}, i, {
-						preconsultaParametro: action.payload.datoActualizado.preconsultaParametro
+						consultaSintoma: action.payload.datoActualizado.consultaSintoma
 					})
 				}
 
 				return i
 			})
 
-			console.log('nuevaLista')
-			console.log(nuevaLista)
-
 			state = Object.assign({}, state, {
 				editar: { 
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false },
+				formulario: INITIAL_STATE.formulario,
 				listar: {
-					parametrosPreConsulta: nuevaLista
+					sintomasConsulta: nuevaLista
 				}
 			})
 
 			return state
 
-		case EDITAR_PRECONSULTA_PARAMETRO_FALLO:
+		case EDITAR_CONSULTA_SINTOMA_FALLO:
 			return Object.assign({}, state, {
 				editar: { 
 					cargando: false,
@@ -236,17 +194,17 @@ export default function (state = INITIAL_STATE, action) {
 		
 
 		// ELIMINAR.
-		case ELIMINAR_PRECONSULTA_PARAMETRO_REQUEST:
+		case ELIMINAR_CONSULTA_SINTOMA_REQUEST:
 			return Object.assign({}, state, {
 				eliminar: { cargando: true },
 				crear: INITIAL_STATE.crear,
 				formulario: INITIAL_STATE.formulario
 			})
 
-		case ELIMINAR_PRECONSULTA_PARAMETRO_EXITO:
+		case ELIMINAR_CONSULTA_SINTOMA_EXITO:
 					
-			let newList = state.listar.parametrosPreConsulta.filter((i) => {
-				return i.preconsultaParametro.id_preconsultaParametro != action.payload.id_preconsultaParametro
+			let newList = state.listar.sintomasConsulta.filter((i) => {
+				return i.consultaSintoma.id_consultaSintoma != action.payload.id_consultaSintoma
 			})
 
 			state = Object.assign({}, state, {
@@ -255,13 +213,13 @@ export default function (state = INITIAL_STATE, action) {
 					error: ''
 				},
 				listar: {
-					parametrosPreConsulta: newList
+					sintomasConsulta: newList
 				}
 			})
 
 			return state
 
-		case ELIMINAR_PRECONSULTA_PARAMETRO_FALLO:
+		case ELIMINAR_CONSULTA_SINTOMA_FALLO:
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
