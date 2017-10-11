@@ -8,7 +8,7 @@ export default (app) => {
 	   .post(consultaSintomaCtrl.crear)
 
 	app.route('/api/consultasintomas/:idConsultaSintoma/editar')
-	   .get(consultaSintomaCtrl.mostrar)
+	   .get(consultaSintomaCtrl.mostrarParaEditar)
 
 	app.route('/api/consultasintomas/editar')
 	   .put(consultaSintomaCtrl.editar)
