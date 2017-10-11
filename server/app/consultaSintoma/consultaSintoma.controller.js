@@ -16,11 +16,11 @@ exports.listar = function(req, res, next) {
 	})
 }
 
-exports.mostrar = function(req, res, next) {
+exports.mostrarParaEditar = function(req, res, next) {
 
 	let idConsultaSintoma = req.params.idConsultaSintoma
 
-	ConsultaSintoma.findById(idConsultaSintoma, (err, sintomaConsulta) => {
+	ConsultaSintoma.findByIdToEdit(idConsultaSintoma, (err, sintomaConsulta) => {
 		// console.log(sintomaConsulta)
 
 		if(err) {
@@ -80,7 +80,6 @@ exports.crear = function(req, res, next) {
 		}
 	})
 }
-
 
 exports.editar = function(req, res, next) {
 	let datos = {
