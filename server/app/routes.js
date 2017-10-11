@@ -13,6 +13,9 @@ import analisisTipoReferenciaRoutes from './analisisTipoReferencia/analisisTipoR
 import analisisRoutes from './analisis/analisis.routes'
 
 
+import consultaSintomaRoutes from './consultaSintoma/consultaSintoma.routes'
+
+
 export default (app) => {
 	// usuarioRoutes(app)
 	// rolRoutes(app)
@@ -25,4 +28,6 @@ export default (app) => {
 
 	// Vista previa.
 	analisisRoutes(app)
+
+	consultaSintomaRoutes(app)
 }
