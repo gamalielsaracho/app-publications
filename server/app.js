@@ -32,7 +32,9 @@ require('././app/nivel/nivel.sockets')(io)
 require('././app/parametroPreConsulta/parametroPreConsulta.sockets')(io)
 
 require('././app/diagnostico/diagnostico.sockets')(io)
-require('././app/consulta/consulta.sockets')(io)
+// require('././app/consulta/consulta.sockets')(io)
+require('././app/sintoma/sintoma.sockets')(io)
+
 
 
 // AJAX.
@@ -41,18 +43,18 @@ require('././app/consulta/consulta.sockets')(io)
 require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
 
 
-// Farmacia.
-require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
-require('././app/presentacion/presentacion.sockets')(io)
-require('././app/tipoConsumo/tipoConsumo.sockets')(io)
-require('././app/dosis/dosis.sockets')(io)
-require('././app/unidadMedidaMedicamento/unidadMedidaMedicamento.sockets')(io)
-require('././app/farmaceutica/farmaceutica.sockets')(io)
-require('././app/proveedor/proveedor.sockets')(io)
+// Farmacia. VEEEER.!!
+// require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
+// require('././app/presentacion/presentacion.sockets')(io)
+// require('././app/tipoConsumo/tipoConsumo.sockets')(io)
+// require('././app/dosis/dosis.sockets')(io)
+// require('././app/unidadMedidaMedicamento/unidadMedidaMedicamento.sockets')(io)
+// require('././app/farmaceutica/farmaceutica.sockets')(io)
+// require('././app/proveedor/proveedor.sockets')(io)
 // Agregar solamente. si piden.
 // require('././app/accion/accion.sockets')(io)
-require('././app/medicamento/medicamento.sockets')(io)
-require('././app/loteMedicamento/loteMedicamento.sockets')(io)
+// require('././app/medicamento/medicamento.sockets')(io)
+// require('././app/loteMedicamento/loteMedicamento.sockets')(io)
 
 
 

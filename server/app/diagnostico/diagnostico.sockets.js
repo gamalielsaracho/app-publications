@@ -29,14 +29,17 @@ export default (io) => {
 			Diagnostico.verifyIfExist(data, (err, diagnosticoExistente) => {
 				if(err) {
 					console.log(err)
+					socket.emit('crear_diagnostico', { error: 'Ocurrió un error, intente más tarde.' })
+					return
 				}
 
 				if(diagnosticoExistente[0]) {
-						socket.emit('crear_diagnostico', { error: 'Este nivel ya está registrado' })
+						socket.emit('crear_diagnostico', { error: 'Este diagnóstico ya está registrado' })
 						return
 				} else {
 					Diagnostico.create(data, (err, diagnostico) => {
 						if(err) {
+							console.log(err)
 							socket.emit('crear_diagnostico', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
@@ -69,10 +72,12 @@ export default (io) => {
 			Diagnostico.verifyIfExist(data, (err, diagnosticoExistente) => {
 				if(err) {
 					console.log(err)
+					socket.emit('editar_diagnostico', { error: 'Ocurrió un error, intente más tarde.' })
+					return
 				}
 
 				if(diagnosticoExistente[0]) {
-					socket.emit('editar_diagnostico', { error: 'Este nivel ya está registrado' })
+					socket.emit('editar_diagnostico', { error: 'Este diagnóstico ya está registrado' })
 					return
 				}
 					

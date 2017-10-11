@@ -93,6 +93,7 @@ import ListarUnidadesParametroPrePage from '././unidadParametroPre/pages/ListarU
 
 // DIAGNOSTICOS.
 import ListarDiagnosticosPage from '././diagnostico/pages/ListarDiagnosticosPage'
+import ListarSintomasPage from '././sintoma/pages/ListarSintomasPage'
 
 
 // CONSULTAS APP.
@@ -182,6 +183,7 @@ export default (
 			<Route path='/dashboard/unidades-parametro-preconsulta' component={ListarUnidadesParametroPrePage}/>
 
 			<Route path='/dashboard/diagnosticos' component={ListarDiagnosticosPage}/>
+			<Route path='/dashboard/sintomas' component={ListarSintomasPage}/>
 
 			<Route path='/dashboard/consultas' component={ListarConsultasApp}>
 				<IndexRoute component={ListarConsultasPage}/>

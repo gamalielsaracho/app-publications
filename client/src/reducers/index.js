@@ -24,8 +24,9 @@ import preConsultaParametroReducer from '../preConsultaParametro/reducer'
 import unidadParametroPreReducer from '../unidadParametroPre/reducer'
 
 import diagnosticoReducer from '../diagnostico/reducer'
-
 import consultaReducer from '../consulta/reducer'
+import sintomaReducer from '../sintoma/reducer'
+
 
 // Farmacia.
 import nombreMedicamentoReducer from '../nombreMedicamento/reducer'
@@ -78,7 +79,7 @@ const rootReducer = combineReducers({
 
 	diagnostico: diagnosticoReducer,
 	consulta: consultaReducer,
-
+	sintoma: sintomaReducer,
 	
 	// Farmacia.
 	nombreMedicamento: nombreMedicamentoReducer,

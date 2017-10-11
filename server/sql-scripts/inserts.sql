@@ -1,6 +1,6 @@
 -- TIPO DOCUMENTO.
 INSERT INTO `tiposdocumentos` (`id_tipoDocumento`, `descripcion`) 
-	VALUES ('1', 'dni');
+	VALUES (NULL, 'dni');
 
 -- ROLES.
 INSERT INTO `roles` (`id_rol`, `descripcion`) 
