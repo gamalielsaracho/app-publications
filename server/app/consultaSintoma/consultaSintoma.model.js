@@ -24,15 +24,18 @@ exports.find = (idConsulta, callback) => {
 	connection.end()
 }
 
+
 exports.findById = (idConsultaSintoma, callback) => {
 
 	let q = `
 		SELECT
 			*
-		FROM  
-			consultasSintomas
+		FROM
+			consultasSintomas consultaSintoma,
+			sintomas sintoma
 		WHERE
-			id_consultaSintoma = ?
+			consultaSintoma.id_sintoma = sintoma.id_sintoma AND
+			consultaSintoma.id_consultaSintoma = ?
 
 	`
 	var options = {
@@ -44,6 +47,34 @@ exports.findById = (idConsultaSintoma, callback) => {
 
 	connection.end()
 }
+
+exports.findByIdToEdit = (idConsultaSintoma, callback) => {
+
+	let q = `
+		SELECT
+			consultaSintoma.id_consultaSintoma,
+			consultaSintoma.id_sintoma,
+			consultaSintomaid_consulta,
+
+			sintoma.observaciones
+		FROM
+			consultasSintomas consultaSintoma,
+			sintomas sintoma
+		WHERE
+			consultaSintoma.id_sintoma = sintoma.id_sintoma AND
+			consultaSintoma.id_consultaSintoma = ?
+
+	`
+	var options = {
+		sql: q,
+		nestTables: false
+	}
+
+	return connection.query(options, [idConsultaSintoma], callback)
+
+	connection.end()
+}
+
 
 exports.verifyIfExist = (data, callback) => {
 	let q = `
