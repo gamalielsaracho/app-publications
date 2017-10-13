@@ -34,8 +34,8 @@ class Listar extends Component {
 
 		if((rol == 'administracion') || (rol == 'laboratorio' && idPersonal == i.analisis.id_personal)) {
 			return <div>
-				<button type="button" onClick={() => { this.props.abrirFormularioEditarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia) }} className="btn btn-warning btn-sm btn-space">Editar</button>
-				<button type="button" onClick={() => { this.props.eliminarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia) }} className="btn btn-danger btn-sm btn-space">Eliminar</button>
+				<button type="button" onClick={() => { this.props.abrirFormularioEditarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoReferencia) }} className="btn btn-warning btn-sm btn-space">Editar</button>
+				<button type="button" onClick={() => { this.props.eliminarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoReferencia) }} className="btn btn-danger btn-sm btn-space">Eliminar</button>
 			</div>
 		} else {
 			return <span></span>
@@ -48,7 +48,7 @@ class Listar extends Component {
 		return <tbody>
 			{
 				analisisTipoReferencias.map((i) => {
-					return <tr key={i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia}>
+					return <tr key={i.analisisTipoReferencia.id_analisisTipoReferencia}>
 			            <td>{ i.parametro.descripcion }</td>
 			            <td>{ i.analisisTipoReferencia.valor }</td>
 			            <td>{ i.unidad.descripcion }</td>

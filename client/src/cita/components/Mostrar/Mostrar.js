@@ -88,9 +88,9 @@ class Mostrar extends Component {
 			</div>
 		} else {
 			return <div className='row'>
-					<MensajeOerror error={error} mensaje={null}/>
+				<MensajeOerror error={error} mensaje={null}/>
 
-					{ this.renderCita(cita) }
+				{ this.renderCita(cita) }
 				<br/>
 				<br/>
 			</div>

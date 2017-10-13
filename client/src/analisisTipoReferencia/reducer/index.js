@@ -152,7 +152,7 @@ export default function (state = INITIAL_STATE, action) {
 			// console.log(action.payload.datoActualizado)
 			
 			let nuevaLista = state.listar.analisisTipoReferencias.map((i) => {
-				if(i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia == action.payload.datoActualizado.analisisTipoReferencia.id_analisisTipoAnalisisReferencia) {
+				if(i.analisisTipoReferencia.id_analisisTipoReferencia == action.payload.datoActualizado.analisisTipoReferencia.id_analisisTipoReferencia) {
 					// console.log('i')
 					// console.log(i)
 
@@ -201,7 +201,7 @@ export default function (state = INITIAL_STATE, action) {
 		case ELIMINAR_ANALISIS_TIPO_REFERENCIA_EXITO:
 					
 			let newList = state.listar.analisisTipoReferencias.filter((i) => {
-				return i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia != action.payload.id_analisisTipoAnalisisReferencia
+				return i.analisisTipoReferencia.id_analisisTipoReferencia != action.payload.id_analisisTipoReferencia
 			})
 
 			state = Object.assign({}, state, {
