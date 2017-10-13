@@ -11,8 +11,6 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FieldSelectDiagnosticosContainer from '../../../diagnostico/components/FieldSelectDiagnosticos'
-
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -27,19 +25,14 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
 		this.renderFieldTextArea = this.renderFieldTextArea.bind(this)
 
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
-	componentWillMount() {
-		this.props.listarDiagnosticosFuncion()
-	}
 
 	enviarFormulario(formProps) {
-
-		
 		if(this.props.editarContenido) {
 			this.props.editarConsulta(formProps)
 		} else {
@@ -70,11 +63,27 @@ class Formulario extends Component {
 		</div>
 	}
 
-	renderCargando(cargando) {
+
+	renderFormulario(cargando) {
+		const { handleSubmit, pristine, reset, submitting } = this.props		
+
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			return <span></span>
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+					<form onSubmit={handleSubmit(this.enviarFormulario)}>
+						<div className='row'>
+							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+								<Field name='fechaProximaConsulta' type='date' component={renderField} label='Fecha próxima consulta'/>
+							</div>
+						</div>
+								
+						<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+						<button type="button" onClick={ this.props.cerrarFormularioConsulta } className="btn btn-primary btn-space">Cancelar</button>
+					</form>
+				</div>
+			</div>
 		}
 	}
 
@@ -85,8 +94,6 @@ class Formulario extends Component {
 		  		position: 'none'
 		  	}
 		}
-
-		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
 			abirtoCrear, abirtoEditar, cargando, consulta 
@@ -107,31 +114,8 @@ class Formulario extends Component {
 					<h4 className='text-center'>Formulario consulta</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
-					<div className='row'>
-						{ this.renderCargando(cargando) }
-
-						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								<div className='row'>
-									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-										<Field name='fechaProximaConsulta' type='date' component={renderField} label='Fecha próxima consulta'/>
-									</div>
-									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-										<Field name='id_diagnostico' type='text' 
-											component={FieldSelectDiagnosticosContainer}
-											listar={this.props.listarDiagnosticos}
-											label='Diagnóstico'/>
-									</div>
-									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-										<Field name='observacionDiagnostico' type='textarea' component={this.renderFieldTextArea} label='Observaciones'/>
-									</div>
-								</div>
-								
-								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioConsulta } className="btn btn-primary btn-space">Cancelar</button>
-							</form>
-						</div>
-					</div>
+					
+					{ this.renderFormulario(cargando) }
 				</div>
 			</ReactModal>
 		} else {
