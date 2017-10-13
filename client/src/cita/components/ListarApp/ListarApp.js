@@ -37,12 +37,6 @@ class ListarApp extends Component {
 			{ this.renderMenuByRol(rolUsuario) }
 
 			{ this.props.children }
-			
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
 		</div>
 	}
 }
