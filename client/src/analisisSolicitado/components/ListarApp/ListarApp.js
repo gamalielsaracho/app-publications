@@ -9,15 +9,15 @@ class ListarApp extends Component {
 	render() {
 		let activeList = true
 		let activeShow = true
-		let dataUrl = ''
+		let urlListarSolicitudes = ''
 
 		if(this.props.urls.idPaciente) {
-			dataUrl = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio`
+			urlListarSolicitudes = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio`
 		} else {
-			dataUrl = `/dashboard/solicitudes-laboratorio`
+			urlListarSolicitudes = `/dashboard/solicitudes-laboratorio`
 		}
 
-		// console.log(dataUrl)
+		// console.log(urlListarSolicitudes)
 		if(this.props.urls.idAnalisisSolicitado) {
 			activeList = ''
 			activeShow = 'active'
@@ -29,7 +29,7 @@ class ListarApp extends Component {
 		return <div>
 			<ul className="nav nav-tabs no-print-data">
 			  <li className="nav-item nav-link" className={activeList}>
-			    	<Link to={dataUrl}>Listar</Link>
+			    	<Link to={urlListarSolicitudes}>Listar</Link>
 			  </li>
 			  <li className="nav-item nav-link" className={activeShow}>
 			    <a className="nav-link">Detalle solicitud laboratorio</a>
