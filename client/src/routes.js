@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
+import pacienteRoutes from './routes/Paciente'
+
 // App Principal de la aplicación.
 import AppContainer from './app/components/App'
 
@@ -32,23 +34,7 @@ import ListarAreasPage from '././area/pages/ListarAreasPage'
 // ALERGIAS.
 import ListarAlergiasPage from '././alergia/pages/ListarAlergiasPage'
 
-
-
-
-// PACIENTES
-		// Listar.
-import ListarPacienteApp from '././paciente/components/ListarApp'
-
-import ListarPacientesPage from '././paciente/pages/ListarPacientesPage'
-
-import MostrarPacienteAppContainer from '././paciente/components/MostrarApp'
 	
-	// PACIENTE ALERGIAS.
-	import ListarPacienteAlergiasPage from '././pacienteAlergia/pages/ListarPacienteAlergiasPage'
-
-
-
-
 // LISTAR ANÁLISIS SOLICITADOS APP.
 import ListarAppAnalisisSolicitadosContainer from '././analisisSolicitado/components/ListarApp'
 import ListarAnalisisSolicitadosContainer from '././analisisSolicitado/components/Listar'
@@ -97,8 +83,9 @@ import ListarSintomasPage from '././sintoma/pages/ListarSintomasPage'
 
 
 // CONSULTAS APP.
-import ListarConsultasApp from '././consulta/components/ListarApp'
-import ListarConsultasPage from '././consulta/pages/ListarConsultasPage'
+import ListarConsultasAppContainer from '././consulta/components/ListarApp'
+
+import ListarConsultasContainer from '././consulta/components/Listar'
 
 				// Con todos los detalles.
 // CONSULTA APP.
@@ -107,6 +94,10 @@ import MostrarConsultaAppContainer from '././consulta/components/MostrarApp'
 
 // ... Para cuando el médico realize la consulta.
 import MostrarConsultaRellenandoAppContainer from '././consulta/components/MostrarRellenandoApp'
+
+import ListarSintomasConsultaContainer from '././consultaSintoma/components/Listar'
+
+import ListarConsultaDiagnosticosContainer from '././consultaDiagnostico/components/Listar'
 
 
 				// Módulo farmacia.
@@ -185,32 +176,23 @@ export default (
 			<Route path='/dashboard/diagnosticos' component={ListarDiagnosticosPage}/>
 			<Route path='/dashboard/sintomas' component={ListarSintomasPage}/>
 
-			<Route path='/dashboard/consultas' component={ListarConsultasApp}>
-				<IndexRoute component={ListarConsultasPage}/>
-				<Route path='/dashboard/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
-				</Route>
-			</Route>
-
-
-
-			{/* Historial clínico. */}
-			<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
-				<IndexRoute component={ListarPacientesPage}/>
+			<Route path='/dashboard/consultas' component={ListarConsultasAppContainer}>
+				<IndexRoute component={ListarConsultasContainer}/>
 				
-				<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
-					<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
-					
-					<Route path='/dashboard/pacientes/:idPaciente/solicitudes-laboratorio' component={ListarAppAnalisisSolicitadosContainer}>
-						<IndexRoute component={ListarAnalisisSolicitadosContainer}/>
-						
-						<Route path='/dashboard/pacientes/:idPaciente/solicitudes-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
-							<Route path='/dashboard/pacientes/:idPaciente/solicitudes-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
-						</Route>
+				<Route path='/dashboard/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
+					<Route path='/dashboard/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
+					<Route path='/dashboard/consultas/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
+
+					<Route path='/dashboard/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
+						<Route path='/dashboard/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
 					</Route>
 
 				</Route>
 			</Route>
 
+
+			{ pacienteRoutes }
+			
 
 			<Route path='/dashboard/citas' component={ListarCitasApp}>
 				<IndexRoute component={ListarCitasPage}/>
@@ -221,6 +203,10 @@ export default (
 							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
 							
 							</Route>
+
+							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
+							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
+
 						</Route>
 					</Route>
 				</Route>
