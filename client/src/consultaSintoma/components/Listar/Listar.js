@@ -23,13 +23,13 @@ class Listar extends Component {
 		this.props.listarConsultaSintomas(this.props.urls.idConsulta)
 	}
 
-	shouldComponentUpdate(nextProps) {
-		return nextProps.sintomasConsulta !== this.props.sintomasConsulta
-	}
+	// shouldComponentUpdate(nextProps) {
+	// 	return nextProps.sintomasConsulta !== this.props.sintomasConsulta
+	// }
 
 	renderFormularioSintomaConsulta() {
 		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
-			<FormularioSintomaConsultaContainer
+			return <FormularioSintomaConsultaContainer
 				idConsulta = { this.props.urls.idConsulta }/>
 		} else {
 			return <span></span>
@@ -62,6 +62,7 @@ class Listar extends Component {
 			{
 				sintomasConsulta.map((i) => {
 					return <tr key={i.consultaSintoma.id_consultaSintoma}>
+			            <td>{ i.consultaSintoma.id_consultaSintoma }</td>
 			            <td>{ i.sintoma.descripcion }</td>
 			            <td>{ i.consultaSintoma.observaciones }</td>
 
@@ -83,11 +84,17 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div>
-					<h3 className='text-center'></h3>
+					<h3 className='text-center'>Síntomas</h3>
 											
 					<MensajeOerror error={error} mensaje={null}/>
-
+					<div className='row'>
+						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+							<button onClick={ this.props.abrirFormularioCrearConsultaSintoma } className='btn btn-success'>Agregar</button>
+						</div>
+					</div>
 					<br/>
+
+					{ this.renderFormularioSintomaConsulta() }
 
 					<div className='table-responsive'>
 						<table className='table table-striped'>
@@ -96,6 +103,7 @@ class Listar extends Component {
 						        	<th>Id</th>
 						        	<th>Nombre</th>
 						        	<th>Observaciones</th>
+						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
 
