@@ -51,7 +51,7 @@ export function abrirFormularioCrearConsultaSintoma() {
 	return (dispatch) => {
 		dispatch(reset('FormularioConsultaSintoma'))
 
-		dispatch({ type: ABRIR_FORMULARIO_CREAR_DEPARTAMENTO })
+		dispatch({ type: ABRIR_FORMULARIO_CREAR_CONSULTA_SINTOMA })
 	}
 }
 
