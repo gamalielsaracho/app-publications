@@ -52,7 +52,7 @@ exports.verifyIfExist = (data, callback) => {
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO analisisTiposReferencias (
-			id_analisisTipoAnalisisReferencia,
+			id_analisisTipoReferencia,
 			id_analisisTipo, 
 			id_analisis, 
 			id_tipoAnalisis, 
@@ -93,7 +93,7 @@ exports.findById = (idAnalisisTipoAnalisisReferencia, callback) => {
 			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
 
-			analisisTipoReferencia.id_analisisTipoAnalisisReferencia = ?
+			analisisTipoReferencia.id_analisisTipoReferencia = ?
 	`
 
 	var options = {
@@ -118,7 +118,7 @@ exports.findByIdToUpdate = (idAnalisisTipoAnalisisReferencia, callback) => {
 		WHERE
 			analisisTipoReferencia.id_referencia = referencia.id_referencia AND
 			referencia.id_parametroAnalisis = parametro.id_parametroAnalisis  AND
-			id_analisisTipoAnalisisReferencia = ?
+			id_analisisTipoReferencia = ?
 	`
 
 	var options = {
@@ -137,7 +137,7 @@ exports.update = (data, callback) => {
 		UPDATE analisisTiposReferencias SET 
 			valor = ?
 		WHERE
-			id_analisisTipoAnalisisReferencia = ?
+			id_analisisTipoReferencia = ?
 	`
 
 	if(data.valor) {
@@ -145,7 +145,7 @@ exports.update = (data, callback) => {
 	}
 
 	return connection.query(q, [ data.valor,
-								 data.id_analisisTipoAnalisisReferencia ], callback)
+								 data.id_analisisTipoReferencia ], callback)
 
 	connection.end()
 }
@@ -155,7 +155,7 @@ exports.delete = (idAnalisisTipoAnalisisReferencia, callback) => {
 	let q = `
 		DELETE FROM analisisTiposReferencias 
 			WHERE
-				id_analisisTipoAnalisisReferencia = ?
+				id_analisisTipoReferencia = ?
 	`
 
 	return connection.query(q, [idAnalisisTipoAnalisisReferencia], callback)
