@@ -12,8 +12,9 @@ import analisisTipoReferenciaRoutes from './analisisTipoReferencia/analisisTipoR
 // Vista previa.
 import analisisRoutes from './analisis/analisis.routes'
 
-
 import consultaSintomaRoutes from './consultaSintoma/consultaSintoma.routes'
+
+import consultaDiagnosticoRoutes from './consultaDiagnostico/consultaDiagnostico.routes'
 
 
 export default (app) => {
@@ -30,4 +31,6 @@ export default (app) => {
 	analisisRoutes(app)
 
 	consultaSintomaRoutes(app)
+
+	consultaDiagnosticoRoutes(app)
 }
