@@ -30,7 +30,7 @@ class MostrarVistaPrevia extends Component {
 		return <tbody>
 			{
 				datos.map((i) => {
-					return <tr key={i.analisisTipoReferencia.id_analisisTipoAnalisisReferencia}>
+					return <tr key={i.analisisTipoReferencia.id_analisisTipoReferencia}>
 			            <td>{ i.parametro.descripcion }</td>
 			            <td>{ i.unidad.descripcion }</td>
 			            <td>{ i.analisisTipoReferencia.valor }</td>
