@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import FormularioDiagnosticoContainer from '../Formulario'
+
 import Cargando from '../../../app/components/Cargando'
 
 class FieldSelectDiagnosticos extends Component {
@@ -11,7 +13,9 @@ class FieldSelectDiagnosticos extends Component {
 		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
-					
+						
+				<FormularioDiagnosticoContainer/>
+
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
