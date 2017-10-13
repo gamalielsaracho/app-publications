@@ -33,8 +33,10 @@ class MostrarRellenandoApp extends Component {
 		}
 	}
 
-	renderLinkSolicitudLaboratorio(activeSolicitudLaboratorio) {
+	renderLinkSolicitudLaboratorio(urlMostrarSolicitudLaboratorio) {
 		const { analisisSolicitados, cargando, error } = this.props.listar
+
+		let activeSolicitudLaboratorio
 
 		if(cargando) {
 			return <p>Cargando..</p>
@@ -51,11 +53,17 @@ class MostrarRellenandoApp extends Component {
 				return <div>
 					{ this.renderBtnAgregarConsultaByRol() }
 				</div>
-			} else {			
+			} else {
+				let url = `${urlMostrarSolicitudLaboratorio}/${solicitudesLaboratorio[0].analisisSolicitado.id_analisisSolicitado}`
+				
+				if(this.props.pathname == url) {
+					activeSolicitudLaboratorio = 'active'
+				}
+
 				return <div>
 					<ul className="nav nav-tabs">
 						<li className="nav-item nav-link" className={activeSolicitudLaboratorio}>
-						    <Link to={`/dashboard/citas/${this.props.urls.idCita}/preconsulta/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/solicitud-laboratorio/${solicitudesLaboratorio[0].analisisSolicitado.id_analisisSolicitado}`}>Solicitud laboratorio</Link>
+						    <Link to={`${urlMostrarSolicitudLaboratorio}/${solicitudesLaboratorio[0].analisisSolicitado.id_analisisSolicitado}`}>Solicitud laboratorio</Link>
 						</li>
 					</ul>
 				</div>
@@ -64,21 +72,29 @@ class MostrarRellenandoApp extends Component {
 	}
 
 	render() {
-		let activeDiagnosticos
-		let activeTratamientos
-		let activeSolicitudLaboratorio
+		let urlListarSintomas
+		let urlListarDiagnosticos
+		let urlMostrarSolicitudLaboratorio
 
-		if(this.props.urls.idAnalisisSolicitado) {
-			activeSolicitudLaboratorio = 'active'
-			activeDiagnosticos = ''
-			activeTratamientos = ''
+		let activeDiagnosticos
+		let activeSintomas
+
+		urlListarSintomas = `/dashboard/citas/${this.props.urls.idCita}/preconsulta/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/sintomas`
+		urlListarDiagnosticos = `/dashboard/citas/${this.props.urls.idCita}/preconsulta/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/diagnosticos`
+		urlMostrarSolicitudLaboratorio = `/dashboard/citas/${this.props.urls.idCita}/preconsulta/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/solicitud-laboratorio`
+
+		switch(this.props.pathname) {
+			case urlListarSintomas:
+				activeSintomas = 'active'
+				activeDiagnosticos = ''
+				break
+
+			case urlListarDiagnosticos:
+				activeSintomas = ''
+				activeDiagnosticos = 'active'
+				break
 		}
 
-			// <ul className="nav nav-tabs">
-			// 	<li className="nav-item nav-link" className={activeList}>
-			// 	    <Link to={`/dashboard/tipos-analisis/${this.props.urls.idTipoAnalisis}/parametros/${this.props.urls.idParametroAnalisis}/referencias`}>Valores de referencia</Link>
-			//   	</li>
-			// </ul>
 
 		return <div>
 			<br/>
@@ -89,16 +105,17 @@ class MostrarRellenandoApp extends Component {
 				
 			<br/>
 			<ul className="nav nav-tabs">
+				<li className="nav-item nav-link" className={activeSintomas}>
+				    <Link to={urlListarSintomas}>Síntomas</Link>
+				</li>
 				<li className="nav-item nav-link" className={activeDiagnosticos}>
-				    <Link to={`/dashboard`}>HACER LOS DIAGNÓSTICOS</Link>
+				    <Link to={urlListarDiagnosticos}>Diagnósticos</Link>
 				</li>
-				<li className="nav-item nav-link" className={activeTratamientos}>
-				    <Link to={`/dashboard`}>Tratamientos (HACER)</Link>
-				</li>
-				{ this.renderLinkSolicitudLaboratorio(activeSolicitudLaboratorio) }
+				{ this.renderLinkSolicitudLaboratorio(urlMostrarSolicitudLaboratorio) }
 			</ul>
-
 			{ this.props.children }
+			<br/>
+			<br/>
 		</div>
 	}
 }
