@@ -5,34 +5,59 @@ import MostarPacienteContainer from '../Mostrar'
 
 class MostrarApp extends Component {
 	render() {
-		let idPaciente = this.props.idPaciente
+		let urlListarAlergias
+		let urlListarConsultas
+		let urlListarSolicitudesAnalisis
+
+		let activeAlergias
+		let activeConsultas
+		let activeSolicitudesAnalisis
+
+		urlListarAlergias = `/dashboard/pacientes/${this.props.urls.idPaciente}/alergias`
+		urlListarConsultas = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
+		urlListarSolicitudesAnalisis = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio`
 		
+		switch(this.props.pathname) {
+			case urlListarAlergias:
+				activeAlergias = 'active'
+				activeConsultas = ''
+				activeSolicitudesAnalisis = ''
+				break
+
+			case urlListarConsultas:
+				activeAlergias = ''
+				activeConsultas = 'active'
+				activeSolicitudesAnalisis = ''
+				break
+
+			case urlListarSolicitudesAnalisis:
+				activeAlergias = ''
+				activeConsultas = ''
+				activeSolicitudesAnalisis = 'active'
+				break
+		}
+
 		return <div>
 			<br/>
 			<MostarPacienteContainer 
-				idPaciente={idPaciente}/>
+				idPaciente = { this.props.urls.idPaciente }/>
 
 			<h3 className='text-center'>Historial Clínico</h3>
+
 			<ul className="nav nav-tabs">
-			  <li className="nav-item">
-			    <a className="nav-link active">
-			    	<Link to={`/dashboard/pacientes/${idPaciente}/alergias`}>Alergias</Link>
-			    </a>
-			  </li>
-			  <li className="nav-item">
-			    <a className="nav-link">Consultas</a>
-			  </li>
-			  <li className="nav-item">
-			    <a className="nav-link active">
-			    	<Link to={`/dashboard/pacientes/${idPaciente}/solicitudes-laboratorio`}>
+				<li className="nav-item nav-link" className={activeAlergias}>
+			    	<Link to={urlListarAlergias}>Alergias</Link>
+				</li>
+				<li className="nav-item nav-link" className={activeConsultas}>
+			    	<Link to={urlListarConsultas}>Consultas</Link>
+				</li>
+				<li className="nav-item nav-link" className={activeSolicitudesAnalisis}>
+				<Link to={urlListarSolicitudesAnalisis}>
 			    		Solicitudes laboratorio
 			    	</Link>
-			    </a>
-			  </li>
-			  <li className="nav-item">
-			    <a className="nav-link">Análisis Realizados</a>
-			  </li>
+				</li>
 			</ul>
+
 			<br/>
 			{ this.props.children }
 
