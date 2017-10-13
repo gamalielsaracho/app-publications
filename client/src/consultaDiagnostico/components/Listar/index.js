@@ -1,0 +1,2 @@
+import ListarConsultaDiagnosticosContainer from './container'
+export default ListarConsultaDiagnosticosContainer
