@@ -7,10 +7,8 @@ exports.find = (callback) => {
 			FROM
 				consultas consulta,
 				personales personal,
-				pacientes paciente,
-				diagnosticos diagnostico
+				pacientes paciente
 			WHERE
-				consulta.id_diagnostico = diagnostico.id_diagnostico AND
 				consulta.id_personal = personal.id_personal AND
 				consulta.id_paciente = paciente.id_paciente
 	`
@@ -33,10 +31,8 @@ exports.findListByIdPersonal = (idPersonal, callback) => {
 			FROM
 				consultas consulta,
 				personales personal,
-				pacientes paciente,
-				diagnosticos diagnostico
+				pacientes paciente
 			WHERE
-				consulta.id_diagnostico = diagnostico.id_diagnostico AND
 				consulta.id_personal = personal.id_personal AND
 				consulta.id_paciente = paciente.id_paciente AND
 				consulta.id_personal = ?
@@ -60,10 +56,8 @@ exports.findListByIdPaciente = (idPaciente, callback) => {
 			FROM
 				consultas consulta,
 				personales personal,
-				pacientes paciente,
-				diagnosticos diagnostico
+				pacientes paciente
 			WHERE
-				consulta.id_diagnostico = diagnostico.id_diagnostico AND
 				consulta.id_personal = personal.id_personal AND
 				consulta.id_paciente = paciente.id_paciente AND
 				consulta.id_paciente = ?
@@ -89,13 +83,11 @@ exports.findById = (data, callback) => {
 
 				preconsultas preconsulta,
 				personales personalEnfermeria,
-				niveles nivel,
-				diagnosticos diagnostico
+				niveles nivel
 			WHERE
 				consulta.id_personal = personal.id_personal AND
 				consulta.id_paciente = paciente.id_paciente AND
 
-				consulta.id_diagnostico = diagnostico.id_diagnostico AND
 				consulta.id_preconsulta = preconsulta.id_preconsulta AND
 				preconsulta.id_personal = personalEnfermeria.id_personal AND
 				preconsulta.id_nivel = nivel.id_nivel AND
@@ -127,10 +119,9 @@ exports.findById = (data, callback) => {
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO consultas (id_consulta, fecha, fechaProximaConsulta, 
-		id_personal, id_preconsulta, observacionDiagnostico, 
-		id_diagnostico, id_paciente)
+		id_personal, id_preconsulta, observacionDiagnostico, id_paciente)
 
-			VALUES (null, ?, ?, ?, ?, LOWER(?), ?, ?);
+			VALUES (null, ?, ?, ?, ?, LOWER(?), ?)
 	`
 	if(data.observacionDiagnostico) {
 		data.observacionDiagnostico.trim()
@@ -141,7 +132,6 @@ exports.create = (data, callback) => {
 								 data.id_personal,
 								 data.id_preconsulta,
 								 data.observacionDiagnostico,
-								 data.id_diagnostico,
 								 data.id_paciente ], callback)
 
 	connection.end()
@@ -168,7 +158,6 @@ exports.update = (data, callback) => {
 	let q = `
 		UPDATE consultas SET 
 			fechaProximaConsulta = ?,
-			id_diagnostico = ?,
 			observacionDiagnostico = ?
 		WHERE
 			id_consulta = ?
@@ -179,7 +168,6 @@ exports.update = (data, callback) => {
 	}
 
 	return connection.query(q, [ data.fechaProximaConsulta,
-								 data.id_diagnostico,
 								 data.observacionDiagnostico,
 								 data.id_consulta ], callback)
 
