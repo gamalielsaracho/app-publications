@@ -1,5 +1,7 @@
 import Rol from './rol.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (socket, io) => {
 
 		function roles() {
@@ -50,15 +52,29 @@ export default (socket, io) => {
 		socket.on('eliminar_rol', (data) => {
 			// Rol.auditoria(data, 'eliminación')
 
-			Rol.delete(data.id_rol, (err) => {
+			referentialIntegritySimple('personales', 'id_rol', data.id_rol, (err, enUso) => {
 				if(err) {
+					console.log(err)
 					socket.emit('eliminar_rol', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_rol', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_rol', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Rol.delete(data.id_rol, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_rol', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				roles()
+						socket.emit('eliminar_rol', { mensaje: 'Se Eliminó exitósamente.' })
+
+						roles()
+					})
+				}
+
 			})
 		})
 
