@@ -32,7 +32,7 @@ require('././app/nivel/nivel.sockets')(io)
 require('././app/parametroPreConsulta/parametroPreConsulta.sockets')(io)
 
 require('././app/diagnostico/diagnostico.sockets')(io)
-// require('././app/consulta/consulta.sockets')(io)
+require('././app/consulta/consulta.sockets')(io)
 require('././app/sintoma/sintoma.sockets')(io)
 
 
