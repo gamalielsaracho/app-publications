@@ -54,9 +54,10 @@ exports.findByIdToEdit = (idConsultaSintoma, callback) => {
 		SELECT
 			consultaSintoma.id_consultaSintoma,
 			consultaSintoma.id_sintoma,
-			consultaSintomaid_consulta,
+			consultaSintoma.id_consulta,
+			consultaSintoma.observaciones,
 
-			sintoma.observaciones
+			sintoma.descripcion
 		FROM
 			consultasSintomas consultaSintoma,
 			sintomas sintoma
