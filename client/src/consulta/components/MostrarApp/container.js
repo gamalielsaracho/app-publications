@@ -9,12 +9,13 @@ import {
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
 	return {
-		idConsulta: ownProps.params.idConsulta,
-
 		listar: state.analisisSolicitado.listar,
 
 		// guardamos todos los parametros de la url en el objeto urls.
-		urls: ownProps.params
+		urls: ownProps.params,
+
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname
 	}
 }
 
