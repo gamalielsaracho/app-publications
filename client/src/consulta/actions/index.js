@@ -114,6 +114,28 @@ export function listarConsultasMedico(idPersonal) {
 	}
 }
 
+// para el historial Clínico.
+export function listarConsultasPaciente(idPaciente) {
+	return (dispatch) => {
+
+		dispatch({ type: LISTAR_CONSULTAS_REQUEST })
+
+		// var consultaSocket = io.connect('http://localhost:3000/consulta');
+		consultaSocket.emit('listar_consultas_paciente', { 
+			id_paciente: idPaciente 
+		})
+
+		consultaSocket.on('listar_consultas_paciente', (data) => {
+			if(data.error) {
+				dispatch({ type: LISTAR_CONSULTAS_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: LISTAR_CONSULTAS_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+
 export function crearConsulta(datosFormulario) {
 	return (dispatch) => {
 
