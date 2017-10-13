@@ -33,8 +33,10 @@ class MostrarApp extends Component {
 		}
 	}
 
-	renderLinkSolicitudLaboratorio(activeSolicitudLaboratorio) {
+	renderLinkSolicitudLaboratorio(urlMostrarSolicitudLaboratorio) {
 		const { analisisSolicitados, cargando, error } = this.props.listar
+
+		let activeSolicitudLaboratorio
 
 		if(cargando) {
 			return <p>Cargando..</p>
@@ -51,11 +53,17 @@ class MostrarApp extends Component {
 				return <div>
 					{ this.renderBtnAgregarConsultaByRol() }
 				</div>
-			} else {			
+			} else {	
+				let url = `${urlMostrarSolicitudLaboratorio}/${solicitudesLaboratorio[0].analisisSolicitado.id_analisisSolicitado}`
+				
+				if(this.props.pathname == url) {
+					activeSolicitudLaboratorio = 'active'
+				}
+
 				return <div>
 					<ul className="nav nav-tabs">
 						<li className="nav-item nav-link" className={activeSolicitudLaboratorio}>
-						    <Link to={`/dashboard`}>Solicitud laboratorio</Link>
+						    <Link to={`${urlMostrarSolicitudLaboratorio}/${solicitudesLaboratorio[0].analisisSolicitado.id_analisisSolicitado}`}>Solicitud laboratorio</Link>
 						</li>
 					</ul>
 				</div>
@@ -64,36 +72,63 @@ class MostrarApp extends Component {
 	}
 
 	render() {
+		let urlListarSintomas
+		let urlListarDiagnosticos
+		let urlMostrarSolicitudLaboratorio
+
 		let activeDiagnosticos
-		let activeTratamientos
+		let activeSintomas
 		let activeSolicitudLaboratorio
 
-		if(this.props.urls.idAnalisisSolicitado) {
-			activeSolicitudLaboratorio = 'active'
-			activeDiagnosticos = ''
-			activeTratamientos = ''
+
+		// Rutas según el lugar en donde se encuentre el usuario.
+		
+		if(this.props.urls.idPaciente && this.props.urls.idConsulta) {
+			urlListarSintomas = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/sintomas`
+			urlListarDiagnosticos = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/diagnosticos`
+			urlMostrarSolicitudLaboratorio = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
+		} else {
+			urlListarSintomas = `/dashboard/consultas/${this.props.urls.idConsulta}/sintomas`
+			urlListarDiagnosticos = `/dashboard/consultas/${this.props.urls.idConsulta}/diagnosticos`
+			urlMostrarSolicitudLaboratorio = `/dashboard/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
 		}
+
+		
+		switch(this.props.pathname) {
+			case urlListarSintomas:
+				activeSintomas = 'active'
+				activeDiagnosticos = ''
+				break
+
+			case urlListarDiagnosticos:
+				activeSintomas = ''
+				activeDiagnosticos = 'active'
+				break
+		}
+
 
 		return <div>
 			<br/>
 
 			<MostrarConsultaContainer 
-				idConsulta = {this.props.idConsulta}/>
+				urls = {this.props.urls}/>
 
 			<FormularioConsultaContainer/>
 
 			<br/>
 			<ul className="nav nav-tabs">
+				<li className="nav-item nav-link" className={activeSintomas}>
+				    <Link to={urlListarSintomas}>Síntomas</Link>
+				</li>
 				<li className="nav-item nav-link" className={activeDiagnosticos}>
-				    <Link to={`/dashboard`}>HACER LOS DIAGNÓSTICOS</Link>
+				    <Link to={urlListarDiagnosticos}>Diagnósticos</Link>
 				</li>
-				<li className="nav-item nav-link" className={activeTratamientos}>
-				    <Link to={`/dashboard`}>Tratamientos (HACER)</Link>
-				</li>
-				{ this.renderLinkSolicitudLaboratorio(activeSolicitudLaboratorio) }
-			</ul>
 
+				{ this.renderLinkSolicitudLaboratorio(urlMostrarSolicitudLaboratorio) }
+			</ul>
 			{ this.props.children }
+			<br/>
+			<br/>
 		</div>
 	}
 }
