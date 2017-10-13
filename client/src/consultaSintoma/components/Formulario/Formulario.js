@@ -5,6 +5,7 @@ import ReactModal from 'react-modal'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import FieldSelectSintomasContainer from '../../../sintoma/components/FieldSelectSintomas'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -24,7 +25,6 @@ class Formulario extends Component {
 
 		this.renderFieldTextArea = this.renderFieldTextArea.bind(this)
 		this.renderFieldSelectSintomas = this.renderFieldSelectSintomas.bind(this)
-		this.renderBtnCancelar = this.renderBtnCancelar.bind(this)
 	}
 
 	componentWillMount() {
@@ -37,11 +37,11 @@ class Formulario extends Component {
 		
 		console.log(formProps)
 
-		// if(this.props.editarContenido) {
-		// 	this.props.editarConsultaSintoma(formProps)
-		// } else {
-		// 	this.props.crearConsultaSintoma(formProps)
-		// }
+		if(this.props.editarContenido) {
+			this.props.editarConsultaSintoma(formProps)
+		} else {
+			this.props.crearConsultaSintoma(formProps)
+		}
 	}
 
 	renderFieldTextArea({ input, label, type, meta: { touched, error, warning } }) {
@@ -55,22 +55,15 @@ class Formulario extends Component {
 		</div>
 	}
 
-	renderBtnCancelar() {
-		if(this.props.editarContenido) {
-			return <button type="button" onClick={ this.props.cerrarFormularioConsultaSintoma } className="btn btn-primary btn-space">Cancelar</button>
-		} else {
-			return <span></span>
-		}
-	}
 
 	renderFieldSelectSintomas(sintomaConsulta) {
+		
 		if(!this.props.editarContenido) {
-				// <Field name='id_sintoma' type='text' 
-				// 				component={}
-				// 				listaParametros={} 
-				// 				label='Síntoma'/>
 			return <div>
-				<h3>Select option (síntomas)</h3>
+				<Field name='id_sintoma' type='text' 
+					component={FieldSelectSintomasContainer}
+					listar={this.props.listarSintomas} 
+					label='Síntoma'/>
 			</div>
 		} else {
 			return <p><strong>Síntoma:</strong> { sintomaConsulta.descripcion }</p>
@@ -83,29 +76,27 @@ class Formulario extends Component {
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			return <form onSubmit={handleSubmit(this.enviarFormulario)}>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
+			return <div className='row'>
+				<form onSubmit={handleSubmit(this.enviarFormulario)}>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 						{ this.renderFieldSelectSintomas(sintomaConsulta) }
 					</div>
-				</div>
-
-				<div className='row'>
-					<div className='col-xs-12 col-sm-6 col-md-4 col-lg-8'>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 						<Field name='observaciones' type='textarea' component={this.renderFieldTextArea} label='Observaciones'/>
 					</div>
-				</div>
-																	
-				<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-				{ this.renderBtnCancelar() }
-			</form>
+																		
+					<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+					<button type="button" onClick={ this.props.cerrarFormularioConsultaSintoma } className="btn btn-primary btn-space">Cancelar</button>
+
+				</form>
+			</div>
 		}
 	}
 
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh',
+		  		height: '45vh',
 		  		position: 'none'
 		  	}
 		}
@@ -118,7 +109,7 @@ class Formulario extends Component {
 			: this.props.crear.error ? this.props.crear.error : this.props.editar.error 
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
-
+		// console.log(this.props.formulario)
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
 					       	contentLabel="Minimal Modal Example"
@@ -130,10 +121,8 @@ class Formulario extends Component {
 					<div className='row'>
 						<MensajeOerror error={error} mensaje={null}/>
 					</div>
-						
-					<div className='row'>
-						{ renderFormulario(cargando, sintomaConsulta) }
-					</div>
+
+					{ this.renderFormulario(cargando, sintomaConsulta) }
 
 				</div>
 			</ReactModal>
