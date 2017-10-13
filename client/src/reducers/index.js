@@ -29,6 +29,8 @@ import sintomaReducer from '../sintoma/reducer'
 
 import consultaSintomaReducer from '../consultaSintoma/reducer'
 
+import consultaDiagnosticoReducer from '../consultaDiagnostico/reducer'
+
 
 // Farmacia.
 import nombreMedicamentoReducer from '../nombreMedicamento/reducer'
@@ -83,6 +85,7 @@ const rootReducer = combineReducers({
 	consulta: consultaReducer,
 	sintoma: sintomaReducer,
 	consultaSintoma: consultaSintomaReducer,
+	consultaDiagnostico: consultaDiagnosticoReducer,
 
 
 	
