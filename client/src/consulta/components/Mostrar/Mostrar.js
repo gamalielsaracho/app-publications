@@ -12,28 +12,44 @@ import ListarPreConsultaParametrosContainer from '../../../preConsultaParametro/
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
 		this.renderConsulta = this.renderConsulta.bind(this)
+		this.renderDatosPaciente = this.renderDatosPaciente.bind(this)
 	}
 
 	componentWillMount() {
-		this.props.mostrarConsulta(this.props.idConsulta)
+		console.log('LOS PARAMETROS PASADOS SON --->')
+		console.log(this.props.urls)
+		// urls es pasado como property al ser llamado dentro de MostrarApp.
+		this.props.mostrarConsulta(this.props.urls.idConsulta)
 	}
 
-	renderCargando(cargando) {
-		if(cargando) {
-			return <Cargando/>
-		} else {
+	renderDatosPaciente(dato) {
+		if(this.props.urls.idPaciente) {
 			return <span></span>
+		} else {
+			return <div>
+				<h4 className='text-center'>Paciente</h4>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<p><strong>Numero de Documento:</strong> { dato.paciente.nroDocumento }</p>
+						<p><strong>Dirección:</strong> { dato.paciente.direccion }</p>				
+					</div>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<p><strong>Nombre:</strong> { dato.paciente.nombres+' '+dato.paciente.apellidos }</p>
+						<p><strong>Edad:</strong> { calcularEdad(dato.paciente.fechaNacimiento) }</p>
+					</div>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<p><strong>Sexo:</strong>{ dato.paciente.sexo }</p>
+					</div>
+				</div>
+			</div>
 		}
 	}
 
-	renderConsulta(dato) {
-		if(dato) {
-			if(dato.consulta != undefined) {
-				// console.log(dato)
-				// console.log(calcularEdad(dato.paciente.fechaNacimiento))
-
+	renderConsulta(cargando, dato) {
+		if(cargando) {
+			return <Cargando/>
+		} else if (dato){
 				return <div>
 					<h4 className='text-center'>Consulta</h4>
 					<div className='row'>
@@ -43,29 +59,12 @@ class Mostrar extends Component {
 							<p><strong>Fecha próxima consulta:</strong>{ formatDate(dato.consulta.fechaProximaConsulta) }</p>
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							<p><strong>Diagnóstico:</strong>{ dato.diagnostico.descripcion }</p>
-							<p><strong>Observaciones: </strong>{ dato.consulta.observacionDiagnostico }</p>
-						</div>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<button onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
 							<button onClick={ () => { this.props.eliminarConsulta(dato.consulta.id_consulta) } } className='btn btn-danger btn-space'>Eliminar</button>
 						</div>
 					</div>
 
-					<h4 className='text-center'>Paciente</h4>
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							<p><strong>Numero de Documento:</strong> { dato.paciente.nroDocumento }</p>
-							<p><strong>Dirección:</strong> { dato.paciente.direccion }</p>				
-						</div>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							<p><strong>Nombre:</strong> { dato.paciente.nombres+' '+dato.paciente.apellidos }</p>
-							<p><strong>Edad:</strong> { calcularEdad(dato.paciente.fechaNacimiento) }</p>
-						</div>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							<p><strong>Sexo:</strong>{ dato.paciente.sexo }</p>
-						</div>
-					</div>
+					{ this.renderDatosPaciente(dato) }
 
 					<h4 className='text-center'>Pre-consulta</h4>
 					<div className='row'>
@@ -80,10 +79,8 @@ class Mostrar extends Component {
 					</div>
 
 				</div>
-			} else {
-				return <span></span>
-			}
 		}
+
 	}
 
 	render() {
@@ -91,10 +88,9 @@ class Mostrar extends Component {
 		const { cargando, consulta, error } = this.props.mostrar
 		
 		return <div>
-			{ this.renderCargando(cargando) }
 			<MensajeOerror error={error} mensaje={null}/>
 
-			{ this.renderConsulta(consulta) }
+			{ this.renderConsulta(cargando, consulta) }
 		</div>
 	}
 }
