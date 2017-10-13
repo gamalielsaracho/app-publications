@@ -4,10 +4,11 @@ import MostrarApp from './MostrarApp'
 
 function mapStateToProps(state, ownProps) {
 	return {
-		idPaciente: ownProps.params.idPaciente
-		
-		// nroDocumento: ownProps.params.nroDocumento,
-		// idTipoDocumento: ownProps.params.idTipoDocumento
+		// guardamos todos los parametros de la url en el objeto urls.
+		urls: ownProps.params,
+
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname
 	}
 }
 
