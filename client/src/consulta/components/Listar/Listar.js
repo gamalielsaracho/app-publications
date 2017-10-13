@@ -15,14 +15,16 @@ class Listar extends Component {
 	}
 
 	componentWillMount() {
-		switch(removeAccents(this.personalLocalSt.rol)) {
-			case 'administracion':
-				this.props.listarConsultas()
-				break
+		if(this.props.urls.idPaciente) {
+			this.props.listarConsultasPaciente(this.props.urls.idPaciente)
+		} else {
+			let rol = removeAccents(this.personalLocalSt.rol)
 
-			case 'medico':
+			if(rol == 'administracion') {
+				this.props.listarConsultas()
+			} else if (rol == 'medico') {
 				this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
-				break
+			}
 		}
 	}
 
@@ -35,6 +37,13 @@ class Listar extends Component {
 	}	
 
 	renderConsultas(consultas) {
+		let urlMostrarConsulta
+
+		if(this.props.urls.idPaciente) {
+			urlMostrarConsulta = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
+		} else {
+			urlMostrarConsulta = `/dashboard/consultas`
+		}
 
 		return <tbody>
 			{
@@ -45,7 +54,8 @@ class Listar extends Component {
 			            <td>{ i.consulta.fecha }</td>
 			            <td>{ i.consulta.fechaProximaConsulta }</td>
 			            <td>
-			            	<Link to={`/dashboard/consultas/${i.consulta.id_consulta}`}>
+
+			            	<Link to={`${urlMostrarConsulta}/${i.consulta.id_consulta}`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
 			            </td>
