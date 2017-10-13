@@ -54,7 +54,11 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					departamento: null
-				}
+				},
+
+				// Limpia los estados de error.
+				editar: INITIAL_STATE.editar,
+				crear: INITIAL_STATE.crear
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_REQUEST:
@@ -66,7 +70,11 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: true,
 					sintomaConsulta: null
-				}
+				},
+				
+				// Limpia los estados de error.
+				editar: INITIAL_STATE.editar,
+				crear: INITIAL_STATE.crear
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_EXITO:
@@ -78,11 +86,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					sintomaConsulta: action.payload
-				},
-
-				// Limpia los estados de error.
-				editar: INITIAL_STATE.editar,
-				crear: INITIAL_STATE.crear
+				}
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_SINTOMA_FALLO:
