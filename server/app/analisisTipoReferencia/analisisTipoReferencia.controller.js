@@ -20,7 +20,7 @@ exports.listar = function(req, res, next) {
 exports.crear = function(req, res, next) {
 
 	let datos = {
-		// id_analisisTipoAnalisisReferencia: null,
+		// id_analisisTipoReferencia: null,
 		id_analisisTipo: req.body.id_analisisTipo,
 		id_analisis: req.body.id_analisis,
 		id_tipoAnalisis: req.body.id_tipoAnalisis,
@@ -44,6 +44,7 @@ exports.crear = function(req, res, next) {
 		if(paramentroExistente[0]) {
 			return res.status(422).json({ error: 'Este paramentro ya está registrado.' })
 		} else {
+			// console.log(datos)
 			AnalisisTipoReferencia.create(datos, (err, result) => {
 				if(err) {
 					console.log(err)
@@ -85,7 +86,7 @@ exports.mostrarParaEditar = function(req, res, next) {
 
 exports.editar = function(req, res, next) {
 	let datos = {
-		id_analisisTipoAnalisisReferencia: req.body.id_analisisTipoAnalisisReferencia,
+		id_analisisTipoReferencia: req.body.id_analisisTipoReferencia,
 		valor: req.body.valor
 	}
 
@@ -95,7 +96,7 @@ exports.editar = function(req, res, next) {
 			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		AnalisisTipoReferencia.findById(datos.id_analisisTipoAnalisisReferencia, (err, analisisTipoReferencia) => {
+		AnalisisTipoReferencia.findById(datos.id_analisisTipoReferencia, (err, analisisTipoReferencia) => {
 			// console.log(analisisTipoReferencia)
 
 			if(err) {
@@ -123,7 +124,7 @@ exports.eliminar = function(req, res, next) {
 
 		return res.json({
 			mensaje: 'Se Eliminó exitósamente.',
-			id_analisisTipoAnalisisReferencia: idAnalisisTipoAnalisisReferencia
+			id_analisisTipoReferencia: idAnalisisTipoAnalisisReferencia
 		})
 	})
 }
