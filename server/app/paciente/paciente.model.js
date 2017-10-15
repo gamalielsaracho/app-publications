@@ -2,11 +2,17 @@ import connection from '../../config/connection'
 
 exports.find = (callback) => {
 	let q = `
-		SELECT * FROM pacientes pa, tiposDocumentos tipoDocumento, ciudades ciudad, areas area 
-			WHERE 
-				pa.id_tipoDocumento = tipoDocumento.id_tipoDocumento AND
-				pa.id_ciudad = ciudad.id_ciudad AND
-				pa.id_area = area.id_area
+		SELECT 
+			* 
+		FROM 
+			pacientes pa, 
+			tiposDocumentos tipoDocumento,
+			ciudades ciudad, 
+			areas area 
+		WHERE 
+			pa.id_tipoDocumento = tipoDocumento.id_tipoDocumento AND
+			pa.id_ciudad = ciudad.id_ciudad AND
+			pa.id_area = area.id_area
 	`
 	var options = {
 		sql: q, 

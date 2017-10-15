@@ -16,6 +16,8 @@ import consultaSintomaRoutes from './consultaSintoma/consultaSintoma.routes'
 
 import consultaDiagnosticoRoutes from './consultaDiagnostico/consultaDiagnostico.routes'
 
+import medicamentoDrogaRoutes from './medicamentoDroga/medicamentoDroga.routes'
+
 
 export default (app) => {
 	// usuarioRoutes(app)
@@ -33,4 +35,6 @@ export default (app) => {
 	consultaSintomaRoutes(app)
 
 	consultaDiagnosticoRoutes(app)
+
+	medicamentoDrogaRoutes(app)
 }
