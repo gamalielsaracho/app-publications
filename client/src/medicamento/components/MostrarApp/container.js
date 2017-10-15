@@ -8,10 +8,14 @@ import MostrarApp from './MostrarApp'
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
 	return {
-		idMedicamento: ownProps.params.idMedicamento,
+		// guardamos todos los parametros de la url en el objeto urls.
+		urls: ownProps.params,
 		
 		// Para hacer render del formulario solamente cuando esté abierto.
-		formulario: state.medicamento.formulario
+		formulario: state.medicamento.formulario,
+
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname
 	}
 }
 

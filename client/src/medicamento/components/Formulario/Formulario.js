@@ -8,30 +8,10 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-// ...
-import
-	FieldSelectNombresMedicamentosContainer
-from '../../../nombreMedicamento/components/FieldSelectNombresMedicamentos'
-
-import
-	FieldSelectDosisContainer
-from '../../../dosis/components/FieldSelectDosis'
-
-import
-	FieldSelectTiposConsumosContainer
-from '../../../tipoConsumo/components/FieldSelectTiposConsumos'
 
 import
 	FieldSelectFarmaceuticasContainer
 from '../../../farmaceutica/components/FieldSelectFarmaceuticas'
-
-import
-	FieldSelectUnidadesMedicamentosContainer
-from '../../../unidadMedidaMedicamento/components/FieldSelectUnidadesMedicamentos'
-
-import
-	FieldSelectPresentacionesContainer
-from '../../../presentacion/components/FieldSelectPresentaciones'
 
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
@@ -56,12 +36,7 @@ class Formulario extends Component {
 	// }
 
 	componentWillMount() {
-		this.props.listarNombresMedicamentosFuncion()
-		this.props.listarDosisFuncion()
-		this.props.listarTiposConsumosFuncion()
 		this.props.listarFarmaceuticasFuncion()
-		this.props.listarUnidadesMedicamentosFuncion()
-		this.props.listarPresentacionesFuncion()
 	}
 
 	enviarFormulario(formProps) {				
@@ -126,28 +101,7 @@ class Formulario extends Component {
 						{ this.renderCargando(cargando) }
 
 
-						<form onSubmit={handleSubmit(this.enviarFormulario)}>
-							<div className='row'>
-								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
-									<Field name='id_nombreMedicamento' 
-										type='text' component={FieldSelectNombresMedicamentosContainer} 
-										listar={this.props.listarNombresMedicamentos}
-										label='Nombre Medicamento'/>
-								</div>
-								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
-									<Field name='id_presentacion'
-										type='text' component={FieldSelectPresentacionesContainer}
-										listar={this.props.listarPresentaciones}
-										label='Presentación'/>
-								</div>
-								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
-									<Field name='id_tipoConsumo'
-										type='text' component={FieldSelectTiposConsumosContainer} 
-										listar={this.props.listarTiposConsumos}
-										label='Tipo consumo'/>
-								</div>
-							</div>
-																						
+						<form onSubmit={handleSubmit(this.enviarFormulario)}>																						
 							<div className='row'>
 								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
 									<Field name='id_farmaceutica'
@@ -156,28 +110,12 @@ class Formulario extends Component {
 										label='Farmacéutica'/>
 								</div>
 								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
-									<Field name='id_dosis'
-										type='text' component={FieldSelectDosisContainer}
-										listar={this.props.listarDosis}
-										label='Dosis'/>
+									<Field name='nombre' type='text' component={renderField} label='Nombre'/>
 								</div>
 								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
-									<Field name='id_unidadMedidaMedicamento'
-										type='text' component={FieldSelectUnidadesMedicamentosContainer} 
-										listar={this.props.listarUnidadesMedicamentos}
-										label='Unidad de medida'/>
+									<Field name='observaciones' type='text' component={renderField} label='Descripción Gral.'/>
 								</div>
 							</div>
-
-							<div className='row'>
-								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-3'>
-									<Field name='cantidadFarmaceutica' type='text' component={renderField} label='Cantidad x Unidad'/>
-								</div>
-								<div className='col-xs-12 col-sm-12 col-md-6 col-lg-3'>
-									<Field name='stockMinimo' type='text' component={renderField} label='Stock mínimo'/>
-								</div>
-							</div>
-
 
 							<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 							<button type="button" onClick={ this.props.cerrarFormularioMedicamento } className="btn btn-primary btn-space">Cancelar</button>

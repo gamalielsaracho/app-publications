@@ -8,29 +8,10 @@ import {
 } from '../../actions'
 
 // Selects Options.
-import {
-	listarNombresMedicamentos
-} from '../../../nombreMedicamento/actions'
-
-import {
-	listarDosis
-} from '../../../dosis/actions'
-
-import {
-	listarTiposConsumos
-} from '../../../tipoConsumo/actions'
 
 import {
 	listarFarmaceuticas
 } from '../../../farmaceutica/actions'
-
-import {
-	listarUnidadesMedicamentos
-} from '../../../unidadMedidaMedicamento/actions'
-
-import {
-	listarPresentaciones
-} from '../../../presentacion/actions'
 
 
 import Formulario from './Formulario'
@@ -93,12 +74,7 @@ function mapStateToProps(state) {
 		editar: state.medicamento.editar,
 
 		// Selects options.
-		listarNombresMedicamentos: state.nombreMedicamento.listar,
-		listarDosis: state.dosis.listar,
-		listarTiposConsumos: state.tipoConsumo.listar,
 		listarFarmaceuticas: state.farmaceutica.listar,
-		listarUnidadesMedicamentos: state.unidadMedicamento.listar,
-		listarPresentaciones: state.presentacion.listar
 	}
 }
 
@@ -119,23 +95,9 @@ function mapDispatchToProps(dispatch) {
 		},
 
 		// selects Options.
-		listarNombresMedicamentosFuncion: () => {
-			dispatch(listarNombresMedicamentos())
-		},
-		listarDosisFuncion: () => {
-			dispatch(listarDosis())
-		},
-		listarTiposConsumosFuncion: () => {
-			dispatch(listarTiposConsumos())
-		},
+		
 		listarFarmaceuticasFuncion: () => {
 			dispatch(listarFarmaceuticas())
-		},
-		listarUnidadesMedicamentosFuncion: () => {
-			dispatch(listarUnidadesMedicamentos())
-		},
-		listarPresentacionesFuncion: () => {
-			dispatch(listarPresentaciones())
 		}
 	}
 }

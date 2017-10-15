@@ -21,7 +21,10 @@ function mapDispatchToProps(dispatch) {
 			dispatch(abrirFormularioEditarMedicamento(idMedicamento))
 		},
 		eliminarMedicamento: (idMedicamento) => {
-			dispatch(eliminarMedicamento(idMedicamento))
+			var r = confirm("Está seguro que desea eliminar ?");
+		    if (r == true) {
+				dispatch(eliminarMedicamento(idMedicamento))
+		    }
 		},
 		mostrarMedicamento: (idMedicamento) => {
 			dispatch(mostrarMedicamento(idMedicamento))

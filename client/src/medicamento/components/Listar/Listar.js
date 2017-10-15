@@ -14,6 +14,11 @@ class Listar extends Component {
 
 	}
 
+
+	componentWillMount() {
+		this.props.listarMedicamentos()
+	}
+
 	renderFormularioMedicamento() {
 		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
 			return <FormularioMedicamentoContainer/>
@@ -22,18 +27,8 @@ class Listar extends Component {
 		}
 	}
 
-	componentWillMount() {
-		this.props.listarMedicamentos()
-	}
-
 	shouldComponentUpdate(nextProps) {
 		if((nextProps.medicamentos !== this.props.medicamentos) || (nextProps.formulario !==  this.props.formulario)) {
-			// console.log('ESTADO DE FORMULARIO ANTERIOR.')
-			// console.log(this.props.formulario)
-
-			// console.log('ESTADO DE FORMULARIO SIGUIENTE.')
-			// console.log(nextProps.formulario)
-
 			return true
 		}else {
 			return false
@@ -41,22 +36,15 @@ class Listar extends Component {
 	}	
 
 	renderMedicamentos(medicamentos) {
-
 		return <tbody>
 			{
 				medicamentos.map((i) => {
 					return <tr key={i.medicamento.id_medicamento}>
-			            <td>{ i.medicamento.id_medicamento }</td>
-			            <td>{ i.nombreMedicamento.descripcion }</td>
-			            <td>{ i.nombreMedicamento.nombreGenerico }</td>
-			            <td>{ i.presentacion.descripcion }</td>
-			            <td>{ i.dosis.valor }</td>
-			            <td>{ i.unidad.descripcion }</td>
-			            <td>{ i.medicamento.cantidadFarmaceutica }</td>
-			            <td>{ i.tipoConsumo.descripcion }</td>
-
+			            <td>{ i.medicamento.nombre }</td>
+			            <td>{ i.medicamento.observaciones }</td>
+			            <td>{ i.farmaceutica.nombre }</td>
 			            <td>
-			            	<Link to={`/dashboard/medicamentos/${i.medicamento.id_medicamento}`}>
+			            	<Link to={`/dashboard/medicamentos/${i.medicamento.id_medicamento}/drogas`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
 			            </td>
@@ -91,14 +79,9 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
-						        	<th>Nombre comercial</th>
-						        	<th>Nombre genérico</th>
-						        	<th>Presentación</th>
-						        	<th>Dosis</th>
-						        	<th>Medida</th>
-						        	<th>Cantidad x unidad</th>
-						        	<th>Consumo via</th>
+						        	<th>Nombre</th>
+						        	<th>Detalle</th>
+						        	<th>Farmaceutica</th>
 
 						        	<th>Opciones</th>
 						    	</tr>

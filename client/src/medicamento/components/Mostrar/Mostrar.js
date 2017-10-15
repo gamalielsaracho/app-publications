@@ -12,7 +12,7 @@ class Mostrar extends Component {
 	}
 
 	componentWillMount() {
-		this.props.mostrarMedicamento(this.props.idMedicamento)
+		this.props.mostrarMedicamento(this.props.urls.idMedicamento)
 	}
 	
 	renderMedicamento(i) {
@@ -20,19 +20,8 @@ class Mostrar extends Component {
 			return <div>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
-						<p><strong>Nombre Medicamento/a:</strong>{ i.nombreMedicamento.descripcion }</p>
-						<p><strong>Tipo consumo:</strong>{ i.tipoConsumo.descripcion }</p>				
-					</div>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
-						<p><strong>Dosis:</strong>{ i.dosis.valor }</p>				
-						<p><strong>Presentación:</strong>{ i.presentacion.descripcion }</p>
-					</div>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
-						<p><strong>Unidad de medida:</strong>{ i.unidad.descripcion }</p>				
-						<p><strong>Cantidad x Unidad:</strong>{ i.medicamento.cantidadFarmaceutica }</p>				
-					</div>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
-						<p><strong>Stock mínimo:</strong>{ i.medicamento.stockMinimo }</p>				
+						<p><strong>Nombre Medicamento:</strong>{ i.medicamento.nombre }</p>
+						<p><strong>Detalle:</strong>{ i.medicamento.observaciones }</p>				
 					</div>
 				</div>
 
