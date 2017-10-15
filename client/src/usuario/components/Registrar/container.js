@@ -30,13 +30,17 @@ import Registrar from './Registrar'
 // fecha_nacimiento
 // contrasena
 
+
 const validate = values => {
   const errors = {}
   if (!values.nroDocumento) {
     errors.nroDocumento = 'Nro de documento obligatorio.'
-  } else if (values.nroDocumento.length <= 4) {
-    errors.nroDocumento = 'Por lo menos 4 caracteres.'
+  } else {
+      if(values.nroDocumento.length < 4) {
+        errors.nroDocumento = 'Por lo menos 4 caracteres.'
+      }
   }
+
   if (!values.id_tipoDocumento) {
     errors.id_tipoDocumento = 'Tipo de documento obligatorio.'
   }
@@ -53,19 +57,19 @@ const validate = values => {
 
   if (!values.nombres) {
     errors.nombres = 'Nombre completo es obligatorio.'
-  } else if (values.nombres.length <= 10) {
-    errors.nombres = 'Por lo menos 10 caracteres.'
+  } else if (values.nombres.length <= 3) {
+    errors.nombres = 'Por lo menos 3 caracteres.'
   }
+
   if (!values.apellidos) {
     errors.apellidos = 'Apellido completo obligatorio.'
-  } else if (values.apellidos.length < 10) {
-    errors.apellidos = 'Por lo menos 10 caracteres'
+  } else if (values.apellidos.length < 3) {
+    errors.apellidos = 'Por lo menos 3 caracteres'
   }
   if (!values.correo) {
     errors.correo = 'Correo obligatorio.'
-  } else if (values.correo.length < 10) {
-    errors.correo = 'Como minimo 10 caracteres'
   }
+
   if (!values.nroRegistro) {
     errors.nroRegistro = 'Nro de registro obligatorio.'
   } else if (values.nroRegistro.length <= 4) {
@@ -78,21 +82,21 @@ const validate = values => {
   // }
   if (!values.celular) {
     errors.celular = 'Nro de celular obligatorio.'
-  } else if (values.celular.length <= 7) {
-    errors.celular = 'Como minimo 7 caracteres.'
+  } else if (values.celular.length <= 5) {
+    errors.celular = 'Como minimo 5 caracteres.'
   }
   if (!values.direccion) {
     errors.direccion = 'Dirección obligatorio.'
-  } else if (values.direccion.length < 10) {
-    errors.direccion = 'Como minimo 10 caracteres.'
+  } else if (values.direccion.length < 5) {
+    errors.direccion = 'Como minimo 5 caracteres.'
   }
   if (!values.fecha_nacimiento) {
     errors.fecha_nacimiento = 'Fecha de nacimiento obligatorio.'
   }
   if (!values.contrasena) {
     errors.contrasena = 'Contraseña obligatorio.'
-  } else if (values.contrasena.length <= 8) {
-    errors.contrasena = 'Como minimo 8 caracteres.'
+  } else if (values.contrasena.length <= 5) {
+    errors.contrasena = 'Como minimo 5 caracteres.'
   }
   
   return errors

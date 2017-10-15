@@ -116,7 +116,7 @@ class Registrar extends Component {
 					<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7 col-centered'>
 						<div className='row'>
 							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-								<Field name="nroDocumento" type="text" component={this.renderFieldInput} label="Numero de documento"/>
+								<Field name="nroDocumento" type="number" component={this.renderFieldInput} label="Numero de documento"/>
 								<Field name="id_especialidad" type="text" component={this.renderFieldSelectEspecialidad} listaEspecialidades={this.props.listaEspecialidades} label="Especialidades"/>
 								
 								<Field name="id_rol" type="text" component={this.renderFieldSelectRol} listaRoles={this.props.listaRoles} label="Roles"/>
