@@ -1,5 +1,7 @@
 import Farmaceutica from './farmaceutica.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var farmaceuticaNsp = io.of('/farmaceutica');
 	
@@ -53,17 +55,30 @@ export default (io) => {
 
 
 		socket.on('eliminar_farmaceutica', (data) => {
-			Farmaceutica.delete(data, (err) => {
+			referentialIntegritySimple('medicamentos', 'id_farmaceutica', data.id_farmaceutica, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_farmaceutica', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_farmaceutica', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Farmaceutica.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				farmaceuticas()
+						socket.emit('eliminar_farmaceutica', { mensaje: 'Se Eliminó exitósamente.' })
+
+						farmaceuticas()
+					})
+				}
 			})
+			
 		})
 
 
