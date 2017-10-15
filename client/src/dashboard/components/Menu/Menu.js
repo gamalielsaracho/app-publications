@@ -48,21 +48,27 @@ class Menu extends Component {
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/sintomas'>Síntomas (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/consultas'>Consultas (Adm) <span className="badge">8</span></Link></li>			
-		
+
 
 			{ /* FARMACIA. */}
 			<h3>Farmacia</h3>
-			<li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Adm)</Link></li>
-			<li><Link to='/dashboard/presentaciones'>presentaciones (Adm)</Link></li>
-			<li><Link to='/dashboard/tipos-consumos'>Tipos consumos (Adm)</Link></li>
-			<li><Link to='/dashboard/dosis'>Dosis (Adm)</Link></li>					
-			<li><Link to='/dashboard/unidades-medicamentos'>Unidades de medida (Adm)</Link></li>			
 			<li><Link to='/dashboard/farmaceuticas'>Farmacéuticas (Adm)</Link></li>			
-			<li><Link to='/dashboard/proveedores'>Proveedores (Adm)</Link></li>			
+			<li><Link to='/dashboard/medicamentos'>Medicamentos (Adm)</Link></li>			
+			<li><Link to='/dashboard/drogas'>Drogas (Adm)</Link></li>					
+			
+			<li><Link to='/dashboard/medicamentos-entregados'>Medicamentos entregados (Adm)</Link></li>					
+
+
+			{ /* <li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Adm)</Link></li>
+			<li><Link to='/dashboard/presentaciones'>presentaciones (Adm)</Link></li>
+			<li><Link to='/dashboard/tipos-consumos'>Tipos consumos (Adm)</Link></li> */}
+						
+			{ /* <li><Link to='/dashboard/unidades-medicamentos'>Unidades de medida (Adm)</Link></li>			
+			<li><Link to='/dashboard/proveedores'>Proveedores (Adm)</Link></li> */}			
+			
 			{ /* Agregar solamente. si piden. */}
 			{ /* <li><Link to='/dashboard/acciones'>Acciones (Adm)</Link></li> */}		
-			<li><Link to='/dashboard/medicamentos'>Medicamentos (Adm)</Link></li>			
-			<li><Link to='/dashboard/lotes-medicamentos'>Lotes (Adm)</Link></li>			
+			{ /* <li><Link to='/dashboard/lotes-medicamentos'>Lotes (Adm)</Link></li> */}			
 
 
 			<h3>Laboratorio</h3>
@@ -109,7 +115,14 @@ class Menu extends Component {
 
 	farmaciaMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Farm)</Link></li>
+			<li><Link to='/dashboard/farmaceuticas'>Farmacéuticas (Farm)</Link></li>			
+			<li><Link to='/dashboard/medicamentos'>Medicamentos (Farm)</Link></li>			
+			<li><Link to='/dashboard/drogas'>Drogas (Farm)</Link></li>
+
+			<li><Link to='/dashboard/medicamentos-entregados'>Medicamentos entregados (Farm)</Link></li>					
+			
+
+			{ /* <li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Farm)</Link></li>
 			<li><Link to='/dashboard/presentaciones'>presentaciones (Farm)</Link></li>
 			<li><Link to='/dashboard/tipos-consumos'>Tipos consumos (Farm)</Link></li>
 			<li><Link to='/dashboard/dosis'>Dosis (Farm)</Link></li>					
@@ -118,8 +131,9 @@ class Menu extends Component {
 			<li><Link to='/dashboard/proveedores'>Proveedores (Farm)</Link></li>			
 			{ /* Agregar solamente. si piden. */}
 			{ /* <li><Link to='/dashboard/acciones'>Acciones (Farm)</Link></li> */}		
-			<li><Link to='/dashboard/medicamentos'>Medicamentos (Farm)</Link></li>			
-			<li><Link to='/dashboard/lotes-medicamentos'>Lotes (Farm)</Link></li>			
+			
+			{ /* <li><Link to='/dashboard/medicamentos'>Medicamentos (Farm)</Link></li>			
+			<li><Link to='/dashboard/lotes-medicamentos'>Lotes (Farm)</Link></li> */}			
 
 		</ul>
 	}	
