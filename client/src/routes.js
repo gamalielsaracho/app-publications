@@ -1,7 +1,13 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
+import medicamentoRoutes from './medicamento/routes'
+
 import pacienteRoutes from './routes/Paciente'
+
+import medicamentoEntregadoRoutes from './medicamentoEntregado/routes'
+
+
 
 // App Principal de la aplicación.
 import AppContainer from './app/components/App'
@@ -104,7 +110,10 @@ import ListarConsultaDiagnosticosContainer from '././consultaDiagnostico/compone
 import ListarNombresMedicamentosPage from '././nombreMedicamento/pages/ListarNombresMedicamentosPage'
 import ListarPresentacionesPage from '././presentacion/pages/ListarPresentacionesPage'
 import ListarTiposConsumosPage from '././tipoConsumo/pages/ListarTiposConsumosPage'
-import ListarDosisPage from '././dosis/pages/ListarDosisPage'
+
+// Estable.
+import ListarDrogasPage from '././droga/pages/ListarDrogasPage'
+
 import ListarUnidadesMedicamentosPage from '././unidadMedidaMedicamento/pages/ListarUnidadesMedicamentosPage'
 import ListarFarmaceuticasPage from '././farmaceutica/pages/ListarFarmaceuticasPage'
 import ListarProveedoresPage from '././proveedor/pages/ListarProveedoresPage'
@@ -137,12 +146,7 @@ import ListarTipoAnalisisParametrosContainer from '././tipoAnalisisParametro/com
 
 
 // ===================================================================
-	// LISTAR MEDICAMENTOS APP.
-import ListarMedicamentosApp from '././medicamento/components/ListarApp'
-import ListarMedicamentosPage from '././medicamento/pages/ListarMedicamentosPage'
 	
-	// MOSTRAR MEDICAMENTO APP.
-import MostrarMedicamentoAppContainer from '././medicamento/components/MostrarApp'
 
 	// LISTAR LOTES-MEDICAMENTOS APP.
 import ListarLotesMedicamentosAppContainer from '././loteMedicamento/components/ListarApp'
@@ -191,7 +195,9 @@ export default (
 			</Route>
 
 
+			{ medicamentoRoutes }
 			{ pacienteRoutes }
+			{ medicamentoEntregadoRoutes }
 			
 
 			<Route path='/dashboard/citas' component={ListarCitasApp}>
@@ -217,19 +223,13 @@ export default (
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
 			<Route path='/dashboard/presentaciones' component={ListarPresentacionesPage}/>
 			<Route path='/dashboard/tipos-consumos' component={ListarTiposConsumosPage}/>
-			<Route path='/dashboard/dosis' component={ListarDosisPage}/>
+			<Route path='/dashboard/drogas' component={ListarDrogasPage}/>
 			<Route path='/dashboard/unidades-medicamentos' component={ListarUnidadesMedicamentosPage}/>
 			<Route path='/dashboard/farmaceuticas' component={ListarFarmaceuticasPage}/>
 			<Route path='/dashboard/proveedores' component={ListarProveedoresPage}/>
 			{/* Agregar solamente. si piden. (Acciones). */}
 			{/* <Route path='/dashboard/acciones' component={ListarAccionesPage}/> */}
 			
-			<Route path='/dashboard/medicamentos' component={ListarMedicamentosApp}>
-				<IndexRoute component={ListarMedicamentosPage}/>
-
-				<Route path='/dashboard/medicamentos/:idMedicamento' component={MostrarMedicamentoAppContainer}/>
-			</Route>
-
 			
 			<Route path='/dashboard/lotes-medicamentos' component={ListarLotesMedicamentosAppContainer}>
 				<IndexRoute component={ListarLotesMedicamentosPage}/>
