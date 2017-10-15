@@ -47,14 +47,18 @@ require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
 // require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
 // require('././app/presentacion/presentacion.sockets')(io)
 // require('././app/tipoConsumo/tipoConsumo.sockets')(io)
-// require('././app/dosis/dosis.sockets')(io)
+require('././app/droga/droga.sockets')(io)
 // require('././app/unidadMedidaMedicamento/unidadMedidaMedicamento.sockets')(io)
-// require('././app/farmaceutica/farmaceutica.sockets')(io)
+require('././app/farmaceutica/farmaceutica.sockets')(io)
 // require('././app/proveedor/proveedor.sockets')(io)
 // Agregar solamente. si piden.
 // require('././app/accion/accion.sockets')(io)
-// require('././app/medicamento/medicamento.sockets')(io)
+require('././app/medicamento/medicamento.sockets')(io)
 // require('././app/loteMedicamento/loteMedicamento.sockets')(io)
+
+
+// Medicamentos Entregados.
+require('././app/medicamentoEntregado/medicamentoEntregado.sockets')(io)
 
 
 
