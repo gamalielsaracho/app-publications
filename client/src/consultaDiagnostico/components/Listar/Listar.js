@@ -12,6 +12,8 @@ class Listar extends Component {
 		super(props)
 		this.renderConsultaDiagnosticos = this.renderConsultaDiagnosticos.bind(this)
 		this.renderBtnsOpcionesByRolYpersonal = this.renderBtnsOpcionesByRolYpersonal.bind(this)
+		
+		this.renderFormularioConsultaDiagnostico = this.renderFormularioConsultaDiagnostico.bind(this)
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
@@ -20,7 +22,16 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		return nextProps.consultaDiagnosticos !== this.props.consultaDiagnosticos
+		let condition = (
+			nextProps.consultaDiagnosticos !== this.props.consultaDiagnosticos ||
+			nextProps.formulario !== this.props.formulario
+		)
+
+		if(condition) {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	renderBtnsOpcionesByRolYpersonal(i) {
@@ -32,7 +43,7 @@ class Listar extends Component {
 		// console.log('HOLA DESDE renderBtnsOpcionesByRolYpersonal.! cool.!')
 		// &&  == personalPre.personal.id_personal
 
-		if((rol == 'medico' || rol == 'administración')) {
+		if((rol == 'medico' || rol == 'administracion')) {
 			return <div>
 					<button type="button" onClick={() => { this.props.abrirFormularioEditarConsultaDiagnostico(i.consultaDiagnostico.id_consultaDiagnostico) }} className="btn btn-warning btn-space">Editar</button>
 					<button type="button" onClick={() => { this.props.eliminarConsultaDiagnostico(i.consultaDiagnostico.id_consultaDiagnostico) }} className="btn btn-danger btn-space">Eliminar</button>
@@ -41,6 +52,15 @@ class Listar extends Component {
 			return <span></span>
 		}
 
+	}
+
+	renderFormularioConsultaDiagnostico() {
+		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
+			return <FormularioConsultaDiagnosticoContainer
+					urls = { this.props.urls }/>
+		} else {
+			return <span></span>
+		}
 	}
 
 	renderConsultaDiagnosticos(datos) {
@@ -85,8 +105,7 @@ class Listar extends Component {
 					</div>
 					<br/>
 
-					<FormularioConsultaDiagnosticoContainer
-						urls = { this.props.urls }/>
+					{ this.renderFormularioConsultaDiagnostico() }
 
 					<div className='table-responsive'>
 						<table className='table table-striped'>
