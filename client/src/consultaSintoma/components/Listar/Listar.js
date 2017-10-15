@@ -24,7 +24,16 @@ class Listar extends Component {
 	}
 
 	// shouldComponentUpdate(nextProps) {
-	// 	return nextProps.sintomasConsulta !== this.props.sintomasConsulta
+	// 	let condition = (
+	// 		nextProps.sintomasConsulta !== this.props.sintomasConsulta ||
+	// 		nextProps.formulario !== this.props.formulario
+	// 	)
+
+	// 	if(condition) {
+	// 		return true
+	// 	} else {
+	// 		return false
+	// 	}
 	// }
 
 	renderFormularioSintomaConsulta() {
