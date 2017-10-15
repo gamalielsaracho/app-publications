@@ -17,7 +17,12 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.farmaceuticas !== this.props.farmaceuticas) {
+		let condition = (
+			nextProps.farmaceuticas !== this.props.farmaceuticas ||
+			nextProps.eliminar !== this.props.eliminar
+		)
+		
+		if(condition) {
 			return true
 		}else {
 			return false
@@ -25,7 +30,6 @@ class Listar extends Component {
 	}	
 
 	renderFarmaceuticas(farmaceuticas) {
-
 		return <tbody>
 			{
 				farmaceuticas.map((farmaceutica) => {
@@ -47,7 +51,10 @@ class Listar extends Component {
 
 	render() {
 
-		const { farmaceuticas, cargando, error } = this.props.listar
+		const { farmaceuticas, cargando } = this.props.listar
+
+		let error = this.props.listar.error ? this.props.listar.error :
+					this.props.eliminar.error
 
 		if(cargando) {
 			return <Cargando/>
