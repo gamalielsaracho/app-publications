@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		farmaceutica: {}
+		farmaceutica: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { farmaceuticas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, farmaceutica: {}, error: '', abierto: false },
+	mostrar: { cargando: false, farmaceutica: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,11 +58,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					farmaceutica: {}
+					farmaceutica: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_FARMACEUTICA_REQUEST:
@@ -73,11 +74,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					farmaceutica: {}
+					farmaceutica: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_FARMACEUTICA_EXITO:
@@ -90,7 +92,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					farmaceutica: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_FARMACEUTICA_FALLO:
@@ -101,7 +104,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					farmaceutica: {}
+					farmaceutica: null
 				},
 				mostrar: { abierto: false }
 			})
@@ -115,7 +118,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					farmaceutica: {}
+					farmaceutica: null
 				}
 			})
 
@@ -146,7 +149,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_FARMACEUTICAS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_FARMACEUTICAS_EXITO:
@@ -180,7 +184,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					farmaceutica: {},
+					farmaceutica: null,
 					error: action.payload,
 					abierto: true
 				},
@@ -191,7 +195,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					farmaceutica: {},
+					farmaceutica: null,
 					error: '',
 					abierto: false
 				}
