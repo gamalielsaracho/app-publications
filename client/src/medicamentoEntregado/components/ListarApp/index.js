@@ -1,0 +1,2 @@
+import ListarMedicamentosEntregadosAppContainer from './container'
+export default ListarMedicamentosEntregadosAppContainer
