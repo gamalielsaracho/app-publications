@@ -6,17 +6,9 @@ exports.find = (callback) => {
 		SELECT * 
 			FROM 
 				medicamentos medicamento,
-				nombresMedicamentos nombreMedicamento,
-				dosis dosis,
-				tiposConsumo tipoConsumo,
-				unidadesMedidasMedicamentos unidad,
-				presentaciones presentacion
+				farmaceuticas farmaceutica
 			WHERE
-				medicamento.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento AND
-				medicamento.id_dosis = dosis.id_dosis AND
-				medicamento.id_tipoConsumo = tipoConsumo.id_tipoConsumo AND
-				medicamento.id_unidadMedidaMedicamento = unidad.id_unidadMedidaMedicamento AND
-				medicamento.id_presentacion = presentacion.id_presentacion
+				medicamento.id_farmaceutica = farmaceutica.id_farmaceutica
 	`
 
 	var options = {
@@ -35,21 +27,10 @@ exports.findById = (data, callback) => {
 		SELECT * 
 			FROM 
 				medicamentos medicamento,
-				nombresMedicamentos nombreMedicamento,
-				dosis dosis,
-				tiposConsumo tipoConsumo,
-				unidadesMedidasMedicamentos unidad,
-				presentaciones presentacion,
 				farmaceuticas farmaceutica
-
 			WHERE
-				medicamento.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento AND
-				medicamento.id_dosis = dosis.id_dosis AND
-				medicamento.id_tipoConsumo = tipoConsumo.id_tipoConsumo AND
-				medicamento.id_unidadMedidaMedicamento = unidad.id_unidadMedidaMedicamento AND
-				medicamento.id_presentacion = presentacion.id_presentacion AND
 				medicamento.id_farmaceutica = farmaceutica.id_farmaceutica AND
-				id_medicamento = ?
+				medicamento.id_medicamento = ?
 	`
 
 	var options = {
@@ -74,33 +55,27 @@ exports.findById = (data, callback) => {
 // }
 
 exports.create = (data, callback) => {
+	console.log(data)
 	let q = `
 		INSERT INTO medicamentos (
 			id_medicamento,
-			id_nombreMedicamento,
-			id_dosis,
-			stockMinimo,
-			id_tipoConsumo,
 			id_farmaceutica,
-			id_unidadMedidaMedicamento,
-			id_presentacion,
-			cantidadFarmaceutica
-		) VALUES (null, LOWER(?), LOWER(?), LOWER(?), LOWER(?), 
-			      LOWER(?), LOWER(?), LOWER(?), LOWER(?))
+			nombre,
+			observaciones
+		) VALUES (null, ?, LOWER(?), LOWER(?))
 	`
 
-	if(data.cantidadFarmaceutica) {
-		data.cantidadFarmaceutica.trim()
+	if(data.nombre) {
+		data.nombre.trim()
 	}
 
-	return connection.query(q, [ data.id_nombreMedicamento,
-								 data.id_dosis,
-								 data.stockMinimo.trim(),
-								 data.id_tipoConsumo,
-								 data.id_farmaceutica,
-								 data.id_unidadMedidaMedicamento,
-								 data.id_presentacion,
-								 data.cantidadFarmaceutica ], callback)
+	if(data.observaciones) {
+		data.observaciones.trim()
+	}
+
+	return connection.query(q, [ data.id_farmaceutica,
+								 data.nombre,
+								 data.observaciones ], callback)
 
 	connection.end()
 }
@@ -126,30 +101,24 @@ exports.findByIdToUpdate = (data, callback) => {
 exports.update = (data, callback) => {
 	let q = `
 		UPDATE medicamentos SET 
-			id_nombreMedicamento = ?,
-			id_dosis = ?,
-			stockMinimo = ?,
-			id_tipoConsumo = ?,
 			id_farmaceutica = ?,
-			id_unidadMedidaMedicamento = ?,
-			id_presentacion = ?,
-			cantidadFarmaceutica = ?
+			nombre = LOWER(?),
+			observaciones = LOWER(?)
 			WHERE 
 				id_medicamento = ?
 	`
 
-	if(data.cantidadFarmaceutica) {
-		data.cantidadFarmaceutica.trim()
+	if(data.nombre) {
+		data.nombre.trim()
 	}
 
-	return connection.query(q, [ data.id_nombreMedicamento,
-								 data.id_dosis,
-								 data.stockMinimo.trim(),
-								 data.id_tipoConsumo,
-								 data.id_farmaceutica,
-								 data.id_unidadMedidaMedicamento,
-								 data.id_presentacion,
-								 data.cantidadFarmaceutica,
+	if(data.observaciones) {
+		data.observaciones.trim()
+	}
+
+	return connection.query(q, [ data.id_farmaceutica,
+								 data.nombre,
+								 data.observaciones,
 								 data.id_medicamento ], callback)
 
 	connection.end()
