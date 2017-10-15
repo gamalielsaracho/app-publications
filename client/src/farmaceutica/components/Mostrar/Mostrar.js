@@ -8,28 +8,19 @@ import Cargando from '../../../app/components/Cargando'
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
 		this.renderFarmaceutica = this.renderFarmaceutica.bind(this)
 	}
 
-	renderCargando(cargando) {
+
+	renderFarmaceutica(cargando, farmaceutica) {
 		if(cargando) {
 			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
-
-	renderFarmaceutica(farmaceutica) {
-		if(farmaceutica) {
+		} else if(farmaceutica) {
 			return <div>
 				<p><strong>Nombre:</strong> { farmaceutica.nombre }</p>
 				<p><strong>Dirección:</strong> { farmaceutica.direccion }</p>
 				<p><strong>Telefono:</strong> { farmaceutica.telefono }</p>
-
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 
@@ -59,10 +50,10 @@ class Mostrar extends Component {
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
+
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderFarmaceutica(farmaceutica) }
+							{ this.renderFarmaceutica(cargando, farmaceutica) }
 						</div>
 					</div>
 				</div>
