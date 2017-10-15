@@ -36,13 +36,21 @@ import consultaDiagnosticoReducer from '../consultaDiagnostico/reducer'
 import nombreMedicamentoReducer from '../nombreMedicamento/reducer'
 import presentacionReducer from '../presentacion/reducer'
 import tipoConsumoReducer from '../tipoConsumo/reducer'
-import dosisReducer from '../dosis/reducer'
 import unidadMedidaMedicamentoReducer from '../unidadMedidaMedicamento/reducer'
-import farmaceuticaReducer from '../farmaceutica/reducer'
 import proveedorReducer from '../proveedor/reducer'
 import accionReducer from '../accion/reducer'
-import medicamentoReducer from '../medicamento/reducer'
 import loteMedicamentoReducer from '../loteMedicamento/reducer'
+
+
+// Estable Farmacia.
+import farmaceuticaReducer from '../farmaceutica/reducer'
+import drogaReducer from '../droga/reducer'
+import medicamentoReducer from '../medicamento/reducer'
+import medicamentoDrogaReducer from '../medicamentoDroga/reducer'
+
+// Medicamentos entregados.
+import medicamentoEntregadoReducer from '../medicamentoEntregado/reducer'
+
 
 
 // Laboratorio
@@ -93,13 +101,18 @@ const rootReducer = combineReducers({
 	nombreMedicamento: nombreMedicamentoReducer,
 	presentacion: presentacionReducer,
 	tipoConsumo: tipoConsumoReducer,
-	dosis: dosisReducer,
 	unidadMedicamento: unidadMedidaMedicamentoReducer,
-	farmaceutica: farmaceuticaReducer,
 	proveedor: proveedorReducer,
 	accion: accionReducer,
-	medicamento: medicamentoReducer,
 	loteMedicamento: loteMedicamentoReducer,
+
+		// Farmacia estable.
+	medicamento: medicamentoReducer,
+	farmaceutica: farmaceuticaReducer,
+	droga: drogaReducer,
+	medicamentoDroga: medicamentoDrogaReducer,
+
+	medicamentoEntregado: medicamentoEntregadoReducer,
 
 
 	// Laboratorio
