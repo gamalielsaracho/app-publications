@@ -17,27 +17,31 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.nombresMedicamentos !== this.props.nombresMedicamentos) {
+		let condition = (
+			nextProps.nombresMedicamentos !== this.props.nombresMedicamentos ||
+			nextProps.eliminar !== this.props.eliminar
+		)
+		
+		if(condition) {
 			return true
 		}else {
 			return false
 		}
 	}	
 
+
 	renderNombresMedicamentos(nombresMedicamentos) {
 
 		return <tbody>
 			{
-				nombresMedicamentos.map((nombre) => {
-					return <tr key={nombre.id_nombreMedicamento}>
-			            <td>{ nombre.id_nombreMedicamento }</td>
-			            <td>{ nombre.descripcion }</td>
-			            <td>{ nombre.nombreGenerico }</td>
+				nombresMedicamentos.map((i) => {
+					return <tr key={i.id_nombreMedicamento}>
+			            <td>{ i.descripcion }</td>
 
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarNombreMedicamento(nombre.id_nombreMedicamento) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarNombreMedicamento(nombre.id_nombreMedicamento) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarNombreMedicamento(nombre.id_nombreMedicamento) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarNombreMedicamento(i.id_nombreMedicamento) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarNombreMedicamento(i.id_nombreMedicamento) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarNombreMedicamento(i.id_nombreMedicamento) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
@@ -47,7 +51,10 @@ class Listar extends Component {
 
 	render() {
 
-		const { nombresMedicamentos, cargando, error } = this.props.listar
+		const { nombresMedicamentos, cargando } = this.props.listar
+
+		let error = this.props.listar.error ? this.props.listar.error :
+					this.props.eliminar.error
 
 		if(cargando) {
 			return <Cargando/>
@@ -71,9 +78,7 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
 						        	<th>Nombre comercial</th>
-						        	<th>Nombre genérico</th>
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
