@@ -28,6 +28,7 @@ export default (io) => {
 			
 			MedicamentoEntregado.create(data, (err, medicamentoEntregado) => {
 				if(err) {
+					console.log(err)
 					socket.emit('crear_medicamentoEntregado', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
