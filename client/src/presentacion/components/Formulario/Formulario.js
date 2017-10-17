@@ -22,7 +22,7 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
 	}
 
 	enviarFormulario(formProps) {				
@@ -35,11 +35,22 @@ class Formulario extends Component {
 		}
 	}
 
-	renderCargando(cargando) {
+	renderFormulario(cargando) {
+		const { handleSubmit, pristine, reset, submitting } = this.props		
+
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			return <span></span>
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+					<form onSubmit={handleSubmit(this.enviarFormulario)}>
+						<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
+														
+						<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+						<button type="button" onClick={ this.props.cerrarFormularioPresentacion } className="btn btn-primary btn-space">Cancelar</button>
+					</form>
+				</div>
+			</div>
 		}
 	}
 
@@ -51,8 +62,6 @@ class Formulario extends Component {
 		  	}
 		}
 
-		const { handleSubmit, pristine, reset, submitting } = this.props		
-		
 		const { 
 			abirtoCrear, abirtoEditar, cargando, presentacion 
 		} = this.props.formulario
@@ -72,21 +81,8 @@ class Formulario extends Component {
 					<h4 className='text-center'>Formulario presentación</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
-					<div className='row'>
-						{ this.renderCargando(cargando) }
 
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-
-							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								
-								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-														
-								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioPresentacion } className="btn btn-primary btn-space">Cancelar</button>
-								
-							</form>
-						</div>
-					</div>
+					{ this.renderFormulario(cargando) }
 				</div>
 			</ReactModal>
 		} else {
