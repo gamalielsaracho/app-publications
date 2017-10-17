@@ -65,9 +65,8 @@ class FieldSelectPacientes extends Component {
 							}
 						</select>
 					</div>
-
-			    	{ touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
+			    { touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 			</div>)
 		}
 	}
