@@ -37,22 +37,21 @@ exports.verifyIfExist = (data, callback) => {
 	let q = `
 		SELECT * FROM nombresMedicamentos 
 			WHERE
-			descripcion = ? AND
-			nombreGenerico = ?
+			descripcion = ?
 	`
 
-	return connection.query(q, [data.descripcion.trim(), data.nombreGenerico.trim()], callback)
+	return connection.query(q, [data.descripcion.trim()], callback)
 
 	connection.end()
 }
 
 exports.create = (data, callback) => {
 	let q = `
-		INSERT INTO nombresMedicamentos (id_nombreMedicamento, descripcion, nombreGenerico)
-			VALUES (null, LOWER(?), LOWER(?));
+		INSERT INTO nombresMedicamentos (id_nombreMedicamento, descripcion)
+			VALUES (null, LOWER(?));
 	`
 	
-	return connection.query(q, [data.descripcion.trim(), data.nombreGenerico.trim()], callback)
+	return connection.query(q, [data.descripcion.trim()], callback)
 
 	connection.end()
 }
@@ -60,13 +59,12 @@ exports.create = (data, callback) => {
 exports.update = (data, callback) => {
 	let q = `
 		UPDATE nombresMedicamentos SET 
-			descripcion = LOWER(?),
-			nombreGenerico = LOWER(?)
+			descripcion = LOWER(?)
 			WHERE 
 				id_nombreMedicamento = ?
 	`
 
-	return connection.query(q, [data.descripcion.trim(), data.nombreGenerico.trim(), data.id_nombreMedicamento], callback)
+	return connection.query(q, [data.descripcion.trim(), data.id_nombreMedicamento], callback)
 
 	connection.end()
 }
