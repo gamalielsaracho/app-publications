@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		presentacion: {}
+		presentacion: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { presentaciones:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, presentacion: {}, error: '', abierto: false },
+	mostrar: { cargando: false, presentacion: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,11 +58,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					presentacion: {}
+					presentacion: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PRESENTACION_REQUEST:
@@ -73,11 +74,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					presentacion: {}
+					presentacion: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PRESENTACION_EXITO:
@@ -101,7 +103,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					presentacion: {}
+					presentacion: null
 				},
 				mostrar: { abierto: false }
 			})
@@ -115,7 +117,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					presentacion: {}
+					presentacion: null
 				}
 			})
 
@@ -126,8 +128,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_PRESENTACION_EXITO:
-			console.log(action.payload.datoInsertado)
-
+		
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
@@ -146,7 +147,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_PRESENTACIONES_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_PRESENTACIONES_EXITO:
@@ -164,7 +166,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_PRESENTACION_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_PRESENTACION_EXITO:
@@ -181,7 +184,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					presentacion: {},
+					presentacion: null,
 					error: action.payload,
 					abierto: true
 				},
@@ -192,7 +195,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					presentacion: {},
+					presentacion: null,
 					error: '',
 					abierto: false
 				}
