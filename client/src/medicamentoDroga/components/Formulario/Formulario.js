@@ -115,7 +115,7 @@ class Formulario extends Component {
 					       	style={customStyles}>
 
 				<div className='container'>
-					<h4 className='text-center'>Formulario Drogas |||</h4>
+					<h4 className='text-center'>Formulario Drogas</h4>
 
 					<div className='row'>
 						<MensajeOerror error={error} mensaje={null}/>
