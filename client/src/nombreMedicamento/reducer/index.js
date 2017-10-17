@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		nombreMedicamento: {}
+		nombreMedicamento: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { nombresMedicamentos:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, nombreMedicamento: {}, error: '', abierto: false },
+	mostrar: { cargando: false, nombreMedicamento: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,11 +58,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					nombreMedicamento: {}
+					nombreMedicamento: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_NOMBRE_MEDICAMENTO_REQUEST:
@@ -73,11 +74,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					nombreMedicamento: {}
+					nombreMedicamento: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_NOMBRE_MEDICAMENTO_EXITO:
@@ -90,7 +92,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					nombreMedicamento: action.payload
 				},
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: { abierto: false }
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_NOMBRE_MEDICAMENTO_FALLO:
@@ -101,9 +103,9 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					nombreMedicamento: {}
+					nombreMedicamento: null
 				},
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: { abierto: false }
 			})
 
 
@@ -139,7 +141,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_NOMBRES_MEDICAMENTOS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_NOMBRES_MEDICAMENTOS_EXITO:
@@ -153,11 +156,13 @@ export default function (state = INITIAL_STATE, action) {
 				listar: { error: action.payload, nombresMedicamentos:[], cargando: false }
 			})
 
+
 		// MOSTRAR.
 		case MOSTRAR_NOMBRE_MEDICAMENTO_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: INITIAL_STATE.formulario
+				formulario: INITIAL_STATE.formulario,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_NOMBRE_MEDICAMENTO_EXITO:
@@ -167,14 +172,15 @@ export default function (state = INITIAL_STATE, action) {
 					nombreMedicamento: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoCrear: false, abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
+				// formulario: { abirtoCrear: false, abirtoEditar: false }
 			})
 
 		case MOSTRAR_NOMBRE_MEDICAMENTO_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					nombreMedicamento: {},
+					nombreMedicamento: null,
 					error: action.payload,
 					abierto: true
 				},
@@ -183,12 +189,7 @@ export default function (state = INITIAL_STATE, action) {
 
 		case CERRAR_MODAL_MOSTRAR_NOMBRE_MEDICAMENTO:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					nombreMedicamento: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
