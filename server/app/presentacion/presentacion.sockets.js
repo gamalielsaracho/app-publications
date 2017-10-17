@@ -1,5 +1,7 @@
 import Presentacion from './presentacion.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var presentacionNsp = io.of('/presentacion');
 	
@@ -52,16 +54,28 @@ export default (io) => {
 
 
 		socket.on('eliminar_presentacion', (data) => {
-			Presentacion.delete(data, (err) => {
+			referentialIntegritySimple('medicamentos', 'id_presentacion', data.id_presentacion, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_presentacion', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_presentacion', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_presentacion', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Presentacion.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_presentacion', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				presentaciones()
+						socket.emit('eliminar_presentacion', { mensaje: 'Se Eliminó exitósamente.' })
+
+						presentaciones()
+					})
+				}
 			})
 		})
 
