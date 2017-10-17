@@ -8,25 +8,16 @@ import Cargando from '../../../app/components/Cargando'
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
 		this.renderPresentacion = this.renderPresentacion.bind(this)
 	}
 
-	renderCargando(cargando) {
+	renderPresentacion(cargando, presentacion) {
 		if(cargando) {
 			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
-
-	renderPresentacion(presentacion) {
-		if(presentacion) {
+		} else if(presentacion) {
 			return <div>
 				<p><strong>Nombre:</strong> { presentacion.descripcion }</p>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 
@@ -40,8 +31,6 @@ class Mostrar extends Component {
 
 
 		const { cargando, presentacion, error, abierto } = this.props.mostrar
-
-		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
@@ -56,10 +45,9 @@ class Mostrar extends Component {
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderPresentacion(presentacion) }
+							{ this.renderPresentacion(cargando, presentacion) }
 						</div>
 					</div>
 				</div>
