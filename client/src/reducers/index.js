@@ -51,6 +51,7 @@ import medicamentoDrogaReducer from '../medicamentoDroga/reducer'
 // Medicamentos entregados.
 import medicamentoEntregadoReducer from '../medicamentoEntregado/reducer'
 
+import medicamentoAgregadoReducer from '../medicamentoXentregado/reducer'
 
 
 // Laboratorio
@@ -98,8 +99,6 @@ const rootReducer = combineReducers({
 
 	
 	// Farmacia.
-	nombreMedicamento: nombreMedicamentoReducer,
-	presentacion: presentacionReducer,
 	tipoConsumo: tipoConsumoReducer,
 	unidadMedicamento: unidadMedidaMedicamentoReducer,
 	proveedor: proveedorReducer,
@@ -107,12 +106,15 @@ const rootReducer = combineReducers({
 	loteMedicamento: loteMedicamentoReducer,
 
 		// Farmacia estable.
+	presentacion: presentacionReducer,
+	nombreMedicamento: nombreMedicamentoReducer,
 	medicamento: medicamentoReducer,
 	farmaceutica: farmaceuticaReducer,
 	droga: drogaReducer,
 	medicamentoDroga: medicamentoDrogaReducer,
 
 	medicamentoEntregado: medicamentoEntregadoReducer,
+	medicamentoAgregado: medicamentoAgregadoReducer,
 
 
 	// Laboratorio
@@ -122,6 +124,7 @@ const rootReducer = combineReducers({
 	tipoAnalisis: tipoAnalisisReducer,
 	tipoAnalisisParametro: tipoAnalisisParametroReducer,
 	referencia: referenciaReducer,
+
 
 	// Análisis.
 	analisisSolicitado: analisisSolicitadoReducer,
