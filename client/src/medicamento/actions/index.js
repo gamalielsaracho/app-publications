@@ -92,6 +92,24 @@ export function listarMedicamentos() {
 	}
 }
 
+export function listarMedicamentosListaDrogas() {
+	return (dispatch) => {
+
+		dispatch({ type: LISTAR_MEDICAMENTOS_REQUEST })
+
+		var medicamentoSocket = io.connect('http://localhost:3000/medicamento');
+
+		medicamentoSocket.on('listar_medicamentos_lista_drogas', (data) => {
+
+			if(data.error) {
+				dispatch({ type: LISTAR_MEDICAMENTOS_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: LISTAR_MEDICAMENTOS_EXITO, payload: data })
+			}
+		})
+	}
+}
+
 export function crearMedicamento(datosFormulario) {
 	return (dispatch) => {
 
