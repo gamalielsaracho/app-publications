@@ -53,7 +53,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					departamento: null
+					sintomaConsulta: null
 				},
 
 				// Limpia los estados de error.
