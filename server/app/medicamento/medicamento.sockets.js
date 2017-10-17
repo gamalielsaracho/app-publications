@@ -1,5 +1,9 @@
 import Medicamento from './medicamento.model'
 
+import MedicamentoDroga from '../medicamentoDroga/medicamentoDroga.model'
+
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var medicamentoNsp = io.of('/medicamento');
 	
@@ -25,6 +29,42 @@ export default (io) => {
 		
 		medicamentos()
 
+		function medicamentosConListaDeDrogas() {
+			Medicamento.find((err, medicamentos) => {
+				// console.log(medicamentos)
+				if(err) {
+					console.log(err)
+					
+					socket.emit('listar_medicamentos_lista_drogas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+					return
+				}
+
+				let longMedicamentos = medicamentos.length
+
+				medicamentos.map((i) => {
+					MedicamentoDroga.find(i.medicamento.id_medicamento , (err, drogas) => {
+						if(err) {
+							console.log(err)
+							socket.emit('listar_medicamentos_lista_drogas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+						}
+						
+						i.drogas = drogas
+
+						if(i == medicamentos[longMedicamentos - 1]) {
+							medicamentoNsp.emit('listar_medicamentos_lista_drogas', { 
+								medicamentos: medicamentos
+							})
+						}
+					})
+				})
+
+				// console.log(medicamentos)
+
+			})
+		}
+
+		medicamentosConListaDeDrogas()
+
 
 		socket.on('crear_medicamento', function(data) {
 			// Medicamento.verifyIfExist(data, (err, nivelExistente) => {
@@ -49,6 +89,7 @@ export default (io) => {
 						})
 						
 						medicamentos()
+						medicamentosConListaDeDrogas()
 					})
 				// }
 			// })
@@ -56,17 +97,31 @@ export default (io) => {
 
 
 		socket.on('eliminar_medicamento', (data) => {
-			Medicamento.delete(data, (err) => {
+			referentialIntegritySimple('medicamentosXentregados', 'id_medicamento', data.id_medicamento, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_medicamento', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_medicamento', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_medicamento', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Medicamento.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_medicamento', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				medicamentos()
+						socket.emit('eliminar_medicamento', { mensaje: 'Se Eliminó exitósamente.' })
+
+						medicamentos()
+					})
+				}
 			})
+
+			
 		})
 
 		socket.on('mostrar_medicamento_editar', (data) => {
