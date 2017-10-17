@@ -1,0 +1,2 @@
+import FormularioMedicamentoAgregadoContainer from './container'
+export default FormularioMedicamentoAgregadoContainer

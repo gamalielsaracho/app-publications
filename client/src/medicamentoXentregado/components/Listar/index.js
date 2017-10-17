@@ -1,0 +1,2 @@
+import ListarMedicamentosAgregadosContainer from './container'
+export default ListarMedicamentosAgregadosContainer
