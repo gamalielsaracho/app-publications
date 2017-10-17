@@ -18,6 +18,7 @@ import Formulario from './Formulario'
 const validate = (values) => {
 	const errors = {}
 
+	// console.log(values.id_paciente)
 	if(!values.id_paciente) {
 		errors.id_paciente = 'Tienes que seleccionar un paciente.'
 	}

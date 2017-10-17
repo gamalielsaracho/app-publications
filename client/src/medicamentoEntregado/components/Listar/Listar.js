@@ -54,7 +54,7 @@ class Listar extends Component {
 			            <td>{ moment(i.medicamentoEntregado.fecha).format('L') }</td>
 
 			            <td>
-			            	<Link to={`/dashboard/medicamentos-entregados/${i.medicamentoEntregado.id_medicamentoEntregado}`}>
+			            	<Link to={`/dashboard/medicamentos-entregados/${i.medicamentoEntregado.id_medicamentoEntregado}/medicamentos`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarMedicamentoEntregado(i.medicamentoEntregado.id_medicamentoEntregado) }} className="btn btn-warning btn-space">Editar</button>
