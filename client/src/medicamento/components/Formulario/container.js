@@ -7,12 +7,19 @@ import {
 	cerrarFormularioMedicamento
 } from '../../actions'
 
-// Selects Options.
+// Selects Options (ACTIONS).
 
 import {
 	listarFarmaceuticas
 } from '../../../farmaceutica/actions'
 
+import {
+	listarNombresMedicamentos
+} from '../../../nombreMedicamento/actions'
+
+import {
+	listarPresentaciones
+} from '../../../presentacion/actions'
 
 import Formulario from './Formulario'
 
@@ -75,6 +82,8 @@ function mapStateToProps(state) {
 
 		// Selects options.
 		listarFarmaceuticas: state.farmaceutica.listar,
+		listarNombresMedicamentos: state.nombreMedicamento.listar,
+		listarPresentaciones: state.presentacion.listar
 	}
 }
 
@@ -94,10 +103,17 @@ function mapDispatchToProps(dispatch) {
 			dispatch(editarMedicamento(datosFormulario))
 		},
 
-		// selects Options.
+
+		// selects Options functions.
 		
 		listarFarmaceuticasFuncion: () => {
 			dispatch(listarFarmaceuticas())
+		},
+		listarNombresMedicamentosFuncion: () => {
+			dispatch(listarNombresMedicamentos())
+		},
+		listarPresentacionesFuncion: () => {
+			dispatch(listarPresentaciones())
 		}
 	}
 }
