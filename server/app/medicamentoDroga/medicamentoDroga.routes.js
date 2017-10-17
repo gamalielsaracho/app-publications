@@ -1,6 +1,9 @@
 import medicamentoDrogaCtrl from './medicamentoDroga.controller'
 
 export default (app) => {
+	app.route('/api/medicamentoDrogas')
+	   .get(medicamentoDrogaCtrl.listarTodaLaLista)
+
 	app.route('/api/medicamentoDrogas/:idMedicamento')
 	   .get(medicamentoDrogaCtrl.listar)
 
