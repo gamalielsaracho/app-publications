@@ -68,6 +68,17 @@ export function cerrarFormularioMedicamentoDroga() {
 	}
 }
 
+export function listarTodaLaListaMedicamentoDrogas() {
+	return (dispatch) => {
+
+		let url = `/medicamentoDrogas`
+
+		dispatch({ type: LISTAR_MEDICAMENTO_DROGAS_REQUEST })
+
+		getData(LISTAR_MEDICAMENTO_DROGAS_EXITO, LISTAR_MEDICAMENTO_DROGAS_FALLO, true, url, dispatch)
+	}
+}
+
 export function listarMedicamentoDrogas(idMedicamento) {
 	return (dispatch) => {
 
