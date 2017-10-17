@@ -8,26 +8,16 @@ import Cargando from '../../../app/components/Cargando'
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
 		this.renderNombreMedicamento = this.renderNombreMedicamento.bind(this)
 	}
 
-	renderCargando(cargando) {
+	renderNombreMedicamento(cargando, nombreMedicamento) {
 		if(cargando) {
 			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
-
-	renderNombreMedicamento(nombreMedicamento) {
-		if(nombreMedicamento) {
+		} else if(nombreMedicamento) {
 			return <div>
 				<p><strong>Nombre comercial:</strong> { nombreMedicamento.descripcion }</p>
-				<p><strong>Nombre genérico:</strong> { nombreMedicamento.nombreGenerico }</p>				
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 
@@ -57,10 +47,9 @@ class Mostrar extends Component {
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderNombreMedicamento(nombreMedicamento) }
+							{ this.renderNombreMedicamento(cargando, nombreMedicamento) }
 						</div>
 					</div>
 				</div>
