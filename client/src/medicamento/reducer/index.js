@@ -61,7 +61,8 @@ export default function (state = INITIAL_STATE, action) {
 					medicamento: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_MEDICAMENTO_REQUEST:
@@ -75,7 +76,8 @@ export default function (state = INITIAL_STATE, action) {
 					medicamento: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_MEDICAMENTO_EXITO:
@@ -142,7 +144,8 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_MEDICAMENTOS_REQUEST:
 			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' },
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_MEDICAMENTOS_EXITO:
@@ -159,7 +162,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_MEDICAMENTO_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_MEDICAMENTO_EXITO:
