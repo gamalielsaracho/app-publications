@@ -36,13 +36,19 @@ class Listar extends Component {
 	}	
 
 	renderMedicamentos(medicamentos) {
+		// console.log(medicamentos)
+		
 		return <tbody>
 			{
 				medicamentos.map((i) => {
 					return <tr key={i.medicamento.id_medicamento}>
-			            <td>{ i.medicamento.nombre }</td>
-			            <td>{ i.medicamento.observaciones }</td>
+			            <td>{ i.nombreMedicamento.descripcion +' '+
+			            	  i.medicamento.cantidadXunidad +' '+
+			            	  i.presentacion.descripcion
+			            }</td>
+
 			            <td>{ i.farmaceutica.nombre }</td>
+			            <td>{ i.medicamento.observaciones }</td>
 			            <td>
 			            	<Link to={`/dashboard/medicamentos/${i.medicamento.id_medicamento}/drogas`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
@@ -80,8 +86,8 @@ class Listar extends Component {
 							<thead>
 						    	<tr>
 						        	<th>Nombre</th>
-						        	<th>Detalle</th>
 						        	<th>Farmaceutica</th>
+						        	<th>Observaciones</th>
 
 						        	<th>Opciones</th>
 						    	</tr>
