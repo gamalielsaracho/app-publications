@@ -14,14 +14,8 @@ const validate = (values) => {
 
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.trim().length < 4) {
-   			errors.descripcion = 'Tiene que ser por lo menos 4 characteres.'
-	}
-
-	if(!values.nombreGenerico) {
-		errors.nombreGenerico = 'Tienes que introducir un nombre.'
-	}else if (values.nombreGenerico.trim().length < 1) {
-   			errors.nombreGenerico = 'Tienes que introducir un nombre.'
+	}else if (values.descripcion.trim().length < 3) {
+   			errors.descripcion = 'Tiene que ser por lo menos 3 caracteres.'
 	}
 
 	return errors
