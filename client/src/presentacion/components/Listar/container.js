@@ -13,7 +13,7 @@ import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.presentacion.crear,
+		eliminar: state.presentacion.eliminar,
 		listar: state.presentacion.listar,
 		presentaciones: state.presentacion.listar.presentaciones
 	}
