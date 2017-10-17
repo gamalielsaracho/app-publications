@@ -3,12 +3,37 @@ import React, { Component } from 'react'
 import FormularioMedicamentoContainer from '../Formulario'
 
 class FieldSelectMedicamentos extends Component {
+	constructor(props) {
+		super(props)
+		this.renderDetalleGral = this.renderDetalleGral.bind(this)
+	}
+
+	renderDetalleGral(i) {
+		return <div>
+			<br/>
+			{
+				i.drogas.map((d) => {
+					return <div key={d.medicamentoDroga.id_medicamentoDroga}>
+			        	<h4>{ ' '+ d.droga.descripcion +' '+ d.medicamentoDroga.descripcionProporcion +' | '}</h4>
+			        </div>
+				})
+			}
+		<br/>
+		</div>
+	}
+
 	render() {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
+		let op = {
+			'font-size':'20px'
+		}
+
 		if(listar.cargando) {
-			return <p>Cargando...</p>
+			return <p>Cargando medicamentos...</p>
 		} else {
+			// console.log(listar.medicamentos)
+			
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
@@ -16,12 +41,17 @@ class FieldSelectMedicamentos extends Component {
 				
 				<div className='form-inline'>
 					<div className='form-group'>
-						<select {...input} name={name} className='form-control'>
-							<option value=''>Seleccionar medicamento</option>
+						<select multiple {...input} name={name} className='form-control'>
 							{
 								listar.medicamentos.map((i) => {
-									return <option key={i.medicamento.id_medicamento} value={i.medicamento.id_medicamento}>
-										{ i.nombreMedicamento.descripcion }
+									return <option style={op} key={i.medicamento.id_medicamento} value={i.medicamento.id_medicamento}>
+										<p>
+											{ 
+											  i.nombreMedicamento.descripcion +' '+
+							            	  i.medicamento.cantidadXunidad +' '+
+							            	  i.presentacion.descripcion
+			           			 			}
+										</p>
 									</option>
 								})
 							}
