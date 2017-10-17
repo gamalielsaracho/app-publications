@@ -7,12 +7,13 @@ class FieldSelectNombresMedicamentos extends Component {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
 		if(listar.cargando) {
-			return <p>Cargando Nombres..</p>
+			return <p>Cargando Nombres Comerciales..</p>
 		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
 				<FormularioNombreMedicamentoContainer/>
+
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
