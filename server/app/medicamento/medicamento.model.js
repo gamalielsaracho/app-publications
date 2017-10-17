@@ -6,9 +6,13 @@ exports.find = (callback) => {
 		SELECT * 
 			FROM 
 				medicamentos medicamento,
-				farmaceuticas farmaceutica
+				farmaceuticas farmaceutica,
+				nombresMedicamentos nombreMedicamento,
+				presentaciones presentacion
 			WHERE
-				medicamento.id_farmaceutica = farmaceutica.id_farmaceutica
+				medicamento.id_farmaceutica = farmaceutica.id_farmaceutica AND
+				medicamento.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento AND
+				medicamento.id_presentacion = presentacion.id_presentacion
 	`
 
 	var options = {
@@ -27,9 +31,13 @@ exports.findById = (data, callback) => {
 		SELECT * 
 			FROM 
 				medicamentos medicamento,
-				farmaceuticas farmaceutica
+				farmaceuticas farmaceutica,
+				nombresMedicamentos nombreMedicamento,
+				presentaciones presentacion
 			WHERE
 				medicamento.id_farmaceutica = farmaceutica.id_farmaceutica AND
+				medicamento.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento AND
+				medicamento.id_presentacion = presentacion.id_presentacion AND				
 				medicamento.id_medicamento = ?
 	`
 
@@ -60,13 +68,15 @@ exports.create = (data, callback) => {
 		INSERT INTO medicamentos (
 			id_medicamento,
 			id_farmaceutica,
-			nombre,
-			observaciones
-		) VALUES (null, ?, LOWER(?), LOWER(?))
+			observaciones,
+			id_presentacion,
+			id_nombreMedicamento,
+			cantidadXunidad
+		) VALUES (null, ?, LOWER(?), ?, ?, ?)
 	`
 
-	if(data.nombre) {
-		data.nombre.trim()
+	if(data.cantidadXunidad) {
+		data.cantidadXunidad.toString().trim()
 	}
 
 	if(data.observaciones) {
@@ -74,8 +84,10 @@ exports.create = (data, callback) => {
 	}
 
 	return connection.query(q, [ data.id_farmaceutica,
-								 data.nombre,
-								 data.observaciones ], callback)
+								 data.observaciones || 'Ninguna',
+								 data.id_presentacion,
+								 data.id_nombreMedicamento,
+								 data.cantidadXunidad || 1 ], callback)
 
 	connection.end()
 }
@@ -102,14 +114,16 @@ exports.update = (data, callback) => {
 	let q = `
 		UPDATE medicamentos SET 
 			id_farmaceutica = ?,
-			nombre = LOWER(?),
-			observaciones = LOWER(?)
-			WHERE 
-				id_medicamento = ?
+			observaciones = LOWER(?),
+			id_presentacion = ?,
+			id_nombreMedicamento = ?,
+			cantidadXunidad = ?
+		WHERE 
+			id_medicamento = ?
 	`
 
-	if(data.nombre) {
-		data.nombre.trim()
+	if(data.cantidadXunidad) {
+		data.cantidadXunidad.toString().trim()
 	}
 
 	if(data.observaciones) {
@@ -117,8 +131,10 @@ exports.update = (data, callback) => {
 	}
 
 	return connection.query(q, [ data.id_farmaceutica,
-								 data.nombre,
-								 data.observaciones,
+								 data.observaciones || 'Ninguna',
+								 data.id_presentacion,
+								 data.id_nombreMedicamento,
+								 data.cantidadXunidad || 1,
 								 data.id_medicamento ], callback)
 
 	connection.end()
