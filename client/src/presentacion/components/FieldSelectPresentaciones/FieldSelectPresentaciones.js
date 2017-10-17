@@ -13,6 +13,7 @@ class FieldSelectPresentaciones extends Component {
 				<label htmlFor={label}>{label}</label>
 				
 				<FormularioPresentacionContainer/>
+				
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
