@@ -20,8 +20,13 @@ class Mostrar extends Component {
 			return <div>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
-						<p><strong>Nombre Medicamento:</strong>{ i.medicamento.nombre }</p>
-						<p><strong>Detalle:</strong>{ i.medicamento.observaciones }</p>				
+						<p><strong>Medicamento:</strong>{
+							i.nombreMedicamento.descripcion +' '+
+			            	i.medicamento.cantidadXunidad +' '+
+			            	i.presentacion.descripcion
+			            }</p>
+
+						<p><strong>Observaciones:</strong>{ i.medicamento.observaciones }</p>				
 					</div>
 				</div>
 
@@ -50,8 +55,11 @@ class Mostrar extends Component {
 	}
 
 	render() {
-		const { cargando, medicamento, error, abierto } = this.props.mostrar
+		const { cargando, medicamento, abierto } = this.props.mostrar
 		
+		let error = this.props.mostrar.error ? this.props.mostrar.error :
+					this.props.eliminar.error
+
 		if(cargando) {
 			return <Cargando/>
 		} else {
