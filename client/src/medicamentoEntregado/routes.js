@@ -8,15 +8,18 @@ import ListarMedicamentosEntregadosPage from './././pages/ListarMedicamentosEntr
 // Mostrar App.
 import MostrarMedicamentoEntregadoAppContainer from './././components/MostrarApp'
 
+// MEDICAMENTOS X MEDICAMENTOS-ENTREGADOS.
+import ListarMedicamentosAgregadosContainer from '../medicamentoXentregado/components/Listar'
+
 
 const medicamentoEntregadoRoutes = (
 	<Route path='/dashboard/medicamentos-entregados' component={ListarMedicamentosEntregadosAppContainer}>
 		<IndexRoute component={ListarMedicamentosEntregadosPage}/>
 		
 		<Route path='/dashboard/medicamentos-entregados/:idMedicamentoEntregado' component={MostrarMedicamentoEntregadoAppContainer}>
+			<Route path='/dashboard/medicamentos-entregados/:idMedicamentoEntregado/medicamentos' component={ListarMedicamentosAgregadosContainer}/>
 		</Route>
 	</Route>
 )
-			// <Route path='/dashboard/medicamentos-entregados/:idMedicamentoEntregado/medicamentos' component={ListarMedicamentoDrogasContainer}/>
 
 export default medicamentoEntregadoRoutes

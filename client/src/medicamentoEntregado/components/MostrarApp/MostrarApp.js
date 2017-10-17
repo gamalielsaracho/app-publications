@@ -45,7 +45,7 @@ class MostrarApp extends Component {
 			<br/>
 			<ul className="nav nav-tabs">
 				<li className="nav-item nav-link" className={activeListarMedicamentos}>
-				    <Link to={urlListarMedicamentos}>Medicamento</Link>
+				    <Link to={urlListarMedicamentos}>Medicamentos</Link>
 				</li>
 			</ul>
 				
