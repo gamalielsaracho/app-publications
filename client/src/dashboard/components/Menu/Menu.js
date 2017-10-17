@@ -58,9 +58,10 @@ class Menu extends Component {
 			
 			<li><Link to='/dashboard/medicamentos-entregados'>Medicamentos entregados (Adm)</Link></li>					
 
+			<li><Link to='/dashboard/nombres-medicamentos'>Nombres medicamentos (Adm)</Link></li>
 
-			{ /* <li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Adm)</Link></li>
-			<li><Link to='/dashboard/presentaciones'>presentaciones (Adm)</Link></li>
+			<li><Link to='/dashboard/presentaciones'>Presentaciones (Adm)</Link></li>
+			{ /* 
 			<li><Link to='/dashboard/tipos-consumos'>Tipos consumos (Adm)</Link></li> */}
 						
 			{ /* <li><Link to='/dashboard/unidades-medicamentos'>Unidades de medida (Adm)</Link></li>			
@@ -121,9 +122,11 @@ class Menu extends Component {
 
 			<li><Link to='/dashboard/medicamentos-entregados'>Medicamentos entregados (Farm)</Link></li>					
 			
-
-			{ /* <li><Link to='/dashboard/nombres-medicamentos'>Nombres-medicamentos (Farm)</Link></li>
-			<li><Link to='/dashboard/presentaciones'>presentaciones (Farm)</Link></li>
+			<li><Link to='/dashboard/nombres-medicamentos'>Nombres medicamentos (Farm)</Link></li>
+			
+			<li><Link to='/dashboard/presentaciones'>Presentaciones (Farm)</Link></li>
+			
+			{ /* 
 			<li><Link to='/dashboard/tipos-consumos'>Tipos consumos (Farm)</Link></li>
 			<li><Link to='/dashboard/dosis'>Dosis (Farm)</Link></li>					
 			<li><Link to='/dashboard/unidades-medicamentos'>Unidades de medida (Farm)</Link></li>			
