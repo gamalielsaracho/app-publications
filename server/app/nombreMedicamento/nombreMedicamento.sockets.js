@@ -1,5 +1,7 @@
 import NombreMedicamento from './nombreMedicamento.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var nombreMedicamentoNsp = io.of('/nombreMedicamento');
 	
@@ -53,17 +55,30 @@ export default (io) => {
 
 
 		socket.on('eliminar_nombreMedicamento', (data) => {
-			NombreMedicamento.delete(data, (err) => {
+			referentialIntegritySimple('medicamentos', 'id_nombreMedicamento', data.id_nombreMedicamento, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_nombreMedicamento', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_nombreMedicamento', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_nombreMedicamento', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					NombreMedicamento.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_nombreMedicamento', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				nombresMedicamentos()
+						socket.emit('eliminar_nombreMedicamento', { mensaje: 'Se Eliminó exitósamente.' })
+
+						nombresMedicamentos()
+					})
+				}
 			})
+			
 		})
 
 
