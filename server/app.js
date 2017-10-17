@@ -44,8 +44,8 @@ require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
 
 
 // Farmacia. VEEEER.!!
-// require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
-// require('././app/presentacion/presentacion.sockets')(io)
+require('././app/nombreMedicamento/nombreMedicamento.sockets')(io)
+require('././app/presentacion/presentacion.sockets')(io)
 // require('././app/tipoConsumo/tipoConsumo.sockets')(io)
 require('././app/droga/droga.sockets')(io)
 // require('././app/unidadMedidaMedicamento/unidadMedidaMedicamento.sockets')(io)
