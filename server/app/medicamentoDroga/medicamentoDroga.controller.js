@@ -1,5 +1,18 @@
 import MedicamentoDroga from './medicamentoDroga.model'
 
+exports.listarTodaLaLista = function(req, res, next) {
+
+	MedicamentoDroga.findAllList((err, medicamentoDrogas) => {
+		// console.log(medicamentoDrogas)
+		if(err) {
+			console.log(err)
+						
+			return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+		}
+
+		return res.json({ medicamentoDrogas: medicamentoDrogas })
+	})
+}
 
 exports.listar = function(req, res, next) {
 	let idMedicamento = req.params.idMedicamento
