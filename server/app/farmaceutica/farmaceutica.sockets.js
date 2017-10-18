@@ -2,6 +2,8 @@ import Farmaceutica from './farmaceutica.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+
 export default (io) => {
 	var farmaceuticaNsp = io.of('/farmaceutica');
 	
@@ -65,17 +67,81 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_farmaceutica', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					Farmaceutica.delete(data, (err) => {
+					Farmaceutica.findById(data, (err, farmaceuticaEncontrada) => {
+						let farmaceutica = farmaceuticaEncontrada[0]
+
+						// console.log(farmaceutica)
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_farmaceutica', { mensaje: 'Se Eliminó exitósamente.' })
+						let fieldsAnteriores = []
 
-						farmaceuticas()
+						let datos = {}
+						datos.id_personal = data.id_personal
+						datos.accion = 'eliminación'
+						datos.tabla = 'farmaceuticas'
+						datos.datoAnterior = ''
+
+						if(farmaceutica.nombre != data.nombre) {
+							fieldsAnteriores.push({
+								nombreCampo: 'nombre',
+								datoCampo: farmaceutica.nombre
+							})
+						}
+
+						if(farmaceutica.direccion != data.direccion) {
+							fieldsAnteriores.push({
+								nombreCampo: 'direccion',
+								datoCampo: farmaceutica.direccion
+							})
+						}
+
+						if(farmaceutica.telefono != data.telefono) {
+							fieldsAnteriores.push({
+								nombreCampo: 'telefono',
+								datoCampo: farmaceutica.telefono
+							})
+						}
+					
+					 
+						fieldsAnteriores.map(function(i) { 
+							var dataLineAnt = ''; 
+							if(i.datoCampo != null && i.nombreCampo != null) {
+								dataLineAnt = `> __${i.nombreCampo}:__ ${i.datoCampo} \n\n`
+							}
+
+							datos.datoAnterior = datos.datoAnterior + dataLineAnt  
+						})
+
+
+						Farmaceutica.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							socket.emit('eliminar_farmaceutica', { mensaje: 'Se Eliminó exitósamente.' })
+
+							farmaceuticas()
+
+							// .. Ejecutar esto despues de eliminar el registro. 
+							console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						// ...
 					})
+
 				}
 			})
 			
@@ -95,18 +161,108 @@ export default (io) => {
 					return
 				}
 					
-					
-				Farmaceutica.update(data, (err) => {
+				Farmaceutica.findById(data, (err, farmaceuticaEncontrada) => {
+					let farmaceutica = farmaceuticaEncontrada[0]
+
+					// console.log(farmaceutica)
 					if(err) {
 						console.log(err)
-						socket.emit('editar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_farmaceutica', { mensaje: 'Se actualizó exitósamente.' })
+					let fieldsAnteriores = []
+					let fieldsNuevos = []
+
+					let datos = {}
+					datos.id_personal = data.id_personal
+					datos.accion = 'actualización'
+					datos.tabla = 'farmaceuticas'
+					datos.datoAnterior = ''
+					datos.datoNuevo = ''
+
+					if(farmaceutica.nombre != data.nombre) {
+						fieldsAnteriores.push({
+							nombreCampo: 'nombre',
+							datoCampo: farmaceutica.nombre
+						})
+						fieldsNuevos.push({
+							nombreCampo: 'nombre',
+							datoCampo: data.nombre
+						})
+					}
+
+					if(farmaceutica.direccion != data.direccion) {
+						fieldsAnteriores.push({
+							nombreCampo: 'direccion',
+							datoCampo: farmaceutica.direccion
+						})
+						fieldsNuevos.push({
+							nombreCampo: 'direccion',
+							datoCampo: data.direccion
+						})
+					}
+
+					if(farmaceutica.telefono != data.telefono) {
+						fieldsAnteriores.push({
+							nombreCampo: 'telefono',
+							datoCampo: farmaceutica.telefono
+						})
+						fieldsNuevos.push({
+							nombreCampo: 'telefono',
+							datoCampo: data.telefono
+						})
+					}
 					
-					farmaceuticas()
+					 
+					fieldsAnteriores.map(function(i) { 
+						var dataLineAnt = ''; 
+						if(i.datoCampo != null && i.nombreCampo != null) {
+							dataLineAnt = `> __${i.nombreCampo}:__ ${i.datoCampo} \n\n`
+						}
+
+						datos.datoAnterior = datos.datoAnterior + dataLineAnt  
+					})
+
+					fieldsNuevos.map(function(i) { 
+						var dataLineNew = ''; 
+						if(i.datoCampo != null && i.nombreCampo != null) {
+							dataLineNew =  `> __${i.nombreCampo}:__ ${i.datoCampo} \n\n`
+						}
+
+						datos.datoNuevo = datos.datoNuevo + dataLineNew  
+					})
+
+					// console.log('data ---------->')
+					// console.log(data)
+					// console.log('farmaceutica ENCONTRADA ---------->')
+					// console.log(farmaceutica)
+
+					// console.log(datos)
+					Farmaceutica.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+
+						socket.emit('editar_farmaceutica', { mensaje: 'Se actualizó exitósamente.' })
+						farmaceuticas()
+
+						// .. Ejecutar esto despues de editar el registro. 
+						console.log(datos)
+						AuditoriaModulo1.create(datos, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_farmaceutica', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return
+							}
+						})
+
+					})
+
 				})
+
+
 			})
 		})
 		
