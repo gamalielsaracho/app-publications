@@ -70,6 +70,11 @@ import analisisTipoReducer from '../analisisTipo/reducer'
 import analisisTipoReferenciaReducer from '../analisisTipoReferencia/reducer'
 
 
+
+// Auditoría
+import auditoriaModulo1Reducer from '../auditoriaModulo1/reducer'
+
+
 const rootReducer = combineReducers({
 	form: formReducer,
 	personal: personalReducer,
@@ -131,7 +136,11 @@ const rootReducer = combineReducers({
 	analisisSolicitadoTipo: analisisSolicitadoTipoReducer,
 	analisis: analisisReducer,
 	analisisTipo: analisisTipoReducer,
-	analisisTipoReferencia: analisisTipoReferenciaReducer
+	analisisTipoReferencia: analisisTipoReferenciaReducer,
+
+
+	// Auditoría.
+	auditoriaModulo1: auditoriaModulo1Reducer
 })
 
 export default rootReducer
