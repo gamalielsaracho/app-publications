@@ -1,0 +1,2 @@
+import ListarFarmaceuticasAppContainer from './container'
+export default ListarFarmaceuticasAppContainer
