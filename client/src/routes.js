@@ -115,7 +115,13 @@ import ListarTiposConsumosPage from '././tipoConsumo/pages/ListarTiposConsumosPa
 import ListarDrogasPage from '././droga/pages/ListarDrogasPage'
 
 import ListarUnidadesMedicamentosPage from '././unidadMedidaMedicamento/pages/ListarUnidadesMedicamentosPage'
+
+import ListarFarmaceuticasAppContainer from '././farmaceutica/components/ListarApp'
 import ListarFarmaceuticasPage from '././farmaceutica/pages/ListarFarmaceuticasPage'
+
+import ListarAuditoria1MovimientosContainer from '././auditoriaModulo1/components/Listar'
+
+
 import ListarProveedoresPage from '././proveedor/pages/ListarProveedoresPage'
 // Agregar solamente. si piden.
 // import ListarAccionesPage from '././accion/pages/ListarAccionesPage'
@@ -225,7 +231,13 @@ export default (
 			<Route path='/dashboard/tipos-consumos' component={ListarTiposConsumosPage}/>
 			<Route path='/dashboard/drogas' component={ListarDrogasPage}/>
 			<Route path='/dashboard/unidades-medicamentos' component={ListarUnidadesMedicamentosPage}/>
-			<Route path='/dashboard/farmaceuticas' component={ListarFarmaceuticasPage}/>
+
+			<Route path='/dashboard/farmaceuticas' component={ListarFarmaceuticasAppContainer}>
+				<IndexRoute component={ListarFarmaceuticasPage}/>
+				<Route path='/dashboard/farmaceuticas/auditoria/:tableName' component={ListarAuditoria1MovimientosContainer}/>
+			</Route>
+
+
 			<Route path='/dashboard/proveedores' component={ListarProveedoresPage}/>
 			{/* Agregar solamente. si piden. (Acciones). */}
 			{/* <Route path='/dashboard/acciones' component={ListarAccionesPage}/> */}
