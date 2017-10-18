@@ -36,6 +36,8 @@ import {
 
 import io from 'socket.io-client'
 
+import jwtDecode from 'jwt-decode'
+
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
@@ -118,8 +120,9 @@ export function eliminarFarmaceutica(idFarmaceutica) {
 
 		dispatch({ type: ELIMINAR_FARMACEUTICA_REQUEST })
 
-		farmaceuticaSocket.emit('eliminar_farmaceutica', { 
-			id_farmaceutica: idFarmaceutica 
+		farmaceuticaSocket.emit('eliminar_farmaceutica', {
+			id_farmaceutica: idFarmaceutica,
+			id_personal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		farmaceuticaSocket.on('eliminar_farmaceutica', (data) => {
@@ -162,6 +165,7 @@ export function cerrarModalMostrarFarmaceutica() {
 
 export function editarFarmaceutica(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.id_personal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_FARMACEUTICA_REQUEST })
 
