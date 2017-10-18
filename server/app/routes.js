@@ -20,6 +20,8 @@ import medicamentoDrogaRoutes from './medicamentoDroga/medicamentoDroga.routes'
 
 import medicamentoXentregadoRoutes from './medicamentoXentregado/medicamentoXentregado.routes'
 
+import auditoriaModulo1Routes from './auditoriaModulo1/auditoriaModulo1.routes'
+
 export default (app) => {
 	// usuarioRoutes(app)
 	// rolRoutes(app)
@@ -40,4 +42,6 @@ export default (app) => {
 	medicamentoDrogaRoutes(app)
 
 	medicamentoXentregadoRoutes(app)
+
+	auditoriaModulo1Routes(app)
 }
