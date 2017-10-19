@@ -61,7 +61,8 @@ export default function (state = INITIAL_STATE, action) {
 					tipoAnalisis: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 
@@ -76,7 +77,8 @@ export default function (state = INITIAL_STATE, action) {
 					tipoAnalisis: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_TIPO_ANALISIS_EXITO:
@@ -142,7 +144,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_TIPOS_ANALISIS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_TIPOS_ANALISIS_EXITO:
@@ -160,7 +163,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_TIPO_ANALISIS_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_TIPO_ANALISIS_EXITO:
