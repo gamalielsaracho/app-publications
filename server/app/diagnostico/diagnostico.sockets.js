@@ -1,5 +1,7 @@
 import Diagnostico from './diagnostico.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var diagnosticoNsp = io.of('/diagnostico');
 	
@@ -54,16 +56,28 @@ export default (io) => {
 
 
 		socket.on('eliminar_diagnostico', (data) => {
-			Diagnostico.delete(data, (err) => {
+			referentialIntegritySimple('consultasdiagnosticos', 'id_diagnostico', data.id_diagnostico, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_diagnostico', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_diagnostico', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_diagnostico', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Diagnostico.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_diagnostico', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				diagnosticos()
+						socket.emit('eliminar_diagnostico', { mensaje: 'Se Eliminó exitósamente.' })
+
+						diagnosticos()
+					})
+				}
 			})
 		})
 
