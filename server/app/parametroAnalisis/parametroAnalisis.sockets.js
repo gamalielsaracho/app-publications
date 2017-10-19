@@ -1,5 +1,7 @@
 import ParametroAnalisis from './parametroAnalisis.model'
 
+import verifyRef from './././../validations/verifyRef.js'
+
 export default (io) => {
 	var parametroAnalisisNsp = io.of('/parametroAnalisis');
 	
@@ -52,16 +54,39 @@ export default (io) => {
 
 
 		socket.on('eliminar_parametroAnalisis', (data) => {
-			ParametroAnalisis.delete(data, (err) => {
+			let d = {
+				table1: 'tiposanalisisparametros', 
+				table2: 'referencias', 
+				table3: null,
+				fieldPrimaryKey: 'id_parametroAnalisis',
+				primaryKey: data.id_parametroAnalisis
+			}
+
+			verifyRef(d, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_parametroAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+				// console.log('enUso ParametroAnalisis ---------->')
+				// console.log(enUso)
+				
+				if(enUso) {
+					socket.emit('eliminar_parametroAnalisis', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					ParametroAnalisis.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				parametrosAnalisis()
+						socket.emit('eliminar_parametroAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+
+						parametrosAnalisis()
+					})
+				}
 			})
 		})
 
