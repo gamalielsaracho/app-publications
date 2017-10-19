@@ -1,5 +1,6 @@
 import AnalisisTipo from './analisisTipo.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
 exports.listar = function(req, res, next) {
 	let idAnalisis = req.params.idAnalisis
@@ -84,15 +85,27 @@ exports.crear = function(req, res, next) {
 exports.eliminar = function(req, res, next) {
 	let idAnalisisTipo = req.params.idAnalisisTipo
 
-	AnalisisTipo.delete(idAnalisisTipo, (err, result) => {
+	referentialIntegritySimple('analisistiposreferencias', 'id_analisisTipo', idAnalisisTipo, (err, enUso) => {
 		if(err) {
 			console.log(err)
-			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		return res.json({ 
-			mensaje: 'Se Eliminó exitósamente.',
-			id_analisisTipo: idAnalisisTipo
-		})
+		if(enUso[0]) {
+			return res.status(422).json({ error: 'Este tipo de análisis ya tiene resultados cargados.' })
+		} else {
+			AnalisisTipo.delete(idAnalisisTipo, (err, result) => {
+				if(err) {
+					console.log(err)
+					return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+				}
+
+				return res.json({ 
+					mensaje: 'Se Eliminó exitósamente.',
+					id_analisisTipo: idAnalisisTipo
+				})
+			})
+		}
 	})
+
 }
