@@ -1,5 +1,7 @@
 import AnalisisSolicitado from './analisisSolicitado.model'
 
+import verifyRef from './././../validations/verifyRef.js'
+
 export default (io) => {
 	var analisisSolicitadoNsp = io.of('/analisisSolicitado');
 	
@@ -66,17 +68,43 @@ export default (io) => {
 
 
 		socket.on('eliminar_analisisSolicitado', (data) => {
-			AnalisisSolicitado.delete(data, (err) => {
+			
+			let d = {
+				table1: 'analisissolicitadostipos', 
+				table2: 'analisis',
+				table3: null,
+				fieldPrimaryKey: 'id_analisisSolicitado',
+				primaryKey: data.id_analisisSolicitado
+			}
+
+			verifyRef(d, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_analisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_analisisSolicitado', { mensaje: 'Se Eliminó exitósamente.' })
+				console.log('En Uso AnalisisSolicitado ---------->')
+				console.log(enUso)
+				
+				if(enUso) {
+					socket.emit('eliminar_analisisSolicitado', { error: 'Este dato está siendo usado por otros registros.' })
+					return
+				} else {
+					AnalisisSolicitado.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_analisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				analisisSolicitados()
+						socket.emit('eliminar_analisisSolicitado', { mensaje: 'Se Eliminó exitósamente.' })
+
+						analisisSolicitados()
+					})
+				}
 			})
+
 		})
 
 		socket.on('mostrar_analisisSolicitado_editar', (data) => {
