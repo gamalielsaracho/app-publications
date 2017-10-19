@@ -1,5 +1,7 @@
 import TipoExamen from './tipoExamen.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var tipoExamenNsp = io.of('/tipoExamen');
 	
@@ -53,17 +55,31 @@ export default (io) => {
 
 
 		socket.on('eliminar_tipoExamen', (data) => {
-			TipoExamen.delete(data, (err) => {
+			referentialIntegritySimple('parametrosanalisis', 'id_tipoExamen', data.id_tipoExamen, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_tipoExamen', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_tipoExamen', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_tipoExamen', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					TipoExamen.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_tipoExamen', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				tiposExamenes()
+						socket.emit('eliminar_tipoExamen', { mensaje: 'Se Eliminó exitósamente.' })
+
+						tiposExamenes()
+					})
+				}
 			})
+
+
 		})
 
 
