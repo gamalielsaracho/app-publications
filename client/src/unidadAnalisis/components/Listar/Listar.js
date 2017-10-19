@@ -17,7 +17,12 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.unidadesAnalisis !== this.props.unidadesAnalisis) {
+		let condition = (
+			nextProps.unidadesAnalisis !== this.props.unidadesAnalisis ||
+			nextProps.eliminar !== this.props.eliminar
+		)
+		
+		if(condition) {
 			return true
 		}else {
 			return false
@@ -45,7 +50,10 @@ class Listar extends Component {
 
 	render() {
 
-		const { unidadesAnalisis, cargando, error } = this.props.listar
+		const { unidadesAnalisis, cargando } = this.props.listar
+
+		let error = this.props.listar.error ? this.props.listar.error :
+			this.props.eliminar.error
 
 		if(cargando) {
 			return <Cargando/>
