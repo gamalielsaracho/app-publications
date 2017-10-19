@@ -123,6 +123,7 @@ class MostrarApp extends Component {
 		}
 
 		return <div>
+			<br/>
 			<MostarAnalisisSolicitadoContainer
 				urls = { this.props.urls }/>
 			<br/>
