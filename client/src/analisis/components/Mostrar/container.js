@@ -9,6 +9,7 @@ import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
+		eliminar: state.analisis.eliminar,
 		mostrar: state.analisis.mostrar
 	}
 }
