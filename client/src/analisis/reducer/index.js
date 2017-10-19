@@ -39,7 +39,8 @@ export default function (state = INITIAL_STATE, action) {
 		
 		case MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_REQUEST:
 			return Object.assign({}, state, {
-				mostrarByIdAnalisisSolicitado: { cargando: true }
+				mostrarByIdAnalisisSolicitado: { cargando: true },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_EXITO:
@@ -87,7 +88,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_ANALISIS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_ANALISIS_EXITO:
@@ -104,7 +106,8 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_ANALISIS_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true }
+				mostrar: { cargando: true },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_ANALISIS_EXITO:
@@ -128,7 +131,8 @@ export default function (state = INITIAL_STATE, action) {
 		// VISTA-PREVIA. 
 		case MOSTRAR_ANALISIS_VISTA_PREVIA_REQUEST:
 			return Object.assign({}, state, {
-				vistaPrevia: { cargando: true }
+				vistaPrevia: { cargando: true },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_ANALISIS_VISTA_PREVIA_EXITO:
