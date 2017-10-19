@@ -1,5 +1,7 @@
 import TipoAnalisis from './tipoAnalisis.model'
 
+import verifyRef from './././../validations/verifyRef.js'
+
 export default (io) => {
 	var tipoAnalisisNsp = io.of('/tipoAnalisis');
 	
@@ -55,17 +57,42 @@ export default (io) => {
 
 
 		socket.on('eliminar_tipoAnalisis', (data) => {
-			TipoAnalisis.delete(data, (err) => {
+			let d = {
+				table1: 'analisissolicitadostipos', 
+				table2: 'analisistipos',
+				table3: 'tiposanalisisparametros',
+				fieldPrimaryKey: 'id_tipoAnalisis',
+				primaryKey: data.id_tipoAnalisis
+			}
+			
+			verifyRef(d, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_tipoAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+				// console.log('En Uso TipoAnalisis ---------->')
+				// console.log(enUso)
+				
+				if(enUso) {
+					socket.emit('eliminar_tipoAnalisis', { error: 'Este dato está siendo usado por otros registros.' })
+					return
+				} else {
+					TipoAnalisis.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				tiposAnalisis()
+						socket.emit('eliminar_tipoAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+
+						tiposAnalisis()
+					})
+				}
 			})
+
 		})
 
 
