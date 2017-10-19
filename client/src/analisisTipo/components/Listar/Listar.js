@@ -22,7 +22,16 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		return nextProps.analisisTipos !== this.props.analisisTipos
+		let condition = (
+			nextProps.analisisTipos !== this.props.analisisTipos ||
+			nextProps.eliminar !== this.props.eliminar
+		)
+		
+		if(condition) {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	renderAnalisisTipos(analisisTipos) {
@@ -45,7 +54,10 @@ class Listar extends Component {
 	}
 
 	render() {
-		const { analisisTipos, cargando, error } = this.props.listar		
+		const { analisisTipos, cargando } = this.props.listar		
+
+		let error = this.props.listar.error ? this.props.listar.error :
+			this.props.eliminar.error
 
 		// console.log(this.props.listar)
 
