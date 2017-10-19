@@ -10,6 +10,7 @@ import MostrarRellenando from './MostrarRellenando'
 
 function mapStateToProps(state) {
 	return {
+		eliminar: state.consulta.eliminar,
 		mostrar: state.consulta.mostrar
 	}
 }
