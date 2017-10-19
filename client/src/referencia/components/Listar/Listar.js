@@ -34,7 +34,16 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		return nextProps.referencias !== this.props.referencias
+		let condition = (
+			nextProps.referencias !== this.props.referencias ||
+			nextProps.eliminar !== this.props.eliminar
+		)
+
+		if(condition) {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	renderReferencias(referencias) {
@@ -64,7 +73,10 @@ class Listar extends Component {
 	}
 
 	render() {
-		const { referencias, cargando, error } = this.props.listar		
+		const { referencias, cargando } = this.props.listar		
+
+		let error = this.props.listar.error ? this.props.listar.error :
+			this.props.eliminar.error
 
 		if(cargando) {
 			return <Cargando/>

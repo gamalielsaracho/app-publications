@@ -14,7 +14,7 @@ import Listar from './Listar'
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps.params)
 	return {
-		crear: state.referencia.crear,
+		eliminar: state.referencia.eliminar,
 		listar: state.referencia.listar,
 		referencias: state.referencia.listar.referencias,
 

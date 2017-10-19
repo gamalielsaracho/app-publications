@@ -62,7 +62,8 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					referencia: null
-				}
+				},
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_REFERENCIA_REQUEST:
@@ -74,7 +75,8 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: true,
 					referencia: null
-				}
+				},
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_REFERENCIA_EXITO:
@@ -146,7 +148,8 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_REFERENCIAS_REQUEST:
 			return Object.assign({}, state, {
 				crear: INITIAL_STATE.crear,
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_REFERENCIAS_EXITO:
@@ -163,7 +166,8 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_REFERENCIAS_FILTRADAS_REQUEST:
 			return Object.assign({}, state, {
 				crear: INITIAL_STATE.crear,
-				listarFiltradas: { cargando: true, error: '' }
+				listarFiltradas: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_REFERENCIAS_FILTRADAS_EXITO:
@@ -180,7 +184,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_REFERENCIA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_REFERENCIA_EXITO:
@@ -224,8 +229,8 @@ export default function (state = INITIAL_STATE, action) {
 				return i
 			})
 
-			console.log('nuevaLista')
-			console.log(nuevaLista)
+			// console.log('nuevaLista')
+			// console.log(nuevaLista)
 
 			state = Object.assign({}, state, {
 				editar: { 
