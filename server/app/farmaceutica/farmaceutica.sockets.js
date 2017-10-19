@@ -4,6 +4,8 @@ import referentialIntegritySimple from './././../validations/referentialIntegrit
 
 import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
 
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var farmaceuticaNsp = io.of('/farmaceutica');
 	
@@ -75,46 +77,22 @@ export default (io) => {
 							console.log(err)
 							socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
 							return
-						}
+						}						
 
-						let fieldsAnteriores = []
-
-						let datos = {}
-						datos.id_personal = data.id_personal
-						datos.accion = 'eliminación'
-						datos.tabla = 'farmaceuticas'
-						datos.datoAnterior = ''
-
-						if(farmaceutica.nombre != data.nombre) {
-							fieldsAnteriores.push({
-								nombreCampo: 'nombre',
-								datoCampo: farmaceutica.nombre
-							})
-						}
-
-						if(farmaceutica.direccion != data.direccion) {
-							fieldsAnteriores.push({
-								nombreCampo: 'direccion',
-								datoCampo: farmaceutica.direccion
-							})
-						}
-
-						if(farmaceutica.telefono != data.telefono) {
-							fieldsAnteriores.push({
-								nombreCampo: 'telefono',
-								datoCampo: farmaceutica.telefono
-							})
-						}
-					
-					 
-						fieldsAnteriores.map(function(i) { 
-							var dataLineAnt = ''; 
-							if(i.datoCampo != null && i.nombreCampo != null) {
-								dataLineAnt = `> __${i.nombreCampo}:__ ${i.datoCampo} \n\n`
+						let listaCampos = [
+							{ 
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: farmaceutica.nombre
+							},
+							{ 
+								nombreCampo: 'Dirección',
+								datoCampoAnterior: farmaceutica.direccion
+							},
+							{ 
+								nombreCampo: 'Telefono',
+								datoCampoAnterior: farmaceutica.telefono
 							}
-
-							datos.datoAnterior = datos.datoAnterior + dataLineAnt  
-						})
+						]
 
 
 						Farmaceutica.delete(data, (err) => {
@@ -128,15 +106,25 @@ export default (io) => {
 
 							farmaceuticas()
 
-							// .. Ejecutar esto despues de eliminar el registro. 
-							console.log(datos)
-							AuditoriaModulo1.create(datos, (err) => {
+							
+							fieldsToEditData(listaCampos, 'eliminación', 'farmaceuticas', data.id_personal, (err, datos) => {
 								if(err) {
 									console.log(err)
-									socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error en la auditoría de este módulo.' })
-									return
+									socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
+									return 
 								}
+							
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
 							})
+							// ..
 						})
 
 						// ...
@@ -170,73 +158,26 @@ export default (io) => {
 						return
 					}
 
-					let fieldsAnteriores = []
-					let fieldsNuevos = []
 
-					let datos = {}
-					datos.id_personal = data.id_personal
-					datos.accion = 'actualización'
-					datos.tabla = 'farmaceuticas'
-					datos.datoAnterior = ''
-					datos.datoNuevo = ''
+					let listaCampos = [
+						{ 
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: farmaceutica.nombre,
+							datoCampoNuevo: data.nombre
+						},
+						{ 
+							nombreCampo: 'Dirección',
+							datoCampoAnterior: farmaceutica.direccion,
+							datoCampoNuevo: data.direccion
+						},
+						{ 
+							nombreCampo: 'Telefono',
+							datoCampoAnterior: farmaceutica.telefono,
+							datoCampoNuevo: data.telefono
+						}
+					]
 
-					if(farmaceutica.nombre != data.nombre) {
-						fieldsAnteriores.push({
-							nombreCampo: 'nombre',
-							datoCampo: farmaceutica.nombre
-						})
-						fieldsNuevos.push({
-							nombreCampo: 'nombre',
-							datoCampo: data.nombre
-						})
-					}
-
-					if(farmaceutica.direccion != data.direccion) {
-						fieldsAnteriores.push({
-							nombreCampo: 'direccion',
-							datoCampo: farmaceutica.direccion
-						})
-						fieldsNuevos.push({
-							nombreCampo: 'direccion',
-							datoCampo: data.direccion
-						})
-					}
-
-					if(farmaceutica.telefono != data.telefono) {
-						fieldsAnteriores.push({
-							nombreCampo: 'telefono',
-							datoCampo: farmaceutica.telefono
-						})
-						fieldsNuevos.push({
-							nombreCampo: 'telefono',
-							datoCampo: data.telefono
-						})
-					}
 					
-					 
-					fieldsAnteriores.map(function(i) { 
-						var dataLineAnt = ''; 
-						if(i.datoCampo != null && i.nombreCampo != null) {
-							dataLineAnt = `> __${i.nombreCampo}:__ ${i.datoCampo} \n\n`
-						}
-
-						datos.datoAnterior = datos.datoAnterior + dataLineAnt  
-					})
-
-					fieldsNuevos.map(function(i) { 
-						var dataLineNew = ''; 
-						if(i.datoCampo != null && i.nombreCampo != null) {
-							dataLineNew =  `> __${i.nombreCampo}:__ ${i.datoCampo} \n\n`
-						}
-
-						datos.datoNuevo = datos.datoNuevo + dataLineNew  
-					})
-
-					// console.log('data ---------->')
-					// console.log(data)
-					// console.log('farmaceutica ENCONTRADA ---------->')
-					// console.log(farmaceutica)
-
 					// console.log(datos)
 					Farmaceutica.update(data, (err) => {
 						if(err) {
@@ -248,14 +189,22 @@ export default (io) => {
 						socket.emit('editar_farmaceutica', { mensaje: 'Se actualizó exitósamente.' })
 						farmaceuticas()
 
-						// .. Ejecutar esto despues de editar el registro. 
-						console.log(datos)
-						AuditoriaModulo1.create(datos, (err) => {
+						fieldsToEditData(listaCampos, 'actualización', 'farmaceuticas', data.id_personal, (err, datos) => {
 							if(err) {
 								console.log(err)
-								socket.emit('editar_farmaceutica', { error: 'Ocurrió un error en la auditoría de este módulo.' })
-								return
+								socket.emit('editar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
+								return 
 							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_farmaceutica', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
 						})
 
 					})
