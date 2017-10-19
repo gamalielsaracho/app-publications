@@ -80,12 +80,14 @@ class Mostrar extends Component {
 
 				</div>
 		}
-
 	}
 
 	render() {
 
-		const { cargando, consulta, error } = this.props.mostrar
+		const { cargando, consulta } = this.props.mostrar
+
+		let error = this.props.mostrar.error ? this.props.mostrar.error :
+					this.props.eliminar.error
 		
 		return <div>
 			<MensajeOerror error={error} mensaje={null}/>
