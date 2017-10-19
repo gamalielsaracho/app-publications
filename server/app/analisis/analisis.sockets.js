@@ -1,5 +1,7 @@
 import Analisis from './analisis.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 import AnalisisTipo from '../analisisTipo/analisisTipo.model'
 import AnalisisTipoReferencia from '../analisisTipoReferencia/analisisTipoReferencia.model'
 
@@ -92,27 +94,40 @@ export default (io) => {
 
 
 		socket.on('eliminar_analisis', (data) => {
-			Analisis.delete(data, (err) => {
+			referentialIntegritySimple('analisistipos', 'id_analisis', data.id_analisis, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_analisis', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_analisis', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_analisis', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Analisis.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_analisis', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				Analisis.findByIdanalisisSolicitado(data, (err, analisis) => {
-					if(err) {
-						console.log(err)
-						socket.emit('mostrar_por_idAnalisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
-						return
-					}
+						socket.emit('eliminar_analisis', { mensaje: 'Se Eliminó exitósamente.' })
 
-					socket.emit('mostrar_por_idAnalisisSolicitado', analisis)
-				})
+						Analisis.findByIdanalisisSolicitado(data, (err, analisis) => {
+							if(err) {
+								console.log(err)
+								socket.emit('mostrar_por_idAnalisisSolicitado', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
 
-				analisisLista()
+							socket.emit('mostrar_por_idAnalisisSolicitado', analisis)
+						})
+
+						analisisLista()
+					})
+				}
 			})
+
 		})
 
 		socket.on('mostrar_analisis', (data) => {
