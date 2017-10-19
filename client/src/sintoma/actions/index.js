@@ -36,6 +36,8 @@ import {
 
 import io from 'socket.io-client'
 
+import jwtDecode from 'jwt-decode'
+
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
@@ -116,7 +118,10 @@ export function eliminarSintoma(idSintoma) {
 
 		dispatch({ type: ELIMINAR_SINTOMA_REQUEST })
 
-		sintomaSocket.emit('eliminar_sintoma', { id_sintoma: idSintoma })
+		sintomaSocket.emit('eliminar_sintoma', {
+			id_sintoma: idSintoma,
+			id_personal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		sintomaSocket.on('eliminar_sintoma', (data) => {
 			console.log(data)
@@ -156,7 +161,8 @@ export function cerrarModalMostrarSintoma() {
 
 export function editarSintoma(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.id_personal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_SINTOMA_REQUEST })
 
 		sintomaSocket.emit('editar_sintoma', datosFormulario)
