@@ -61,7 +61,8 @@ export default function (state = INITIAL_STATE, action) {
 					consulta: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_REQUEST:
@@ -75,7 +76,8 @@ export default function (state = INITIAL_STATE, action) {
 					consulta: null
 				},
 				crear: INITIAL_STATE.crear,
-				editar: INITIAL_STATE.editar
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_EXITO:
@@ -143,7 +145,8 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_CONSULTAS_REQUEST:
 			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' },
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_CONSULTAS_EXITO:
@@ -161,7 +164,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_CONSULTA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_CONSULTA_EXITO:
