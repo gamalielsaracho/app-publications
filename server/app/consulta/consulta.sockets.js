@@ -1,5 +1,7 @@
 import Consulta from './consulta.model'
 
+import verifyRef from './././../validations/verifyRef.js'
+
 export default (io) => {
 	var consultaNsp = io.of('/consulta');
 	
@@ -85,16 +87,39 @@ export default (io) => {
 
 
 		socket.on('eliminar_consulta', (data) => {
-			Consulta.delete(data, (err) => {
+			let d = {
+				table1: 'consultasdiagnosticos', 
+				table2: 'consultassintomas', 
+				table3: 'analisissolicitados',
+				fieldPrimaryKey: 'id_consulta',
+				primaryKey: data.id_consulta
+			}
+
+			verifyRef(d, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_consulta', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_consulta', { mensaje: 'Se Eliminó exitósamente.' })
+				console.log('enUso ---------->')
+				console.log(enUso)
+				
+				if(enUso) {
+					socket.emit('eliminar_consulta', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Consulta.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_consulta', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				consultas()
+						socket.emit('eliminar_consulta', { mensaje: 'Se Eliminó exitósamente.' })
+
+						consultas()
+					})
+				}
 			})
 		})
 
