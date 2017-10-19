@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		diagnostico: {}
+		diagnostico: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { diagnosticos:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, diagnostico: {}, error: '', abierto: false },
+	mostrar: { cargando: false, diagnostico: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,11 +58,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					diagnostico: {}
+					diagnostico: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_DIAGNOSTICO_REQUEST:
@@ -73,11 +74,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					diagnostico: {}
+					diagnostico: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_DIAGNOSTICO_EXITO:
@@ -90,7 +92,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					diagnostico: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar,
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_DIAGNOSTICO_FALLO:
@@ -101,22 +103,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					diagnostico: {}
+					diagnostico: null
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
 		case CERRAR_FORMULARIO_DIAGNOSTICO:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					diagnostico: {}
-				}
+				formulario: INITIAL_STATE.formulario
 			})
 
 		// CREATE diagnostico.
@@ -132,7 +127,7 @@ export default function (state = INITIAL_STATE, action) {
 				crear: { 
 					mensaje: action.payload.mensaje,
 				},
-				formulario: { abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario,
 				// listar: { 
 				// 	diagnosticos: [ ...state.listar.diagnosticos, action.payload.datoInsertado ]
 				// }
@@ -146,7 +141,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_DIAGNOSTICOS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_DIAGNOSTICOS_EXITO:
@@ -164,7 +160,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_DIAGNOSTICO_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_DIAGNOSTICO_EXITO:
@@ -174,28 +171,23 @@ export default function (state = INITIAL_STATE, action) {
 					diagnostico: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case MOSTRAR_DIAGNOSTICO_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					diagnostico: {},
+					diagnostico: null,
 					error: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CERRAR_MODAL_MOSTRAR_DIAGNOSTICO:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					diagnostico: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -211,7 +203,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case EDITAR_DIAGNOSTICO_FALLO:
@@ -234,8 +226,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					diagnostico: action.payload
+					error: ''
 				}
 			})
 
@@ -243,8 +234,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					diagnostico: {}
+					error: action.payload
 				}
 			})
 
