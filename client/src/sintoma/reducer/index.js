@@ -63,7 +63,8 @@ export default function (state = INITIAL_STATE, action) {
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 
@@ -79,7 +80,8 @@ export default function (state = INITIAL_STATE, action) {
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: INITIAL_STATE.mostrar
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_SINTOMA_EXITO:
@@ -138,7 +140,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_SINTOMAS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_SINTOMAS_EXITO:
@@ -156,7 +159,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_SINTOMA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: INITIAL_STATE.formulario
+				formulario: INITIAL_STATE.formulario,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_SINTOMA_EXITO:
