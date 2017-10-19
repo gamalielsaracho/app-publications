@@ -1,5 +1,7 @@
 import Referencia from './referencia.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 exports.listar = function(req, res, next) {
 	Referencia.find((err, referencias) => {
 		// console.log(referencias)
@@ -228,15 +230,26 @@ exports.editar = function(req, res, next) {
 exports.eliminar = function(req, res, next) {
 	let idReferencia = req.params.idReferencia
 
-	Referencia.delete(idReferencia, (err, result) => {
+	referentialIntegritySimple('analisistiposreferencias', 'id_referencia', idReferencia, (err, enUso) => {
 		if(err) {
 			console.log(err)
-			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		return res.json({ 
-			mensaje: 'Se Eliminó exitósamente.',
-			id_referencia: idReferencia
-		})
+		if(enUso[0]) {
+			return res.status(422).json({ error: 'Esta referencia es usada por otros registros.' })
+		} else {
+			Referencia.delete(idReferencia, (err, result) => {
+				if(err) {
+					console.log(err)
+					return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+				}
+
+				return res.json({ 
+					mensaje: 'Se Eliminó exitósamente.',
+					id_referencia: idReferencia
+				})
+			})
+		}
 	})
 }
