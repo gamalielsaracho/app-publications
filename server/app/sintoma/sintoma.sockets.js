@@ -1,5 +1,7 @@
 import Sintoma from './sintoma.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var sintomaNsp = io.of('/sintoma');
 	
@@ -54,16 +56,28 @@ export default (io) => {
 
 
 		socket.on('eliminar_sintoma', (data) => {
-			Sintoma.delete(data, (err) => {
+			referentialIntegritySimple('consultassintomas', 'id_sintoma', data.id_sintoma, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_sintoma', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_sintoma', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_sintoma', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Sintoma.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_sintoma', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				sintomas()
+						socket.emit('eliminar_sintoma', { mensaje: 'Se Eliminó exitósamente.' })
+
+						sintomas()
+					})
+				}
 			})
 		})
 
