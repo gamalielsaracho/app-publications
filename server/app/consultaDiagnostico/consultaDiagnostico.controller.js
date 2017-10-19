@@ -108,17 +108,36 @@ exports.editar = function(req, res, next) {
 			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		ConsultaDiagnostico.findById(datos.id_consultaDiagnostico, (err, consultaDiagnostico) => {
+		ConsultaDiagnostico.findById(datos.id_consultaDiagnostico, (err, consultaDiagnosticoEncontrada) => {
 			// console.log(consultaDiagnostico)
+			let consultaDiagnostico = consultaDiagnosticoEncontrada[0]
 
 			if(err) {
 				console.log(err)
 				return res.json({ error: 'Ocurrió un error, intente más tarde.' })
 			}
 
+			// let listaCampos = [
+			// 			{ 
+			// 				nombreCampo: 'Nombre',
+			// 				datoCampoAnterior: farmaceutica.nombre,
+			// 				datoCampoNuevo: data.nombre
+			// 			},
+			// 			{ 
+			// 				nombreCampo: 'Dirección',
+			// 				datoCampoAnterior: farmaceutica.direccion,
+			// 				datoCampoNuevo: data.direccion
+			// 			},
+			// 			{ 
+			// 				nombreCampo: 'Telefono',
+			// 				datoCampoAnterior: farmaceutica.telefono,
+			// 				datoCampoNuevo: data.telefono
+			// 			}
+			// ]
+
 			return res.json({ 
 				mensaje: 'Se actualizó exitósamente.',
-				consultaDiagnosticoActualizado: consultaDiagnostico[0]
+				consultaDiagnosticoActualizado: consultaDiagnostico
 			})
 		})
 
