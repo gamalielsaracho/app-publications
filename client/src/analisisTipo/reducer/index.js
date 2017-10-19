@@ -37,7 +37,8 @@ export default function (state = INITIAL_STATE, action) {
 	    case ABRIR_FORMULARIO_CREAR_ANALISIS_TIPO:
 	    	return Object.assign({}, state, {
 				formulario: { abirtoCrear: true },
-				crear: INITIAL_STATE.crear
+				crear: INITIAL_STATE.crear,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case CERRAR_FORMULARIO_ANALISIS_TIPO:
@@ -82,7 +83,8 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_ANALISIS_TIPOS_REQUEST:
 			return Object.assign({}, state, {
 				crear: INITIAL_STATE.crear,
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_ANALISIS_TIPOS_EXITO:
@@ -102,7 +104,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_ANALISIS_TIPO_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true },
-				formulario: { abirtoCrear: false }
+				formulario: { abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_ANALISIS_TIPO_EXITO:
