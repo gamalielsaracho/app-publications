@@ -10,6 +10,8 @@ import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
+		eliminar: state.analisisSolicitado.eliminar,
+
 		mostrar: state.analisisSolicitado.mostrar,
 
 		// estado del formulario para hacer render.
