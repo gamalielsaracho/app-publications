@@ -1,5 +1,7 @@
 import ParametroPreConsulta from './parametroPreConsulta.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var parametroPreConsultaNsp = io.of('/parametroPreConsulta');
 	
@@ -51,16 +53,28 @@ export default (io) => {
 
 
 		socket.on('eliminar_parametro', (data) => {
-			ParametroPreConsulta.delete(data, (err) => {
+			referentialIntegritySimple('preconsultasparametros', 'id_parametroPreconsulta', data.id_parametroPreconsulta, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_parametro', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_parametro', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_parametro', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					ParametroPreConsulta.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_parametro', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				parametros()
+						socket.emit('eliminar_parametro', { mensaje: 'Se Eliminó exitósamente.' })
+
+						parametros()
+					})
+				}
 			})
 		})
 
