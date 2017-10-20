@@ -13,7 +13,7 @@ import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.unidadParametroPre.crear,
+		eliminar: state.unidadParametroPre.eliminar,
 		listar: state.unidadParametroPre.listar,
 		unidadesParametroPre: state.unidadParametroPre.listar.unidadesParametroPre
 	}
