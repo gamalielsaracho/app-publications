@@ -1,5 +1,7 @@
 import Ciudad from './ciudad.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (socket, io) => {
 	
 		function ciudades() {
@@ -45,15 +47,27 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_ciudad', (data) => {
-			Ciudad.delete(data.id_ciudad, (err) => {
+			referentialIntegritySimple('pacientes', 'id_ciudad', data.id_ciudad, (err, enUso) => {
 				if(err) {
+					console.log(err)
 					socket.emit('eliminar_ciudad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_ciudad', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_ciudad', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Ciudad.delete(data.id_ciudad, (err) => {
+						if(err) {
+							socket.emit('eliminar_ciudad', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				ciudades()
+						socket.emit('eliminar_ciudad', { mensaje: 'Se Eliminó exitósamente.' })
+
+						ciudades()
+					})
+				}
 			})
 		})
 
