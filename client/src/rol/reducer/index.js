@@ -60,7 +60,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					rol: {}
 				},
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_ROL_REQUEST:
@@ -73,7 +74,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: true,
 					rol: {}
 				},
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_ROL_EXITO:
@@ -142,7 +144,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_ROLES_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_ROLES_EXITO:
@@ -160,7 +163,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_ROL_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_ROL_EXITO:
