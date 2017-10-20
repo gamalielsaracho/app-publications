@@ -17,7 +17,12 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.parametros !== this.props.parametros) {
+		let condition = (
+			nextProps.parametros !== this.props.parametros ||
+			nextProps.eliminar !== this.props.eliminar
+		)
+
+		if(condition) {
 			return true
 		}else {
 			return false
@@ -51,7 +56,10 @@ class Listar extends Component {
 
 	render() {
 
-		const { parametros, cargando, error } = this.props.listar
+		const { parametros, cargando } = this.props.listar
+
+		let error = this.props.listar.error ? this.props.listar.error :
+			this.props.eliminar.error
 
 		if(cargando) {
 			return <Cargando/>

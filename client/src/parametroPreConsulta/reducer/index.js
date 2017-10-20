@@ -62,7 +62,8 @@ export default function (state = INITIAL_STATE, action) {
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PARAMETRO_PRECONSULTA_REQUEST:
@@ -77,7 +78,8 @@ export default function (state = INITIAL_STATE, action) {
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PARAMETRO_PRECONSULTA_EXITO:
@@ -146,7 +148,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_PARAMETROS_PRECONSULTA_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_PARAMETROS_PRECONSULTA_EXITO:
@@ -164,7 +167,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_PARAMETRO_PRECONSULTA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_PARAMETRO_PRECONSULTA_EXITO:

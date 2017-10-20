@@ -13,7 +13,7 @@ import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.parametroPreConsulta.crear,
+		eliminar: state.parametroPreConsulta.eliminar,
 		listar: state.parametroPreConsulta.listar,
 		parametros: state.parametroPreConsulta.listar.parametros
 	}
