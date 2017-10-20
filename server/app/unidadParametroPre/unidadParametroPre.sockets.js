@@ -1,5 +1,7 @@
 import UnidadParametroPre from './unidadParametroPre.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 
 	var unidadParametroPreNsp = io.of('/unidadParametroPre');
@@ -51,16 +53,28 @@ export default (io) => {
 
 
 		socket.on('eliminar_unidadParametroPre', (data) => {
-			UnidadParametroPre.delete(data, (err) => {
+			referentialIntegritySimple('parametrospreconsulta', 'id_unidadParametroPre', data.id_unidadParametroPre, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_unidadParametroPre', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_unidadParametroPre', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_unidadParametroPre', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					UnidadParametroPre.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_unidadParametroPre', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				unidadesParametroPre()
+						socket.emit('eliminar_unidadParametroPre', { mensaje: 'Se Eliminó exitósamente.' })
+
+						unidadesParametroPre()
+					})
+				}
 			})
 		})
 
