@@ -60,7 +60,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					area: {}
 				},
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_AREA_REQUEST:
@@ -73,7 +74,8 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: true,
 					area: {}
 				},
-				mostrar: { abierto: false }
+				mostrar: { abierto: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_AREA_EXITO:
@@ -142,7 +144,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_AREAS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 
@@ -161,7 +164,8 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_AREA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_AREA_EXITO:
