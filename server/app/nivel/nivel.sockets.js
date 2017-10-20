@@ -1,5 +1,7 @@
 import Nivel from './nivel.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (io) => {
 	var nivelNsp = io.of('/nivel');
 	
@@ -50,16 +52,28 @@ export default (io) => {
 
 
 		socket.on('eliminar_nivel', (data) => {
-			Nivel.delete(data, (err) => {
+			referentialIntegritySimple('preconsultas', 'id_nivel', data.id_nivel, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_nivel', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_nivel', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_nivel', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Nivel.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_nivel', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				niveles()
+						socket.emit('eliminar_nivel', { mensaje: 'Se Eliminó exitósamente.' })
+
+						niveles()
+					})
+				}
 			})
 		})
 
