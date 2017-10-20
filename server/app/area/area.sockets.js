@@ -1,5 +1,7 @@
 import Area from './area.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (socket, io) => {
 	
 		function areas() {
@@ -45,15 +47,27 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_area', (data) => {
-			Area.delete(data.id_area, (err) => {
+			referentialIntegritySimple('pacientes', 'id_area', data.id_area, (err, enUso) => {
 				if(err) {
+					console.log(err)
 					socket.emit('eliminar_area', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_area', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_area', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Area.delete(data.id_area, (err) => {
+						if(err) {
+							socket.emit('eliminar_area', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				areas()
+						socket.emit('eliminar_area', { mensaje: 'Se Eliminó exitósamente.' })
+
+						areas()
+					})
+				}
 			})
 		})
 
