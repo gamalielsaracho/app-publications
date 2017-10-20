@@ -1,5 +1,7 @@
 import Alergia from './alergia.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (socket, io) => {
 	
 		function alergias() {
@@ -49,15 +51,27 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_alergia', (data) => {
-			Alergia.delete(data.id_alergia, (err) => {
+			referentialIntegritySimple('pacientesalergias', 'id_alergia', data.id_alergia, (err, enUso) => {
 				if(err) {
+					console.log(err)
 					socket.emit('eliminar_alergia', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_alergia', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_alergia', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Alergia.delete(data.id_alergia, (err) => {
+						if(err) {
+							socket.emit('eliminar_alergia', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				alergias()
+						socket.emit('eliminar_alergia', { mensaje: 'Se Eliminó exitósamente.' })
+
+						alergias()
+					})
+				}
 			})
 		})
 
