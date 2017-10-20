@@ -1,5 +1,7 @@
 import Especialidad from './especialidad.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (socket, io) => {
 	
 		function especialidades() {
@@ -45,17 +47,29 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_especialidad', (data) => {
-			console.log("EL ID ES: "+data.id_especialidad)
+			// console.log("EL ID ES: "+data.id_especialidad)
 
-			Especialidad.delete(data.id_especialidad, (err) => {
+			referentialIntegritySimple('personales', 'id_especialidad', data.id_especialidad, (err, enUso) => {
 				if(err) {
+					console.log(err)
 					socket.emit('eliminar_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_especialidad', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_especialidad', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Especialidad.delete(data.id_especialidad, (err) => {
+						if(err) {
+							socket.emit('eliminar_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				especialidades()
+						socket.emit('eliminar_especialidad', { mensaje: 'Se Eliminó exitósamente.' })
+
+						especialidades()
+					})
+				}
 			})
 		})
 
