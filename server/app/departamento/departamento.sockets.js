@@ -1,5 +1,7 @@
 import Departamento from './departamento.model'
 
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
 export default (socket, io) => {
 	
 		function departamentos() {
@@ -45,15 +47,27 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_departamento', (data) => {
-			Departamento.delete(data.id_departamento, (err) => {
+			referentialIntegritySimple('ciudades', 'id_departamento', data.id_departamento, (err, enUso) => {
 				if(err) {
+					console.log(err)
 					socket.emit('eliminar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_departamento', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_departamento', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Departamento.delete(data.id_departamento, (err) => {
+						if(err) {
+							socket.emit('eliminar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				departamentos()
+						socket.emit('eliminar_departamento', { mensaje: 'Se Eliminó exitósamente.' })
+
+						departamentos()
+					})
+				}
 			})
 		})
 
