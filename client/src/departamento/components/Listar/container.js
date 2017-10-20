@@ -13,7 +13,7 @@ import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.departamento.crear,
+		eliminar: state.departamento.eliminar,
 		listar: state.departamento.listar,
 		departamentos: state.departamento.listar.departamentos
 	}
