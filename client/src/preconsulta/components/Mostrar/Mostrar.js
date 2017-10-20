@@ -82,8 +82,10 @@ class Mostrar extends Component {
 
 	render() {
 
-		const { cargando, preConsulta, error, abierto } = this.props.mostrar
+		const { cargando, preConsulta, abierto } = this.props.mostrar
 
+		let error = this.props.mostrar.error ? this.props.mostrar.error :
+			this.props.eliminar.error
 		// console.log(this.props.mostrar)
 		
 		return <div>

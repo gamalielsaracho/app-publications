@@ -8,6 +8,7 @@ import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
+		eliminar: state.preConsulta.eliminar,
 		mostrar: state.preConsulta.mostrar,
 
 		// Para obtener el rol del personal.
