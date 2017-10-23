@@ -9,16 +9,18 @@ import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import CalendarioCitaContainer from '../Calendario'
 
+import FieldSelectPacientesContainer from '../../../paciente/components/FieldSelectPacientes'
+
 import FieldSelectEspecialidadesContainer from '../../../especialidades/components/FieldSelectEspecialidades'
 
-import FieldSelectPesonales from '../../../usuario/components/FieldSelectPesonales'
+import FieldSelectPesonalesContainer from '../../../usuario/components/FieldSelectPesonales'
 
-const renderField = ({ input, nombreNodo, label, type, meta: { touched, error, warning } }) => (  
+const renderField = ({ input, nombreNodo, disabledVar, label, type, meta: { touched, error, warning } }) => (  
   <div>
 	<div className="form-group">
 		{ console.log(nombreNodo) }
 	 	<label htmlFor={label}>{label}</label>
-    	<input className='form-control' disabled className={nombreNodo+' form-control'} {...input} placeholder={label} type={type}/>
+    	<input className='form-control' disabled={disabledVar} className={nombreNodo+' form-control'} {...input} placeholder={label} type={type}/>
 	</div>
     { touched && ((error && <label className="text-danger">{ error }</label>)) }
   </div>
@@ -32,18 +34,22 @@ class Formulario extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarEspecialidades()
-		this.props.listarPersonales()
+		this.props.listarEspecialidadesFuncion()
+		this.props.listarMedicosFuncion()
+		this.props.listarPacientesFuncion()
 	}
 
 	enviarFormulario(formProps) {		
 		console.log(formProps)
 
-		// if(this.props.editarContenido) {
-		// 	this.props.editarCita(formProps)
-		// } else {
-		// 	this.props.crearCita(formProps)
-		// }
+		if(this.props.editarContenido) {
+			this.props.editarCita(formProps)
+		} else {
+			formProps.id_paciente = formProps.id_paciente[0]
+			formProps.id_personal = formProps.id_personal[0]
+
+			this.props.crearCita(formProps)
+		}
 	}
 
 	renderCargando(cargando) {
@@ -59,7 +65,7 @@ class Formulario extends Component {
 		// console.log(this.props.fechaOtenida)
 		const customStyles = {
 		    content : {
-		  		height: '90vh',
+		  		height: '95vh',
 		  		position: 'none'
 		  	}
 		}
@@ -81,7 +87,7 @@ class Formulario extends Component {
 					       	contentLabel="Minimal Modal Example"
 					       	style={customStyles}>
 
-				<div className='container'>
+				<div className='container-fluit'>
 					<h4 className='text-center'>Formulario cita</h4>
 
 					<div className='row'>
@@ -89,31 +95,72 @@ class Formulario extends Component {
 						{ this.renderCargando(cargando) }
 
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-
-							<CalendarioCitaContainer citas = {this.props.listar.citas}
+							<CalendarioCitaContainer 
+								citas = {this.props.listaCitasEditedAndFilter(this.props.listar.citas, this.props.valoresFiltro)}
 								valoresFiltro={this.props.valoresFiltro}/>
-							
 						</div>
+
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								<Field name='id_especialidad' type='text' component={FieldSelectEspecialidadesContainer} listaEspecialidades={this.props.listaEspecialidades} label='Especialidad'/>
-								
-								<Field name='id_personal' valoresFiltro={this.props.valoresFiltro} type='text' component={FieldSelectPesonales} listaPesonales={this.props.listaPesonales} label='Profesionales'/>
-								
+									
 								<div className='row'>
 									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-										<Field nombreNodo='fechaNodo' name='fecha' type='text' component={renderField} label='Fecha'/>
+										<Field disabledVar={false} name='nroDocumento' type='text' component={renderField} label='Nro de documento'/>
 									</div>
 									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-										<Field nombreNodo='horaInicioNodo' name='inicio' type='text' component={renderField} label='Hora inicio'/>
-										<Field nombreNodo='horaFinNodo' name='fin' type='text' component={renderField} label='Hora fin'/>
+										<Field disabledVar={false} name='id_tipoDocumento' type='text' component={renderField} label='Tipo de documento'/>
+									</div>
+								</div>
+
+								<div className='row'>
+									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+										<Field disabledVar={false} name='nombres' type='text' component={renderField} label='Nombres'/>
+									</div>
+									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+										<Field disabledVar={false} name='apellidos' type='text' component={renderField} label='Apellidos'/>
+									</div>
+								</div>
+
+								<br/>
+								<div className='row'>
+									<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+										<Field name='id_paciente' 
+											type='text'
+											listar = { this.props.listarPacientes }
+											valoresFiltro = { this.props.valoresFiltro }
+											component={FieldSelectPacientesContainer} label='Paciente'/>
+									</div>
+								</div>
+
+								<div className='row'>
+									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+										<Field name='id_especialidad' type='text' 
+											component={FieldSelectEspecialidadesContainer} 
+											listar={this.props.listarEspecialidades} 
+											label='Especialidad'
+											showBtnAdd={false}/>
+									</div>
+									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+										<Field name='id_personal' valoresFiltro={this.props.valoresFiltro} 
+											type='text' component={FieldSelectPesonalesContainer} 
+											listar={this.props.listarMedicos} 
+											label='Profesionales'/>
 									</div>
 								</div>
 
 								
-								<h1>Especialidad: { this.props.valoresFiltro.id_especialidad }</h1>
-								<h1>Médico/a: { this.props.valoresFiltro.id_personal }</h1>
-								
+								<div className='row'>
+									<div className='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
+										<Field disabledVar={false} nombreNodo='fechaNodo' name='fecha' type='text' component={renderField} label='Fecha'/>
+									</div>
+									<div className='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
+										<Field disabledVar={false} nombreNodo='horaInicioNodo' name='start' type='text' component={renderField} label='Hora inicio'/>
+									</div>
+									<div className='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
+										<Field disabledVar={false} nombreNodo='horaFinNodo' name='end' type='text' component={renderField} label='Hora fin'/>
+									</div>
+								</div>
+
 								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 								<button type="button" onClick={ this.props.cerrarFormularioCita } className="btn btn-primary btn-space">Cancelar</button>
 							</form>

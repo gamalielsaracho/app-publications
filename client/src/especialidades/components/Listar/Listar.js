@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FormularioContainer from '../Formulario'
-import MostarContainer from '../Mostrar'
+import FormularioEspecialidadContainer from '../Formulario'
+import MostarEspecialidadContainer from '../Mostrar'
 
 class Listar extends Component {
 	constructor(props) {
@@ -62,8 +62,8 @@ class Listar extends Component {
 				return <div>
 					<h1 className='text-center'>Especialidades</h1>
 					
-					<FormularioContainer/>
-					<MostarContainer/>
+					<FormularioEspecialidadContainer/>
+					<MostarEspecialidadContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
 

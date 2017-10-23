@@ -13,9 +13,13 @@ import {
 } from '../../../especialidades/actions'
 
 import { 
-	listarPersonales
+	listarMedicos
 	// actualizarFormularioFiltro
 } from '../../../usuario/actions'
+
+import {
+	listarPacientes
+} from '../../../paciente/actions'
 
 import Formulario from './Formulario'
 
@@ -47,14 +51,24 @@ function mapStateToProps(state) {
 		listar: state.cita.listar,
 
 		// Lista de especialidades para mostrar dentro del select option.
-		listaEspecialidades: state.especialidad.listar,
+		listarEspecialidades: state.especialidad.listar,
 
 		// Lista los Médicos/as para mostrar dentro del select option Multiple.
-		listaPesonales: state.personal.listar,
+		listarMedicos: state.personal.listarMedicos,
+
+		// Obtener La lista de pacientes para mostrarlo dentro 
+    	// del form-inline.
+		listarPacientes: state.paciente.listar,
 
     	valoresFiltro: {
     		id_especialidad: selector(state, 'id_especialidad'),
-    		id_personal: selector(state, 'id_personal')
+    		id_personal: selector(state, 'id_personal'),
+
+    		// Para filtrar los Pacientes.
+    		nroDocumento: selector(state, 'nroDocumento') || '',
+			id_tipoDocumento: selector(state, 'id_tipoDocumento') || '',
+			nombres: selector(state, 'nombres') || '',
+			apellidos: selector(state, 'apellidos') || ''
     	}
 	}
 }
@@ -76,37 +90,55 @@ function mapDispatchToProps(dispatch) {
 		},
 
 		// Lista para mostrar en el calendario.
-		listaCitasEdited: () => {
-			return [
-				{
-                    title: 'Pedro Raul',
-                    start: '2017-08-21T08:00:00',
-                    end: '2017-08-21T08:30:00',
-                    allDay: false
-                },
-                {
-                    title: 'Rie Motomori',
-                    start: '2017-08-23',
-                    // end: new Date(y, m, 1, 9, 00),
-                    allDay: false
-                },
-                {
-                    title: 'Gamaliel Saracho',
-                    start: '2017-08-23T08:00:00',
-                    end: '2017-08-23T08:30:00',
-                    allDay: false
-                }
-			]
-		},
+		listaCitasEditedAndFilter: (datos, valores) => {
+			let newList = []
+			// title: 'Gamaliel Saracho',
+   //                  start: '2017-08-23T08:00:00',
+   //                  end: '2017-08-23T08:30:00',
+   //                  allDay: false
+			datos.map((i) => {
+				let cita = {}
+				cita.allDay = i.cita.allDay
+				cita.end = i.cita.end
+				cita.fecha = i.cita.fecha
+				cita.id_cita = i.cita.id_cita
+				cita.id_paciente = i.cita.id_paciente
+				cita.id_personal = i.cita.id_personal
+				cita.id_preconsulta = i.cita.id_preconsulta
+				cita.pendiente = i.cita.pendiente
+				cita.start = i.cita.start
+				cita.title =  i.paciente.nombres+' '+i.paciente.apellidos
 
-		listarEspecialidades: () => {
-			dispatch(listarEspecialidades())
-		},
-		listarPersonales: () => {
-			dispatch(listarPersonales())
+				newList.push(cita)
+			})
+
+			if(valores.id_personal != undefined) {
+				valores.id_personal = valores.id_personal[0] 
+				// console.log(valores)
+			}
+
+			newList = newList.filter((i) => {
+				return i.id_personal == valores.id_personal
+			})
+
+			// console.log('newList |||||||||||||||||')
+			// console.log(newList)
+			return newList
 		},
 		listarCitas: () => {
 			dispatch(listarCitas())
+		},
+
+		// Select Options.
+		listarEspecialidadesFuncion: () => {
+			dispatch(listarEspecialidades())
+		},
+		listarMedicosFuncion: () => {
+			dispatch(listarMedicos())
+		},
+		// Función para llamarlo dentro de componentWillMount. 
+		listarPacientesFuncion: () => {
+			dispatch(listarPacientes())
 		}
 	}
 }

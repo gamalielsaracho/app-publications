@@ -56,7 +56,7 @@ class Autenticar extends Component {
 					{ this.renderCargando(cargando) }
 					{ this.renderError(error) }
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>
-						<Field name="correo" type="text" component={renderField} label="Correo"/>
+						<Field name="correo" type="email" component={renderField} label="Correo"/>
 						<Field name="contrasena" type="password" component={renderField} label="Contraseña"/>
 					
 						<div className='row end-lg end-md end-sm end-xs'>

@@ -28,6 +28,11 @@ export const LISTAR_PERSONALES_REQUEST = 'listar_personales_request'
 export const LISTAR_PERSONALES_EXITO = 'listar_personales_exito'
 export const LISTAR_PERSONALES_FALLO = 'listar_personales_fallo'
 
+// Listar todos los personales médicos.
+export const LISTAR_MEDICOS_REQUEST = 'listar_medicos_request'
+export const LISTAR_MEDICOS_EXITO = 'listar_medicos_exito'
+export const LISTAR_MEDICOS_FALLO = 'listar_medicos_fallo'
+
 	// Actualizar la popiedad value de los inputs para filtrar usuarios.
 export const ACTUALIZAR_FORMULARIO_FILTRO = 'actualizar_formulario_filtro'
 

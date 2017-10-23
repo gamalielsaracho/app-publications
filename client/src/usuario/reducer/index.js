@@ -16,6 +16,10 @@ import {
 	LISTAR_PERSONALES_EXITO,
 	LISTAR_PERSONALES_FALLO,
 
+	LISTAR_MEDICOS_REQUEST,		
+	LISTAR_MEDICOS_EXITO,
+	LISTAR_MEDICOS_FALLO,
+
 	ACTUALIZAR_FORMULARIO_FILTRO
 
 } from '../actions/types'
@@ -25,6 +29,7 @@ const INITIAL_STATE = {
 		nombres: '', apellidos: '', correo: ''  
 	},
 	listar: { personales:[], cargando: false, error: '' },
+	listarMedicos: { personales:[], cargando: false, error: '' },
 	registro:{ mensaje:'', error:'', cargando:false },
 	autenticacion: { mensaje: '', error: '', cargando: false },
 	mostrar: { mensaje:'', error:'', cargando:false, personal: {} },
@@ -123,6 +128,32 @@ export default function (state = INITIAL_STATE, action) {
 					error: action.payload.error					
 				}
 			})
+
+
+			// Listar todos los Médicos.
+		case LISTAR_MEDICOS_REQUEST:
+			return state = Object.assign({}, state, {
+				listarMedicos: { cargando: true }
+			})
+			
+		case LISTAR_MEDICOS_EXITO:
+			return state = Object.assign({}, state, {
+				listarMedicos: {
+					personales: action.payload.personales, 
+					cargando:false, 
+					error: ''
+				}
+			})
+			
+		case LISTAR_MEDICOS_FALLO:
+			return state = Object.assign({}, state, {
+				listarMedicos: {
+					personales: [],
+					cargando: false,
+					error: action.payload.error					
+				}
+			})
+			
 
 		case ACTUALIZAR_FORMULARIO_FILTRO:
 			const { valores } = action

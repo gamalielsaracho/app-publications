@@ -9,7 +9,7 @@ import moment from 'moment'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FormularioContainer from '../Formulario'
+import FormularioCitaContainer from '../Formulario'
 import MostarVenCitaContainer from '../MostrarVen'
 
 import MostrarAgregarPreConsultaContainer from '../MostrarAgregarPreConsulta'
@@ -125,7 +125,7 @@ class Listar extends Component {
 	renderFormAndShow(rol) {
 		if(rol == 'ventanilla') {
 			return <div>
-				<FormularioContainer/>
+				<FormularioCitaContainer/>
 				<MostarVenCitaContainer/>
 			</div>
 		} else {

@@ -61,12 +61,13 @@ export function abrirFormularioEditarCita(idCita) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_CITA_REQUEST })
 
-		citaSocket.emit('mostrar_cita', {
+		citaSocket.emit('mostrar_cita_editar', {
 			id_cita: idCita
 		})
 
-		citaSocket.on('mostrar_cita', (data) => {
-			// console.log(data)
+		citaSocket.on('mostrar_cita_editar', (data) => {
+			console.log('mostrar_cita_editar')
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_CITA_FALLO, payload: data.error })
 			} else {

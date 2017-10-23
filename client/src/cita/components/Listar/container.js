@@ -30,7 +30,11 @@ function mapStateToProps(state) {
 
 		// Rol del usuario logeado, se trae desde el servidor, 
 		// para ocultar contenidos de la vista.
-		usuarioEstado: state.personal.usuarioEstado
+		usuarioEstado: state.personal.usuarioEstado,
+
+		// Para ver el estado del formulario, y hacer render del mismo
+		// solamente si esta abierto.
+		formulario: state.cita.formulario
 	}
 }
 

@@ -6,7 +6,7 @@ import {
 } from '../../actions'
 
 import {
-	listarPersonales
+	listarMedicos
 } from '../../../usuario/actions'
 
 
@@ -15,10 +15,8 @@ import Filtros from './Filtros'
 function mapStateToProps(state) {
 	return {
 
-
-		// Estados para el sistema de filtro.
 		// Lista los Médicos/as para mostrar dentro del select option Multiple.
-		listaPersonales: state.personal.listar.personales,
+		listarMedicos: state.personal.listarMedicos,
 
 		filtro: state.cita.filtro		
 	}
@@ -27,8 +25,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarPersonales: () => {
-			dispatch(listarPersonales())
+		listarMedicosFuncion: () => {
+			dispatch(listarMedicos())
 		},
 		actualizarFormularioFiltro: (valores) => {
 			// console.log(valores)

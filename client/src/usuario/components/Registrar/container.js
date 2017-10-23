@@ -112,7 +112,7 @@ const validate = values => {
 
 function mapStateToProps(state) {
 	return {
-    listaEspecialidades: state.especialidad.listar,
+    listarEspecialidades: state.especialidad.listar,
     listaRoles: state.rol.listar,
 		registro: state.personal.registro
 	}
@@ -120,7 +120,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-    listarEspecialidades: () => {
+    listarEspecialidadesFuncion: () => {
       dispatch(listarEspecialidades())
     },
     listarRoles: () => {

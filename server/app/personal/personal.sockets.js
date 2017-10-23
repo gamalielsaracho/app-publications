@@ -21,6 +21,17 @@ export default (socket, io) => {
 
 	personalesLista()
 
+	// Listar solamente los médicos.
+	Personal.findMedicos((err, personales) => {
+		if(err) {
+			socket.emit('listar_personales_medicos', { error: 'Ocurrió un error, intente nuevamente.' })
+			return
+		}
+				
+		io.sockets.emit('listar_personales_medicos', { personales: personales })
+	})
+
+
 	socket.on('registrar_personal', (data) => {
 		// console.log(data.correo)
 
@@ -78,6 +89,7 @@ export default (socket, io) => {
 					nombres: dato.personal.nombres,
 					apellidos: dato.personal.apellidos,
 					correo: dato.personal.correo,
+					id_rol: dato.rol.id_rol,
 					rol: dato.rol.descripcion
 				}
 

@@ -48,24 +48,23 @@ class FieldSelectPacientes extends Component {
 			}
 
 
-			return (<div className=''>
-				<label htmlFor={label}>{label}</label>
+			return (<div>
+				<div className='form-group'>
+					<label htmlFor={label}>{label}</label>
 
-				<div className='form-inline row'>
-					<div className='form-group col-lg-6'>
-						{ this.renderMensajeNoExistente(pacientes) }
+					{ this.renderMensajeNoExistente(pacientes) }
 
-						<select multiple {...input} name={name} className='form-control'>
-							{
-								pacientes.map((i) => {
-									return <option key={i.pa.id_paciente} value={i.pa.id_paciente}>
-										{ i.pa.nroDocumento+' | '+i.tipoDocumento.descripcion+' | '+i.pa.nombres+' '+i.pa.apellidos }
-									</option>
-								})
-							}
-						</select>
-					</div>
+					<select multiple {...input} name={name} className='form-control'>
+						{
+							pacientes.map((i) => {
+								return <option key={i.pa.id_paciente} value={i.pa.id_paciente}>
+									{ i.pa.nroDocumento+' | '+i.tipoDocumento.descripcion+' | '+i.pa.nombres+' '+i.pa.apellidos }
+								</option>
+							})
+						}
+					</select>
 				</div>
+
 			    { touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 			</div>)
 		}

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import { Field, reduxForm } from 'redux-form'
 
+import FieldSelectEspecialidadesContainer from '../../../especialidades/components/FieldSelectEspecialidades'
+
 class Registrar extends Component {
 	constructor(props) {
 		super(props)
@@ -9,38 +11,13 @@ class Registrar extends Component {
 		this.renderCargando = this.renderCargando.bind(this)
 		this.renderError = this.renderError.bind(this)
 
-		this.renderFieldSelectEspecialidad = this.renderFieldSelectEspecialidad.bind(this)
 		this.renderFieldSelectRol = this.renderFieldSelectRol.bind(this)
 		this.renderFieldInput = this.renderFieldInput.bind(this)
 	}
 
 	componentWillMount() {
-		this.props.listarEspecialidades()
+		this.props.listarEspecialidadesFuncion()
 		this.props.listarRoles()
-	}
-
-	renderFieldSelectEspecialidad({ input, label, listaEspecialidades, type, meta: { touched, error, warning } }) {
-		if(listaEspecialidades.especialidades) {
-			return <div>
-				<div className='form-group'>
-			    	<label htmlFor={label}>{label}</label>
-					<select {...input} name={name} className='form-control'>
-						<option value=''>Selecionar especialidad</option>
-						{
-							listaEspecialidades.especialidades.map((especialidad) => {
-								return <option key={especialidad.id_especialidad} value={especialidad.id_especialidad}>
-									{ especialidad.descripcion }
-								</option>
-							})
-						}
-							
-					</select>
-				</div>
-		    	{ touched && ((error && <p className="text-danger text-center">{ error }</p>)) }
-			</div>
-		} else {
-			return <span></span>
-		}
 	}
 
 	renderFieldSelectRol({ input, label, listaRoles, type, meta: { touched, error, warning } }) {
@@ -117,12 +94,16 @@ class Registrar extends Component {
 						<div className='row'>
 							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 								<Field name="nroDocumento" type="number" component={this.renderFieldInput} label="Numero de documento"/>
-								<Field name="id_especialidad" type="text" component={this.renderFieldSelectEspecialidad} listaEspecialidades={this.props.listaEspecialidades} label="Especialidades"/>
+								<Field name='id_especialidad' type='text' 
+									component={FieldSelectEspecialidadesContainer} 
+									listar={this.props.listarEspecialidades} 
+									label='Especialidad'
+									showBtnAdd={true}/>
 								
 								<Field name="id_rol" type="text" component={this.renderFieldSelectRol} listaRoles={this.props.listaRoles} label="Roles"/>
 								<Field name="nombres" type="text" component={this.renderFieldInput} label="Nombres"/>
 								<Field name="apellidos" type="text" component={this.renderFieldInput} label="Apellidos"/>
-								<Field name="correo" type="text" component={this.renderFieldInput} label="Correo"/>
+								<Field name="correo" type="email" component={this.renderFieldInput} label="Correo"/>
 							</div>
 							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 								<Field name="id_tipoDocumento" type="text" component={this.renderFieldInput} label="Tipo documento"/>

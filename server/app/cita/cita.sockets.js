@@ -41,6 +41,7 @@ export default (io) => {
 		socket.on('crear_cita', function(data) {
 			Cita.create(data, (err, cita) => {
 				if(err) {
+					console.log(err)
 					socket.emit('crear_cita', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
@@ -66,6 +67,20 @@ export default (io) => {
 		})
 
 
+		socket.on('mostrar_cita_editar', (data) => {
+			Cita.findByIdToUpdate(data, (err, cita) => {
+				// console.log(cita)
+				if(err) {
+					console.log(err)
+					socket.emit('mostrar_cita_editar', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				socket.emit('mostrar_cita_editar', cita[0])
+			})
+		})
+
+
 		socket.on('editar_cita', (data) => {
 			Cita.update(data, (err) => {
 				if(err) {
@@ -81,7 +96,7 @@ export default (io) => {
 		})
 		 
 		socket.on('mostrar_cita', (data) => {
-			console.log("CITA ID: --> "+data.id_cita)
+			// console.log("CITA ID: --> "+data.id_cita)
 			Cita.findById(data, (err, cita) => {
 				// console.log(cita)
 				if(err) {

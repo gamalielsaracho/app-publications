@@ -17,19 +17,21 @@ class Filtros extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarPersonales()
+		this.props.listarMedicosFuncion()
 	}
 
-	renderSelectPersonales(personales) {
+	renderSelectPersonales(listar) {
 		// console.log('personales')
 		// console.log(personales)
 
-		if(personales) {
+		if(listar.cargando) {
+			return <p>Cargando..</p>
+		} else {
 			return <div className="form-group">
 				<select onChange={this.handleChange} ref='idPersonal' className='form-control'>
 					<option value=''>Médicos/as</option>
 					{
-						personales.map((i) => {
+						listar.personales.map((i) => {
 							return <option key={i.personal.id_personal} value={i.personal.id_personal}>
 								{ i.personal.nombres }
 							</option>
@@ -37,9 +39,6 @@ class Filtros extends Component {
 					}
 				</select>
 			</div>
-
-		} else {
-			return <span>Cargando personales.</span>
 		}
 	}
 
@@ -165,7 +164,7 @@ class Filtros extends Component {
 
 			<div className='row'>
 				<div className='col-lg-2'>
-					{ this.renderSelectPersonales(this.props.listaPersonales) }
+					{ this.renderSelectPersonales(this.props.listarMedicos) }
 				</div>
 			</div>
 

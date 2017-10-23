@@ -70,6 +70,26 @@ exports.create = (data, callback) => {
 	connection.end()
 }
 
+exports.findByIdToUpdate = (data, callback) => {
+	// console.log(data)
+	let q = `
+		SELECT 
+			* 
+		FROM 
+			citas
+		WHERE
+			id_cita = ?
+	`
+	var options = {
+		sql: q,
+		nestTables: false
+	}
+
+	return connection.query(options, [data.id_cita], callback)
+
+	connection.end()
+}
+
 exports.update = (data, callback) => {
 	console.log(data)
 	let q = `

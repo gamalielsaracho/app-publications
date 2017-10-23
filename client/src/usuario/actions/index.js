@@ -16,6 +16,10 @@ import {
 	LISTAR_PERSONALES_EXITO,
 	LISTAR_PERSONALES_FALLO,
 
+	LISTAR_MEDICOS_REQUEST,
+	LISTAR_MEDICOS_EXITO,
+	LISTAR_MEDICOS_FALLO,
+
 	ACTUALIZAR_FORMULARIO_FILTRO
 } from './types'
 
@@ -110,6 +114,25 @@ export function listarPersonales() {
 				dispatch({ type: LISTAR_PERSONALES_FALLO, payload: data.error })
 			} else {	
 				dispatch({ type: LISTAR_PERSONALES_EXITO, payload: data })
+			}
+		})
+
+	}
+}
+
+
+export function listarMedicos() {
+	return (dispatch) => {
+
+		dispatch({ type: LISTAR_MEDICOS_REQUEST })
+
+		// var socketPersonal = io.connect('http://localhost:3000')
+
+		socketPersonal.on('listar_personales_medicos', function(data) {
+			if(data.error) {
+				dispatch({ type: LISTAR_MEDICOS_FALLO, payload: data.error })
+			} else {	
+				dispatch({ type: LISTAR_MEDICOS_EXITO, payload: data })
 			}
 		})
 

@@ -1,2 +1,2 @@
-import FormularioContainer from './container'
-export default FormularioContainer
+import FormularioEspecialidadContainer from './container'
+export default FormularioEspecialidadContainer

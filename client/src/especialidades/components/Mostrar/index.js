@@ -1,2 +1,2 @@
-import MostarContainer from './container'
-export default MostarContainer
+import MostarEspecialidadContainer from './container'
+export default MostarEspecialidadContainer
