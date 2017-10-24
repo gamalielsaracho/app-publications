@@ -12,9 +12,13 @@ import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.paciente.crear,
+		eliminar: state.paciente.eliminar,
 		listar: state.paciente.listar,
-		pacientes: state.paciente.listar.pacientes
+		pacientes: state.paciente.listar.pacientes,
+
+
+		// Para hacer render del formulario únicamente si esta abierto.
+		formulario: state.paciente.formulario
 	}
 }
 

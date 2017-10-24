@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
+import jwtDecode from 'jwt-decode'
+
 import { formatDate } from '../../../globalActions'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FormularioContainer from '../Formulario'
+import FormularioPacienteContainer from '../Formulario'
 // import MostarContainer from '../Mostrar'
 
 class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderPacientes = this.renderPacientes.bind(this)
+		this.renderOptionsByRol = this.renderOptionsByRol.bind(this)
+
+		this.renderFormularioPaciente = this.renderFormularioPaciente.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
@@ -20,13 +26,62 @@ class Listar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-
-		if(nextProps.pacientes !== this.props.pacientes) {
+		let condition = (
+			nextProps.pacientes !== this.props.pacientes ||
+			nextProps.eliminar !== this.props.eliminar ||
+			nextProps.formulario !== this.props.formulario
+		)
+		
+		if(condition) {
 			return true
 		}else {
 			return false
 		}
 	}	
+
+	renderFormularioPaciente() {
+		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
+			console.log("FormularioPacienteContainer montado. cool.!!")
+			return <FormularioPacienteContainer/>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderOptionsByRol(paciente) {
+		switch(this.personalLocalSt.id_rol) {
+			case 3: // admin.
+				return <div>
+					<Link to={`/dashboard/pacientes/${paciente.pa.id_paciente}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.id_paciente) }} className="btn btn-warning btn-space">Editar</button>
+					<button type="button" onClick={() => { this.props.eliminarPaciente(paciente.pa.id_paciente) }} className="btn btn-danger btn-space">Eliminar</button>
+				</div>
+			case 4: // admisión.
+				return <div>
+					<Link to={`/dashboard/pacientes/${paciente.pa.id_paciente}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.id_paciente) }} className="btn btn-warning btn-space">Editar</button>
+					<button type="button" onClick={() => { this.props.eliminarPaciente(paciente.pa.id_paciente) }} className="btn btn-danger btn-space">Eliminar</button>
+				</div>
+			case 1: // médico.
+				return <div>
+					<Link to={`/dashboard/pacientes/${paciente.pa.id_paciente}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
+				</div>
+			case 2: // enfermería.
+				return <div>
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.id_paciente) }} className="btn btn-warning btn-space">Editar</button>
+					<Link to={`/dashboard/pacientes/${paciente.pa.id_paciente}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
+					<button type="button" onClick={() => { this.props.eliminarPaciente(paciente.pa.id_paciente) }} className="btn btn-danger btn-space">Eliminar</button>
+				</div>
+		}
+	}
 
 	renderPacientes(pacientes) {
 
@@ -45,11 +100,7 @@ class Listar extends Component {
 			            <td>{ paciente.ciudad.descripcion }</td>
 
 			            <td>
-							<Link to={`/dashboard/pacientes/${paciente.pa.id_paciente}`}>
-								<button type="button" className="btn btn-info btn-space">Mostrar</button>
-							</Link>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarPaciente(paciente.pa.id_paciente) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarPaciente(paciente.pa.id_paciente) }} className="btn btn-danger btn-space">Eliminar</button>
+			            	{ this.renderOptionsByRol(paciente) }
 			            </td>
 			        </tr>		
 				})
@@ -59,7 +110,10 @@ class Listar extends Component {
 
 	render() {
 
-		const { pacientes, cargando, error } = this.props.listar
+		const { pacientes, cargando } = this.props.listar
+
+		let error = this.props.listar.error ? this.props.listar.error :
+			this.props.eliminar.error
 
 		if(cargando) {
 			return <Cargando/>
@@ -67,9 +121,9 @@ class Listar extends Component {
 				return <div>
 					<h1 className='text-center'>Pacientes</h1>
 					
-					<FormularioContainer/>
-
 					<MensajeOerror error={error} mensaje={null}/>
+
+					{ this.renderFormularioPaciente() }
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
