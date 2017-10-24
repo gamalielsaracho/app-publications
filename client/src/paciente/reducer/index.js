@@ -39,17 +39,18 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		paciente: {}
+		paciente: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { pacientes:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, paciente: {}, error: '', abierto: false },
+	mostrar: { cargando: false, paciente: null, error: '' },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		
 		case ABRIR_FORMULARIO_CREAR_PACIENTE:
 			return Object.assign({}, state, {
 				formulario: {
@@ -58,9 +59,9 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					paciente: {}
+					paciente: null
 				},
-				mostrar: { abierto: false }
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PACIENTE_REQUEST:
@@ -71,9 +72,9 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					paciente: {}
+					paciente: null
 				},
-				mostrar: { abierto: false }
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PACIENTE_EXITO:
@@ -85,8 +86,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					paciente: action.payload
-				},
-				mostrar: { abierto: false }
+				}
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PACIENTE_FALLO:
@@ -97,22 +97,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					paciente: {}
-				},
-				mostrar: { abierto: false }
+					paciente: null
+				}
 			})
 
 
 		case CERRAR_FORMULARIO_PACIENTE:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					paciente: {}
-				},
+				formulario: INITIAL_STATE.formulario,
+
 				// Limpia si es que anteriormente ocurió un error.
 				crear: { error: '' },
 				editar: { error: '' }
@@ -125,7 +118,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_PACIENTE_EXITO:
-			console.log(action.payload.datoInsertado)
+			// console.log(action.payload.datoInsertado)
 
 			return Object.assign({}, state, {
 				crear: { 
@@ -145,7 +138,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_PACIENTES_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 
@@ -163,16 +157,16 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_PACIENTE_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				mostrar: { cargando: true },
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case MOSTRAR_PACIENTE_EXITO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					paciente: action.payload,
-					abierto: true
+					paciente: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
@@ -181,21 +175,15 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					paciente: {},
-					error: action.payload,
-					abierto: true
+					paciente: null,
+					error: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
 		case CERRAR_MODAL_MOSTRAR_PACIENTE:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					paciente: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -234,8 +222,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					paciente: action.payload
+					error: ''
 				}
 			})
 
@@ -243,8 +230,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					paciente: {}
+					error: action.payload
 				}
 			})
 
