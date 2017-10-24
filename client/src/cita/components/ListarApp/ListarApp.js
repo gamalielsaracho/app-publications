@@ -7,34 +7,30 @@ import jwtDecode from 'jwt-decode'
 class ListarApp extends Component {
 	constructor(props) {
 		super(props)
-		this.renderMenuByRol = this.renderMenuByRol.bind(this)
-	}
-
-	renderMenuByRol(rol) {
-		if(rol == 'ventanilla') {
-			return <span>
-			</span>
-		} else {
-			return <ul className="nav nav-tabs">
-			  <li role="presentation" className="active">
-			  	<a>
-			    	<Link to='/dashboard/citas'>Listar</Link>
-			  	</a>
-			  </li>
-
-			  <li role="presentation" id='myTabs'>
-			  	<a href="#">Detalle cita</a>
-			  </li>
-			  
-			</ul>
-		}
 	}
 
 	render() {
-		let rolUsuario = jwtDecode(localStorage.getItem('token')).rol
+
+		let activeListarCitas
+		let activeMostrarCita
+
+		if(this.props.urls.idCita) {
+			activeMostrarCita = 'active'
+			activeListarCitas = ''
+		} else {
+			activeMostrarCita = ''
+			activeListarCitas = 'active'
+		}
 
 		return <div>
-			{ this.renderMenuByRol(rolUsuario) }
+			<ul className="nav nav-tabs no-print-data">
+			  <li className="nav-item nav-link" className={activeListarCitas}>
+			  	<Link to={`/dashboard/citas`}>Listar citas</Link>
+			  </li>
+			  <li className="nav-item nav-link" className={activeMostrarCita}>
+			    <a className="nav-link">Detalle cita</a>
+			  </li>
+			</ul>
 
 			{ this.props.children }
 		</div>

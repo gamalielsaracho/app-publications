@@ -1,2 +1,2 @@
-import ListarCitasApp from './ListarApp'
-export default ListarCitasApp
+import ListarCitasAppContainer from './container'
+export default ListarCitasAppContainer
