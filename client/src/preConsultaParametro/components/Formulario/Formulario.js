@@ -110,27 +110,25 @@ class Formulario extends Component {
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
 		return <div>
-			<div className='row'>
-				<MensajeOerror error={error} mensaje={null}/>
-				{ this.renderCargando(cargando) }
-			</div>
+			<MensajeOerror error={error} mensaje={null}/>
+			{ this.renderCargando(cargando) }
 
-			<div className='row'>
+			<div className=''>
 
 				<FormularioParametroPreConsultaContainer/>
 
 				<form onSubmit={handleSubmit(this.enviarFormulario)}>
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-8'>
+						<div className='col-xs-12 col-sm-12 col-md-8 col-lg-8'>
 							{ this.renderFieldSelectParametrosPre(this.props.listaParametros, parametroPreConsulta) }
 						</div>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-3'>
+						<div className='col-xs-12 col-sm-12 col-md-3 col-lg-3'>
 							<Field name='valor' type='text' component={renderField} label='Valor'/>
 						</div>
 					</div>
 
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-8'>
+						<div className='col-xs-12 col-sm-12 col-md-8 col-lg-8'>
 							<Field name='observaciones' type='textarea' component={this.renderFieldTextArea} label='Observaciones'/>
 						</div>
 					</div>
