@@ -36,6 +36,9 @@ class Formulario extends Component {
 		if(this.props.editarContenido) {
 			this.props.editarConsulta(formProps)
 		} else {
+			console.log('datosCita ---------->')
+			console.log(this.props.datosCita)
+
 			formProps.fecha = new Date()
 			formProps.id_preconsulta = parseInt(this.props.idPreConsulta)
 			
@@ -47,8 +50,8 @@ class Formulario extends Component {
 			// Para pasarle a push y redireccionar a la consulta creada.
 			formProps.id_cita = this.props.datosCita.cita.id_cita
 
-			// console.log(formProps)
-			this.props.crearConsulta(formProps)
+			console.log(formProps)
+			// this.props.crearConsulta(formProps)
 		}
 	}
 

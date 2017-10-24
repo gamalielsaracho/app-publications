@@ -95,7 +95,6 @@ class Menu extends Component {
 
 	enfermeriaMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/alergias'>Alergias (Enf) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Enf) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/citas'>Citas (Enf) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/parametros-preconsulta'>Parametros pre-consulta (Enf) <span className="badge">8</span></Link></li>			
