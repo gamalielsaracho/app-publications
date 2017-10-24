@@ -117,6 +117,7 @@ exports.findById = (data, callback) => {
 // }
 
 exports.create = (data, callback) => {
+	console.log(data)
 	let q = `
 		INSERT INTO consultas (id_consulta, fecha, fechaProximaConsulta, 
 		id_personal, id_preconsulta, observacionDiagnostico, id_paciente)

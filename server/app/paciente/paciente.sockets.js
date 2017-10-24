@@ -1,5 +1,7 @@
 import Paciente from './paciente.model'
 
+import verifyRef from './././../validations/verifyRef.js'
+
 export default (socket, io) => {
 	
 		function pacientes() {
@@ -80,15 +82,39 @@ export default (socket, io) => {
 
 
 		socket.on('eliminar_paciente', (data) => {
-			Paciente.delete(data, (err) => {
+			let d = {
+				table1: 'citas', 
+				table2: 'preconsultas', 
+				table3: 'pacientesalergias',
+				fieldPrimaryKey: 'id_paciente',
+				primaryKey: data.id_paciente
+			}
+
+			verifyRef(d, (err, enUso) => {
 				if(err) {
+					console.log(err)
 					socket.emit('eliminar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_paciente', { mensaje: 'Se Eliminó exitósamente.' })
+				console.log('enUso ---------->')
+				console.log(enUso)
+				
+				if(enUso) {
+					socket.emit('eliminar_paciente', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					Paciente.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				pacientes()
+						socket.emit('eliminar_paciente', { mensaje: 'Se Eliminó exitósamente.' })
+
+						pacientes()
+					})
+				}
 			})
 		})
 
