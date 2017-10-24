@@ -25,7 +25,7 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
 
 		this.renderFieldRadio = this.renderFieldRadio.bind(this)
 	}
@@ -47,6 +47,48 @@ class Formulario extends Component {
 		</div>
 	}
 
+	renderFormulario(cargando) {
+		if(cargando) {
+			return <Cargando/>
+		} else {
+			const { handleSubmit, pristine, reset, submitting } = this.props		
+
+			return <form onSubmit={handleSubmit(this.enviarFormulario)}>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7 col-centered'>
+						<div className='row'>
+							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+								<Field name='nroDocumento' type='text' component={renderField} label='Número de documento'/>
+								<Field name='nombres' type='text' component={renderField} label='Nombres'/>
+								<Field name='sexo' type='radio' component={this.renderFieldRadio} value='masculino' label='Masculino'/>
+								<Field name='sexo' type='radio' component={this.renderFieldRadio} value='femenino' label='Femenino'/>
+								<Field name='direccion' type='text' component={renderField} label='Dirección'/>
+								<Field name='celular' type='text' component={renderField} label='Celular'/>
+								<Field name='id_area' type='text' component={FieldSelectAreas} listaAreas={this.props.listaAreas} label='Area:'/>
+							</div>
+
+							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+								<Field name='id_tipoDocumento' type='text' component={renderField} label='Tipo de documento'/>
+								<Field name='apellidos' type='text' component={renderField} label='Apellidos'/>
+								<Field name='fechaNacimiento' type='date' component={renderField} label='Fecha de nacimiento'/>
+								<Field name='telefono' type='text' component={renderField} label='Telefono'/>
+								<Field name='id_ciudad' type='text' component={FieldSelectCiudadesContainer} listaCiudades={this.props.listaCiudades} label='Ciudad:'/>
+							</div>
+						</div>
+
+						<div className='row row end-lg end-md end-sm end-xs'>
+							<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7'>
+								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+								<button type="button" onClick={ this.props.cerrarFormularioPaciente } className="btn btn-primary btn-space">Cancelar</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		}
+	}
+
 	enviarFormulario(formProps) {
 		console.log(formProps)
 
@@ -57,14 +99,6 @@ class Formulario extends Component {
 		}
 	}
 
-	renderCargando(cargando) {
-		if(cargando) {
-			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
-
 	render() {
 		const customStyles = {
 		    content : {
@@ -72,8 +106,6 @@ class Formulario extends Component {
 		  		position: 'none'
 		  	}
 		}
-
-		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
 			abirtoCrear, abirtoEditar, error, cargando, paciente 
@@ -96,41 +128,8 @@ class Formulario extends Component {
 					<FormularioContainer/>
 
 					<MensajeOerror error={Error} mensaje={null}/>
-					{ this.renderCargando(cargando) }
 
-					<form onSubmit={handleSubmit(this.enviarFormulario)}>
-						<div className='row'>
-							<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7 col-centered'>
-								<div className='row'>
-									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-										<Field name='nroDocumento' type='text' component={renderField} label='Número de documento'/>
-										<Field name='nombres' type='text' component={renderField} label='Nombres'/>
-										<Field name='sexo' type='radio' component={this.renderFieldRadio} value='masculino' label='Masculino'/>
-										<Field name='sexo' type='radio' component={this.renderFieldRadio} value='femenino' label='Femenino'/>
-										<Field name='direccion' type='text' component={renderField} label='Dirección'/>
-										<Field name='celular' type='text' component={renderField} label='Celular'/>
-										<Field name='id_area' type='text' component={FieldSelectAreas} listaAreas={this.props.listaAreas} label='Area:'/>
-									</div>
-
-									<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-										<Field name='id_tipoDocumento' type='text' component={renderField} label='Tipo de documento'/>
-										<Field name='apellidos' type='text' component={renderField} label='Apellidos'/>
-										<Field name='fechaNacimiento' type='date' component={renderField} label='Fecha de nacimiento'/>
-										<Field name='telefono' type='text' component={renderField} label='Telefono'/>
-										<Field name='id_ciudad' type='text' component={FieldSelectCiudadesContainer} listaCiudades={this.props.listaCiudades} label='Ciudad:'/>
-									</div>
-								</div>
-
-								<div className='row row end-lg end-md end-sm end-xs'>
-									<div className='col-xs-12 col-sm-12 col-md-7 col-lg-7'>
-										<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-										<button type="button" onClick={ this.props.cerrarFormularioPaciente } className="btn btn-primary btn-space">Cancelar</button>
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</form>
+					{ this.renderFormulario(cargando) }
 
 				</div>
 			</ReactModal>
