@@ -81,6 +81,30 @@ export default (io) => {
 		})
 
 
+		socket.on('editar_cita_idPreConsultaField', (data) => {
+			Cita.updateIdPreConsultaField(data, (err) => {
+				if(err) {
+					console.log(err)
+					socket.emit('editar_cita_idPreConsultaField', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				socket.emit('editar_cita_idPreConsultaField', { mensaje: 'Se actualizó exitósamente.' })
+				
+				Cita.findById(data, (err, cita) => {
+				// console.log(cita)
+					if(err) {
+						console.log(err)
+						socket.emit('mostrar_cita', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+					
+					socket.emit('mostrar_cita', cita[0])
+				})
+			})
+		})
+
+
 		socket.on('editar_cita', (data) => {
 			Cita.update(data, (err) => {
 				if(err) {
