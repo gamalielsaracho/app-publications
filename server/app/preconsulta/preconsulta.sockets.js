@@ -9,7 +9,6 @@ export default (io) => {
 
 		console.log('Pre-consulta Conectado.')
 
-
 		// socket.on('listar_preconsultas', () => {
 			
 			function preconsultas() {
@@ -29,6 +28,28 @@ export default (io) => {
 			preconsultas()
 
 
+			function preconsultasPorFechaDia() {
+				socket.on('listar_preconsultas_fechaDia', (data) => {
+					// console.log(data)
+
+					// Listar todas las pre-consultas por fecha del día y el paciente.
+					Preconsulta.listarPorFechaActualYidPaciente(data, (err, preConsultas) => {
+						console.log(preConsultas)
+						if(err) {
+							console.log(err)
+							socket.emit('listar_preconsultas_fechaDia', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+							return
+						}
+
+						preconsultaNsp.emit('listar_preconsultas_fechaDia', {
+							preConsultas: preConsultas 
+						})
+					})
+				})
+			}
+
+			preconsultasPorFechaDia()
+
 			socket.on('crear_preconsulta', function(data) {
 				console.log(data)
 				Preconsulta.create(data, (err, preconsulta) => {
@@ -42,8 +63,27 @@ export default (io) => {
 						mensaje: 'Se agregó exitósamente.' ,
 						idPreconsultaInsertada: preconsulta.insertId
 					})
+
+					let datos = {}
+					datos.fechaCita = data.fecha
+					datos.id_paciente = data.id_paciente
+
+					// Listar todas las pre-consultas por fecha del día y el paciente.
+					Preconsulta.listarPorFechaActualYidPaciente(data, (err, preConsultas) => {
+						// console.log(preConsultas)
+						if(err) {
+							console.log(err)
+							socket.emit('listar_preconsultas_fechaDia', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+							return
+						}
+
+						preconsultaNsp.emit('listar_preconsultas_fechaDia', {
+							preConsultas: preConsultas 
+						})
+					})
 				
 					preconsultas()
+					// preconsultasPorFechaDia()
 				})
 			})
 
