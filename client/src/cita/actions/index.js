@@ -206,6 +206,26 @@ export function editarCita(datosFormulario) {
 	}
 }
 
+// Acción para actualizar solamente la clave foranea de 
+// una cita. 
+export function editarCitaIdPreConsultaField(datosFormulario) {
+	return (dispatch) => {
+
+		dispatch({ type: EDITAR_CITA_REQUEST })
+
+		citaSocket.emit('editar_cita_idPreConsultaField', datosFormulario)
+
+		citaSocket.on('editar_cita_idPreConsultaField', (data) => {
+			if(data.error) {
+				dispatch({ type: EDITAR_CITA_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: EDITAR_CITA_EXITO, payload: data })
+			}
+		})
+
+	}
+}
+
 export function actualizarFormularioFiltro(valoresInput) {
 	return (dispatch) => {
 		// console.log(valoresInput)
