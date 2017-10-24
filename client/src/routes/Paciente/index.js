@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router'
 
 
 // Listar.
-import ListarPacienteApp from '../../paciente/components/ListarApp'
+import ListarPacientesApp from '../../paciente/components/ListarApp'
 
 // PACIENTES
 import ListarPacientesPage from '../../paciente/pages/ListarPacientesPage'
@@ -37,7 +37,7 @@ import ListarConsultaDiagnosticosContainer from '../../consultaDiagnostico/compo
 
 {/* Historial clínico. */}
 const pacienteRoutes = (
-	<Route path='/dashboard/pacientes' component={ListarPacienteApp}>
+	<Route path='/dashboard/pacientes' component={ListarPacientesApp}>
 		<IndexRoute component={ListarPacientesPage}/>
 				
 		<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
