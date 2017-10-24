@@ -1,2 +1,2 @@
-import ListarPacienteApp from './ListarApp'
-export default ListarPacienteApp
+import ListarPacientesApp from './container'
+export default ListarPacientesApp
