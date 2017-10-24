@@ -49,7 +49,7 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		cita: {}
+		cita: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	filtro: {
@@ -73,10 +73,10 @@ const INITIAL_STATE = {
 	},
 	listar: { citas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, cita: {}, error: '', abierto: false },
+	mostrar: { cargando: false, cita: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' },
 	mostrarCitaAgregarPreConsulta: {
-		cargando: false, cita: {}, error: '', abierto: false
+		cargando: false, cita: null, error: '', abierto: false
 	}
 }
 
@@ -88,7 +88,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: true,
 					error: '',
 					abierto: true,
-					cita: {}
+					cita: null
 				},
 				mostrar: INITIAL_STATE.mostrar
 			})
@@ -110,7 +110,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					error: action.payload,
 					abierto: true,
-					cita: {}
+					cita: null
 				},
 				mostrar: INITIAL_STATE.mostrar
 			})
@@ -157,7 +157,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					cita: {}
+					cita: null
 				},
 				mostrar: { abierto: false }
 			})
@@ -170,7 +170,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					cita: {}
+					cita: null
 				},
 				mostrar: { abierto: false }
 			})
@@ -196,7 +196,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					cita: {}
+					cita: null
 				},
 				mostrar: { abierto: false }
 			})
@@ -210,7 +210,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					cita: {}
+					cita: null
 				}
 			})
 
@@ -268,7 +268,7 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_CITA_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true, cita:{} },
+				mostrar: { cargando: true, abierto: true, cita:null },
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
@@ -290,7 +290,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					cita: {},
+					cita: null,
 					error: action.payload,
 					abierto: true
 				},
@@ -301,7 +301,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					cita: {},
+					cita: null,
 					error: '',
 					abierto: false
 				}
@@ -343,8 +343,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					cita: action.payload
+					error: ''
 				}
 			})
 
@@ -352,8 +351,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					cita: {}
+					error: action.payload
 				}
 			})
 
