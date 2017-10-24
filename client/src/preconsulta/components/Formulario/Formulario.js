@@ -10,8 +10,6 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 // NIVEL.
 import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
-import FormularioNivelContainer from '../../../nivel/components/Formulario'
-
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -40,7 +38,8 @@ class Formulario extends Component {
 		let datosCita = this.props.datosCita
 		let datosToken = this.props.datosToken
 
-		formProps.fecha = new Date()
+
+		formProps.fecha = datosCita.cita.fecha
 		formProps.id_paciente = datosCita.paciente.id_paciente
 		formProps.id_personal = datosToken.personal.id_personal
 
@@ -101,8 +100,6 @@ class Formulario extends Component {
 
 				<div className='container'>
 					<h4 className='text-center'>Formulario pre-consulta</h4>
-
-					<FormularioNivelContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
 					{ this.renderCargando(cargando) }
