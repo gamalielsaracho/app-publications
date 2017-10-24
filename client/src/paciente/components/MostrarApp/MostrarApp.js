@@ -1,10 +1,20 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
+import jwtDecode from 'jwt-decode'
+
 import MostarPacienteContainer from '../Mostrar'
 
 class MostrarApp extends Component {
-	render() {
+	constructor(props) {
+		super(props)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+		this.renderMenuByRol = this.renderMenuByRol.bind(this)
+	}
+
+	renderMenuByRol() {
+		let rol = this.personalLocalSt.id_rol
+
 		let urlListarAlergias
 		let urlListarConsultas
 		let urlListarSolicitudesAnalisis
@@ -37,28 +47,42 @@ class MostrarApp extends Component {
 				break
 		}
 
+		// 1 médico.
+		// 3 administración.
+		if((rol == 1) || (rol == 3)) {
+			return <div>
+				<h3 className='text-center'>Historial Clínico</h3>
+
+				<ul className="nav nav-tabs">
+					<li className="nav-item nav-link" className={activeAlergias}>
+				    	<Link to={urlListarAlergias}>Alergias</Link>
+					</li>
+					<li className="nav-item nav-link" className={activeConsultas}>
+				    	<Link to={urlListarConsultas}>Consultas</Link>
+					</li>
+					<li className="nav-item nav-link" className={activeSolicitudesAnalisis}>
+					<Link to={urlListarSolicitudesAnalisis}>
+				    		Solicitudes laboratorio
+				    	</Link>
+					</li>
+				</ul>
+				<br/>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
+	render() {
+		
+
 		return <div>
 			<br/>
 			<MostarPacienteContainer 
 				idPaciente = { this.props.urls.idPaciente }/>
 
-			<h3 className='text-center'>Historial Clínico</h3>
+			{ this.renderMenuByRol() }
 
-			<ul className="nav nav-tabs">
-				<li className="nav-item nav-link" className={activeAlergias}>
-			    	<Link to={urlListarAlergias}>Alergias</Link>
-				</li>
-				<li className="nav-item nav-link" className={activeConsultas}>
-			    	<Link to={urlListarConsultas}>Consultas</Link>
-				</li>
-				<li className="nav-item nav-link" className={activeSolicitudesAnalisis}>
-				<Link to={urlListarSolicitudesAnalisis}>
-			    		Solicitudes laboratorio
-			    	</Link>
-				</li>
-			</ul>
-
-			<br/>
 			{ this.props.children }
 
 		</div>
