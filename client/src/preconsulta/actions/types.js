@@ -3,6 +3,20 @@ export const LISTAR_PRECONSULTAS_REQUEST = 'listar_preconsultas_request'
 export const LISTAR_PRECONSULTAS_EXITO = 'listar_preconsultas_exito'
 export const LISTAR_PRECONSULTAS_FALLO = 'listar_preconsultas_fallo'
 
+// Abrir la ventana modal donde se listarán todas
+// las pre-consultas de la fecha de la cita y por paciente.
+export const ABRIR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA = 'abrir_modal_listar_preconsultas_fecha_dia'
+
+
+// FIND por fecha del día y id_paciente.
+export const LISTAR_PRECONSULTAS_FECHA_DIA_REQUEST = 'listar_preconsultas_fecha_dia_request'
+export const LISTAR_PRECONSULTAS_FECHA_DIA_EXITO = 'listar_preconsultas_fecha_dia_exito'
+export const LISTAR_PRECONSULTAS_FECHA_DIA_FALLO = 'listar_preconsultas_fecha_dia_fallo'
+
+
+// cerrar la ventana modal.
+export const CERRAR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA = 'cerrar_modal_listar_preconsultas_fecha_dia'
+
 
 // EDIT.
 export const ABRIR_FORMULARIO_EDITAR_PRECONSULTA_REQUEST = 'abrir_formulario_editar_preconsulta_request'

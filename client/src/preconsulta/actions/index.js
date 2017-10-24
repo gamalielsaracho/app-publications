@@ -11,6 +11,14 @@ import {
 	LISTAR_PRECONSULTAS_EXITO,
 	LISTAR_PRECONSULTAS_FALLO,
 
+	ABRIR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA,
+
+	LISTAR_PRECONSULTAS_FECHA_DIA_REQUEST,
+	LISTAR_PRECONSULTAS_FECHA_DIA_EXITO,
+	LISTAR_PRECONSULTAS_FECHA_DIA_FALLO,
+
+	CERRAR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA,
+
 	// Create rol.
 	CREAR_PRECONSULTA_REQUEST,
 	CREAR_PRECONSULTA_EXITO,
@@ -35,11 +43,47 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
+import moment from 'moment'
+
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var preconsultaSocket = io.connect('http://localhost:3000/preconsulta');
+
+
+export function abrirModalListarPreConsultasFechaDia() {
+	return (dispatch) => {
+		dispatch({ type: ABRIR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA })
+	}
+}
+
+export function cerrarModalListarPreConsultasFechaDia() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA })
+	}
+}
+
+
+export function listarPreConsultasFechaDia(fechaCita, idPaciente) {
+	return (dispatch) => {
+		dispatch({ type: LISTAR_PRECONSULTAS_FECHA_DIA_REQUEST })
+
+		preconsultaSocket.emit('listar_preconsultas_fechaDia', { 
+			fechaCita: fechaCita,
+			id_paciente: idPaciente
+		})
+
+		preconsultaSocket.on('listar_preconsultas_fechaDia', (data) => {
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: LISTAR_PRECONSULTAS_FECHA_DIA_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: LISTAR_PRECONSULTAS_FECHA_DIA_EXITO, payload: data })
+			}
+		})
+	}
+}
 
 export function abrirFormularioCrearPreConsulta() {
 	return (dispatch) => {
