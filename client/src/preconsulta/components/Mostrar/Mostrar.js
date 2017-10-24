@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import removeAccents from 'remove-accents'
+
+import jwtDecode from 'jwt-decode'
+
+import moment from 'moment'
 
 import ReactModal from 'react-modal'
 
@@ -12,71 +15,43 @@ import FormularioPreConsultaParametroContainer from '../../../preConsultaParamet
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
 		this.renderPreConsulta = this.renderPreConsulta.bind(this)
 
 		this.formularioPreConsultaParametroByRol = this.formularioPreConsultaParametroByRol.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
 		this.props.mostrarPreConsulta(this.props.idPreConsulta)
 	}
 
-	formularioPreConsultaParametroByRol(datosToken, personalPre) {
-		// let personal = datosToken.personal
-		// let rol = removeAccents(.rol.descripcion)
-		// let rol = 'medico'
-		if(personalPre != null) {
-			if(removeAccents(datosToken.rol.descripcion) == 'enfermeria' && datosToken.personal.id_personal == personalPre.personal.id_personal) {
-				return <FormularioPreConsultaParametroContainer
-							idPreConsulta={this.props.idPreConsulta}/>
-			} else {
-				return <span></span>
-			}
+	formularioPreConsultaParametroByRol() {
+		let rol = this.personalLocalSt.id_rol
+		
+		// 2 enfermeria.
+		// 3 administración.
+		if((rol == 2) || (rol == 4)) {
+			return <FormularioPreConsultaParametroContainer
+						idPreConsulta={this.props.idPreConsulta}/>
+		} else {
+			return <span></span>
 		}
-		// console.log('El ROL ES DESDE EL SERVER:'+this.props.usuarioEstado.datosToken.rol.descripcion)
-
-		// if(rol == 'enfermeria') {
-		// } else {
-		// }
-
 	}
 
-	renderCargando(cargando) {
+	renderPreConsulta(cargando, preConsulta) {
 		if(cargando) {
 			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
-
-	renderPreConsulta(preConsulta) {
-		let datosToken = null
-		let personalPre = null
-
-		let condition = (
-			this.props.preConsulta != undefined && 
-			this.props.usuarioEstado.datosToken.rol != null
-		);
-
-		if(condition) {
-			datosToken = this.props.usuarioEstado.datosToken
-			personalPre = this.props.preConsulta
-		}
-
-		if(preConsulta && preConsulta.personal !== undefined) {
+		} else if (preConsulta){
 			return <div className='row'>
-				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+				<div className='col-xs-12 col-sm-12 col-md-5 col-lg-5'>
 					<p><strong>Enfermero/a:</strong>{ preConsulta.personal.nombres +' '+ preConsulta.personal.apellidos }</p>
-					<p><strong>Fecha:</strong>{ preConsulta.preconsulta.fecha }</p>
+					<p><strong>Fecha:</strong>{ moment(preConsulta.preconsulta.fecha).format('L') }</p>
 					<p><strong>Nivel:</strong>{ preConsulta.nivel.descripcion }</p>				
 				</div>
-				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-					{ this.formularioPreConsultaParametroByRol(datosToken, personalPre) }
+				<div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+					{ this.formularioPreConsultaParametroByRol() }
 				</div>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 
@@ -89,10 +64,9 @@ class Mostrar extends Component {
 		// console.log(this.props.mostrar)
 		
 		return <div>
-			{ this.renderCargando(cargando) }
 			<MensajeOerror error={error} mensaje={null}/>
 
-			{ this.renderPreConsulta(preConsulta) }
+			{ this.renderPreConsulta(cargando, preConsulta) }
 		</div>
 
 	}
