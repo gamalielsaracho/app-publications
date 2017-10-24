@@ -1,5 +1,7 @@
 import connection from '../../config/connection'
 
+import moment from 'moment'
+
 exports.find = (callback) => {
 
 	let q = `
@@ -23,9 +25,15 @@ exports.find = (callback) => {
 exports.listarPorFechaActualYidPaciente = (data, callback) => {
 
 	let q = `
-		SELECT * FROM preconsultas preconsulta, citas cita
-			WHERE preconsulta.fecha = cita.fecha AND 
-			preconsulta.id_paciente = cita.id_paciente
+		SELECT
+			*
+		FROM
+			preconsultas preconsulta,
+			niveles nivel 
+		WHERE
+			preconsulta.id_nivel = nivel.id_nivel AND
+			preconsulta.fecha = ? AND 
+			preconsulta.id_paciente = ?
 	`
 
 	var options = {
@@ -33,7 +41,7 @@ exports.listarPorFechaActualYidPaciente = (data, callback) => {
 		nestTables: true
 	}
 
-	return connection.query(options, callback)
+	return connection.query(options, [moment(data.fechaCita).format('YYYY-MM-DD'), data.id_paciente], callback)
 
 	connection.end()
 }
