@@ -10,9 +10,8 @@ import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import FormularioCitaContainer from '../Formulario'
-import MostarVenCitaContainer from '../MostrarVen'
 
-import MostrarAgregarPreConsultaContainer from '../MostrarAgregarPreConsulta'
+// import MostrarAgregarPreConsultaContainer from '../MostrarAgregarPreConsulta'
 
 import FiltrosCitaContainer from '../Filtros'
 
@@ -22,30 +21,30 @@ class Listar extends Component {
 		this.renderCitas = this.renderCitas.bind(this)
 		this.renderOptionsByRol = this.renderOptionsByRol.bind(this)
 		this.renderAddButton = this.renderAddButton.bind(this)
-		this.renderFormAndShow = this.renderFormAndShow.bind(this)
+		this.renderFormularioCita = this.renderFormularioCita.bind(this)
 
 		this.renderEstadoCita = this.renderEstadoCita.bind(this)
-
-		this.renderEnfermeriaBtns = this.renderEnfermeriaBtns.bind(this)
+		this.renderBtnDelete = this.renderBtnDelete.bind(this)
 
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
-		switch(removeAccents(this.personalLocalSt.rol)) {
-			case 'ventanilla':
+		// console.log(this.personalLocalSt)
+		switch(this.personalLocalSt.id_rol) {
+			case 4:
 				this.props.listarCitas()
 				break
 				
-			case 'administracion':
+			case 3:
 				this.props.listarCitas()
 				break
 
-			case 'enfermeria':
+			case 2:
 				this.props.listarCitas()
 				break
 
-			case 'medico':
+			case 1:
 				this.props.listarCitasMedico(this.personalLocalSt.id_personal)
 				break
 
@@ -68,50 +67,51 @@ class Listar extends Component {
 		}
 	}
 
-	renderEnfermeriaBtns(cita) {
-		if(cita.id_preconsulta == null) {
-			return <button type="button" onClick={() => { this.props.mostrarCitaAgregarPreConsulta(cita.id_cita) }} className="btn btn-success btn-space">
-				Agregar pre-consulta
-			</button>
-			
+	renderBtnDelete(cita) {
+		if(cita.id_preconsulta) {
+			return <span></span>
 		} else {
-			return <Link to={`/dashboard/citas/${cita.id_cita}`}>
-				<button type="button" className="btn btn-info btn-space">Mostrar</button>
-			</Link>
+			return <button type="button" 
+				onClick={() => { this.props.eliminarCita(cita.id_cita) }} className="btn btn-danger btn-space">
+				Eliminar
+			</button>
 		}
 	}
 
-	renderOptionsByRol(rol, cita) {
-		// alert(rol)
+	renderOptionsByRol(cita) {
 
-		switch(rol) {
-			case 'administracion':
+		switch(this.personalLocalSt.id_rol) {
+			case 3: // admin.
 				return <div>
 					<button type="button" onClick={() => { this.props.mostrarCita(cita.id_cita) }} className="btn btn-info btn-space">Mostrar</button>
 					<button type="button" onClick={() => { this.props.abrirFormularioEditarCita(cita.id_cita) }} className="btn btn-warning btn-space">Editar</button>
-					<button type="button" onClick={() => { this.props.eliminarCita(cita.id_cita) }} className="btn btn-danger btn-space">Eliminar</button>
+					{ this.renderBtnDelete(cita) }
 				</div>
-			case 'ventanilla':
+			case 4: // admisión.
 				return <div>
-					<button type="button" onClick={() => { this.props.mostrarCita(cita.id_cita) }} className="btn btn-info btn-space">Mostrar</button>
+					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
 					<button type="button" onClick={() => { this.props.abrirFormularioEditarCita(cita.id_cita) }} className="btn btn-warning btn-space">Editar</button>
-					<button type="button" onClick={() => { this.props.eliminarCita(cita.id_cita) }} className="btn btn-danger btn-space">Eliminar</button>
+					{ this.renderBtnDelete(cita) }
 				</div>
-			case 'medico':
+			case 1: // médico.
 				return <div>
 					<Link to={`/dashboard/citas/${cita.id_cita}`}>
 						<button type="button" className="btn btn-info btn-space">Mostrar</button>
 					</Link>
 				</div>
-			case 'enfermeria':
+			case 2: // enfermería.
 				return <div>
-					{ this.renderEnfermeriaBtns(cita) }
+					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
 				</div>
 		}
 	}
 
-	renderAddButton(rol) {
-		if(rol == 'ventanilla') {
+	renderAddButton() {
+		if(jwtDecode(localStorage.getItem('token')).id_rol == 4) {
 			return <div className='row'>
 				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
 					<button onClick={ this.props.abrirFormularioCrearCita } className='btn btn-success'>Agregar</button>
@@ -122,12 +122,15 @@ class Listar extends Component {
 		}
 	}
 
-	renderFormAndShow(rol) {
-		if(rol == 'ventanilla') {
-			return <div>
-				<FormularioCitaContainer/>
-				<MostarVenCitaContainer/>
-			</div>
+	renderFormularioCita() {
+		if(jwtDecode(localStorage.getItem('token')).id_rol == 4) {
+			const { abirtoCrear, abirtoEditar } = this.props.formulario
+			
+			if(abirtoCrear || abirtoEditar) {
+				return <FormularioCitaContainer/>
+			} else {
+				return <span></span>
+			}
 		} else {
 			return <span></span>
 		}
@@ -135,12 +138,10 @@ class Listar extends Component {
 
 	renderCitas(citas) {
 
-		let rolUsuario = removeAccents(jwtDecode(localStorage.getItem('token')).rol)
-
 		let filtro = this.props.filtro
 
-		console.log('EL FILTRO.')
-		console.log(citas)
+		// console.log('EL FILTRO.')
+		// console.log(citas)
 
 		let con = { // Condiciones.
 			cita: {
@@ -154,17 +155,18 @@ class Listar extends Component {
 		// }
 
 		return <tbody>
-			{ this.renderFormAndShow(rolUsuario) }
+			{ this.renderFormularioCita() }
 
 			{
 				citas.map((i) => {
 					return <tr key={i.cita.id_cita}>
 			            <td>{ i.cita.id_cita }</td>
-			            <td>{ i.cita.fecha }</td>
-			            <td>{ i.cita.hora }</td>
+			            <td>{ moment(i.cita.fecha).format('L') }</td>
+			            <td>{ moment(i.cita.start).format('LT') }</td>
+			            <td>{ moment(i.cita.end).format('LT') }</td>
 			            <td>{ this.renderEstadoCita(i.cita.pendiente) }</td>
 			            <td>
-			            	{ this.renderOptionsByRol(rolUsuario, i.cita) }
+			            	{ this.renderOptionsByRol(i.cita) }
 			            </td>
 			        </tr>		
 				})
@@ -181,40 +183,33 @@ class Listar extends Component {
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			
-			let rolUsuario = removeAccents(jwtDecode(localStorage.getItem('token')).rol)
-
-				return <div>
-					<h1 className='text-center'>Citas</h1>
+			return <div>
+				<h1 className='text-center'>Citas</h1>
 					
-					<FiltrosCitaContainer/>
+				<MensajeOerror error={error} mensaje={null}/>
 
-					<MostrarAgregarPreConsultaContainer/>
+				{ this.renderAddButton() }
 
-					<MensajeOerror error={error} mensaje={null}/>
-
-					{ this.renderAddButton(rolUsuario) }
-
-
-					<br/>
-					<div className='table-responsive'>
-						<table className='table table-striped'>
-							<thead>
-						    	<tr>
-						        	<th>Id</th>
-						        	<th>Fecha</th>
-						        	<th>Hora</th>
-						        	<th>Estado</th>
-						        	<th>Opciones</th>
-						    	</tr>
-						    </thead>
+				<br/>
+				<div className='table-responsive'>
+					<table className='table table-striped'>
+						<thead>
+						    <tr>
+						    	<th>Id</th>
+						    	<th>Fecha</th>
+						    	<th>Hora inicio</th>
+						    	<th>Hora Fin</th>
+						    	<th>Estado</th>
+						    	<th>Opciones</th>
+						    </tr>
+						</thead>
 
 
-							{ this.renderCitas(citas) }
+						{ this.renderCitas(citas) }
 
-						</table>
-					</div>
+					</table>
 				</div>
+			</div>
 		}
 
 	}
