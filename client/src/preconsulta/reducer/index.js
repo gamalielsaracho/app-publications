@@ -5,6 +5,15 @@ import {
 	LISTAR_PRECONSULTAS_EXITO,
 	LISTAR_PRECONSULTAS_FALLO,
 
+	ABRIR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA,
+
+	LISTAR_PRECONSULTAS_FECHA_DIA_REQUEST,
+	LISTAR_PRECONSULTAS_FECHA_DIA_EXITO,
+	LISTAR_PRECONSULTAS_FECHA_DIA_FALLO,
+
+	CERRAR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA,
+
+
 	ABRIR_FORMULARIO_CREAR_PRECONSULTA,
 
 	CREAR_PRECONSULTA_REQUEST,
@@ -39,18 +48,49 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		preConsulta: {}
+		preConsulta: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { preConsultas:[], cargando: false, error: '' },
+	modalAgregarPreConsulta: { abierto: false },
+	listarPreConsultasFechaDia: { preConsultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, preConsulta: {}, error: '', abierto: false },
+	mostrar: { cargando: false, preConsulta: null, error: '' },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
-		
+
+		case ABRIR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA:
+			return Object.assign({}, state, {
+				modalAgregarPreConsulta: { abierto: true }
+			})
+
+
+		case LISTAR_PRECONSULTAS_FECHA_DIA_REQUEST:
+			return Object.assign({}, state, {
+				listarPreConsultasFechaDia: { cargando: true, error: '' }
+			})
+
+		case LISTAR_PRECONSULTAS_FECHA_DIA_EXITO:
+			return Object.assign({}, state, {
+				listarPreConsultasFechaDia: { 
+					preConsultas: action.payload.preConsultas, cargando: false, error: '' 
+				}
+			})
+
+		case LISTAR_PRECONSULTAS_FECHA_DIA_FALLO:
+			return Object.assign({}, state, {
+				listarPreConsultasFechaDia: { error: action.payload, preConsultas:[], cargando: false }
+			})
+
+		case CERRAR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA:
+			return Object.assign({}, state, {
+				modalAgregarPreConsulta: { abierto: false }
+			})
+		// .............
+
 		case ABRIR_FORMULARIO_CREAR_PRECONSULTA:
 			return Object.assign({}, state, {
 				formulario: {
@@ -59,10 +99,10 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					preConsulta: {}
-				},
-				mostrar: { abierto: false }
+					preConsulta: null
+				}
 			})
+
 
 		case ABRIR_FORMULARIO_EDITAR_PRECONSULTA_REQUEST:
 			return Object.assign({}, state, {
@@ -72,9 +112,8 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					preConsulta: {}
-				},
-				mostrar: { abierto: false }
+					preConsulta: null
+				}
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PRECONSULTA_EXITO:
@@ -86,8 +125,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: '',
 					cargando: false,
 					preConsulta: action.payload
-				},
-				mostrar: { abierto: false }
+				}
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PRECONSULTA_FALLO:
@@ -98,23 +136,16 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					preConsulta: {}
-				},
-				mostrar: { abierto: false }
+					preConsulta: null
+				}
 			})
 
 
 		case CERRAR_FORMULARIO_PRECONSULTA:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					preConsulta: {}
-				}
+				formulario: INITIAL_STATE.formulario
 			})
+
 
 		// CREATE preConsulta.
 		case CREAR_PRECONSULTA_REQUEST:
@@ -123,7 +154,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_PRECONSULTA_EXITO:
-			console.log(action.payload.datoInsertado)
+			// console.log(action.payload.datoInsertado)
 
 			return Object.assign({}, state, {
 				crear: { 
@@ -140,6 +171,7 @@ export default function (state = INITIAL_STATE, action) {
 				crear: { error: action.payload }
 			})
 
+
 		// LISTAR.
 		case LISTAR_PRECONSULTAS_REQUEST:
 			return Object.assign({}, state, {
@@ -151,16 +183,16 @@ export default function (state = INITIAL_STATE, action) {
 				listar: { preConsultas: action.payload.preConsultas, cargando: false, error: '' }
 			})
 
-
 		case LISTAR_PRECONSULTAS_FALLO:
 			return Object.assign({}, state, {
 				listar: { error: action.payload, preConsultas:[], cargando: false }
 			})
 
+
 		// MOSTRAR.
 		case MOSTRAR_PRECONSULTA_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true, abierto: true },
+				mostrar: { cargando: true },
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
@@ -168,8 +200,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					preConsulta: action.payload,
-					abierto: true
+					preConsulta: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
@@ -178,21 +209,16 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					preConsulta: {},
-					error: action.payload,
-					abierto: true
+					preConsulta: null,
+					error: action.payload
 				},
 				formulario: { abirtoEditar: false, abirtoCrear: false }
 			})
 
+
 		case CERRAR_MODAL_MOSTRAR_PRECONSULTA:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					preConsulta: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -231,8 +257,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					preConsulta: action.payload
+					error: ''
 				}
 			})
 
@@ -240,8 +265,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					preConsulta: {}
+					error: action.payload
 				}
 			})
 
