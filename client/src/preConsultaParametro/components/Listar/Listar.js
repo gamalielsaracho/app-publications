@@ -12,6 +12,8 @@ class Listar extends Component {
 		super(props)
 		this.renderPreConsultaParametros = this.renderPreConsultaParametros.bind(this)
 		this.renderBtnsOpcionesByRolYpersonal = this.renderBtnsOpcionesByRolYpersonal.bind(this)
+		
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 
@@ -20,77 +22,34 @@ class Listar extends Component {
 		this.props.listarPreConsultaParametros(this.props.idPreConsulta)
 	}
 
-	// shouldComponentUpdate(nextProps) { 
-	// 	console.log('anterior')
-	// 	console.log(this.props.todos)
-	// 	console.log('suigiente')
-	// 	console.log(nextProps.todos)
-
-	// 	return nextProps.todos !== this.props.todos
-	// }
-
 	shouldComponentUpdate(nextProps) {
-		console.log("Anterio: -> ")
-		console.log(this.props.parametrosPreConsulta)
+		// console.log("Anterio: -> ")
+		// console.log(this.props.parametrosPreConsulta)
 
-		console.log("Siguiente: -> ")
-		console.log(nextProps.parametrosPreConsulta)
+		// console.log("Siguiente: -> ")
+		// console.log(nextProps.parametrosPreConsulta)
 
 		return nextProps.parametrosPreConsulta !== this.props.parametrosPreConsulta
 
 	}
 
-	renderBtnsOpcionesByRolYpersonal(datosToken, personalPre, i) {
-		// let idPersonalLocal = jwtDecode(localStorage.getItem('token')).id_personal
-		
-		// let idPersonalLocal = 12
-		// console.log(idPersonalLocal)
-		if(personalPre != null) {
-			if(removeAccents(datosToken.rol.descripcion) == 'enfermeria' && datosToken.personal.id_personal == personalPre.personal.id_personal) {
-				return <div>
-					<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-warning btn-space">Editar</button>
-					<button type="button" onClick={() => { this.props.eliminarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-danger btn-space">Eliminar</button>
-				</div>
-			} else {
-				return <span></span>
-			}
+	renderBtnsOpcionesByRolYpersonal(i) {
+		let rol = this.personalLocalSt.id_rol
+
+		// 2 enfermería.
+		// 3 administración.
+		if((rol == 2) || (rol == 3)) {
+			return <div>
+				<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-warning btn-space">Editar</button>
+				<button type="button" onClick={() => { this.props.eliminarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-danger btn-space">Eliminar</button>
+			</div>
+		} else {
+			return <span></span>
 		}
 	}
 
 	renderPreConsultaParametros(parametrosPreConsulta) {
-		// console.log(parametrosPreConsulta)
-
-		let datosToken = null
-		let personalPre = null
-
-		let condition = (
-			this.props.preConsulta != undefined && 
-			this.props.usuarioEstado.datosToken.rol != null
-		);
-
-		if(condition) {
-			datosToken = this.props.usuarioEstado.datosToken
-			personalPre = this.props.preConsulta
-			// console.log('El ROL ES DESDE EL SERVER:'+this.props.usuarioEstado.datosToken.rol.descripcion)
-		}
-		// console.log('#### this.props.preConsulta #####')
-		// console.log(personalPre)
-
-		// if() {
-		// 	// console.log('El ROL ES DESDE EL SERVER:'+this.props.usuarioEstado.datosToken.rol.descripcion)
-		// } else {
-		// 	console.log('Nooooooooooo estaaa..!')
-		// }
-
-		// console.log(this.props.preConsulta)
-
-
-
-		// console.log('QQQQQ this.props.usuarioEstado.datosToken')
-
-		// console.log(this.props.usuarioEstado.datosToken.rol)
-
-		// console.log(parametrosPreConsulta)
+		
 		return <tbody>
 			{
 				parametrosPreConsulta.map((i) => {
@@ -103,7 +62,7 @@ class Listar extends Component {
 			            <td>{ i.preconsultaParametro.observaciones }</td>
 
 			            <td>
-							{ this.renderBtnsOpcionesByRolYpersonal(datosToken, personalPre, i) }
+							{ this.renderBtnsOpcionesByRolYpersonal(i) }
 						</td>
 			        </tr>		
 				})
