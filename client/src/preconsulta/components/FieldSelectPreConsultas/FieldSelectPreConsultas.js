@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 
+import FormularioPreConsultaContainer from '../Formulario'
+
 class FieldSelectPreConsultas extends Component {
 	constructor(props) {
 		super(props)
 		this.renderBtnNuevaPreConsulta = this.renderBtnNuevaPreConsulta.bind(this) 
 	}
 
-	renderBtnNuevaPreConsulta(preConsultas, fechaCita) {
-		// console.log(preConsultas)
-		// Si la cantidad obtenida del array es distinto de 0.
-
-		// fechaCita == new Date()
+	renderBtnNuevaPreConsulta(preConsultas) {
 		if(!preConsultas.length) {
 			return <div>
 				<button type="button" onClick={this.props.abrirFormularioCrearPreConsulta} className="btn btn-success btn-space">
@@ -23,21 +21,19 @@ class FieldSelectPreConsultas extends Component {
 	}
 
 	render() {
-		const { input, fechaCita, idPaciente, label, listaPreConsultas, type, meta: { touched, error, warning } } = this.props
+		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 	
 		// console.log(idPaciente+' idPaciente  -> FECHA CITA: '+fechaCita)
-		let preConsultas = listaPreConsultas.preConsultas
 	
-		if(preConsultas) {
-
-			// if(idPaciente != null && fechaCita != null) {
-				preConsultas = preConsultas.filter((i) => {
-					return i.preconsulta.fecha == fechaCita && 
-					i.preconsulta.id_paciente == idPaciente
-				})
-			// }
+		if(listar.cargando) {
+			return <p>Cargando...</p>
+		} else {
+			let preConsultas = listar.preConsultas
 
 			return <div className='row'>
+				<FormularioPreConsultaContainer
+					datosCita={this.props.mostrarCita.cita}/>
+
 				<label htmlFor={label}>{label}</label>
 			
 				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-5'>
@@ -56,11 +52,9 @@ class FieldSelectPreConsultas extends Component {
 					</div>
 				</div>
 				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-5'>
-					{ this.renderBtnNuevaPreConsulta(preConsultas, fechaCita) }
+					{ this.renderBtnNuevaPreConsulta(preConsultas) }
 				</div>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 

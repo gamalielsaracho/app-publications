@@ -8,7 +8,7 @@ import FieldSelectPreConsultas from './FieldSelectPreConsultas'
 
 function mapStateToProps(state) {
 	return {
-		
+		mostrarCita: state.cita.mostrar
 	}
 }
 
