@@ -109,6 +109,19 @@ exports.update = (data, callback) => {
 	connection.end()
 }
 
+exports.updateIdPreConsultaField = (data, callback) => {
+	let q = `
+		UPDATE citas SET
+			id_preconsulta = ?
+		WHERE
+			id_cita = ?
+	`
+
+	return connection.query(q, [data.id_preconsulta, data.id_cita], callback)
+
+	connection.end()
+}
+
 exports.delete = (data, callback) => {	
 
 	let q = `
