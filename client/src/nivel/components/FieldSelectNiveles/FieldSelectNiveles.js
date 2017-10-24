@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import FormularioNivelContainer from '../Formulario'
+
 class FieldSelectNiveles extends Component {
 	render() {
 		const { input, label, listaNiveles, type, meta: { touched, error, warning } } = this.props
@@ -8,6 +10,8 @@ class FieldSelectNiveles extends Component {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
+				<FormularioNivelContainer/>
+
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
