@@ -9,7 +9,6 @@ import { browserHistory } from 'react-router'
 // LISTA DE PRE-CONSULTAS.
 import FieldSelectPreConsultasContainer from '../../../preconsulta/components/FieldSelectPreConsultas'
 
-
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -24,64 +23,32 @@ class AnadirPreConsulta extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
 	}
 
 	componentWillMount() {
-		this.props.listarNiveles()
-		this.props.listarPreConsultas()
+		let datosCita = this.props.datosCita
+
+		this.props.listarPreConsultasFechaDiaFuncion(datosCita.cita.fecha, datosCita.paciente.id_paciente)
 	}
 
 	enviarFormulario(formProps) {
+		// this.props.datosCita es pasado como property al ser llamdo dentro de 
+		// MostarCitaContainer.
 
 		let datosCita = this.props.datosCita
 
-		// console.log(datosCita)
-		// let datosToken = this.props.datosToken
-
-		formProps.fecha = datosCita.cita.fecha
-		// Mal pensado->>>>>
-			// Obtenemos el id del personal de enfermería que está 
-			// autenticado. 
-			// jwtDecode(localStorage.getItem('token')).id_personal
-		// Mal pensado->>>>>
-
-		formProps.id_personal = datosCita.personal.id_personal
-		formProps.id_paciente = datosCita.paciente.id_paciente
 		formProps.id_cita = datosCita.cita.id_cita
 		formProps.id_preconsulta = formProps.id_preconsulta[0]
 
-		// formProps.fecha = new Date()
-		// formProps.id_paciente = datosCita.paciente.id_paciente
-		// formProps.id_personal = datosToken.personal.id_personal
-
-		// Para la ruta que redirecciona a la pre-consulta creada.
-		// formProps.id_cita = datosCita.cita.id_cita
-
 		console.log(formProps)
 
-		// console.log(this.props.personal)
+		this.props.editarCitaIdPreConsultaField(formProps)
 
-		// if(this.props.editarContenido) {
-		// 	this.props.editarPreConsulta(formProps)
-		// } else {
-		// 	this.props.crearPreConsulta(formProps)
-		// }
-		this.props.editarCita(formProps)
-
-		// this.props.cerrarFormularioAnadirPreConsulta()
+		this.props.cerrarModalListarPreConsultasFechaDia()
 		browserHistory.push(`/dashboard/citas/${formProps.id_cita}/preconsulta/${formProps.id_preconsulta}`)
-
 	}
 
-	renderCargando(cargando) {
-		if(cargando) {
-			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
-
+	
 	render() {
 		const customStyles = {
 		    content : {
@@ -91,24 +58,38 @@ class AnadirPreConsulta extends Component {
 		}
 
 		const { handleSubmit, pristine, reset, submitting } = this.props		
-							
-		return <div className='row'>
-			<div className='col-xs-12 col-sm-10 col-md-10 col-lg-12'>
-				<form onSubmit={handleSubmit(this.enviarFormulario)}>
-					<div className='form-group'>
-						<label>Pre-consulta realizada en el día</label>
-						<Field name='id_preconsulta' type='text' 
-							component={FieldSelectPreConsultasContainer} 
-							fechaCita={this.props.datosCita.cita.fecha}
-							idPaciente={this.props.datosCita.paciente.id_paciente}
-							listaPreConsultas={this.props.listaPreConsultas} label=''/>
-					</div>
+		const { abierto } = this.props.modalAgregarPreConsulta
 
-					<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-					<button type="button" onClick={ this.props.cerrarMostrarCitaAgregarPreConsulta } className="btn btn-primary btn-space">Cancelar</button>
-				</form>
-			</div>
-		</div>			
+		// console.log(this.props.listarPreConsultasFechaDia)
+		if(abierto) {
+			return <ReactModal isOpen={abierto}
+				       	contentLabel="Minimal Modal Example"
+				       	style={customStyles}>
+
+				<div className='container'>
+					
+					<div className='row'>
+						<div className='col-xs-12 col-sm-10 col-md-10 col-lg-12'>
+							<form onSubmit={handleSubmit(this.enviarFormulario)}>
+								<div className='form-group'>
+									<label>Pre-consulta realizada en el día</label>
+									<Field name='id_preconsulta' type='text'
+										component={FieldSelectPreConsultasContainer} 
+										listar={this.props.listarPreConsultasFechaDia} 
+										label=''/>
+								</div>
+
+								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+								<button type="button" onClick={ this.props.cerrarModalListarPreConsultasFechaDia } className="btn btn-primary btn-space">Cancelar</button>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+			</ReactModal>
+		} else {
+			return <span></span>
+		}	
 	}
 }
 

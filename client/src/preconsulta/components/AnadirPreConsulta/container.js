@@ -2,22 +2,15 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
 import {
-	crearPreConsulta,
-	editarPreConsulta,
+	listarPreConsultasFechaDia,
 
-	listarPreConsultas
+	cerrarModalListarPreConsultasFechaDia
 } from '../../actions'
 
 import {
-	editarCita,
-	mostrarCita,
-
-	cerrarMostrarCitaAgregarPreConsulta
+	editarCitaIdPreConsultaField
 } from '../../../cita/actions'
 
-import {
-	listarNiveles
-} from '../../../nivel/actions'
 
 import AnadirPreConsulta from './AnadirPreConsulta'
 
@@ -45,46 +38,29 @@ function mapStateToProps(state) {
 		crear: state.preConsulta.crear,
 		editar: state.preConsulta.editar,
 
-		// Para mostrar dentro del select option.
-    	listaNiveles: state.nivel.listar,
 
-    	datosToken: state.personal.usuarioEstado.datosToken,
+		modalAgregarPreConsulta: state.preConsulta.modalAgregarPreConsulta,
 
     	// Para filtrar la lista de pre-consultas y mostrar solamente 1
     	// que sería la preconsulta que se hizo el paciente y se podría
     	// utilizar para muchas citas creadas en el Día.
-    	listaPreConsultas: state.preConsulta.listar,
+    	listarPreConsultasFechaDia: state.preConsulta.listarPreConsultasFechaDia,
 	}
 }
 
 
 function mapDispatchToProps(dispatch) {
 	return {
-		crearPreConsulta: (datosFormulario) => {
-			dispatch(crearPreConsulta(datosFormulario))
-		},
-		// Para cerrar la ventana modal donde se muestra
-		// el la lista de preconsultas del día O el boton para
-		// crear una nueva pre-consulta en el día.
-		cerrarMostrarCitaAgregarPreConsulta: () => {
-			// var r = confirm("Está seguro que desea cancelar?");
-		    // if (r == true) {
-				dispatch(cerrarMostrarCitaAgregarPreConsulta())
-		    // }
-		},
-		editarPreConsulta: (datosFormulario) => {
-			dispatch(editarPreConsulta(datosFormulario))
+		listarPreConsultasFechaDiaFuncion: (fechaCita, idPaciente) => {
+			dispatch(listarPreConsultasFechaDia(fechaCita, idPaciente))
 		},
 
-		listarNiveles: () => {
-			dispatch(listarNiveles())
+		cerrarModalListarPreConsultasFechaDia: () => {
+			dispatch(cerrarModalListarPreConsultasFechaDia())
 		},
-
-		listarPreConsultas: () => {
-			dispatch(listarPreConsultas())
-		},
-		editarCita: (datosFormulario) => {
-			dispatch(editarCita(datosFormulario))
+		
+		editarCitaIdPreConsultaField: (datosFormulario) => {
+			dispatch(editarCitaIdPreConsultaField(datosFormulario))
 		}
 	}
 }
