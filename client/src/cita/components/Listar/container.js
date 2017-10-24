@@ -10,11 +10,9 @@ import {
 	listarCitasMedico,
 
 	eliminarCita,
-	mostrarCita,
 
 	abrirFormularioCrearCita,
 	abrirFormularioEditarCita,
-
 
 	mostrarCitaAgregarPreConsulta
 } from '../../actions'
@@ -51,9 +49,6 @@ function mapDispatchToProps(dispatch) {
 		    if (r == true) {
 				dispatch(eliminarCita(idCita))
 		    }
-		},
-		mostrarCita: (idCita) => {
-			dispatch(mostrarCita(idCita))
 		},
 		abrirFormularioCrearCita: () => {
 			dispatch(abrirFormularioCrearCita())
