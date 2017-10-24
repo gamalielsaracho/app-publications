@@ -10,25 +10,24 @@ import {
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
 	return {
-		idCita: ownProps.params.idCita,
-		idPreConsulta: ownProps.params.idPreConsulta,
-		idConsulta: ownProps.params.idConsulta,
+		// Obtenemos todos los parametros de la url.
+		urls: ownProps.params,
 
 		// obtenemos los datos de la cita que se está mostrando
 		// para pasarle a FormularioConsultaContainer con el objetivo de
 		// obtener id_paciente y pasarle a el objecto formProps del 
 		// formulario.
-		datosCita: state.cita.mostrar.cita,
+		datosCita: state.cita.mostrar,
 
 		// Obtener las consultas para filtarla por id_preConsulta y id_personal
 		// para mostrarlo dentro del menu y pasarle el id_consulta.
-		listar: state.consulta.listar
+		listarConsultas: state.consulta.listar
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarConsultas: () => {
+		listarConsultasFuncion: () => {
 			dispatch(listarConsultas())
 		},
 		abrirFormularioCrearConsulta: () => {
