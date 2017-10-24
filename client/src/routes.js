@@ -7,6 +7,7 @@ import pacienteRoutes from './routes/Paciente'
 
 import medicamentoEntregadoRoutes from './medicamentoEntregado/routes'
 
+import citaRoutes from './cita/routes'
 
 
 // App Principal de la aplicación.
@@ -62,18 +63,9 @@ import MostrarVistaPreviaContainer from '././analisis/components/MostrarVistaPre
 
 
 // CITAS.
-	// Listar.
-import ListarCitasApp from '././cita/components/ListarApp'
-
-import ListarCitasPage from '././cita/pages/ListarCitasPage'
-
-import MostrarCitaAppContainer from '././cita/components/MostrarApp'
 
 // NIVELES.
 import ListarNivelesPage from '././nivel/pages/ListarNivelesPage'
-
-// PRE-CONSULTA APP.
-import MostrarPreConsultaAppContainer from '././preconsulta/components/MostrarApp'
 
 
 // PARAMETROS PRE-CONSULTA.
@@ -97,9 +89,6 @@ import ListarConsultasContainer from '././consulta/components/Listar'
 // CONSULTA APP.
 import MostrarConsultaAppContainer from '././consulta/components/MostrarApp'
 
-
-// ... Para cuando el médico realize la consulta.
-import MostrarConsultaRellenandoAppContainer from '././consulta/components/MostrarRellenandoApp'
 
 import ListarSintomasConsultaContainer from '././consultaSintoma/components/Listar'
 
@@ -204,25 +193,7 @@ export default (
 			{ medicamentoRoutes }
 			{ pacienteRoutes }
 			{ medicamentoEntregadoRoutes }
-			
-
-			<Route path='/dashboard/citas' component={ListarCitasApp}>
-				<IndexRoute component={ListarCitasPage}/>
-				<Route path='/dashboard/citas/:idCita' component={MostrarCitaAppContainer}>
-					<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaAppContainer}>
-
-						<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaRellenandoAppContainer}>
-							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
-							
-							</Route>
-
-							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
-							<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
-
-						</Route>
-					</Route>
-				</Route>
-			</Route>
+			{ citaRoutes }
 
 
 				{/* Módulo farmacia. */}
