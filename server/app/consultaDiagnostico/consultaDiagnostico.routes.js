@@ -2,6 +2,11 @@ import consultaDiagnosticoCtrl from './consultaDiagnostico.controller'
 
 
 export default (app) => {
+	// grafica.
+	app.route('/api/consultaDiagnosticos/grafica1')
+	   .get(consultaDiagnosticoCtrl.listarCantidadDiagnosticosPorAnho)
+
+	   
 	app.route('/api/consultaDiagnosticos/:idConsulta')
 	   .get(consultaDiagnosticoCtrl.listar)
 
