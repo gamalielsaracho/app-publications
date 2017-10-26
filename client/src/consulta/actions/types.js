@@ -3,6 +3,12 @@ export const LISTAR_CONSULTAS_REQUEST = 'listar_consultas_request'
 export const LISTAR_CONSULTAS_EXITO = 'listar_consultas_exito'
 export const LISTAR_CONSULTAS_FALLO = 'listar_consultas_fallo'
 
+// Mostrar estadística 1.
+export const MOSTRAR_ESTADISTICA1_REQUEST = 'mostrar_estadistica1_request'
+export const MOSTRAR_ESTADISTICA1_EXITO = 'mostrar_estadistica1_exito'
+export const MOSTRAR_ESTADISTICA1_FALLO = 'mostrar_estadistica1_fallo'
+
+
 // EDIT.
 export const ABRIR_FORMULARIO_EDITAR_CONSULTA_REQUEST = 'abrir_formulario_editar_consulta_request'
 export const ABRIR_FORMULARIO_EDITAR_CONSULTA_EXITO = 'abrir_formulario_editar_consulta_exito'

@@ -11,6 +11,11 @@ import {
 	LISTAR_CONSULTAS_EXITO,
 	LISTAR_CONSULTAS_FALLO,
 
+	// Mostrar Estadística 1. 
+	MOSTRAR_ESTADISTICA1_REQUEST,
+	MOSTRAR_ESTADISTICA1_EXITO,
+	MOSTRAR_ESTADISTICA1_FALLO,
+
 	// Create rol.
 	CREAR_CONSULTA_REQUEST,
 	CREAR_CONSULTA_EXITO,
@@ -75,6 +80,25 @@ export function cerrarFormularioConsulta() {
 		dispatch({ type: CERRAR_FORMULARIO_CONSULTA })
 	}
 }
+
+
+export function mostrarEstadistica1() {
+	return (dispatch) => {
+		dispatch({ type: MOSTRAR_ESTADISTICA1_REQUEST })
+
+		var consultaSocket = io.connect('http://localhost:3000/consulta');
+
+		consultaSocket.on('cantidad_diagnosticos_porAnho', (data) => {
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: MOSTRAR_ESTADISTICA1_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MOSTRAR_ESTADISTICA1_EXITO, payload: data })
+			}
+		})
+	}
+}
+
 
 export function listarConsultas() {
 	return (dispatch) => {
