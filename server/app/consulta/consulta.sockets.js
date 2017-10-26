@@ -25,6 +25,51 @@ export default (io) => {
 		
 		consultas()
 
+
+		// Estadística 1.
+		Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
+				// console.log(diagnosticos)
+			if(err) {
+				console.log(err)
+				socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+				return
+			}
+
+			let longDiag = diagnosticos.length
+
+			diagnosticos.map((i) => {
+				Consulta.findCantidadDiagnosticosPorAnho(i.id_diagnostico, (err, consultas) => {
+						// console.log(consultas)
+					if(err) {
+						console.log(err)
+						socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+						return
+					}
+
+						i.labels = []
+						i.data = []
+					consultas.map((c) => {
+						// console.log(c)
+						i.data.push(c.cantidad)
+						i.data.sort()
+
+						c.fecha = c.fecha.toString()
+						i.labels.push((c.fecha))
+						i.labels.sort()
+
+					})
+
+						// i.contenido = consultas
+
+					if(i == diagnosticos[longDiag-1]) {
+						consultaNsp.emit('cantidad_diagnosticos_porAnho', diagnosticos)
+					}
+				})
+			})
+		})
+
+
+
 		// Listar todas las consultas que realizó un médico/a.
 		// para mostrarlo al mismo.
 		socket.on('listar_consultas_medico', (data) => {
