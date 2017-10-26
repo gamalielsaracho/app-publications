@@ -37,21 +37,25 @@ class Formulario extends Component {
 			this.props.editarConsulta(formProps)
 		} else {
 			console.log('datosCita ---------->')
-			console.log(this.props.datosCita)
+			console.log(this.props.datosCita.cita)
 
-			formProps.fecha = new Date()
+			let datosCita = this.props.datosCita.cita
+
+			// guardamos la pre-consutal con la misma fecha que tiene la cita
+			// del día.
+			formProps.fecha = datosCita.cita.fecha
 			formProps.id_preconsulta = parseInt(this.props.idPreConsulta)
 			
 			// El id del personal Logeado (Médico/a).
 			formProps.id_personal = this.personalLocalSt.id_personal
 			
-			formProps.id_paciente = this.props.datosCita.cita.id_paciente
+			formProps.id_paciente = datosCita.cita.id_paciente
 
 			// Para pasarle a push y redireccionar a la consulta creada.
-			formProps.id_cita = this.props.datosCita.cita.id_cita
+			formProps.id_cita = datosCita.cita.id_cita
 
 			console.log(formProps)
-			// this.props.crearConsulta(formProps)
+			this.props.crearConsulta(formProps)
 		}
 	}
 
