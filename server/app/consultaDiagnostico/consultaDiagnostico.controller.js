@@ -1,5 +1,55 @@
 import ConsultaDiagnostico from './consultaDiagnostico.model'
 
+import Consulta from '../consulta/consulta.model'
+
+exports.listarCantidadDiagnosticosPorAnho = function(req, res, next) {
+
+	// findOnlyDiagnosticos
+	// findConsultaXdiagnosticos
+
+	Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
+		// console.log(diagnosticos)
+		if(err) {
+			console.log(err)
+			return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+		}
+
+		let longDiag = diagnosticos.length
+
+		diagnosticos.map((i) => {
+			Consulta.findCantidadDiagnosticosPorAnho(i.id_diagnostico, (err, consultas) => {
+				// console.log(consultas)
+				if(err) {
+					console.log(err)
+					return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+				}
+
+					i.labels = []
+					i.data = []
+				consultas.map((c) => {
+					// console.log(c)
+					i.data.push(c.cantidad)
+					i.data.sort()
+
+					c.fecha = c.fecha.toString()
+					i.labels.push((c.fecha))
+					i.labels.sort()
+
+				})
+
+				// i.contenido = consultas
+
+				if(i == diagnosticos[longDiag-1]) {
+					return res.json(diagnosticos)
+				}
+			})
+		})
+
+		// return res.json(diagnosticos)
+	})
+	
+}
+
 
 exports.listar = function(req, res, next) {
 	let idConsulta = req.params.idConsulta
