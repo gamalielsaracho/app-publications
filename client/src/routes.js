@@ -9,6 +9,8 @@ import medicamentoEntregadoRoutes from './medicamentoEntregado/routes'
 
 import citaRoutes from './cita/routes'
 
+import Estadistica1Container from './consulta/components/Estadistica1'
+
 
 // App Principal de la aplicación.
 import AppContainer from './app/components/App'
@@ -150,6 +152,13 @@ import ListarLotesMedicamentosPage from '././loteMedicamento/pages/ListarLotesMe
 import MostrarLoteMedicamentoAppContainer from '././loteMedicamento/components/MostrarApp'
 
 
+// Estadística.
+import EstadisticasAppContainer from '././consulta/components/EstadisticasApp'
+import Estadistica1AppContainer from '././consulta/components/Estadistica1App'
+// import EstadisticasAppContainer from '././consulta/components/EstadisticasApp'
+
+
+
 export default (
 	<Route path='/' component={AppContainer}>
 		<IndexRoute component={HomePage}/>
@@ -157,6 +166,13 @@ export default (
 		<Route path='/entrar' component={AutenticarPage}/>
 
 		<Route path='/dashboard' component={DashBoardContainer}>
+			<Route path='/estadisticas' component={EstadisticasAppContainer}>
+				<Route path='/estadisticas/diagnosticos-anuales' component={Estadistica1AppContainer}/>
+
+			</Route>
+			
+
+
 			<Route path='/usuarios' component={ListarPage}/>
 			<Route path='/roles' component={ListarRolesPage}/>
 			<Route path='/especialidades' component={ListarEspecialidadesPage}/>
