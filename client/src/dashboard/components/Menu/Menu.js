@@ -33,6 +33,8 @@ class Menu extends Component {
 
 	adminMenu() {
 		return <ul className="nav nav-sidebar">
+			<li><Link to='/estadisticas'>Estadísticas (Adm)</Link></li>
+
 			<li><Link to='/usuarios'>Usuarios (Adm) <span className="badge">14</span></Link></li>
 			<li><Link to='/roles'>Roles (Adm) <span className="badge">1</span></Link></li>
 			<li><Link to='/especialidades'>Especialidades (Adm) <span className="badge">0</span></Link></li>
@@ -87,7 +89,6 @@ class Menu extends Component {
 			<li><Link to='/ciudades'>Ciudades (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/departamentos'>Departamentos (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/areas'>Areas (Ven) <span className="badge">8</span></Link></li>
-			<li><Link to='/alergias'>Alergias (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/citas'>Citas (Ven) <span className="badge">8</span></Link></li>
 		</ul>
