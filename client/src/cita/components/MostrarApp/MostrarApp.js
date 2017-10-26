@@ -22,7 +22,6 @@ class MostrarApp extends Component {
 		// 2 enfermería.
 		// 3 administración.
 
-		if((rol == 1) || (rol == 2) || (rol == 3)) {
 			const { cargando, cita, error, abierto } = this.props.mostrar
 
 			if(cargando) {
@@ -38,21 +37,28 @@ class MostrarApp extends Component {
 				// console.log("La fecha ACTUAL:"+ fechaActual)
 
 				if(citaInfo.id_preconsulta != null) {
-					return <li className="nav-item">
-						<a className="nav-link active">
-							<Link to={`/dashboard/citas/${this.props.urls.idCita}/preconsulta/${citaInfo.id_preconsulta}`}>Pre-consulta</Link>
-						</a>
-					</li>
+					if((rol == 1) || (rol == 2) || (rol == 3)) {
+						return <li className="nav-item">
+							<a className="nav-link active">
+								<Link to={`/dashboard/citas/${this.props.urls.idCita}/preconsulta/${citaInfo.id_preconsulta}`}>Pre-consulta</Link>
+							</a>
+						</li>
+					} else {
+						return <span></span>
+					}
 				} else {
-					// 
-					return <li className="nav-item">
-						<button onClick={ () => { this.props.abrirModalListarPreConsultasFechaDia() } } type="button" 
-							className="text-center btn btn-success btn-space">
-							Crear Pre-consulta
-						</button>
-					</li>
+					// ..
+					if((rol == 2) || (rol == 3)) {
+						return <li className="nav-item">
+							<button onClick={ () => { this.props.abrirModalListarPreConsultasFechaDia() } } type="button" 
+								className="text-center btn btn-success btn-space">
+								Crear Pre-consulta
+							</button>
+						</li>
+					} else {
+						return <span></span>
+					}
 				}
-			}
 		} else {
 			return <span></span>
 		}
