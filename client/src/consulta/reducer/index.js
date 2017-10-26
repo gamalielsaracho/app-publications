@@ -5,6 +5,10 @@ import {
 	LISTAR_CONSULTAS_EXITO,
 	LISTAR_CONSULTAS_FALLO,
 
+	MOSTRAR_ESTADISTICA1_REQUEST,
+	MOSTRAR_ESTADISTICA1_EXITO,
+	MOSTRAR_ESTADISTICA1_FALLO,
+
 	ABRIR_FORMULARIO_CREAR_CONSULTA,
 
 	CREAR_CONSULTA_REQUEST,
@@ -45,6 +49,9 @@ const INITIAL_STATE = {
 	listar: { consultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, consulta: null, error: '' },
+	mostrarValoresEstadisticos1: { 
+		cargando: false, valoresEstadisticos: null, error: ''
+	},
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -160,6 +167,30 @@ export default function (state = INITIAL_STATE, action) {
 				listar: { error: action.payload, consultas:[], cargando: false }
 			})
 
+
+		// Mostrar estadística 1.
+		case MOSTRAR_ESTADISTICA1_REQUEST:
+			return Object.assign({}, state, {
+				mostrarValoresEstadisticos1: { cargando: true }
+			})
+
+		case MOSTRAR_ESTADISTICA1_EXITO:
+			return Object.assign({}, state, {
+				mostrarValoresEstadisticos1: {
+					cargando: false,
+					valoresEstadisticos: action.payload
+				}
+			})
+
+		case MOSTRAR_ESTADISTICA1_FALLO:
+			return Object.assign({}, state, {
+				mostrarValoresEstadisticos1: {
+					cargando: false,
+					valoresEstadisticos: null,
+					error: action.payload
+				}
+			})
+
 		// MOSTRAR.
 		case MOSTRAR_CONSULTA_REQUEST:
 			return Object.assign({}, state, {
@@ -169,6 +200,7 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case MOSTRAR_CONSULTA_EXITO:
+			// console.log(action.payload)
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
