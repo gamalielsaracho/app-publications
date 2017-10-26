@@ -1,5 +1,98 @@
 import connection from '../../config/connection'
 
+exports.findConsultaXdiagnosticos = (callback) => {
+
+	let q = `
+		SELECT 
+			 *
+		FROM
+			consultasdiagnosticos cXd,
+		    diagnosticos diagnostico,
+		    consultas consulta
+		WHERE
+			cXd.id_consulta = consulta.id_consulta AND
+		    cXd.id_diagnostico = diagnostico.id_diagnostico
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, callback)
+
+	connection.end()
+}
+
+exports.findOnlyDiagnosticos = (callback) => {
+
+	let q = `
+		SELECT
+			*
+		FROM
+			diagnosticos
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: false
+	}
+
+	return connection.query(options, callback)
+
+	connection.end()
+}
+
+exports.findOnlyYears = (callback) => {
+
+	let q = `
+		SELECT
+			DISTINCT(YEAR(fecha)) fecha
+		FROM
+			consultas
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: false
+	}
+
+	return connection.query(options, callback)
+
+	connection.end()
+}
+
+exports.findCantidadDiagnosticosPorAnho = (idDiagnostico, callback) => {
+
+	let q = `
+	SELECT 
+		* 
+  	FROM
+      (SELECT
+          DISTINCT(cXd.id_diagnostico),
+          YEAR(consulta.fecha) fecha,
+          diagnostico.descripcion,
+          (SELECT COUNT(cXdA.id_diagnostico) FROM consultasdiagnosticos cXdA, consultas con WHERE cXdA.id_diagnostico = diagnostico.id_diagnostico AND cXdA.id_consulta = con.id_consulta AND con.fecha = consulta.fecha) cantidad
+         FROM
+          consultasdiagnosticos cXd,
+          diagnosticos diagnostico,
+          consultas consulta
+        WHERE
+          cXd.id_diagnostico = diagnostico.id_diagnostico AND 
+          diagnostico.id_diagnostico = ? AND
+          cXd.id_consulta = consulta.id_consulta) tGral
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: false
+	}
+
+	return connection.query(options, [idDiagnostico], callback)
+
+	connection.end()
+}
+
 exports.find = (callback) => {
 
 	let q = `
@@ -119,10 +212,11 @@ exports.findById = (data, callback) => {
 exports.create = (data, callback) => {
 	console.log(data)
 	let q = `
-		INSERT INTO consultas (id_consulta, fecha, fechaProximaConsulta, 
-		id_personal, id_preconsulta, observacionDiagnostico, id_paciente)
+		INSERT INTO consultas (
+			id_consulta, fecha, fechaProximaConsulta, 
+			id_personal, id_preconsulta, observacionDiagnostico, id_paciente)
 
-			VALUES (null, ?, ?, ?, ?, LOWER(?), ?)
+		VALUES (null, ?, ?, ?, ?, LOWER(?), ?)
 	`
 	if(data.observacionDiagnostico) {
 		data.observacionDiagnostico.trim()
