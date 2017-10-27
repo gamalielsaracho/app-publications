@@ -1,28 +1,5 @@
 import connection from '../../config/connection'
 
-exports.findConsultaXdiagnosticos = (callback) => {
-
-	let q = `
-		SELECT 
-			 *
-		FROM
-			consultasdiagnosticos cXd,
-		    diagnosticos diagnostico,
-		    consultas consulta
-		WHERE
-			cXd.id_consulta = consulta.id_consulta AND
-		    cXd.id_diagnostico = diagnostico.id_diagnostico
-	`
-
-	var options = {
-		sql: q, 
-		nestTables: true
-	}
-
-	return connection.query(options, callback)
-
-	connection.end()
-}
 
 exports.findOnlyDiagnosticos = (callback) => {
 
@@ -62,7 +39,8 @@ exports.findOnlyYears = (callback) => {
 	connection.end()
 }
 
-exports.findCantidadDiagnosticosPorAnho = (idDiagnostico, callback) => {
+
+exports.findCantidadDiagnosticosEnAnhos = (idDiagnostico, callback) => {
 
 	let q = `
 	SELECT 
@@ -81,6 +59,8 @@ exports.findCantidadDiagnosticosPorAnho = (idDiagnostico, callback) => {
           cXd.id_diagnostico = diagnostico.id_diagnostico AND 
           diagnostico.id_diagnostico = ? AND
           cXd.id_consulta = consulta.id_consulta) tGral
+        
+        ORDER BY fecha ASC
 	`
 
 	var options = {
@@ -92,6 +72,36 @@ exports.findCantidadDiagnosticosPorAnho = (idDiagnostico, callback) => {
 
 	connection.end()
 }
+
+
+exports.findCantidadDiagnosticosPorAnho = (Anho, callback) => {
+
+	let q = `
+		SELECT
+      		DISTINCT(YEAR(consulta.fecha)) fecha,
+        	cXd.id_diagnostico,
+        	diagnostico.descripcion,
+        	(SELECT COUNT(cXdA.id_diagnostico) FROM consultasdiagnosticos cXdA, consultas con WHERE cXdA.id_diagnostico = diagnostico.id_diagnostico AND cXdA.id_consulta = con.id_consulta AND con.fecha = consulta.fecha) cantidad
+        FROM
+        	consultasdiagnosticos cXd,
+        	diagnosticos diagnostico,
+        	consultas consulta
+        WHERE
+        	cXd.id_diagnostico = diagnostico.id_diagnostico AND 
+        	cXd.id_consulta = consulta.id_consulta AND
+        	YEAR(consulta.fecha) = ?
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: false
+	}
+
+	return connection.query(options, [Anho], callback)
+
+	connection.end()
+}
+
 
 exports.find = (callback) => {
 
