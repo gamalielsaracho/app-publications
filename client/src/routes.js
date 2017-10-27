@@ -155,8 +155,7 @@ import MostrarLoteMedicamentoAppContainer from '././loteMedicamento/components/M
 // Estadística.
 import EstadisticasAppContainer from '././consulta/components/EstadisticasApp'
 import Estadistica1AppContainer from '././consulta/components/Estadistica1App'
-// import EstadisticasAppContainer from '././consulta/components/EstadisticasApp'
-
+import Estadistica2AppContainer from '././consulta/components/Estadistica2App'
 
 
 export default (
@@ -168,7 +167,7 @@ export default (
 		<Route path='/dashboard' component={DashBoardContainer}>
 			<Route path='/estadisticas' component={EstadisticasAppContainer}>
 				<Route path='/estadisticas/diagnosticos-anuales' component={Estadistica1AppContainer}/>
-
+				<Route path='/estadisticas/diagnosticos-anual' component={Estadistica2AppContainer}/>
 			</Route>
 			
 
