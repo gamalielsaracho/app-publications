@@ -2,10 +2,7 @@ import ConsultaDiagnostico from './consultaDiagnostico.model'
 
 import Consulta from '../consulta/consulta.model'
 
-exports.listarCantidadDiagnosticosPorAnho = function(req, res, next) {
-
-	// findOnlyDiagnosticos
-	// findConsultaXdiagnosticos
+exports.listarCantidadDiagnosticosEnAnhos = function(req, res, next) {
 
 	Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
 		// console.log(diagnosticos)
@@ -17,7 +14,7 @@ exports.listarCantidadDiagnosticosPorAnho = function(req, res, next) {
 		let longDiag = diagnosticos.length
 
 		diagnosticos.map((i) => {
-			Consulta.findCantidadDiagnosticosPorAnho(i.id_diagnostico, (err, consultas) => {
+			Consulta.findCantidadDiagnosticosEnAnhos(i.id_diagnostico, (err, consultas) => {
 				// console.log(consultas)
 				if(err) {
 					console.log(err)
@@ -29,11 +26,11 @@ exports.listarCantidadDiagnosticosPorAnho = function(req, res, next) {
 				consultas.map((c) => {
 					// console.log(c)
 					i.data.push(c.cantidad)
-					i.data.sort()
+					// i.data.sort()
 
 					c.fecha = c.fecha.toString()
 					i.labels.push((c.fecha))
-					i.labels.sort()
+					// i.labels.sort()
 
 				})
 
@@ -46,9 +43,55 @@ exports.listarCantidadDiagnosticosPorAnho = function(req, res, next) {
 		})
 
 		// return res.json(diagnosticos)
-	})
-	
+	})	
 }
+
+
+exports.listarCantidadDiagnosticosPorAnho = function(req, res, next) {
+
+	Consulta.findOnlyYears((err, anhos) => {
+		// console.log(anhos)
+		if(err) {
+			console.log(err)
+			return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+		}
+
+		let longAnhos = anhos.length
+
+		anhos.map((i) => {
+			// console.log(i.fecha)
+			Consulta.findCantidadDiagnosticosPorAnho(i.fecha, (err, diagnosticos) => {
+				if(err) {
+					console.log(err)
+					return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+				}
+
+					i.labels = []
+					i.data = []
+				diagnosticos.map((d) => {
+
+					i.data.push(d.cantidad)
+					// i.data.sort()
+
+					// d.fecha = d.fecha.toString()
+					i.labels.push((d.descripcion))
+					// i.labels.sort()
+
+				})
+
+				// i.contenido = consultas
+
+				if(i == anhos[longAnhos-1]) {
+					return res.json(anhos)
+				}
+
+			})
+		})
+
+		// return res.json(diagnosticos)
+	})	
+}
+
 
 
 exports.listar = function(req, res, next) {
