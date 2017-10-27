@@ -5,9 +5,9 @@ import {
 	LISTAR_CONSULTAS_EXITO,
 	LISTAR_CONSULTAS_FALLO,
 
-	MOSTRAR_ESTADISTICA1_REQUEST,
-	MOSTRAR_ESTADISTICA1_EXITO,
-	MOSTRAR_ESTADISTICA1_FALLO,
+	MOSTRAR_ESTADISTICA_REQUEST,
+	MOSTRAR_ESTADISTICA_EXITO,
+	MOSTRAR_ESTADISTICA_FALLO,
 
 	ABRIR_FORMULARIO_CREAR_CONSULTA,
 
@@ -49,7 +49,7 @@ const INITIAL_STATE = {
 	listar: { consultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, consulta: null, error: '' },
-	mostrarValoresEstadisticos1: { 
+	mostrarValoresEstadisticos: { 
 		cargando: false, valoresEstadisticos: null, error: ''
 	},
 	editar: { cargando: false, mensaje: '', error: '' }
@@ -168,23 +168,23 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 
-		// Mostrar estadística 1.
-		case MOSTRAR_ESTADISTICA1_REQUEST:
+		// Mostrar estadística.
+		case MOSTRAR_ESTADISTICA_REQUEST:
 			return Object.assign({}, state, {
-				mostrarValoresEstadisticos1: { cargando: true }
+				mostrarValoresEstadisticos: { cargando: true }
 			})
 
-		case MOSTRAR_ESTADISTICA1_EXITO:
+		case MOSTRAR_ESTADISTICA_EXITO:
 			return Object.assign({}, state, {
-				mostrarValoresEstadisticos1: {
+				mostrarValoresEstadisticos: {
 					cargando: false,
 					valoresEstadisticos: action.payload
 				}
 			})
 
-		case MOSTRAR_ESTADISTICA1_FALLO:
+		case MOSTRAR_ESTADISTICA_FALLO:
 			return Object.assign({}, state, {
-				mostrarValoresEstadisticos1: {
+				mostrarValoresEstadisticos: {
 					cargando: false,
 					valoresEstadisticos: null,
 					error: action.payload
