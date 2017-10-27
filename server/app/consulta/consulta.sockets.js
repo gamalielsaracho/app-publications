@@ -31,18 +31,18 @@ export default (io) => {
 				// console.log(diagnosticos)
 			if(err) {
 				console.log(err)
-				socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+				socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 				return
 			}
 
 			let longDiag = diagnosticos.length
 
 			diagnosticos.map((i) => {
-				Consulta.findCantidadDiagnosticosPorAnho(i.id_diagnostico, (err, consultas) => {
+				Consulta.findCantidadDiagnosticosEnAnhos(i.id_diagnostico, (err, consultas) => {
 						// console.log(consultas)
 					if(err) {
 						console.log(err)
-						socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+						socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 						return
 					}
 
@@ -51,23 +51,66 @@ export default (io) => {
 					consultas.map((c) => {
 						// console.log(c)
 						i.data.push(c.cantidad)
-						i.data.sort()
+						// i.data.sort()
 
 						c.fecha = c.fecha.toString()
 						i.labels.push((c.fecha))
-						i.labels.sort()
+						// i.labels.sort()
 
 					})
 
 						// i.contenido = consultas
 
 					if(i == diagnosticos[longDiag-1]) {
-						consultaNsp.emit('cantidad_diagnosticos_porAnho', diagnosticos)
+						consultaNsp.emit('cantidad_diagnosticos_enAnhos', diagnosticos)
 					}
 				})
 			})
 		})
 
+
+
+		// Estadística 2.
+		Consulta.findOnlyYears((err, anhos) => {
+			// console.log(anhos)
+			if(err) {
+				console.log(err)
+				socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+				return
+			}
+
+			let longAnhos = anhos.length
+
+			anhos.map((i) => {
+				// console.log(i.fecha)
+				Consulta.findCantidadDiagnosticosPorAnho(i.fecha, (err, diagnosticos) => {
+					if(err) {
+						console.log(err)
+						socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+						return
+					}
+
+						i.labels = []
+						i.data = []
+					diagnosticos.map((d) => {
+						i.data.push(d.cantidad)
+						// i.data.sort()
+
+						// d.fecha = d.fecha.toString()
+						i.labels.push((d.descripcion))
+						// i.labels.sort()
+
+					})
+
+					// i.contenido = consultas
+
+					if(i == anhos[longAnhos-1]) {
+						consultaNsp.emit('cantidad_diagnosticos_porAnho', anhos)
+					}
+
+				})
+			})
+		})	
 
 
 		// Listar todas las consultas que realizó un médico/a.
