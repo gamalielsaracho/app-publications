@@ -15,7 +15,7 @@ import {
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
 	return {
-		mostrarValoresEstadisticos1: state.consulta.mostrarValoresEstadisticos1,
+		mostrarValoresEstadisticos: state.consulta.mostrarValoresEstadisticos,
 
 		valoresFiltro: {
     		// Para filtrar .
