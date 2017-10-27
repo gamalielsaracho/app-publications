@@ -9,6 +9,8 @@ import EstadisticasApp from './EstadisticasApp'
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
 	return {
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname
 	}
 }
 
