@@ -24,7 +24,7 @@ class Estadistica1App extends Component {
 	render() {
 		const { handleSubmit, fieldDisabled, pristine, reset, submitting } = this.props		
 
-		const { cargando, valoresEstadisticos, error } = this.props.mostrarValoresEstadisticos1
+		const { cargando, valoresEstadisticos, error } = this.props.mostrarValoresEstadisticos
 		
 		if(cargando) {
 			return <Cargando/>
@@ -40,7 +40,6 @@ class Estadistica1App extends Component {
 					<button className='btn btn-success no-print-data' 
 						onClick={() => {
 							window.print()
-							browserHistory.push('/estadisticas/diagnosticos-anuales/')
 						}}>Imprimir o Exportar a PDF</button>
 				</form>
 				<MensajeOerror error={error} mensaje={null}/>
