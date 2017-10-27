@@ -3,10 +3,10 @@ export const LISTAR_CONSULTAS_REQUEST = 'listar_consultas_request'
 export const LISTAR_CONSULTAS_EXITO = 'listar_consultas_exito'
 export const LISTAR_CONSULTAS_FALLO = 'listar_consultas_fallo'
 
-// Mostrar estadística 1.
-export const MOSTRAR_ESTADISTICA1_REQUEST = 'mostrar_estadistica1_request'
-export const MOSTRAR_ESTADISTICA1_EXITO = 'mostrar_estadistica1_exito'
-export const MOSTRAR_ESTADISTICA1_FALLO = 'mostrar_estadistica1_fallo'
+// Mostrar estadística .
+export const MOSTRAR_ESTADISTICA_REQUEST = 'mostrar_estadistica_request'
+export const MOSTRAR_ESTADISTICA_EXITO = 'mostrar_estadistica_exito'
+export const MOSTRAR_ESTADISTICA_FALLO = 'mostrar_estadistica_fallo'
 
 
 // EDIT.

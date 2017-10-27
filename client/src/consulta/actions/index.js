@@ -11,10 +11,10 @@ import {
 	LISTAR_CONSULTAS_EXITO,
 	LISTAR_CONSULTAS_FALLO,
 
-	// Mostrar Estadística 1. 
-	MOSTRAR_ESTADISTICA1_REQUEST,
-	MOSTRAR_ESTADISTICA1_EXITO,
-	MOSTRAR_ESTADISTICA1_FALLO,
+	// Mostrar Estadística. 
+	MOSTRAR_ESTADISTICA_REQUEST,
+	MOSTRAR_ESTADISTICA_EXITO,
+	MOSTRAR_ESTADISTICA_FALLO,
 
 	// Create rol.
 	CREAR_CONSULTA_REQUEST,
@@ -84,21 +84,38 @@ export function cerrarFormularioConsulta() {
 
 export function mostrarEstadistica1() {
 	return (dispatch) => {
-		dispatch({ type: MOSTRAR_ESTADISTICA1_REQUEST })
+		dispatch({ type: MOSTRAR_ESTADISTICA_REQUEST })
+
+		var consultaSocket = io.connect('http://localhost:3000/consulta');
+
+		consultaSocket.on('cantidad_diagnosticos_enAnhos', (data) => {
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: MOSTRAR_ESTADISTICA_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MOSTRAR_ESTADISTICA_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+
+export function mostrarEstadistica2() {
+	return (dispatch) => {
+		dispatch({ type: MOSTRAR_ESTADISTICA_REQUEST })
 
 		var consultaSocket = io.connect('http://localhost:3000/consulta');
 
 		consultaSocket.on('cantidad_diagnosticos_porAnho', (data) => {
 			// console.log(data)
 			if(data.error) {
-				dispatch({ type: MOSTRAR_ESTADISTICA1_FALLO, payload: data.error })
+				dispatch({ type: MOSTRAR_ESTADISTICA_FALLO, payload: data.error })
 			} else {
-				dispatch({ type: MOSTRAR_ESTADISTICA1_EXITO, payload: data })
+				dispatch({ type: MOSTRAR_ESTADISTICA_EXITO, payload: data })
 			}
 		})
 	}
 }
-
 
 export function listarConsultas() {
 	return (dispatch) => {
