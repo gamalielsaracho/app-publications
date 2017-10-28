@@ -107,7 +107,7 @@ export default (io) => {
 							farmaceuticas()
 
 							
-							fieldsToEditData(listaCampos, 'eliminación', 'farmaceuticas', data.id_personal, (err, datos) => {
+							fieldsToEditData(listaCampos, 'eliminación', 'farmaceuticas', data.idPersonal, (err, datos) => {
 								if(err) {
 									console.log(err)
 									socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
@@ -186,10 +186,9 @@ export default (io) => {
 							return
 						}
 
-						socket.emit('editar_farmaceutica', { mensaje: 'Se actualizó exitósamente.' })
 						farmaceuticas()
 
-						fieldsToEditData(listaCampos, 'actualización', 'farmaceuticas', data.id_personal, (err, datos) => {
+						fieldsToEditData(listaCampos, 'actualización', 'farmaceuticas', data.idPersonal, (err, datos) => {
 							if(err) {
 								console.log(err)
 								socket.emit('editar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
@@ -207,6 +206,7 @@ export default (io) => {
 							})
 						})
 
+						socket.emit('editar_farmaceutica', { mensaje: 'Se actualizó exitósamente.' })
 					})
 
 				})
