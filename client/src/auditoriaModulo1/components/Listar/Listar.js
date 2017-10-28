@@ -76,7 +76,7 @@ class Listar extends Component {
 						    	<tr>
 						        	<th><h4>Dato anterior</h4></th>
 						        	<th><h4>Dato nuevo</h4></th>
-						        	<th><h4>Tabla</h4></th>
+						        	<th><h4>Módulo</h4></th>
 						        	<th><h4>Acción</h4></th>
 						        	<th><h4>Fecha</h4></th>
 						        	<th><h4>Hora</h4></th>
