@@ -122,7 +122,7 @@ export function eliminarFarmaceutica(idFarmaceutica) {
 
 		farmaceuticaSocket.emit('eliminar_farmaceutica', {
 			id_farmaceutica: idFarmaceutica,
-			id_personal: jwtDecode(localStorage.getItem('token')).id_personal
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		farmaceuticaSocket.on('eliminar_farmaceutica', (data) => {
@@ -165,7 +165,7 @@ export function cerrarModalMostrarFarmaceutica() {
 
 export function editarFarmaceutica(datosFormulario) {
 	return (dispatch) => {
-		datosFormulario.id_personal = jwtDecode(localStorage.getItem('token')).id_personal
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_FARMACEUTICA_REQUEST })
 
