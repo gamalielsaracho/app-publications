@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router'
 
 import medicamentoRoutes from './medicamento/routes'
 
-import pacienteRoutes from './routes/Paciente'
+import pacienteRoutes from './paciente/routes'
 
 import medicamentoEntregadoRoutes from './medicamentoEntregado/routes'
 
@@ -217,6 +217,7 @@ export default (
 			<Route path='/dashboard/tipos-consumos' component={ListarTiposConsumosPage}/>
 			<Route path='/dashboard/drogas' component={ListarDrogasPage}/>
 			<Route path='/dashboard/unidades-medicamentos' component={ListarUnidadesMedicamentosPage}/>
+
 
 			<Route path='/dashboard/farmaceuticas' component={ListarFarmaceuticasAppContainer}>
 				<IndexRoute component={ListarFarmaceuticasPage}/>
