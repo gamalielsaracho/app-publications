@@ -2,6 +2,14 @@ import Paciente from './paciente.model'
 
 import verifyRef from './././../validations/verifyRef.js'
 
+import foreignKeyData from './././../useFul/foreignKeyData.js'
+
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
+import moment from 'moment'
+
 export default (socket, io) => {
 	
 		function pacientes() {
@@ -122,16 +130,143 @@ export default (socket, io) => {
 		socket.on('editar_paciente', (data) => {
 			// console.log(data)
 
-			Paciente.update(data, (err) => {
+			Paciente.verifyIfExist(data, (err, pacienteExistente) => {
 				if(err) {
 					console.log(err)
 					socket.emit('editar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('editar_paciente', { mensaje: 'Se actualizó exitósamente.' })
-			
-				pacientes()
-			})
+				if(pacienteExistente[0]) {
+					socket.emit('editar_paciente', { error: 'Este paciente ya está registrado.' })
+				} else {
+					// foreignKeyData('medicamentos', 'id_farmaceutica', data.id_farmaceutica)
+					
+					Paciente.findById(data, (err, pacienteDatosAnterior) => {
+						let pAnt = pacienteDatosAnterior[0]
+
+						console.error("fecha Anterior ------> "+pAnt.pa.fechaNacimiento)
+
+						if(err) {
+							console.log(err)
+							socket.emit('editar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+
+						Paciente.update(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							pacientes()
+
+							Paciente.findById(data, (err, pacienteDatosNuevo) => {
+								let pNue = pacienteDatosNuevo[0]
+
+
+								console.error("fecha Nueva ------> "+pNue.pa.fechaNacimiento)
+
+								if(err) {
+									console.log(err)
+									socket.emit('editar_paciente', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+
+								// Fecha de Nacimiento.
+								
+								let listaCampos = [
+									{ 
+										nombreCampo: 'Nro. de documento',
+										datoCampoAnterior: pAnt.pa.nroDocumento,
+										datoCampoNuevo: pNue.pa.nroDocumento
+									},
+									{ 
+										nombreCampo: 'Nombres',
+										datoCampoAnterior: pAnt.pa.nombres,
+										datoCampoNuevo: pNue.pa.nombres
+									},
+									{ 
+										nombreCampo: 'Apellidos',
+										datoCampoAnterior: pAnt.pa.apellidos,
+										datoCampoNuevo: pNue.pa.apellidos
+									},
+									{ 
+										nombreCampo: 'Fecha de nacimiento',
+										datoCampoAnterior: moment(pAnt.pa.fechaNacimiento).format('DD/MM/YYYY'),
+										datoCampoNuevo: moment(pNue.pa.fechaNacimiento).format('DD/MM/YYYY')
+									},
+									{ 
+										nombreCampo: 'Dirección',
+										datoCampoAnterior: pAnt.pa.direccion,
+										datoCampoNuevo: pNue.pa.direccion
+									},
+									{ 
+										nombreCampo: 'Fecha de muerte',
+										datoCampoAnterior: pAnt.pa.fechaMuerte,
+										datoCampoNuevo: pNue.pa.fechaMuerte
+									},
+									{ 
+										nombreCampo: 'celular',
+										datoCampoAnterior: pAnt.pa.celular,
+										datoCampoNuevo: pNue.pa.celular
+									},
+									{ 
+										nombreCampo: 'telefono',
+										datoCampoAnterior: pAnt.pa.telefono,
+										datoCampoNuevo: pNue.pa.telefono
+									},
+									{ 
+										nombreCampo: 'Area',
+										datoCampoAnterior: pAnt.area.descripcion,
+										datoCampoNuevo: pNue.area.descripcion
+									},
+									{ 
+										nombreCampo: 'Ciudad',
+										datoCampoAnterior: pAnt.ciudad.descripcion,
+										datoCampoNuevo: pNue.ciudad.descripcion
+									},
+									{ 
+										nombreCampo: 'sexo',
+										datoCampoAnterior: pAnt.pa.sexo,
+										datoCampoNuevo: pNue.pa.sexo
+									},
+									{ 
+										nombreCampo: 'Tipo de Documento',
+										datoCampoAnterior: pAnt.tipoDocumento.descripcion,
+										datoCampoNuevo: pNue.tipoDocumento.descripcion
+									}
+								]
+
+								// console.log(listaCampos)
+								fieldsToEditData(listaCampos, 'actualización', 'pacientes', data.idPersonal, (err, datos) => {
+									if(err) {
+										console.log(err)
+										socket.emit('editar_paciente', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+
+									// .. Ejecutar esto despues de editar el registro. 
+									console.log(datos)
+
+									AuditoriaModulo1.create(datos, (err) => {
+										if(err) {
+											console.log(err)
+											socket.emit('editar_paciente', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+											return
+										}
+									})
+								})
+
+								// console.log(listaCampos)
+							})
+
+							socket.emit('editar_paciente', { mensaje: 'Se actualizó exitósamente.' })
+						})
+
+					})
+				}
+			})			
 		})
 }
