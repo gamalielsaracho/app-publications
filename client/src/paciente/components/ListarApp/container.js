@@ -2,8 +2,6 @@ import { connect } from 'react-redux'
 
 import ListarApp from './ListarApp'
 
-// import {
-// } from '../../..//actions'
 
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
@@ -18,7 +16,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		
+
 	}
 }
 
