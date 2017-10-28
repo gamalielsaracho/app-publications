@@ -37,6 +37,9 @@ import {
 import io from 'socket.io-client'
 import { socket, formatDate } from '../../globalActions'
 
+import jwtDecode from 'jwt-decode'
+import moment from 'moment'
+
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
@@ -62,7 +65,7 @@ export function abrirFormularioEditarPaciente(idPaciente) {
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_FALLO, payload: data.error })
 			} else {
-				data.fechaNacimiento = formatDate(data.fechaNacimiento)
+				data.fechaNacimiento = moment(data.fechaNacimiento).format('YYYY-MM-DD')
 
 				console.log(data)
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_EXITO, payload: data })
@@ -126,7 +129,9 @@ export function eliminarPaciente(idPaciente) {
 		// var socket = io('http://localhost:3000')
 
 		socket.emit('eliminar_paciente', {
-			id_paciente: idPaciente
+			id_paciente: idPaciente,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+
 		})
 
 		socket.on('eliminar_paciente', (data) => {
@@ -170,6 +175,7 @@ export function cerrarModalMostrarPaciente() {
 
 export function editarPaciente(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_PACIENTE_REQUEST })
 
