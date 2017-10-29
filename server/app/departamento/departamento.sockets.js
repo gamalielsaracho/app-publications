@@ -2,6 +2,10 @@ import Departamento from './departamento.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (socket, io) => {
 	
 		function departamentos() {
@@ -21,21 +25,35 @@ export default (socket, io) => {
 
 
 		socket.on('crear_departamento', function(data) {
-			Departamento.create(data, (err, departamento) => {
+			// console.log(data)
+			Departamento.verifyIfExist(data, (err, departamentoExistente) => {
 				if(err) {
+					console.log(err)
 					socket.emit('crear_departamento', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('crear_departamento', { mensaje: 'Se agregó exitósamente.' })
-			
-				departamentos()
+				if(departamentoExistente[0]) {
+					socket.emit('crear_departamento', { error: 'Este departamento ya está registrado.' })
+					return
+				} else {
+					Departamento.create(data, (err, departamento) => {
+						if(err) {
+							socket.emit('crear_departamento', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+
+						socket.emit('crear_departamento', { mensaje: 'Se agregó exitósamente.' })
+					
+						departamentos()
+					})
+				}
 			})
 		})
 
 
 		socket.on('mostrar_departamento', (data) => {
-			Departamento.findById(data.id_departamento, (err, departamento) => {
+			Departamento.findById(data, (err, departamento) => {
 				if(err) {
 					socket.emit('mostrar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
 					return
@@ -57,15 +75,54 @@ export default (socket, io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_departamento', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					Departamento.delete(data.id_departamento, (err) => {
+
+					Departamento.findById(data, (err, departamentoEncontrada) => {
+						let departamento = departamentoEncontrada[0]
+
+						// console.log(departamento)
 						if(err) {
+							console.log(err)
 							socket.emit('eliminar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_departamento', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{ 
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: departamento.descripcion
+							}
+						]
 
-						departamentos()
+						Departamento.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							departamentos()
+
+							fieldsToEditData(listaCampos, 'eliminación', 'departamentos', data.idPersonal, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_departamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return 
+								}
+								
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_departamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_departamento', { mensaje: 'Se Eliminó exitósamente.' })
+						})
+
 					})
 				}
 			})
@@ -73,15 +130,70 @@ export default (socket, io) => {
 
 
 		socket.on('editar_departamento', (data) => {
-			Departamento.update(data, (err) => {
+			console.log(data)
+
+			Departamento.verifyIfExist(data, (err, departamentoExistente) => {
 				if(err) {
+					console.log(err)
 					socket.emit('editar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('editar_departamento', { mensaje: 'Se actualizó exitósamente.' })
-			
-				departamentos()
+				if(departamentoExistente[0]) {
+					socket.emit('editar_departamento', { error: 'Este departamento ya está registrado.' })
+					return
+				} 
+
+				Departamento.findById(data, (err, departamentoEncontrada) => {
+					let departamento = departamentoEncontrada[0]
+
+					// console.log(departamento)
+					if(err) {
+						console.log(err)
+						socket.emit('editar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					let listaCampos = [
+						{ 
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: departamento.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+
+					Departamento.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_departamento', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+					
+						departamentos()
+
+						fieldsToEditData(listaCampos, 'actualización', 'departamentos', data.idPersonal, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_departamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return 
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_departamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_departamento', { mensaje: 'Se actualizó exitósamente.' })
+					})
+				})
+
 			})
 		})
 }
