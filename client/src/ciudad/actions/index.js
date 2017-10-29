@@ -34,6 +34,8 @@ import {
 	ELIMINAR_CIUDAD_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 import { socket } from '../../globalActions'
 
@@ -52,9 +54,9 @@ export function abrirFormularioEditarCiudad(idCiudad) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_CIUDAD_REQUEST })
 
-		socket.emit('mostrar_ciudad', { id_ciudad: idCiudad })
+		socket.emit('mostrar_ciudad_editar', { id_ciudad: idCiudad })
 
-		socket.on('mostrar_ciudad', (data) => {
+		socket.on('mostrar_ciudad_editar', (data) => {
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_CIUDAD_FALLO, payload: data.error })
@@ -96,14 +98,15 @@ export function crearCiudad(datosFormulario) {
 
 		socket.emit('crear_ciudad', datosFormulario)
 		socket.on('crear_ciudad', (data) => {
-			if(data.err) {
+			if(data.error) {
 				dispatch({ type: CREAR_CIUDAD_FALLO, payload: data.error })
 			} else {
+				dispatch(reset('FormularioCiudad'))
+				
 				dispatch({ type: CREAR_CIUDAD_EXITO, payload: data })
 			}
 		})
 	
-		dispatch(reset('FormularioCiudad'))
 	}
 }
 
@@ -112,7 +115,10 @@ export function eliminarCiudad(idCiudad) {
 
 		dispatch({ type: ELIMINAR_CIUDAD_REQUEST })
 
-		socket.emit('eliminar_ciudad', { id_ciudad: idCiudad })
+		socket.emit('eliminar_ciudad', {
+			id_ciudad: idCiudad,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		socket.on('eliminar_ciudad', (data) => {
 			if(data.error) {
@@ -150,6 +156,7 @@ export function cerrarModalMostrarCiudad() {
 
 export function editarCiudad(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_CIUDAD_REQUEST })
 
