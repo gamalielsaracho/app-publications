@@ -34,6 +34,8 @@ import {
 	ELIMINAR_DEPARTAMENTO_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 import { socket } from '../../globalActions'
 
@@ -96,14 +98,14 @@ export function crearDepartamento(datosFormulario) {
 
 		socket.emit('crear_departamento', datosFormulario)
 		socket.on('crear_departamento', (data) => {
-			if(data.err) {
+			if(data.error) {
 				dispatch({ type: CREAR_DEPARTAMENTO_FALLO, payload: data.error })
 			} else {
+				dispatch(reset('FormularioDepartamento'))
 				dispatch({ type: CREAR_DEPARTAMENTO_EXITO, payload: data })
 			}
 		})
 	
-		dispatch(reset('FormularioDepartamento'))
 	}
 }
 
@@ -112,7 +114,10 @@ export function eliminarDepartamento(idDepartamento) {
 
 		dispatch({ type: ELIMINAR_DEPARTAMENTO_REQUEST })
 
-		socket.emit('eliminar_departamento', { id_departamento: idDepartamento })
+		socket.emit('eliminar_departamento', { 
+			id_departamento: idDepartamento,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		socket.on('eliminar_departamento', (data) => {
 			if(data.error) {
@@ -150,6 +155,7 @@ export function cerrarModalMostrarDepartamento() {
 
 export function editarDepartamento(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_DEPARTAMENTO_REQUEST })
 
