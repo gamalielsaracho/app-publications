@@ -14,7 +14,7 @@ const validate = (values) => {
 
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.length < 5) {
+	}else if (values.descripcion.trim().length < 5) {
    		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
 	}
 
@@ -26,7 +26,12 @@ function mapStateToProps(state) {
 		formulario: state.departamento.formulario,
 		initialValues: state.departamento.formulario.departamento,
 		enableReinitialize: state.departamento.formulario.iniciarValores,
-		editarContenido: state.departamento.formulario.iniciarValores
+		editarContenido: state.departamento.formulario.iniciarValores,
+
+
+		// Para obtener el error al crear o editar.
+		crear: state.departamento.crear,
+		editar: state.departamento.editar
 	}
 }
 
