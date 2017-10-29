@@ -20,7 +20,7 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
 	}
 
 	enviarFormulario(formProps) {
@@ -31,13 +31,25 @@ class Formulario extends Component {
 		}
 	}
 
-	renderCargando(cargando) {
+	renderFormulario(cargando) {
+		const { handleSubmit, pristine, reset, submitting } = this.props
+
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			return <span></span>
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+					<form onSubmit={handleSubmit(this.enviarFormulario)}>
+						<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
+														
+						<button type="submit" className='btn btn-info btn-space' disabled={pristine || submitting}>Guardar</button>
+						<button type="button" onClick={ this.props.cerrarFormularioDepartamento } className='btn btn-primary btn-space'>Cancelar</button>
+					</form>
+				</div>
+			</div>
 		}
 	}
+
 
 	render() {
 		const customStyles = {
@@ -46,13 +58,15 @@ class Formulario extends Component {
 		  		position: 'none'
 		  	}
 		}
-
-		const { handleSubmit, pristine, reset, submitting } = this.props
 		
 		const { 
-			abirtoCrear, abirtoEditar, error, cargando, departamento 
+			abirtoCrear, abirtoEditar, cargando, departamento 
 		} = this.props.formulario
 
+		let error = this.props.formulario.error ? this.props.formulario.error 
+			: this.props.crear.error ? this.props.crear.error : this.props.editar.error 
+
+		// console.log(error)
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
 		if(abierto) {
@@ -63,19 +77,9 @@ class Formulario extends Component {
 				<div className='container'>
 					<h4 className='text-center'>Formulario departamento</h4>
 
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-							<MensajeOerror error={error} mensaje={null}/>
-							{ this.renderCargando(cargando) }
+					<MensajeOerror error={error} mensaje={null}/>
 
-							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-														
-								<button type="submit" className='btn btn-info btn-space' disabled={pristine || submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioDepartamento } className='btn btn-primary btn-space'>Cancelar</button>
-							</form>
-						</div>
-					</div>
+					{ this.renderFormulario(cargando) }
 				</div>
 
 			</ReactModal>
