@@ -9,6 +9,11 @@ import medicamentoEntregadoRoutes from './medicamentoEntregado/routes'
 
 import citaRoutes from './cita/routes'
 
+import departamentoRoutes from './departamento/routes'
+
+import ciudadRoutes from './ciudad/routes'
+
+
 import Estadistica1Container from './consulta/components/Estadistica1'
 
 
@@ -31,11 +36,6 @@ import ListarRolesPage from '././rol/pages/ListarRolesPage'
 // ESPECIALIDAD.
 import ListarEspecialidadesPage from '././especialidades/pages/ListarEspecialidadesPage'
 
-// CIUDADES.
-import ListarCiudadesPage from '././ciudad/pages/ListarCiudadesPage'
-
-// DEPARTAMENTOS.
-import ListarDepartamentosPage from '././departamento/pages/ListarDepartamentosPage'
 
 // AREAS.
 import ListarAreasPage from '././area/pages/ListarAreasPage'
@@ -175,8 +175,6 @@ export default (
 			<Route path='/usuarios' component={ListarPage}/>
 			<Route path='/roles' component={ListarRolesPage}/>
 			<Route path='/especialidades' component={ListarEspecialidadesPage}/>
-			<Route path='/ciudades' component={ListarCiudadesPage}/>
-			<Route path='/departamentos' component={ListarDepartamentosPage}/>
 			
 			<Route path='/areas' component={ListarAreasPage}/>
 			<Route path='/alergias' component={ListarAlergiasPage}/>
@@ -209,7 +207,8 @@ export default (
 			{ pacienteRoutes }
 			{ medicamentoEntregadoRoutes }
 			{ citaRoutes }
-
+			{ departamentoRoutes }
+			{ ciudadRoutes }
 
 				{/* Módulo farmacia. */}
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
