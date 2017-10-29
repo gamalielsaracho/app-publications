@@ -38,14 +38,15 @@ class Listar extends Component {
 
 		return <tbody>
 			{
-				ciudades.map((ciudad) => {
-					return <tr key={ciudad.id_ciudad}>
-			            <td>{ ciudad.id_ciudad }</td>
-			            <td>{ ciudad.descripcion }</td>
+				ciudades.map((i) => {
+					return <tr key={i.ciudad.id_ciudad}>
+			            <td>{ i.ciudad.id_ciudad }</td>
+			            <td>{ i.ciudad.descripcion }</td>
+			            <td>{ i.departamento.descripcion }</td>
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarCiudad(ciudad.id_ciudad) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarCiudad(ciudad.id_ciudad) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarCiudad(ciudad.id_ciudad) }} className="btn btn-danger btn-space">Eliminar</button>
+							<button type="button" onClick={() => { this.props.mostrarCiudad(i.ciudad.id_ciudad) }} className="btn btn-info btn-space">Mostrar</button>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarCiudad(i.ciudad.id_ciudad) }} className="btn btn-warning btn-space">Editar</button>
+							<button type="button" onClick={() => { this.props.eliminarCiudad(i.ciudad.id_ciudad) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>	
 				})
@@ -84,7 +85,8 @@ class Listar extends Component {
 							<thead>
 						    	<tr>
 						        	<th className='center'>Id_ciudad</th>
-						        	<th className='center'>Descripción</th>
+						        	<th className='center'>Nombre</th>
+						        	<th className='center'>Departamento</th>
 						        	<th className='center'>Opciones</th>
 						    	</tr>
 						    </thead>
