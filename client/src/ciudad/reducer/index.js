@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		ciudad: {}
+		ciudad: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { ciudades:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, ciudad: {}, error: '', abierto: false },
+	mostrar: { cargando: false, ciudad: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,10 +58,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					ciudad: {}
+					ciudad: null
 				},
-				mostrar: { abierto: false },
-				eliminar: INITIAL_STATE.eliminar
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CIUDAD_REQUEST:
@@ -72,10 +74,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					ciudad: {}
+					ciudad: null
 				},
-				mostrar: { abierto: false },
-				eliminar: INITIAL_STATE.eliminar
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CIUDAD_EXITO:
@@ -88,7 +92,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					ciudad: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_CIUDAD_FALLO:
@@ -99,22 +103,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					ciudad: {}
+					ciudad: null
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
 		case CERRAR_FORMULARIO_CIUDAD:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					ciudad: {}
-				}
+				formulario: INITIAL_STATE.formulario
 			})
 
 		// CREATE.
@@ -124,16 +121,11 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_CIUDAD_EXITO:
-			console.log(action.payload.datoInsertado)
-
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
 				},
-				formulario: { abirtoCrear: false }
-				// listar: { 
-				// 	ciudades: [ ...state.listar.ciudades, action.payload.datoInsertado ]
-				// }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CREAR_CIUDAD_FALLO:
@@ -164,7 +156,7 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_CIUDAD_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false },
+				formulario: INITIAL_STATE.formulario,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -175,28 +167,23 @@ export default function (state = INITIAL_STATE, action) {
 					ciudad: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case MOSTRAR_CIUDAD_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					ciudad: {},
+					ciudad: null,
 					error: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CERRAR_MODAL_MOSTRAR_CIUDAD:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					ciudad: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -212,7 +199,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case EDITAR_CIUDAD_FALLO:
@@ -235,8 +222,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					ciudad: action.payload
+					error: ''
 				}
 			})
 
@@ -244,8 +230,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					ciudad: {}
+					error: action.payload
 				}
 			})
 
