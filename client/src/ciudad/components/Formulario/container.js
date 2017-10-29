@@ -8,8 +8,7 @@ import {
 } from '../../actions'
 
 import {
-	listarDepartamentos,
-	abrirFormularioCrearDepartamento
+	listarDepartamentos
 } from '../../../departamento/actions'
 
 import Formulario from './Formulario'
@@ -23,7 +22,7 @@ const validate = (values) => {
 
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.length < 5) {
+	}else if (values.descripcion.trim().length < 5) {
    		errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
 	}
 
@@ -37,7 +36,12 @@ function mapStateToProps(state) {
 		enableReinitialize: state.ciudad.formulario.iniciarValores,
 		editarContenido: state.ciudad.formulario.iniciarValores,
 
-		listaDepartamentos: state.departamento.listar
+		// Para obtener el error al crear o editar.
+		crear: state.ciudad.crear,
+		editar: state.ciudad.editar,
+
+		// Llamamos Todos los departamentos para pasarle al select option.
+		listarDepartamentos: state.departamento.listar		
 	}
 }
 
@@ -58,11 +62,9 @@ function mapDispatchToProps(dispatch) {
 		},
 
 
-		listarDepartamentos: () => {
+		// Para ser llamado dentro de componentWillMount()
+		listarDepartamentosFuncion: () => {
 			dispatch(listarDepartamentos())
-		},
-		abrirFormularioCrearDepartamento: () => {
-			dispatch(abrirFormularioCrearDepartamento())
 		}
 	}
 }
