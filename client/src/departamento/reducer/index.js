@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		departamento: {}
+		departamento: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { departamentos:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, departamento: {}, error: '', abierto: false },
+	mostrar: { cargando: false, departamento: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,9 +58,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					departamento: {}
+					departamento: null
 				},
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
+
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -72,9 +75,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					departamento: {}
+					departamento: null
 				},
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
+
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -88,7 +94,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					departamento: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_DEPARTAMENTO_FALLO:
@@ -99,22 +105,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					departamento: {}
+					departamento: null
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
 		case CERRAR_FORMULARIO_DEPARTAMENTO:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					departamento: {}
-				}
+				formulario: INITIAL_STATE.formulario
 			})
 
 		// CREATE.
@@ -124,19 +123,16 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_DEPARTAMENTO_EXITO:
-			console.log(action.payload.datoInsertado)
 
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
 				},
-				formulario: { abirtoCrear: false }
-				// listar: { 
-				// 	departamentos: [ ...state.listar.departamentos, action.payload.datoInsertado ]
-				// }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CREAR_DEPARTAMENTO_FALLO:
+			console.log(action.payload)
 			return state = Object.assign({}, state, {
 				crear: { error: action.payload }
 			})
@@ -164,8 +160,11 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_DEPARTAMENTO_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false },
-				eliminar: INITIAL_STATE.eliminar
+				formulario: INITIAL_STATE.formulario,
+				eliminar: INITIAL_STATE.eliminar,
+
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar
 			})
 
 		case MOSTRAR_DEPARTAMENTO_EXITO:
@@ -175,28 +174,23 @@ export default function (state = INITIAL_STATE, action) {
 					departamento: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case MOSTRAR_DEPARTAMENTO_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					departamento: {},
+					departamento: null,
 					error: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CERRAR_MODAL_MOSTRAR_DEPARTAMENTO:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					departamento: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -212,7 +206,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case EDITAR_DEPARTAMENTO_FALLO:
