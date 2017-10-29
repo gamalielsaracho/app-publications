@@ -111,17 +111,100 @@ export default (socket, io) => {
 				if(enUso) {
 					socket.emit('eliminar_paciente', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					Paciente.delete(data, (err) => {
+					Paciente.findById(data, (err, pacienteDatosAnterior) => {
+						let pAnt = pacienteDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_paciente', { mensaje: 'Se Eliminó exitósamente.' })
 
-						pacientes()
+						let listaCampos = [
+							{
+								nombreCampo: 'Nro. de documento',
+								datoCampoAnterior: pAnt.pa.nroDocumento
+							},
+							{
+								nombreCampo: 'Nombres',
+								datoCampoAnterior: pAnt.pa.nombres
+							},
+							{ 
+								nombreCampo: 'Apellidos',
+								datoCampoAnterior: pAnt.pa.apellidos
+							},
+							{ 
+								nombreCampo: 'Fecha de nacimiento',
+								datoCampoAnterior: moment(pAnt.pa.fechaNacimiento).format('DD/MM/YYYY')
+							},
+							{ 
+								nombreCampo: 'Dirección',
+								datoCampoAnterior: pAnt.pa.direccion
+							},
+							{ 
+								nombreCampo: 'Fecha de muerte',
+								datoCampoAnterior: pAnt.pa.fechaMuerte
+							},
+							{ 
+								nombreCampo: 'celular',
+								datoCampoAnterior: pAnt.pa.celular
+							},
+							{ 
+								nombreCampo: 'telefono',
+								datoCampoAnterior: pAnt.pa.telefono
+							},
+							{ 
+								nombreCampo: 'Area',
+								datoCampoAnterior: pAnt.area.descripcion
+							},
+							{ 
+								nombreCampo: 'Ciudad',
+								datoCampoAnterior: pAnt.ciudad.descripcion
+							},
+							{ 
+								nombreCampo: 'sexo',
+								datoCampoAnterior: pAnt.pa.sexo
+							},
+							{ 
+								nombreCampo: 'Tipo de Documento',
+								datoCampoAnterior: pAnt.tipoDocumento.descripcion
+							}
+						]
+
+						Paciente.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_paciente', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							pacientes()
+
+							fieldsToEditData(listaCampos, 'eliminación', 'pacientes', data.idPersonal, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_paciente', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+
+								// .. Ejecutar esto despues de editar el registro. 
+								console.log(datos)
+
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_paciente', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_paciente', { mensaje: 'Se Eliminó exitósamente.' })
+						})
+						// 
 					})
+
 				}
 			})
 		})
@@ -145,7 +228,7 @@ export default (socket, io) => {
 					Paciente.findById(data, (err, pacienteDatosAnterior) => {
 						let pAnt = pacienteDatosAnterior[0]
 
-						console.error("fecha Anterior ------> "+pAnt.pa.fechaNacimiento)
+						// console.error("fecha Anterior ------> "+pAnt.pa.fechaNacimiento)
 
 						if(err) {
 							console.log(err)
@@ -166,7 +249,7 @@ export default (socket, io) => {
 								let pNue = pacienteDatosNuevo[0]
 
 
-								console.error("fecha Nueva ------> "+pNue.pa.fechaNacimiento)
+								// console.error("fecha Nueva ------> "+pNue.pa.fechaNacimiento)
 
 								if(err) {
 									console.log(err)
@@ -174,7 +257,6 @@ export default (socket, io) => {
 									return
 								}
 
-								// Fecha de Nacimiento.
 								
 								let listaCampos = [
 									{ 
