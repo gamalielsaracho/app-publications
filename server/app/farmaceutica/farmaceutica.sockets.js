@@ -102,10 +102,8 @@ export default (io) => {
 								return
 							}
 
-							socket.emit('eliminar_farmaceutica', { mensaje: 'Se Eliminó exitósamente.' })
 
 							farmaceuticas()
-
 							
 							fieldsToEditData(listaCampos, 'eliminación', 'farmaceuticas', data.idPersonal, (err, datos) => {
 								if(err) {
@@ -124,6 +122,9 @@ export default (io) => {
 									}
 								})
 							})
+
+							socket.emit('eliminar_farmaceutica', { mensaje: 'Se Eliminó exitósamente.' })
+							
 							// ..
 						})
 
