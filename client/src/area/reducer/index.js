@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		area: {}
+		area: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { areas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, area: {}, error: '', abierto: false },
+	mostrar: { cargando: false, area: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,9 +58,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					area: {}
+					area: null
 				},
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
+
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -72,9 +75,12 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					area: {}
+					area: null
 				},
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
+
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -88,7 +94,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					area: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_AREA_FALLO:
@@ -99,22 +105,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					area: {}
+					area: null
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
 		case CERRAR_FORMULARIO_AREA:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					area: {}
-				}
+				formulario: INITIAL_STATE.formulario
 			})
 
 		// CREATE area.
@@ -124,16 +123,11 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_AREA_EXITO:
-			console.log(action.payload.datoInsertado)
-
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
 				},
-				formulario: { abirtoCrear: false }
-				// listar: { 
-				// 	areas: [ ...state.listar.areas, action.payload.datoInsertado ]
-				// }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CREAR_AREA_FALLO:
@@ -164,7 +158,7 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_AREA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false },
+				formulario: INITIAL_STATE.formulario,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -175,28 +169,23 @@ export default function (state = INITIAL_STATE, action) {
 					area: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case MOSTRAR_AREA_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					area: {},
+					area: null,
 					error: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CERRAR_MODAL_MOSTRAR_AREA:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					area: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -212,7 +201,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case EDITAR_AREA_FALLO:
@@ -235,8 +224,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					area: action.payload
+					error: ''
 				}
 			})
 
@@ -244,8 +232,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					area: {}
+					error: action.payload
 				}
 			})
 
