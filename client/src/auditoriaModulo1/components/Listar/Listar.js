@@ -17,10 +17,10 @@ class Listar extends Component {
 	}
 
 	componentWillMount() {
-		if(this.props.urls.tableName) {
+		if(this.props.urls.tableName && this.props.urls.idTableFather) {
+			this.props.listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre(this.props.urls.tableName, this.props.urls.idTableFather)
+		} else if(this.props.urls.tableName) {
 			this.props.listarAuditoria1MovimientosPorNombreTabla(this.props.urls.tableName)
-		} else if(this.props.idTableFather) {
-			this.props.listarAuditoria1MovimientosPorIdTablaPadre(this.props.urls.idTableFather)
 		}
 	}
 
@@ -35,6 +35,7 @@ class Listar extends Component {
 					// i.auditoria.datoAnterior = marked(i.auditoria.datoAnterior)
 
 					return <tr key={i.auditoria.id_auditoriaModulo1}>
+			            <td><p>{ i.auditoria.idRegistro }</p></td>
 			            <td dangerouslySetInnerHTML={{ __html:md.render(i.auditoria.datoAnterior) }}>
 			            </td>
 			            <td dangerouslySetInnerHTML={{ __html:md.render(i.auditoria.datoNuevo) }}>
@@ -74,6 +75,7 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
+						        	<th><h4>Código</h4></th>
 						        	<th><h4>Dato anterior</h4></th>
 						        	<th><h4>Dato nuevo</h4></th>
 						        	<th><h4>Módulo</h4></th>

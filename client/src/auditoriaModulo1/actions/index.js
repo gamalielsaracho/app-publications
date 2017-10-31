@@ -26,7 +26,7 @@ import {
 
 export function listarAuditoria1MovimientosPorNombreTabla(tableName) {
 	return (dispatch) => {
-		let url = `/auditoriaModulo1/${tableName}/nombreTabla`
+		let url = `/auditoriaModulo1/nombreTabla/${tableName}`
 
 		dispatch({ type: LISTAR_AUDITORIA1_MOVIMIENTOS_REQUEST })
 
@@ -36,9 +36,9 @@ export function listarAuditoria1MovimientosPorNombreTabla(tableName) {
 
 
 
-export function listarAuditoria1MovimientosPorIdTablaPadre(idTableFather) {
+export function listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre(tableName, idTableFather) {
 	return (dispatch) => {
-		let url = `/auditoriaModulo1/${idTableFather}/idTablaPadre`
+		let url = `/auditoriaModulo1/nombreTabla/${tableName}/idTablaPadre/${idTableFather}`
 
 		dispatch({ type: LISTAR_AUDITORIA1_MOVIMIENTOS_REQUEST })
 

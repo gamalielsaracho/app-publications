@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import {
 	listarAuditoria1MovimientosPorNombreTabla,
-	listarAuditoria1MovimientosPorIdTablaPadre
+	listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre
 } from '../../actions'
 
 import Listar from './Listar'
@@ -22,8 +22,8 @@ function mapDispatchToProps(dispatch) {
 		listarAuditoria1MovimientosPorNombreTabla: (tableName) => {
 			dispatch(listarAuditoria1MovimientosPorNombreTabla(tableName))
 		},
-		listarAuditoria1MovimientosPorIdTablaPadre: (idTableFather) => {
-			dispatch(listarAuditoria1MovimientosPorIdTablaPadre(idTableFather))
+		listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre: (tableName, idTableFather) => {
+			dispatch(listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre(tableName, idTableFather))
 		}
 	}
 }
