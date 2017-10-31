@@ -34,6 +34,8 @@ import {
 	ELIMINAR_AREA_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 import { socket } from '../../globalActions'
 
@@ -96,14 +98,15 @@ export function crearArea(datosFormulario) {
 
 		socket.emit('crear_area', datosFormulario)
 		socket.on('crear_area', (data) => {
-			if(data.err) {
+			if(data.error) {
 				dispatch({ type: CREAR_AREA_FALLO, payload: data.error })
 			} else {
+				dispatch(reset('FormularioArea'))
+
 				dispatch({ type: CREAR_AREA_EXITO, payload: data })
 			}
 		})
 	
-		dispatch(reset('FormularioArea'))
 	}
 }
 
@@ -115,7 +118,10 @@ export function eliminarArea(idArea) {
 
 		// var socket = io('http://localhost:3000')
 
-		socket.emit('eliminar_area', { id_area: idArea })
+		socket.emit('eliminar_area', { 
+			id_area: idArea,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		socket.on('eliminar_area', (data) => {
 			console.log(data)
@@ -155,6 +161,7 @@ export function cerrarModalMostrarArea() {
 
 export function editarArea(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_AREA_REQUEST })
 
