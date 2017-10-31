@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		alergia: {}
+		alergia: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { alergias:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, alergia: {}, error: '', abierto: false },
+	mostrar: { cargando: false, alergia: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,9 +58,11 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					alergia: {}
+					alergia: null
 				},
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -72,9 +74,11 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					alergia: {}
+					alergia: null
 				},
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -88,7 +92,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					alergia: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_ALERGIA_FALLO:
@@ -99,22 +103,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					alergia: {}
+					alergia: null
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
 		case CERRAR_FORMULARIO_ALERGIA:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					alergia: {}
-				}
+				formulario: INITIAL_STATE.formulario
 			})
 
 		// CREATE alergia.
@@ -124,16 +121,13 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_ALERGIA_EXITO:
-			console.log(action.payload.datoInsertado)
 
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
 				},
-				formulario: { abirtoCrear: false }
-				// listar: { 
-				// 	alergias: [ ...state.listar.alergias, action.payload.datoInsertado ]
-				// }
+				formulario: INITIAL_STATE.formulario
+
 			})
 
 		case CREAR_ALERGIA_FALLO:
@@ -164,7 +158,7 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_ALERGIA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false },
+				formulario: INITIAL_STATE.formulario,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -175,28 +169,23 @@ export default function (state = INITIAL_STATE, action) {
 					alergia: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case MOSTRAR_ALERGIA_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					alergia: {},
+					alergia: null,
 					error: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CERRAR_MODAL_MOSTRAR_ALERGIA:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					alergia: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -212,7 +201,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case EDITAR_ALERGIA_FALLO:
