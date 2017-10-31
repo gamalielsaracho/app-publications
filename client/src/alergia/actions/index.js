@@ -34,6 +34,8 @@ import {
 	ELIMINAR_ALERGIA_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 import { socket } from '../../globalActions'
 
@@ -96,14 +98,15 @@ export function crearAlergia(datosFormulario) {
 
 		socket.emit('crear_alergia', datosFormulario)
 		socket.on('crear_alergia', (data) => {
-			if(data.err) {
+			if(data.error) {
 				dispatch({ type: CREAR_ALERGIA_FALLO, payload: data.error })
 			} else {
+				dispatch(reset('FormularioAlergia'))
+
 				dispatch({ type: CREAR_ALERGIA_EXITO, payload: data })
 			}
 		})
 	
-		dispatch(reset('FormularioAlergia'))
 	}
 }
 
@@ -115,7 +118,10 @@ export function eliminarAlergia(idAlergia) {
 
 		// var socket = io('http://localhost:3000')
 
-		socket.emit('eliminar_alergia', { id_alergia: idAlergia })
+		socket.emit('eliminar_alergia', {
+			id_alergia: idAlergia,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		socket.on('eliminar_alergia', (data) => {
 			console.log(data)
@@ -155,7 +161,8 @@ export function cerrarModalMostrarAlergia() {
 
 export function editarAlergia(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_ALERGIA_REQUEST })
 
 		socket.emit('editar_alergia', datosFormulario)
