@@ -1,10 +1,10 @@
 import React , { Component } from 'react'
 
-import ListarContainer from '../components/Listar'
+import ListarAreasContainer from '../components/Listar'
 
 class ListarAreasPage extends Component {
 	render() {
-		return <ListarContainer/>
+		return <ListarAreasContainer/>
 	}
 }
 
