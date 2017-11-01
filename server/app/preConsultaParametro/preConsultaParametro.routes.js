@@ -16,6 +16,6 @@ export default (app) => {
 	app.route('/api/parametrospreConsulta/editar')
 	   .put(preConsultaParametroCtrl.editar)
 
-	app.route('/api/parametrospreConsulta/:idPreconsultaParametro/eliminar')
+	app.route('/api/parametrospreConsulta/:idPreconsultaParametro/eliminar/:idPersonalParametro')
 	   .delete(preConsultaParametroCtrl.eliminar)
 }

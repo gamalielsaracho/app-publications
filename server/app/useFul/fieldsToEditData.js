@@ -8,7 +8,7 @@
 // 	}
 // ]
 
-export default (listaCampos, action, tableName, idPersonal, callback) => {
+export default (idRegistro, listaCampos, action, tableName, idPersonal, idTableFather, callback) => {
 	let datos = {}
 
 	let fieldsAnteriores = []
@@ -62,6 +62,8 @@ export default (listaCampos, action, tableName, idPersonal, callback) => {
 	datos.id_personal = idPersonal
 	datos.accion = action
 	datos.tabla = tableName
+	datos.idTablaPadre = idTableFather
+	datos.idRegistro = idRegistro
 	datos.datoAnterior = datoAnterior
 	datos.datoNuevo = datoNuevo
 

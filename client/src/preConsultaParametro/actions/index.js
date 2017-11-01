@@ -33,6 +33,8 @@ import {
 	ELIMINAR_PRECONSULTA_PARAMETRO_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 import axios from 'axios'
 
@@ -108,7 +110,9 @@ export function crearPreConsultaParametro(datosFormulario) {
 
 export function eliminarPreConsultaParametro(idPreconsultaParametro) {
 	return (dispatch) => {
-		let url = `/parametrospreConsulta/${idPreconsultaParametro}/eliminar`
+		let idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
+		let url = `/parametrospreConsulta/${idPreconsultaParametro}/eliminar/${idPersonal}`
 
 		dispatch({ type: ELIMINAR_PRECONSULTA_PARAMETRO_REQUEST })
 
@@ -150,6 +154,7 @@ export function editarPreConsultaParametro(datosFormulario) {
 	return (dispatch) => {
 		let url = `${API_URL}/parametrospreConsulta/editar`
 
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_PRECONSULTA_PARAMETRO_REQUEST })
 		

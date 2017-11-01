@@ -1,9 +1,10 @@
 import auditoriaModulo1Ctrl from './auditoriaModulo1.controller.js'
 
 export default (app) => {
-	app.route('/api/auditoriaModulo1/:tableName/nombreTabla')
+	app.route('/api/auditoriaModulo1/nombreTabla/:tableName')
 	   .get(auditoriaModulo1Ctrl.listarPorNombreTabla)
 
-	app.route('/api/auditoriaModulo1/:idTableFather/idTablaPadre')
-	   .get(auditoriaModulo1Ctrl.listarPorIdTablaPadre)
+	   // /auditoriaModulo1/nombreTabla/${tableName}/idTablaPadre/${idTableFather}
+	app.route('/api/auditoriaModulo1/nombreTabla/:tableName/idTablaPadre/:idTableFather')
+	   .get(auditoriaModulo1Ctrl.listarPorNombreTablaYidTablaPadre)
 }

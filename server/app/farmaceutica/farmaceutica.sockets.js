@@ -105,7 +105,7 @@ export default (io) => {
 
 							farmaceuticas()
 							
-							fieldsToEditData(listaCampos, 'eliminación', 'farmaceuticas', data.idPersonal, (err, datos) => {
+							fieldsToEditData(data.id_farmaceutica, listaCampos, 'eliminación', 'farmaceuticas', data.idPersonal, null, (err, datos) => {
 								if(err) {
 									console.log(err)
 									socket.emit('eliminar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
@@ -156,6 +156,7 @@ export default (io) => {
 					// console.log(farmaceutica)
 					if(err) {
 						console.log(err)
+						socket.emit('editar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
@@ -189,10 +190,10 @@ export default (io) => {
 
 						farmaceuticas()
 
-						fieldsToEditData(listaCampos, 'actualización', 'farmaceuticas', data.idPersonal, (err, datos) => {
+						fieldsToEditData(data.id_farmaceutica, listaCampos, 'actualización', 'farmaceuticas', data.idPersonal, null, (err, datos) => {
 							if(err) {
 								console.log(err)
-								socket.emit('editar_farmaceutica', { error: 'Ocurrió un error, intente más tarde.' })
+								socket.emit('editar_farmaceutica', { error: 'Ocurrió un error en la auditoría de este módulo.' })
 								return 
 							}
 							

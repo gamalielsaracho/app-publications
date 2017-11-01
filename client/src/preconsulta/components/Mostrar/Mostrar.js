@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import jwtDecode from 'jwt-decode'
 
@@ -47,6 +48,11 @@ class Mostrar extends Component {
 					<p><strong>Enfermero/a:</strong>{ preConsulta.personal.nombres +' '+ preConsulta.personal.apellidos }</p>
 					<p><strong>Fecha:</strong>{ moment(preConsulta.preconsulta.fecha).format('L') }</p>
 					<p><strong>Nivel:</strong>{ preConsulta.nivel.descripcion }</p>				
+					
+				  	<Link target="_blank" to={`/dashboard/modulos-auditados/${this.props.idPreConsulta}/auditoria/pre-consulta-parametro`}>
+				  		Auditoría
+				  	</Link>
+
 				</div>
 				<div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
 					{ this.formularioPreConsultaParametroByRol() }

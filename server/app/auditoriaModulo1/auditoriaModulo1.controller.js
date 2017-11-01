@@ -16,10 +16,11 @@ exports.listarPorNombreTabla = function(req, res, next) {
 }
 
 
-exports.listarPorIdTablaPadre = function(req, res, next) {
+exports.listarPorNombreTablaYidTablaPadre = function(req, res, next) {
+	let tableName = req.params.tableName
 	let idTableFather = req.params.idTableFather
 
-	AuditoriaModulo1.findByIdTableFather(idTableFather, (err, auditoria1Movimientos) => {
+	AuditoriaModulo1.findByTableNameAndIdTableFather(tableName, idTableFather, (err, auditoria1Movimientos) => {
 		// console.log(auditoria1Movimientos)
 		if(err) {
 			console.log(err)

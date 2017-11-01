@@ -34,6 +34,8 @@ import {
 	ELIMINAR_UNIDAD_PARAMETRO_PRE_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -119,7 +121,8 @@ export function eliminarUnidadParametroPre(idUnidadParametroPre) {
 		dispatch({ type: ELIMINAR_UNIDAD_PARAMETRO_PRE_REQUEST })
 
 		unidadParametroPreSocket.emit('eliminar_unidadParametroPre', { 
-			id_unidadParametroPre: idUnidadParametroPre
+			id_unidadParametroPre: idUnidadParametroPre,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		unidadParametroPreSocket.on('eliminar_unidadParametroPre', (data) => {
@@ -162,7 +165,8 @@ export function cerrarModalMostrarUnidadParametroPre() {
 
 export function editarUnidadParametroPre(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_UNIDAD_PARAMETRO_PRE_REQUEST })
 
 		unidadParametroPreSocket.emit('editar_unidadParametroPre', datosFormulario)

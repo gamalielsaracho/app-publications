@@ -41,7 +41,7 @@ exports.find = (idPreconsulta, callback) => {
 	connection.end()
 }
 
-exports.findById = (idPreconsultaParametro, callback) => {
+exports.findById = (data, callback) => {
 
 	let q = `
 		SELECT
@@ -72,7 +72,7 @@ exports.findById = (idPreconsultaParametro, callback) => {
 		nestTables: true
 	}
 
-	return connection.query(options, [idPreconsultaParametro], callback)
+	return connection.query(options, [data.id_preconsultaParametro], callback)
 
 	connection.end()
 }

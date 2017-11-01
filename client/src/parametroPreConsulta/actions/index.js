@@ -34,6 +34,8 @@ import {
 	ELIMINAR_PARAMETRO_PRECONSULTA_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -119,7 +121,8 @@ export function eliminarParametroPreConsulta(idParametroPreconsulta) {
 		dispatch({ type: ELIMINAR_PARAMETRO_PRECONSULTA_REQUEST })
 
 		parametroPreConsultaSocket.emit('eliminar_parametro', { 
-			id_parametroPreconsulta: idParametroPreconsulta 
+			id_parametroPreconsulta: idParametroPreconsulta,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		parametroPreConsultaSocket.on('eliminar_parametro', (data) => {
@@ -162,7 +165,8 @@ export function cerrarModalMostrarParametroPreConsulta() {
 
 export function editarParametroPreConsulta(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_PARAMETRO_PRECONSULTA_REQUEST })
 
 		parametroPreConsultaSocket.emit('editar_parametro', datosFormulario)

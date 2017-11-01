@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 
 class FieldSelectParametrosPre extends Component {
 	render() {
-		const { input, label, listaParametros, type, meta: { touched, error, warning } } = this.props
-
-		let parametros = listaParametros.parametros
+		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
 		// let parametrosPreConsulta = this.props.listarPreConsultaParametros.parametrosPreConsulta
 		// console.log('this.props.listarPreConsultaParametros')
@@ -18,9 +16,14 @@ class FieldSelectParametrosPre extends Component {
 		// 	})
 		// }
 
-		if(parametros) {
+		if(listar.cargando) {
+			return <p>Cargando..</p>
+		} else {
+			let parametros = listar.parametros
+
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
+
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
@@ -44,8 +47,6 @@ class FieldSelectParametrosPre extends Component {
 			    	{ touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 }

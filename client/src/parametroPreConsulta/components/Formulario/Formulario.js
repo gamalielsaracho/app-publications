@@ -10,8 +10,6 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import FieldSelectUnidadesParametroPreContainer from '../../../unidadParametroPre/components/FieldSelectUnidadesParametroPre'
 
-import FormularioUnidadParametroPreContainer from '../../../unidadParametroPre/components/Formulario'
-
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -26,11 +24,11 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
 	}
 
 	componentWillMount() {
-		this.props.listarUnidadesParametroPre()
+		this.props.listarUnidadesParametroPreFuncion()
 	}
 
 	enviarFormulario(formProps) {				
@@ -43,11 +41,33 @@ class Formulario extends Component {
 		}
 	}
 
-	renderCargando(cargando) {
+	renderFormulario(cargando) {
+		const { handleSubmit, pristine, reset, submitting } = this.props		
+
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			return <span></span>
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+
+					<form onSubmit={handleSubmit(this.enviarFormulario)}>
+						<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
+								
+						<Field name='id_unidadParametroPre' type='text' 
+							listar={this.props.listarUnidadesParametroPre}
+							component={FieldSelectUnidadesParametroPreContainer} 
+							label='Unidad'/>
+								
+						<Field name='valorNormal' type='text' component={renderField} label='Valor normal'/>
+						<Field name='valorAlto' type='text' component={renderField} label='Valor alto'/>
+						<Field name='valorBajo' type='text' component={renderField} label='Valor bajo'/>
+														
+						<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+						<button type="button" onClick={ this.props.cerrarFormularioParametroPreConsulta } className="btn btn-primary btn-space">Cancelar</button>
+					</form>
+
+				</div>
+			</div>
 		}
 	}
 
@@ -59,7 +79,6 @@ class Formulario extends Component {
 		  	}
 		}
 
-		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
 			abirtoCrear, abirtoEditar, cargando, parametroPreConsulta 
@@ -70,6 +89,7 @@ class Formulario extends Component {
 
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
+		// ..
 
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
@@ -80,32 +100,8 @@ class Formulario extends Component {
 					<h4 className='text-center'>Formulario parametro pre-consulta</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
-					<div className='row'>
-						{ this.renderCargando(cargando) }
 
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-
-
-							<FormularioUnidadParametroPreContainer/>
-
-							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
-								
-								<Field name='id_unidadParametroPre' type='text' 
-									listaUnidadesParametroPre={this.props.listaUnidadesParametroPre}
-									component={FieldSelectUnidadesParametroPreContainer} 
-									label='Unidad'/>
-								
-								<Field name='valorNormal' type='text' component={renderField} label='Valor normal'/>
-								<Field name='valorAlto' type='text' component={renderField} label='Valor alto'/>
-								<Field name='valorBajo' type='text' component={renderField} label='Valor bajo'/>
-														
-								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioParametroPreConsulta } className="btn btn-primary btn-space">Cancelar</button>
-							</form>
-
-						</div>
-					</div>
+					{ this.renderFormulario(cargando) }
 				</div>
 			</ReactModal>
 		} else {

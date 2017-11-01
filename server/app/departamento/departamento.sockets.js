@@ -102,7 +102,7 @@ export default (socket, io) => {
 
 							departamentos()
 
-							fieldsToEditData(listaCampos, 'eliminación', 'departamentos', data.idPersonal, (err, datos) => {
+							fieldsToEditData(data.id_departamento, listaCampos, 'eliminación', 'departamentos', data.idPersonal, null, (err, datos) => {
 								if(err) {
 									console.log(err)
 									socket.emit('eliminar_departamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
@@ -172,7 +172,7 @@ export default (socket, io) => {
 					
 						departamentos()
 
-						fieldsToEditData(listaCampos, 'actualización', 'departamentos', data.idPersonal, (err, datos) => {
+						fieldsToEditData(data.id_departamento, listaCampos, 'actualización', 'departamentos', data.idPersonal, null, (err, datos) => {
 							if(err) {
 								console.log(err)
 								socket.emit('editar_departamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })

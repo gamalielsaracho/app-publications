@@ -8,22 +8,15 @@ import Cargando from '../../../app/components/Cargando'
 class Mostrar extends Component {
 	constructor(props) {
 		super(props)
-		this.renderCargando = this.renderCargando.bind(this)
 		this.renderParametroPreConsulta = this.renderParametroPreConsulta.bind(this)
 	}
 
-	renderCargando(cargando) {
+
+	renderParametroPreConsulta(cargando, dato) {
 		if(cargando) {
-			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
-
-	renderParametroPreConsulta(dato) {
-		if(dato) {
 			// console.log(dato)
-
+			return <Cargando/>
+		} else if(dato) {
 			return <div>
 				<p><strong>Nombre:</strong> { dato.parametro.descripcion }</p>
 				<p><strong>Unidad:</strong> { dato.unidad.descripcion }</p>
@@ -31,8 +24,6 @@ class Mostrar extends Component {
 				<p><strong>Valor alto:</strong> { dato.parametro.valorAlto }</p>
 				<p><strong>Valor bajo:</strong> { dato.parametro.valorBajo }</p>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 
@@ -47,7 +38,7 @@ class Mostrar extends Component {
 
 		const { cargando, parametro, error, abierto } = this.props.mostrar
 
-		console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
+		// console.log("Mostrar estÁ: "+this.props.mostrar.abierto)
 		
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
@@ -62,10 +53,9 @@ class Mostrar extends Component {
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6 col-centered'>
-							{ this.renderCargando(cargando) }
 							<MensajeOerror error={error} mensaje={null}/>
 
-							{ this.renderParametroPreConsulta(parametro) }
+							{ this.renderParametroPreConsulta(cargando, parametro) }
 						</div>
 					</div>
 				</div>

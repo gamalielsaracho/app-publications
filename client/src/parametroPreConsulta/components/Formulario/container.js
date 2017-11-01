@@ -57,7 +57,7 @@ function mapStateToProps(state) {
 
 		// Lista de las Unidades Para pasarle al componente
 		// FieldSelectUnidadesParametroPre.
-		listaUnidadesParametroPre: state.unidadParametroPre.listar
+		listarUnidadesParametroPre: state.unidadParametroPre.listar
 	}
 }
 
@@ -79,7 +79,7 @@ function mapDispatchToProps(dispatch) {
 
 		// Acción para listar unidades de medidas
 		// y llamar el componentWillMount.
-		listarUnidadesParametroPre: () => {
+		listarUnidadesParametroPreFuncion: () => {
 			dispatch(listarUnidadesParametroPre())
 		}
 	}

@@ -47,7 +47,7 @@ exports.findByTableName = (tableName, callback) => {
 	// connection.end()
 
 
-exports.findByIdTableFather = (idTableFather, callback) => {
+exports.findByTableNameAndIdTableFather = (tableName, idTableFather, callback) => {
 
 	let q = `
 		SELECT 
@@ -57,6 +57,7 @@ exports.findByIdTableFather = (idTableFather, callback) => {
 			personales personal			
 		WHERE
 			auditoria.id_personal = personal.id_personal AND
+			auditoria.tabla = ? AND
 			auditoria.idTablaPadre = ?
 	`
 	var options = {
@@ -64,7 +65,7 @@ exports.findByIdTableFather = (idTableFather, callback) => {
 		nestTables: true
 	}
 
-	return connection.query(options, [idTableFather], callback)
+	return connection.query(options, [tableName, idTableFather], callback)
 
 	connection.end()
 }
@@ -74,13 +75,14 @@ exports.create = (data, callback) => {
 
 	let q = `
 		INSERT INTO auditoriamodulo1 (
-			id_auditoriaModulo1, datoAnterior, datoNuevo, fecha, hora,
+			id_auditoriaModulo1, idRegistro, datoAnterior, datoNuevo, fecha, hora,
 			accion, tabla, id_personal, idTablaPadre
 		)
-		VALUES (null, ?, ?, now(), ?, ?, ?, ?, ?)
+		VALUES (null, ?, ?, ?, now(), ?, ?, ?, ?, ?)
 	`
 
-	return connection.query(q, [ data.datoAnterior,
+	return connection.query(q, [ data.idRegistro,
+								 data.datoAnterior,
 								 data.datoNuevo || 'Ninguno',
 								 getHour(),
 								 data.accion,

@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
 
+import FormularioUnidadParametroPreContainer from '../Formulario'
+
 class FieldSelectUnidadesParametroPre extends Component {
 	render() {
-		const { input, label, listaUnidadesParametroPre, type, meta: { touched, error, warning } } = this.props
+		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
-		if(listaUnidadesParametroPre.unidadesParametroPre) {
+		if(listar.cargando) {
+			return <p>Cargando..</p>
+		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
+				<FormularioUnidadParametroPreContainer/>
+
 				<div className='form-inline'>
 					<div className='form-group'>
 						<select {...input} name={name} className='form-control'>
 							<option value=''>Seleccionar Unidad de medida</option>
 							{
-								listaUnidadesParametroPre.unidadesParametroPre.map((unidad) => {
+								listar.unidadesParametroPre.map((unidad) => {
 									return <option key={unidad.id_unidadParametroPre} value={unidad.id_unidadParametroPre}>
 										{ unidad.descripcion }
 									</option>
@@ -29,8 +35,6 @@ class FieldSelectUnidadesParametroPre extends Component {
 			    	{ touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 }

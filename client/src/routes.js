@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
+import farmaceuticaRoutes from './farmaceutica/routes'
+
 import medicamentoRoutes from './medicamento/routes'
 
 import pacienteRoutes from './paciente/routes'
@@ -12,6 +14,16 @@ import citaRoutes from './cita/routes'
 import departamentoRoutes from './departamento/routes'
 
 import ciudadRoutes from './ciudad/routes'
+
+import areaRoutes from './area/routes'
+
+import alergiaRoutes from './alergia/routes'
+
+import unidadParametroPreRoutes from './unidadParametroPre/routes'
+
+import parametroPreConsultaRoutes from './parametroPreConsulta/routes'
+
+import auditoriaModulo1Routes from './auditoriaModulo1/routes'
 
 
 import Estadistica1Container from './consulta/components/Estadistica1'
@@ -35,13 +47,6 @@ import ListarRolesPage from '././rol/pages/ListarRolesPage'
 
 // ESPECIALIDAD.
 import ListarEspecialidadesPage from '././especialidades/pages/ListarEspecialidadesPage'
-
-
-// AREAS.
-import ListarAreasPage from '././area/pages/ListarAreasPage'
-
-// ALERGIAS.
-import ListarAlergiasPage from '././alergia/pages/ListarAlergiasPage'
 
 	
 // LISTAR ANÁLISIS SOLICITADOS APP.
@@ -69,13 +74,6 @@ import MostrarVistaPreviaContainer from '././analisis/components/MostrarVistaPre
 // NIVELES.
 import ListarNivelesPage from '././nivel/pages/ListarNivelesPage'
 
-
-// PARAMETROS PRE-CONSULTA.
-import ListarParametrosPreConsultaPage from '././parametroPreConsulta/pages/ListarParametrosPreConsultaPage'
-
-
-// UNIDADES PARAMENTRO PRE-CONSULTA.
-import ListarUnidadesParametroPrePage from '././unidadParametroPre/pages/ListarUnidadesParametroPrePage'
 
 // DIAGNOSTICOS.
 import ListarDiagnosticosPage from '././diagnostico/pages/ListarDiagnosticosPage'
@@ -107,8 +105,6 @@ import ListarDrogasPage from '././droga/pages/ListarDrogasPage'
 
 import ListarUnidadesMedicamentosPage from '././unidadMedidaMedicamento/pages/ListarUnidadesMedicamentosPage'
 
-import ListarFarmaceuticasAppContainer from '././farmaceutica/components/ListarApp'
-import ListarFarmaceuticasPage from '././farmaceutica/pages/ListarFarmaceuticasPage'
 
 import ListarAuditoria1MovimientosContainer from '././auditoriaModulo1/components/Listar'
 
@@ -176,14 +172,7 @@ export default (
 			<Route path='/roles' component={ListarRolesPage}/>
 			<Route path='/especialidades' component={ListarEspecialidadesPage}/>
 			
-			<Route path='/areas' component={ListarAreasPage}/>
-			<Route path='/alergias' component={ListarAlergiasPage}/>
-
 			<Route path='/dashboard/niveles' component={ListarNivelesPage}/>
-
-			<Route path='/dashboard/parametros-preconsulta' component={ListarParametrosPreConsultaPage}/>
-
-			<Route path='/dashboard/unidades-parametro-preconsulta' component={ListarUnidadesParametroPrePage}/>
 
 			<Route path='/dashboard/diagnosticos' component={ListarDiagnosticosPage}/>
 			<Route path='/dashboard/sintomas' component={ListarSintomasPage}/>
@@ -203,12 +192,18 @@ export default (
 			</Route>
 
 
+			{ farmaceuticaRoutes }
 			{ medicamentoRoutes }
 			{ pacienteRoutes }
 			{ medicamentoEntregadoRoutes }
 			{ citaRoutes }
 			{ departamentoRoutes }
 			{ ciudadRoutes }
+			{ areaRoutes }
+			{ alergiaRoutes }
+			{ unidadParametroPreRoutes }
+			{ parametroPreConsultaRoutes }
+			{ auditoriaModulo1Routes }
 
 				{/* Módulo farmacia. */}
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
@@ -216,12 +211,6 @@ export default (
 			<Route path='/dashboard/tipos-consumos' component={ListarTiposConsumosPage}/>
 			<Route path='/dashboard/drogas' component={ListarDrogasPage}/>
 			<Route path='/dashboard/unidades-medicamentos' component={ListarUnidadesMedicamentosPage}/>
-
-
-			<Route path='/dashboard/farmaceuticas' component={ListarFarmaceuticasAppContainer}>
-				<IndexRoute component={ListarFarmaceuticasPage}/>
-				<Route path='/dashboard/farmaceuticas/auditoria/:tableName' component={ListarAuditoria1MovimientosContainer}/>
-			</Route>
 
 
 			<Route path='/dashboard/proveedores' component={ListarProveedoresPage}/>

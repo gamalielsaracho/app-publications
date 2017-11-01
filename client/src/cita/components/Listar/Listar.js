@@ -83,7 +83,9 @@ class Listar extends Component {
 		switch(this.personalLocalSt.id_rol) {
 			case 3: // admin.
 				return <div>
-					<button type="button" onClick={() => { this.props.mostrarCita(cita.id_cita) }} className="btn btn-info btn-space">Mostrar</button>
+					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+						<button type="button" className="btn btn-info btn-space">Mostrar</button>
+					</Link>
 					<button type="button" onClick={() => { this.props.abrirFormularioEditarCita(cita.id_cita) }} className="btn btn-warning btn-space">Editar</button>
 					{ this.renderBtnDelete(cita) }
 				</div>
@@ -143,15 +145,16 @@ class Listar extends Component {
 		// console.log('EL FILTRO.')
 		// console.log(citas)
 
-		let con = { // Condiciones.
-			cita: {
-				fechaActual: filtro.cita.fechaActual
-			}
-		}
+			// Para filtrar información. 
+		// let con = { // Condiciones.
+		// 	cita: {
+		// 		fechaActual: filtro.cita.fechaActual
+		// 	}
+		// }
 
 
 		// if(con.id_personal){
-			citas = this.props.filtrarCitas(citas, con)
+			// citas = this.props.filtrarCitas(citas, con)
 		// }
 
 		return <tbody>

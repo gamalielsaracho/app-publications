@@ -42,8 +42,7 @@ function mapStateToProps(state) {
 
 		// Lista de los parametros para pasarle al componente 
 		// FieldSelectParametrosPre como propiedad.
-		listaParametros: state.parametroPreConsulta.listar
-
+		listarParametrosPreConsulta: state.parametroPreConsulta.listar
 	}
 }
 
@@ -61,7 +60,7 @@ function mapDispatchToProps(dispatch) {
 		},
 
 		// Llamar dentro de componentWillMount, para listar los parametros.
-		listarParametrosPreConsulta: () => {
+		listarParametrosPreConsultaFuncion: () => {
 			dispatch(listarParametrosPreConsulta())
 		}
 	}

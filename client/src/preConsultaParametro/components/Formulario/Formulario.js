@@ -31,7 +31,7 @@ class Formulario extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarParametrosPreConsulta()
+		this.props.listarParametrosPreConsultaFuncion()
 	}
 
 	enviarFormulario(formProps) {
@@ -64,7 +64,7 @@ class Formulario extends Component {
 			return <div>
 				<Field name='id_parametroPreconsulta' type='text' 
 								component={FieldSelectParametrosPreContainer}
-								listaParametros={listaParametros} 
+								listar={listaParametros} 
 								label='Paramentro'/>
 			</div>
 		} else {
@@ -120,7 +120,7 @@ class Formulario extends Component {
 				<form onSubmit={handleSubmit(this.enviarFormulario)}>
 					<div className='row'>
 						<div className='col-xs-12 col-sm-12 col-md-8 col-lg-8'>
-							{ this.renderFieldSelectParametrosPre(this.props.listaParametros, parametroPreConsulta) }
+							{ this.renderFieldSelectParametrosPre(this.props.listarParametrosPreConsulta, parametroPreConsulta) }
 						</div>
 						<div className='col-xs-12 col-sm-12 col-md-3 col-lg-3'>
 							<Field name='valor' type='text' component={renderField} label='Valor'/>

@@ -2,6 +2,10 @@ import ParametroPreConsulta from './parametroPreConsulta.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var parametroPreConsultaNsp = io.of('/parametroPreConsulta');
 	
@@ -63,16 +67,72 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_parametro', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					ParametroPreConsulta.delete(data, (err) => {
+					ParametroPreConsulta.findById(data, (err, parametroDatosAnterior) => {
+						// console.log(parametro)
+						let pAnt = parametroDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_parametro', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_parametro', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{ 
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: pAnt.parametro.descripcion
+							},
+							{ 
+								nombreCampo: 'Valor normal',
+								datoCampoAnterior: pAnt.parametro.valorNormal
+							},
+							{ 
+								nombreCampo: 'Valor alto',
+								datoCampoAnterior: pAnt.parametro.valorAlto
+							},
+							{ 
+								nombreCampo: 'Valor bajo',
+								datoCampoAnterior: pAnt.parametro.valorBajo
+							},
+							{ 
+								nombreCampo: 'Unidad',
+								datoCampoAnterior: pAnt.unidad.descripcion
+							}
+						]
 
-						parametros()
+						ParametroPreConsulta.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_parametro', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							parametros()
+
+							// console.log(listaCampos)
+							fieldsToEditData(data.id_parametroPreconsulta, listaCampos, 'eliminación', 'parametros-preconsulta', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_parametro', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_parametro', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_parametro', { mensaje: 'Se Eliminó exitósamente.' })
+
+						})
+
 					})
 				}
 			})
@@ -103,18 +163,93 @@ export default (io) => {
 				// 	return
 				// }
 					
-					
+			ParametroPreConsulta.findById(data, (err, parametroDatosAnterior) => {
+				// console.log(parametro)
+				let pAnt = parametroDatosAnterior[0]
+
+				if(err) {
+					console.log(err)
+					socket.emit('editar_parametro', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
 				ParametroPreConsulta.update(data, (err) => {
 					if(err) {
 						console.log(err)
 						socket.emit('editar_parametro', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
-
-					socket.emit('editar_parametro', { mensaje: 'Se actualizó exitósamente.' })
 					
 					parametros()
+
+					ParametroPreConsulta.findById(data, (err, parametroDatosNuevo) => {
+						// console.log(parametro)
+						let pNue = parametroDatosNuevo[0]
+
+						if(err) {
+							console.log(err)
+							socket.emit('editar_parametro', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+							return
+						}
+
+						let listaCampos = [
+							{ 
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: pAnt.parametro.descripcion,
+								datoCampoNuevo: pNue.parametro.descripcion
+							},
+							{ 
+								nombreCampo: 'Valor normal',
+								datoCampoAnterior: pAnt.parametro.valorNormal,
+								datoCampoNuevo: pNue.parametro.valorNormal
+							},
+							{ 
+								nombreCampo: 'Valor alto',
+								datoCampoAnterior: pAnt.parametro.valorAlto,
+								datoCampoNuevo: pNue.parametro.valorAlto
+							},
+							{ 
+								nombreCampo: 'Valor bajo',
+								datoCampoAnterior: pAnt.parametro.valorBajo,
+								datoCampoNuevo: pNue.parametro.valorBajo
+							},
+							{ 
+								nombreCampo: 'Unidad',
+								datoCampoAnterior: pAnt.unidad.descripcion,
+								datoCampoNuevo: pNue.unidad.descripcion
+							}
+						]
+
+
+						// console.log(listaCampos)
+						fieldsToEditData(data.id_parametroPreconsulta, listaCampos, 'actualización', 'parametros-preconsulta', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_parametro', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return
+							}
+
+							// .. Ejecutar esto despues de editar el registro. 
+							console.log(datos)
+
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_parametro', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_parametro', { mensaje: 'Se actualizó exitósamente.' })
+
+					})
+
 				})
+
+			})
+
+
 			// })
 		})
 		

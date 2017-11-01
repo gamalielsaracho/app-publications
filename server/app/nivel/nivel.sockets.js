@@ -2,6 +2,9 @@ import Nivel from './nivel.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var nivelNsp = io.of('/nivel');
 	

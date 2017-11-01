@@ -6,38 +6,48 @@ exports.find = (callback) => {
 	connection.end()
 }
 
-exports.findById = (idAlergia, callback) => {
-	return connection.query('select * from alergias where id_alergia = ?', [idAlergia], callback)
+exports.findById = (data, callback) => {
+	return connection.query('select * from alergias where id_alergia = ?', [data.id_alergia], callback)
+
+	connection.end()
+}
+
+exports.verifyIfExist = (data, callback) => {
+	let q = `
+		SELECT * FROM alergias
+			WHERE
+			descripcion = ?
+	`
+	return connection.query(q, [data.descripcion.trim()], callback)
 
 	connection.end()
 }
 
 exports.create = (data, callback) => {
-	return connection.query('INSERT INTO alergias SET ?', data, callback)
+	let q = `
+		INSERT INTO alergias (id_alergia, descripcion)
+			VALUES (null, LOWER(?))
+	`
+	return connection.query(q, [ data.descripcion.trim() ], callback)
 
 	connection.end()
 }
 
 exports.update = (data, callback) => {
-	return connection.query('update alergias set descripcion = ? where id_alergia = ?', [data.descripcion, data.id_alergia], callback)
+	let q = `
+		update 
+			alergias 
+		set
+			descripcion = LOWER(?) 
+		where id_alergia = ?
+	`
+	return connection.query(q, [data.descripcion.trim(), data.id_alergia], callback)
 
 	connection.end()
 }
 
-exports.delete = (idAlergia, callback) => {	
-	return connection.query('DELETE FROM alergias WHERE id_alergia = ?', [idAlergia], callback)
-
-	connection.end()
-}
-
-exports.create = (data, callback) => {
-	return connection.query('INSERT INTO alergias SET ?', data, callback)
-
-	connection.end()
-}
-
-exports.update = (data, callback) => {
-	return connection.query('update alergias set descripcion = ? where id_alergia = ?', [data.descripcion, data.id_alergia], callback)
+exports.delete = (data, callback) => {	
+	return connection.query('DELETE FROM alergias WHERE id_alergia = ?', [data.id_alergia], callback)
 
 	connection.end()
 }

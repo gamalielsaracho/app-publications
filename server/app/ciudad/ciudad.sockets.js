@@ -103,7 +103,7 @@ export default (socket, io) => {
 							ciudades()
 
 							// console.log(listaCampos)
-							fieldsToEditData(listaCampos, 'eliminación', 'ciudades', data.idPersonal, (err, datos) => {
+							fieldsToEditData(data.id_ciudad, listaCampos, 'eliminación', 'ciudades', data.idPersonal, null, (err, datos) => {
 								if(err) {
 									console.log(err)
 									socket.emit('eliminar_ciudad', { error: 'Ocurrió un error en la auditoría de este módulo.' })
@@ -199,7 +199,7 @@ export default (socket, io) => {
 
 
 								// console.log(listaCampos)
-								fieldsToEditData(listaCampos, 'actualización', 'ciudades', data.idPersonal, (err, datos) => {
+								fieldsToEditData(data.id_ciudad, listaCampos, 'actualización', 'ciudades', data.idPersonal, null, (err, datos) => {
 									if(err) {
 										console.log(err)
 										socket.emit('editar_ciudad', { error: 'Ocurrió un error en la auditoría de este módulo.' })

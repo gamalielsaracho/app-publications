@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		parametro: {}
+		parametro: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { parametros:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, parametro: {}, error: '', abierto: false },
+	mostrar: { cargando: false, parametro: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,11 +58,11 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					parametro: {}
+					parametro: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -74,11 +74,11 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					parametro: {}
+					parametro: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
-				mostrar: { abierto: false },
+				mostrar: INITIAL_STATE.mostrar,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -92,7 +92,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false,
 					parametro: action.payload
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_PARAMETRO_PRECONSULTA_FALLO:
@@ -103,22 +103,15 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					parametro: {}
+					parametro: null
 				},
-				mostrar: { abierto: false }
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
 		case CERRAR_FORMULARIO_PARAMETRO_PRECONSULTA:
 			return Object.assign({}, state, {
-				formulario: {
-					abirtoCrear: false,
-					abirtoEditar: false,
-					iniciarValores: false,
-					error: '',
-					cargando: false,
-					parametro: {}
-				}
+				formulario: INITIAL_STATE.formulario
 			})
 
 		// CREATE parametro.
@@ -128,16 +121,11 @@ export default function (state = INITIAL_STATE, action) {
 			})
 
 		case CREAR_PARAMETRO_PRECONSULTA_EXITO:
-			console.log(action.payload.datoInsertado)
-
 			return Object.assign({}, state, {
 				crear: { 
 					mensaje: action.payload.mensaje,
 				},
-				formulario: { abirtoCrear: false }
-				// listar: { 
-				// 	parametros: [ ...state.listar.parametros, action.payload.datoInsertado ]
-				// }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CREAR_PARAMETRO_PRECONSULTA_FALLO:
@@ -167,7 +155,7 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_PARAMETRO_PRECONSULTA_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false },
+				formulario: INITIAL_STATE.formulario,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -178,28 +166,23 @@ export default function (state = INITIAL_STATE, action) {
 					parametro: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case MOSTRAR_PARAMETRO_PRECONSULTA_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					parametro: {},
+					parametro: null,
 					error: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CERRAR_MODAL_MOSTRAR_PARAMETRO_PRECONSULTA:
 			return Object.assign({}, state, {
-				mostrar: {
-					cargando: false,
-					parametro: {},
-					error: '',
-					abierto: false
-				}
+				mostrar: INITIAL_STATE.mostrar
 			})
 
 
@@ -215,7 +198,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case EDITAR_PARAMETRO_PRECONSULTA_FALLO:
@@ -238,8 +221,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: '',
-					parametro: action.payload
+					error: ''
 				}
 			})
 
@@ -247,8 +229,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				eliminar: {
 					cargando: false,
-					error: action.payload,
-					parametro: {}
+					error: action.payload
 				}
 			})
 

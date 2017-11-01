@@ -1,0 +1,2 @@
+import ListarAuditoria1MovimientosAppContainer from './container'
+export default ListarAuditoria1MovimientosAppContainer

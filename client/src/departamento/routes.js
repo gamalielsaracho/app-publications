@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
-import ListarDepartamentosAppContainer from '../departamento/components/ListarApp'
-import ListarDepartamentosPage from '../departamento/pages/ListarDepartamentosPage'
+import ListarDepartamentosAppContainer from './components/ListarApp'
+import ListarDepartamentosPage from './pages/ListarDepartamentosPage'
 
 import ListarAuditoria1MovimientosContainer from '../auditoriaModulo1/components/Listar'
 

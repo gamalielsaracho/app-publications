@@ -2,6 +2,10 @@ import UnidadParametroPre from './unidadParametroPre.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 
 	var unidadParametroPreNsp = io.of('/unidadParametroPre');
@@ -63,17 +67,56 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_unidadParametroPre', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					UnidadParametroPre.delete(data, (err) => {
+
+					UnidadParametroPre.findById(data, (err, unidadDatosAnterior) => {
+						let uAnt = unidadDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_unidadParametroPre', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_unidadParametroPre', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: uAnt.descripcion
+							}
+						]
 
-						unidadesParametroPre()
+
+						UnidadParametroPre.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_unidadParametroPre', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							unidadesParametroPre()
+
+							fieldsToEditData(data.id_unidadParametroPre, listaCampos, 'eliminación', 'unidades-parametro-preconsulta', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_unidadParametroPre', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return 
+								}
+								
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_unidadParametroPre', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+							
+							socket.emit('eliminar_unidadParametroPre', { mensaje: 'Se Eliminó exitósamente.' })
+
+						})
 					})
+
 				}
 			})
 		})
@@ -89,19 +132,55 @@ export default (io) => {
 					socket.emit('editar_unidadParametroPre', { error: 'Esta unidad de medida ya está registrada' })
 					return
 				}
-					
-					
-				UnidadParametroPre.update(data, (err) => {
+
+				UnidadParametroPre.findById(data, (err, unidadDatosAnterior) => {
+					let uAnt = unidadDatosAnterior[0]
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_unidadParametroPre', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_unidadParametroPre', { mensaje: 'Se actualizó exitósamente.' })
-					
-					unidadesParametroPre()
-				})
+					let listaCampos = [
+						{
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: uAnt.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+					UnidadParametroPre.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_unidadParametroPre', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+							
+						unidadesParametroPre()
+
+						fieldsToEditData(data.id_unidadParametroPre, listaCampos, 'actualización', 'unidades-parametro-preconsulta', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_unidadParametroPre', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return 
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_unidadParametroPre', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_unidadParametroPre', { mensaje: 'Se actualizó exitósamente.' })
+
+					})
+				})					
 			})
 		})
 		

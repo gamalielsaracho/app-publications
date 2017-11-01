@@ -34,14 +34,16 @@ class Menu extends Component {
 	adminMenu() {
 		return <ul className="nav nav-sidebar">
 			<li><Link to='/estadisticas'>Estadísticas (Adm)</Link></li>
+			<li><Link to='/dashboard/modulos-auditados'>Auditoría (Adm)</Link></li>
 
+			
 			<li><Link to='/usuarios'>Usuarios (Adm) <span className="badge">14</span></Link></li>
 			<li><Link to='/roles'>Roles (Adm) <span className="badge">1</span></Link></li>
 			<li><Link to='/especialidades'>Especialidades (Adm) <span className="badge">0</span></Link></li>
 			<li><Link to='/dashboard/ciudades'>Ciudades (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/departamentos'>Departamentos (Adm) <span className="badge">8</span></Link></li>
-			<li><Link to='/areas'>Areas (Adm) <span className="badge">8</span></Link></li>
-			<li><Link to='/alergias'>Alergias (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/areas'>Areas (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/alergias'>Alergias (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/citas'>Citas (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/niveles'>Niveles (Adm) <span className="badge">8</span></Link></li>
@@ -88,7 +90,7 @@ class Menu extends Component {
 		return <ul className="nav nav-sidebar">
 			<li><Link to='/dashboard/ciudades'>Ciudades (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/departamentos'>Departamentos (Ven) <span className="badge">8</span></Link></li>
-			<li><Link to='/areas'>Areas (Ven) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/areas'>Areas (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/citas'>Citas (Ven) <span className="badge">8</span></Link></li>
 		</ul>
@@ -105,7 +107,7 @@ class Menu extends Component {
 
 	medicinaMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/alergias'>Alergias (Med) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/alergias'>Alergias (Med) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Med) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/citas'>Citas (Med) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Med) <span className="badge">8</span></Link></li>			

@@ -16,19 +16,19 @@ class Listar extends Component {
 		this.props.listarRoles()
 	}
 
-	shouldComponentUpdate(nextProps) {
+	// shouldComponentUpdate(nextProps) {
 		// console.log("actual:")
 		// console.log(this.props.roles)
 
 		// console.log("el que sigue:")
 		// console.log(nextProps.roles)
 
-		if(nextProps.roles !== this.props.roles) {
-			return true
-		}else {
-			return false
-		}
-	}	
+	// 	if(nextProps.roles !== this.props.roles) {
+	// 		return true
+	// 	}else {
+	// 		return false
+	// 	}
+	// }	
 
 	renderRoles(roles) {
 

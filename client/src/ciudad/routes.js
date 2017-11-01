@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
-import ListarCiudadesAppContainer from '../ciudad/components/ListarApp'
+import ListarCiudadesAppContainer from './components/ListarApp'
 
 // CIUDADES.
-import ListarCiudadesPage from '../ciudad/pages/ListarCiudadesPage'
+import ListarCiudadesPage from './pages/ListarCiudadesPage'
 
 import ListarAuditoria1MovimientosContainer from '../auditoriaModulo1/components/Listar'
 

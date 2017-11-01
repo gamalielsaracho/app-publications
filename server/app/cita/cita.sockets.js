@@ -12,7 +12,6 @@ export default (io) => {
 				// console.log(citas)
 				if(err) {
 					console.log(err)
-					
 					socket.emit('listar_citas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 					return
 				}

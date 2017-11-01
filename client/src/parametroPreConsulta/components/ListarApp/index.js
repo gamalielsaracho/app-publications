@@ -1,0 +1,2 @@
+import ListarParametrosPreConsultaAppContainer from './container'
+export default ListarParametrosPreConsultaAppContainer

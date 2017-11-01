@@ -24,12 +24,15 @@ import ListarSintomasConsultaContainer from '../consultaSintoma/components/Lista
 // CONSULTA X DIAGNÓSTICOS.
 import ListarConsultaDiagnosticosContainer from '../consultaDiagnostico/components/Listar'
 
-
+				
 const citaRoutes = (
 	<Route path='/dashboard/citas' component={ListarCitasAppContainer}>
 		<IndexRoute component={ListarCitasPage}/>
 		<Route path='/dashboard/citas/:idCita' component={MostrarCitaAppContainer}>
 			<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaAppContainer}>
+
+				
+
 
 				<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaRellenandoAppContainer}>
 					<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta/consulta/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>

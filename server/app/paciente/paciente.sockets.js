@@ -181,7 +181,7 @@ export default (socket, io) => {
 
 							pacientes()
 
-							fieldsToEditData(listaCampos, 'eliminación', 'pacientes', data.idPersonal, (err, datos) => {
+							fieldsToEditData(data.id_paciente, listaCampos, 'eliminación', 'pacientes', data.idPersonal, null, (err, datos) => {
 								if(err) {
 									console.log(err)
 									socket.emit('eliminar_paciente', { error: 'Ocurrió un error en la auditoría de este módulo.' })
@@ -322,7 +322,7 @@ export default (socket, io) => {
 								]
 
 								// console.log(listaCampos)
-								fieldsToEditData(listaCampos, 'actualización', 'pacientes', data.idPersonal, (err, datos) => {
+								fieldsToEditData(data.id_paciente, listaCampos, 'actualización', 'pacientes', data.idPersonal, null, (err, datos) => {
 									if(err) {
 										console.log(err)
 										socket.emit('editar_paciente', { error: 'Ocurrió un error en la auditoría de este módulo.' })
