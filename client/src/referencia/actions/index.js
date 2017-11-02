@@ -36,6 +36,8 @@ import {
 	ELIMINAR_REFERENCIA_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import axios from 'axios'
 
 import { browserHistory } from 'react-router'
@@ -127,7 +129,9 @@ export function crearReferencia(datosFormulario) {
 
 export function eliminarReferencia(idReferencia) {
 	return (dispatch) => {
-		let url = `/referencias/${idReferencia}/eliminar`
+		let idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
+		let url = `/referencias/${idReferencia}/eliminar/${idPersonal}`
 
 		dispatch({ type: ELIMINAR_REFERENCIA_REQUEST })
 
@@ -151,6 +155,8 @@ export function mostrarReferencia(idReferencia) {
 
 export function editarReferencia(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
 		let url = `${API_URL}/referencias/editar`
 
 		dispatch({ type: EDITAR_REFERENCIA_REQUEST })
