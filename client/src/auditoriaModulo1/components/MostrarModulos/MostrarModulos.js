@@ -16,7 +16,11 @@ class MostrarModulos extends Component {
 				  	</Link>
 				</div>
 				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
-
+					<Link to='/dashboard/modulos-auditados/niveles'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Niveles
+						</button>
+				  	</Link>
 				</div>
 				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
 
