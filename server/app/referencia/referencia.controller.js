@@ -2,6 +2,9 @@ import Referencia from './referencia.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 exports.listar = function(req, res, next) {
 	Referencia.find((err, referencias) => {
 		// console.log(referencias)
@@ -190,7 +193,7 @@ exports.mostrarParaEditar = function(req, res, next) {
 }
 
 exports.editar = function(req, res, next) {
-	let datos = {
+	let data = {
 		id_referencia: req.body.id_referencia,
 		diasMaximos: req.body.diasMaximos,
 		mesesMaximos: req.body.mesesMaximos,
@@ -201,34 +204,125 @@ exports.editar = function(req, res, next) {
 		mesesMinimos: req.body.mesesMinimos,
 		anosMinimos: req.body.anosMinimos,
 		general: req.body.general,
-		sexo: req.body.sexo
+		sexo: req.body.sexo,
+
+		idPersonal: req.body.idPersonal
 	}
 
-	Referencia.update(datos, (err) => {
+	Referencia.findById(data.id_referencia, (err, referenciaDatosAnterior) => {
+		let refAnt = referenciaDatosAnterior[0]
+
 		if(err) {
 			console.log(err)
 			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		Referencia.findById(datos.id_referencia, (err, referencia) => {
-			// console.log(referencia)
-
+		Referencia.update(data, (err) => {
 			if(err) {
 				console.log(err)
 				return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 			}
 
-			return res.json({ 
-				mensaje: 'Se actualizó exitósamente.',
-				referenciaActualizada: referencia[0]
+			Referencia.findById(data.id_referencia, (err, referenciaDatosNuevo) => {
+				// console.log(referencia)
+				let refNue = referenciaDatosNuevo[0]
+
+				if(err) {
+					console.log(err)
+					return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
+				}
+
+				let listaCampos = [
+					{ 
+						nombreCampo: 'Días máximos',
+						datoCampoAnterior: refAnt.diasMaximos,
+						datoCampoNuevo: refNue.diasMaximos
+					},
+					{ 
+						nombreCampo: 'Meses máximos',
+						datoCampoAnterior: refAnt.mesesMaximos,
+						datoCampoNuevo: refNue.mesesMaximos
+					},
+					{ 
+						nombreCampo: 'Años máximos',
+						datoCampoAnterior: refAnt.anosMaximos,
+						datoCampoNuevo: refNue.anosMaximos
+					},
+					{ 
+						nombreCampo: 'Superior',
+						datoCampoAnterior: refAnt.superior,
+						datoCampoNuevo: refNue.superior
+					},
+					{ 
+						nombreCampo: 'Inferior',
+						datoCampoAnterior: refAnt.inferior,
+						datoCampoNuevo: refNue.inferior
+					},
+					{ 
+						nombreCampo: 'Días mínimos',
+						datoCampoAnterior: refAnt.diasMinimos,
+						datoCampoNuevo: refNue.diasMinimos
+					},
+					{ 
+						nombreCampo: 'Meses mínimos',
+						datoCampoAnterior: refAnt.mesesMinimos,
+						datoCampoNuevo: refNue.mesesMinimos
+					},
+					{ 
+						nombreCampo: 'Años mínimos',
+						datoCampoAnterior: refAnt.anosMinimos,
+						datoCampoNuevo: refNue.anosMinimos
+					},
+					{ 
+						nombreCampo: 'Sexo',
+						datoCampoAnterior: refAnt.sexo,
+						datoCampoNuevo: refNue.sexo
+					},
+					{ 
+						nombreCampo: 'Nro. de documento',
+						datoCampoAnterior: refAnt.nroDocumento,
+						datoCampoNuevo: refNue.nroDocumento
+					},
+					{
+						nombreCampo: 'General',
+						datoCampoAnterior: refAnt.general,
+						datoCampoNuevo: refNue.general
+					}
+				]
+
+				// console.log(listaCampos)
+				fieldsToEditData(data.id_referencia, listaCampos, 'actualización', 'referencias', data.idPersonal, refAnt.id_parametroAnalisis, (err, datos) => {
+					if(err) {
+						console.log(err)
+						return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+					}
+
+					// .. Ejecutar esto despues de editar el registro. 
+					console.log(datos)
+
+					AuditoriaModulo1.create(datos, (err) => {
+						if(err) {
+							console.log(err)
+							return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+						}
+					})
+				})
+
+				return res.json({ 
+					mensaje: 'Se actualizó exitósamente.',
+					referenciaActualizada: refNue
+				})
 			})
 		})
-
+		
 	})
+
 }
 
 exports.eliminar = function(req, res, next) {
 	let idReferencia = req.params.idReferencia
+	let idPersonal = req.params.idPersonal
+
 
 	referentialIntegritySimple('analisistiposreferencias', 'id_referencia', idReferencia, (err, enUso) => {
 		if(err) {
@@ -239,17 +333,93 @@ exports.eliminar = function(req, res, next) {
 		if(enUso[0]) {
 			return res.status(422).json({ error: 'Esta referencia es usada por otros registros.' })
 		} else {
-			Referencia.delete(idReferencia, (err, result) => {
+			Referencia.findById(idReferencia, (err, referenciaDatosAnterior) => {
+				let refAnt = referenciaDatosAnterior[0]
+
 				if(err) {
 					console.log(err)
-					return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+					return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 				}
 
-				return res.json({ 
-					mensaje: 'Se Eliminó exitósamente.',
-					id_referencia: idReferencia
+
+				let listaCampos = [
+					{ 
+						nombreCampo: 'Días máximos',
+						datoCampoAnterior: refAnt.diasMaximos
+					},
+					{ 
+						nombreCampo: 'Meses máximos',
+						datoCampoAnterior: refAnt.mesesMaximos
+					},
+					{ 
+						nombreCampo: 'Años máximos',
+						datoCampoAnterior: refAnt.anosMaximos
+					},
+					{ 
+						nombreCampo: 'Superior',
+						datoCampoAnterior: refAnt.superior
+					},
+					{ 
+						nombreCampo: 'Inferior',
+						datoCampoAnterior: refAnt.inferior
+					},
+					{ 
+						nombreCampo: 'Días mínimos',
+						datoCampoAnterior: refAnt.diasMinimos
+					},
+					{ 
+						nombreCampo: 'Meses mínimos',
+						datoCampoAnterior: refAnt.mesesMinimos
+					},
+					{ 
+						nombreCampo: 'Años mínimos',
+						datoCampoAnterior: refAnt.anosMinimos
+					},
+					{ 
+						nombreCampo: 'Sexo',
+						datoCampoAnterior: refAnt.sexo
+					},
+					{ 
+						nombreCampo: 'Nro. de documento',
+						datoCampoAnterior: refAnt.nroDocumento
+					},
+					{
+						nombreCampo: 'General',
+						datoCampoAnterior: refAnt.general
+					}
+				]
+
+				Referencia.delete(idReferencia, (err, result) => {
+					if(err) {
+						console.log(err)
+						return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+					}
+
+					// console.log(listaCampos)
+					fieldsToEditData(refAnt.id_referencia, listaCampos, 'actualización', 'referencias', idPersonal, refAnt.id_parametroAnalisis, (err, datos) => {
+						if(err) {
+							console.log(err)
+							return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+						}
+
+						// .. Ejecutar esto despues de eliminar el registro. 
+						console.log(datos)
+
+						AuditoriaModulo1.create(datos, (err) => {
+							if(err) {
+								console.log(err)
+								return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+							}
+						})
+					})
+
+					return res.json({ 
+						mensaje: 'Se Eliminó exitósamente.',
+						id_referencia: idReferencia
+					})
 				})
 			})
+
 		}
 	})
 }
