@@ -248,7 +248,6 @@ export default (socket, io) => {
 							Paciente.findById(data, (err, pacienteDatosNuevo) => {
 								let pNue = pacienteDatosNuevo[0]
 
-
 								// console.error("fecha Nueva ------> "+pNue.pa.fechaNacimiento)
 
 								if(err) {

@@ -2,6 +2,10 @@ import ParametroAnalisis from './parametroAnalisis.model'
 
 import verifyRef from './././../validations/verifyRef.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var parametroAnalisisNsp = io.of('/parametroAnalisis');
 	
@@ -75,16 +79,60 @@ export default (io) => {
 				if(enUso) {
 					socket.emit('eliminar_parametroAnalisis', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					ParametroAnalisis.delete(data, (err) => {
+					ParametroAnalisis.findById(data, (err, parametroAnalisisDatosAnterior) => {
+						let prAnlAnt = parametroAnalisisDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_parametroAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+								{ 
+									nombreCampo: 'Nombre',
+									datoCampoAnterior: prAnlAnt.parametro.descripcion
+								},
+								{ 
+									nombreCampo: 'Unidad',
+									datoCampoAnterior: prAnlAnt.unidad.descripcion
+								},
+								{ 
+									nombreCampo: 'Tipo examen',
+									datoCampoAnterior: prAnlAnt.tipoExamen.descripcion
+								}
+						]
 
-						parametrosAnalisis()
+						ParametroAnalisis.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							parametrosAnalisis()
+
+							fieldsToEditData(data.id_parametroAnalisis, listaCampos, 'eliminación', 'parametros-analisis', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_parametroAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+
+								// .. Ejecutar esto despues de editar el registro. 
+								console.log(datos)
+
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_parametroAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_parametroAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+						})
 					})
 				}
 			})
@@ -115,27 +163,79 @@ export default (io) => {
 			// 	}
 					
 					
-				ParametroAnalisis.update(data, (err) => {
+				ParametroAnalisis.findById(data, (err, parametroAnalisisDatosAnterior) => {
+					let prAnlAnt = parametroAnalisisDatosAnterior[0]
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_parametroAnalisis', { mensaje: 'Se actualizó exitósamente.' })
-
-					ParametroAnalisis.findById(data, (err, parametroAnalisis) => {
+					ParametroAnalisis.update(data, (err) => {
 						if(err) {
 							console.log(err)
-							socket.emit('mostrar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+							socket.emit('editar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('mostrar_parametroAnalisis', parametroAnalisis[0])
+						parametrosAnalisis()
+
+						socket.emit('editar_parametroAnalisis', { mensaje: 'Se actualizó exitósamente.' })
+
+						ParametroAnalisis.findById(data, (err, parametroAnalisisDatosNuevo) => {
+							let prAnlNue = parametroAnalisisDatosNuevo[0]
+							
+							if(err) {
+								console.log(err)
+								socket.emit('mostrar_parametroAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							let listaCampos = [
+								{ 
+									nombreCampo: 'Nombre',
+									datoCampoAnterior: prAnlAnt.parametro.descripcion,
+									datoCampoNuevo: prAnlNue.parametro.descripcion
+								},
+								{ 
+									nombreCampo: 'Unidad',
+									datoCampoAnterior: prAnlAnt.unidad.descripcion,
+									datoCampoNuevo: prAnlNue.unidad.descripcion
+								},
+								{ 
+									nombreCampo: 'Tipo examen',
+									datoCampoAnterior: prAnlAnt.tipoExamen.descripcion,
+									datoCampoNuevo: prAnlNue.tipoExamen.descripcion
+								}
+							]
+
+							fieldsToEditData(data.id_parametroAnalisis, listaCampos, 'actualización', 'parametros-analisis', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_parametroAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+
+								// .. Ejecutar esto despues de editar el registro. 
+								console.log(datos)
+
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('editar_parametroAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('mostrar_parametroAnalisis', prAnlNue)
+						})
+
 					})
 
-					parametrosAnalisis()
 				})
+
 			// })
 		})
 		
