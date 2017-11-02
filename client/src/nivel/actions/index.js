@@ -34,6 +34,8 @@ import {
 	ELIMINAR_NIVEL_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -116,7 +118,10 @@ export function eliminarNivel(idNivel) {
 
 		dispatch({ type: ELIMINAR_NIVEL_REQUEST })
 
-		nivelSocket.emit('eliminar_nivel', { id_nivel: idNivel })
+		nivelSocket.emit('eliminar_nivel', { 
+			id_nivel: idNivel,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		nivelSocket.on('eliminar_nivel', (data) => {
 			console.log(data)
@@ -156,6 +161,7 @@ export function cerrarModalMostrarNivel() {
 
 export function editarNivel(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_NIVEL_REQUEST })
 

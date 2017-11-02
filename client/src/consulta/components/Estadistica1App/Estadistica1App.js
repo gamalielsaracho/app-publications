@@ -37,6 +37,7 @@ class Estadistica1App extends Component {
 						component={FieldSelectDiagnosticos} 
 						label='Diagnóstico'
 						showBtnAdd={false}/>
+
 					<button className='btn btn-success no-print-data' 
 						onClick={() => {
 							window.print()
