@@ -16,17 +16,9 @@ class Listar extends Component {
 		this.renderMovimientos = this.renderMovimientos.bind(this)
 	}
 
-	componentWillMount() {
-		if(this.props.urls.tableName && this.props.urls.idTableFather) {
-			this.props.listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre(this.props.urls.tableName, this.props.urls.idTableFather)
-		} else if(this.props.urls.tableName) {
-			this.props.listarAuditoria1MovimientosPorNombreTabla(this.props.urls.tableName)
-		}
-	}
-
-
 	renderMovimientos(auditoria1Movimientos) {
-
+		// console.log(auditoria1Movimientos)
+		
 		return <tbody>
 			{
 				auditoria1Movimientos.map((i) => {
@@ -57,18 +49,9 @@ class Listar extends Component {
 
 	render() {
 
-		const { auditoria1Movimientos, cargando } = this.props.listar
-
-		let error = this.props.listar.error
-
-		if(cargando) {
-			return <Cargando/>
-		} else {
-				return <div>
-					<h1 className='text-center'>Auditoría</h1>
+		return <div>
+			<h1 className='text-center'>Auditoría</h1>
 					
-					<MensajeOerror error={error} mensaje={null}/>
-
 					<br/>
 
 					<div className='table-responsive'>
@@ -86,12 +69,11 @@ class Listar extends Component {
 						    	</tr>
 						    </thead>
 
-							{ this.renderMovimientos(auditoria1Movimientos) }
+							{ this.renderMovimientos(this.props.movimientosFiltrados) }
 
 						</table>
 					</div>
-				</div>
-		}
+		</div>
 
 	}
 }
