@@ -2,6 +2,9 @@ import TipoAnalisis from './tipoAnalisis.model'
 
 import verifyRef from './././../validations/verifyRef.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var tipoAnalisisNsp = io.of('/tipoAnalisis');
 	
@@ -79,17 +82,55 @@ export default (io) => {
 					socket.emit('eliminar_tipoAnalisis', { error: 'Este dato está siendo usado por otros registros.' })
 					return
 				} else {
-					TipoAnalisis.delete(data, (err) => {
+					TipoAnalisis.findById(data, (err, tipoAnalisisDatosAnterior) => {
+						let tpAnlAnt = tipoAnalisisDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_tipoAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: tpAnlAnt.descripcion
+							}
+						]
 
-						tiposAnalisis()
+						TipoAnalisis.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+
+							tiposAnalisis()
+
+							fieldsToEditData(data.id_tipoAnalisis, listaCampos, 'eliminación', 'tipos-analisis', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return 
+								}
+							
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(data, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_tipoAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
+							
+						})
 					})
+
 				}
 			})
 
@@ -109,18 +150,56 @@ export default (io) => {
 					return
 				}
 					
-					
-				TipoAnalisis.update(data, (err) => {
+				TipoAnalisis.findById(data, (err, tipoAnalisisDatosAnterior) => {
+					let tpAnlAnt = tipoAnalisisDatosAnterior[0]
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_tipoAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_tipoAnalisis', { mensaje: 'Se actualizó exitósamente.' })
-					
-					tiposAnalisis()
+					let listaCampos = [
+						{
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: tpAnlAnt.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+
+					TipoAnalisis.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_tipoAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+						
+						tiposAnalisis()
+
+						fieldsToEditData(data.id_tipoAnalisis, listaCampos, 'actualización', 'tipos-analisis', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_tipoAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return 
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(data, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_tipoAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_tipoAnalisis', { mensaje: 'Se actualizó exitósamente.' })
+
+					})
 				})
+					
 			})
 		})
 		
