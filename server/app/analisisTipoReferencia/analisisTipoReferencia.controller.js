@@ -1,5 +1,7 @@
 import AnalisisTipoReferencia from './analisisTipoReferencia.model'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
 
 exports.listar = function(req, res, next) {
 	let idAnalisisTipo = req.params.idAnalisisTipo
@@ -85,46 +87,129 @@ exports.mostrarParaEditar = function(req, res, next) {
 }
 
 exports.editar = function(req, res, next) {
-	let datos = {
+	let data = {
 		id_analisisTipoReferencia: req.body.id_analisisTipoReferencia,
-		valor: req.body.valor
+		valor: req.body.valor,
+		idPersonal: req.body.idPersonal
 	}
 
-	AnalisisTipoReferencia.update(datos, (err) => {
+
+	AnalisisTipoReferencia.findById(data.id_analisisTipoReferencia, (err, analisisTipoReferenciaDatosAnterior) => {
+		let aTpRefAnt = analisisTipoReferenciaDatosAnterior[0]
+
 		if(err) {
 			console.log(err)
 			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		AnalisisTipoReferencia.findById(datos.id_analisisTipoReferencia, (err, analisisTipoReferencia) => {
-			// console.log(analisisTipoReferencia)
-
+		AnalisisTipoReferencia.update(data, (err) => {
 			if(err) {
 				console.log(err)
 				return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 			}
 
-			return res.json({ 
-				mensaje: 'Se actualizó exitósamente.',
-				analisisTipoReferenciaActualizado: analisisTipoReferencia[0]
+			AnalisisTipoReferencia.findById(data.id_analisisTipoReferencia, (err, analisisTipoReferenciaDatosNuevo) => {
+				let aTpRefNue = analisisTipoReferenciaDatosNuevo[0]
+
+				if(err) {
+					console.log(err)
+					return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
+				}
+
+				let listaCampos = [
+					{ 
+						nombreCampo: 'Nombre',
+						datoCampoAnterior: aTpRefAnt.parametro.descripcion,
+						datoCampoNuevo: aTpRefNue.parametro.descripcion
+					}, 
+					{
+						nombreCampo: 'Valor',
+						datoCampoAnterior: `${aTpRefAnt.analisisTipoReferencia.valor} ${aTpRefAnt.unidad.descripcion}`,
+						datoCampoNuevo: `${aTpRefNue.analisisTipoReferencia.valor} ${aTpRefNue.unidad.descripcion}`
+					}
+				]
+
+				// console.log(listaCampos)
+				fieldsToEditData(aTpRefAnt.analisisTipoReferencia.id_analisisTipoReferencia, listaCampos, 'actualización', 'resultados-analisis', data.idPersonal, aTpRefAnt.analisisTipoReferencia.id_analisisTipo, (err, datos) => {
+					if(err) {
+						console.log(err)
+						return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+					}
+
+					// .. Ejecutar esto despues de editar el registro. 
+					console.log(datos)
+
+					AuditoriaModulo1.create(datos, (err) => {
+						if(err) {
+							console.log(err)
+							return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+						}
+					})
+				})
+
+				return res.json({ 
+					mensaje: 'Se actualizó exitósamente.',
+					analisisTipoReferenciaActualizado: aTpRefNue
+				})
 			})
 		})
 
 	})
+
+
 }
 
 exports.eliminar = function(req, res, next) {
 	let idAnalisisTipoAnalisisReferencia = req.params.idAnalisisTipoAnalisisReferencia
+	let idPersonal = req.params.idPersonal
 
-	AnalisisTipoReferencia.delete(idAnalisisTipoAnalisisReferencia, (err, result) => {
+	AnalisisTipoReferencia.findById(idAnalisisTipoAnalisisReferencia, (err, analisisTipoReferenciaDatosAnterior) => {
+		let aTpRefAnt = analisisTipoReferenciaDatosAnterior[0]
+
 		if(err) {
 			console.log(err)
 			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		return res.json({
-			mensaje: 'Se Eliminó exitósamente.',
-			id_analisisTipoReferencia: idAnalisisTipoAnalisisReferencia
+		let listaCampos = [
+			{ 
+				nombreCampo: 'Nombre',
+				datoCampoAnterior: aTpRefAnt.parametro.descripcion
+			}, 
+			{
+				nombreCampo: 'Valor',
+				datoCampoAnterior: `${aTpRefAnt.analisisTipoReferencia.valor} ${aTpRefAnt.unidad.descripcion}`
+			}
+		]
+
+		AnalisisTipoReferencia.delete(idAnalisisTipoAnalisisReferencia, (err, result) => {
+			if(err) {
+				console.log(err)
+				return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
+			}
+
+			// console.log(listaCampos)
+			fieldsToEditData(aTpRefAnt.id_analisisTipoReferencia, listaCampos, 'eliminación', 'resultados-analisis', idPersonal, aTpRefAnt.id_analisisTipo, (err, datos) => {
+				if(err) {
+					console.log(err)
+					return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+				}
+
+				// .. Ejecutar esto despues de eliminar el registro. 
+				console.log(datos)
+				AuditoriaModulo1.create(datos, (err) => {
+					if(err) {
+						console.log(err)
+						return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+					}
+				})
+			})
+
+			return res.json({
+				mensaje: 'Se Eliminó exitósamente.',
+				id_analisisTipoReferencia: idAnalisisTipoAnalisisReferencia
+			})
 		})
 	})
+
 }
