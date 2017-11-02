@@ -26,6 +26,8 @@ import {
 	ELIMINAR_ANALISIS_TIPO_REFERENCIA_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 import axios from 'axios'
 
@@ -101,7 +103,9 @@ export function crearAnalisisTipoReferencia(datosFormulario) {
 
 export function eliminarAnalisisTipoReferencia(idAnalisisTipoAnalisisReferencia) {
 	return (dispatch) => {
-		let url = `/analisisTipoReferencias/${idAnalisisTipoAnalisisReferencia}/eliminar`
+		let idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
+		let url = `/analisisTipoReferencias/${idAnalisisTipoAnalisisReferencia}/eliminar/${idPersonal}`
 
 		dispatch({ type: ELIMINAR_ANALISIS_TIPO_REFERENCIA_REQUEST })
 
@@ -114,6 +118,8 @@ export function eliminarAnalisisTipoReferencia(idAnalisisTipoAnalisisReferencia)
 
 export function editarAnalisisTipoReferencia(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		let url = `${API_URL}/analisisTipoReferencias/editar`
 
 
