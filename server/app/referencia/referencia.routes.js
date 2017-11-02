@@ -23,6 +23,6 @@ export default (app) => {
 	app.route('/api/referencias/editar')
 	   .put(referenciaCtrl.editar)
 
-	app.route('/api/referencias/:idReferencia/eliminar')
+	app.route('/api/referencias/:idReferencia/eliminar/:idPersonal')
 	   .delete(referenciaCtrl.eliminar)
 }
