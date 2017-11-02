@@ -34,6 +34,8 @@ import {
 	ELIMINAR_TIPO_ANALISIS_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -119,7 +121,8 @@ export function eliminarTipoAnalisis(idTipoAnalisis) {
 		dispatch({ type: ELIMINAR_TIPO_ANALISIS_REQUEST })
 
 		tipoAnalisisSocket.emit('eliminar_tipoAnalisis', { 
-			id_tipoAnalisis: idTipoAnalisis 
+			id_tipoAnalisis: idTipoAnalisis,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		tipoAnalisisSocket.on('eliminar_tipoAnalisis', (data) => {
@@ -162,7 +165,8 @@ export function cerrarModalMostrarTipoAnalisis() {
 
 export function editarTipoAnalisis(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_TIPO_ANALISIS_REQUEST })
 
 		tipoAnalisisSocket.emit('editar_tipoAnalisis', datosFormulario)
