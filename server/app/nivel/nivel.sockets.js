@@ -65,17 +65,56 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_nivel', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					Nivel.delete(data, (err) => {
+					Nivel.findById(data, (err, nivelDatosAnterior) => {
+						let aAnt = nivelDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_nivel', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_nivel', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: aAnt.descripcion,
+								datoCampoNuevo: data.descripcion
+							}
+						]
 
-						niveles()
+						Nivel.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_nivel', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							niveles()
+
+							fieldsToEditData(data.id_nivel, listaCampos, 'eliminación', 'niveles', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_nivel', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return 
+								}
+							
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_nivel', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_nivel', { mensaje: 'Se Eliminó exitósamente.' })
+
+						})
+
 					})
+
 				}
 			})
 		})
@@ -93,17 +132,55 @@ export default (io) => {
 				}
 					
 					
-				Nivel.update(data, (err) => {
+				Nivel.findById(data, (err, nivelDatosAnterior) => {
+					let aAnt = nivelDatosAnterior[0]
+
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_nivel', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_nivel', { mensaje: 'Se actualizó exitósamente.' })
-					
-					niveles()
+					let listaCampos = [
+						{
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: aAnt.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+					Nivel.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_nivel', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+						
+						niveles()
+
+						fieldsToEditData(data.id_nivel, listaCampos, 'actualización', 'niveles', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_nivel', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return 
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_nivel', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_nivel', { mensaje: 'Se actualizó exitósamente.' })
+					})
 				})
+
 			})
 		})
 		
