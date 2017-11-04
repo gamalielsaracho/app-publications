@@ -16,7 +16,7 @@ exports.find = (idAnalisisTipo, callback) => {
 		WHERE
 			analisisTipoReferencia.id_referencia = referencia.id_referencia AND
 			analisisTipoReferencia.id_analisis = analisis.id_analisis AND
-			referencia.id_parametroAnalisis = parametro.id_parametroAnalisis  AND
+			referencia.id_parametroAnalisis = parametro.id_parametroAnalisis AND
 			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
 
