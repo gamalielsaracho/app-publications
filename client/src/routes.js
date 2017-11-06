@@ -25,6 +25,12 @@ import parametroPreConsultaRoutes from './parametroPreConsulta/routes'
 
 import auditoriaModulo1Routes from './auditoriaModulo1/routes'
 
+import nivelRoutes from './nivel/routes'
+
+import diagnosticoRoutes from './diagnostico/routes'
+
+import sintomaRoutes from './sintoma/routes'
+
 
 import Estadistica1Container from './consulta/components/Estadistica1'
 
@@ -70,14 +76,6 @@ import MostrarVistaPreviaContainer from '././analisis/components/MostrarVistaPre
 
 
 // CITAS.
-
-// NIVELES.
-import ListarNivelesPage from '././nivel/pages/ListarNivelesPage'
-
-
-// DIAGNOSTICOS.
-import ListarDiagnosticosPage from '././diagnostico/pages/ListarDiagnosticosPage'
-import ListarSintomasPage from '././sintoma/pages/ListarSintomasPage'
 
 
 // CONSULTAS APP.
@@ -172,10 +170,6 @@ export default (
 			<Route path='/roles' component={ListarRolesPage}/>
 			<Route path='/especialidades' component={ListarEspecialidadesPage}/>
 			
-			<Route path='/dashboard/niveles' component={ListarNivelesPage}/>
-
-			<Route path='/dashboard/diagnosticos' component={ListarDiagnosticosPage}/>
-			<Route path='/dashboard/sintomas' component={ListarSintomasPage}/>
 
 			<Route path='/dashboard/consultas' component={ListarConsultasAppContainer}>
 				<IndexRoute component={ListarConsultasContainer}/>
@@ -204,6 +198,9 @@ export default (
 			{ unidadParametroPreRoutes }
 			{ parametroPreConsultaRoutes }
 			{ auditoriaModulo1Routes }
+			{ nivelRoutes }
+			{ diagnosticoRoutes }
+			{ sintomaRoutes }
 
 				{/* Módulo farmacia. */}
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
