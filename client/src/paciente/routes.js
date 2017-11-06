@@ -34,13 +34,11 @@ import MostrarVistaPreviaContainer from '../analisis/components/MostrarVistaPrev
 
 import ListarConsultaDiagnosticosContainer from '../consultaDiagnostico/components/Listar'
 
-import ListarAuditoria1MovimientosContainer from '../auditoriaModulo1/components/Listar'
 
 {/* Historial clínico. */}
 const pacienteRoutes = (
 	<Route path='/dashboard/pacientes' component={ListarPacientesApp}>
 		<IndexRoute component={ListarPacientesPage}/>
-		<Route path='/dashboard/pacientes/auditoria/:tableName' component={ListarAuditoria1MovimientosContainer}/>
 				
 		<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
 			<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
