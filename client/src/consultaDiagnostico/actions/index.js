@@ -27,6 +27,8 @@ import {
 	ELIMINAR_CONSULTA_DIAGNOSTICO_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import axios from 'axios'
 
 import { browserHistory } from 'react-router'
@@ -105,7 +107,9 @@ export function crearConsultaDiagnostico(datosFormulario) {
 
 export function eliminarConsultaDiagnostico(idDiagnosticoConsulta) {
 	return (dispatch) => {
-		let url = `/consultaDiagnosticos/${idDiagnosticoConsulta}/eliminar`
+		let idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
+		let url = `/consultaDiagnosticos/${idDiagnosticoConsulta}/eliminar/${idPersonal}`
 
 		dispatch({ type: ELIMINAR_CONSULTA_DIAGNOSTICO_REQUEST })
 
@@ -118,6 +122,8 @@ export function eliminarConsultaDiagnostico(idDiagnosticoConsulta) {
 
 export function editarConsultaDiagnostico(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		let url = `${API_URL}/consultaDiagnosticos/editar`
 
 
