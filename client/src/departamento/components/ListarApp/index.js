@@ -1,2 +1,0 @@
-import ListarDepartamentosAppContainer from './container'
-export default ListarDepartamentosAppContainer
