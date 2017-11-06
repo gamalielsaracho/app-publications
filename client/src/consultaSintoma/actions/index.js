@@ -28,6 +28,8 @@ import {
 	ELIMINAR_CONSULTA_SINTOMA_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 import axios from 'axios'
 
@@ -111,7 +113,9 @@ export function crearConsultaSintoma(datosFormulario) {
 
 export function eliminarConsultaSintoma(idConsultaSintoma) {
 	return (dispatch) => {
-		let url = `/consultasintomas/${idConsultaSintoma}/eliminar`
+		let idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
+		let url = `/consultasintomas/${idConsultaSintoma}/eliminar/${idPersonal}`
 
 		dispatch({ type: ELIMINAR_CONSULTA_SINTOMA_REQUEST })
 
@@ -124,8 +128,9 @@ export function eliminarConsultaSintoma(idConsultaSintoma) {
 
 export function editarConsultaSintoma(datosFormulario) {
 	return (dispatch) => {
-		let url = `${API_URL}/consultasintomas/editar`
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
+		let url = `${API_URL}/consultasintomas/editar`
 
 		dispatch({ type: EDITAR_CONSULTA_SINTOMA_REQUEST })
 		
