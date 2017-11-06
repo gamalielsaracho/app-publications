@@ -34,6 +34,8 @@ import {
 	ELIMINAR_DIAGNOSTICO_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -116,7 +118,10 @@ export function eliminarDiagnostico(idDiagnostico) {
 
 		dispatch({ type: ELIMINAR_DIAGNOSTICO_REQUEST })
 
-		diagnosticoSocket.emit('eliminar_diagnostico', { id_diagnostico: idDiagnostico })
+		diagnosticoSocket.emit('eliminar_diagnostico', { 
+			id_diagnostico: idDiagnostico,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		diagnosticoSocket.on('eliminar_diagnostico', (data) => {
 			console.log(data)
@@ -156,7 +161,8 @@ export function cerrarModalMostrarDiagnostico() {
 
 export function editarDiagnostico(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_DIAGNOSTICO_REQUEST })
 
 		diagnosticoSocket.emit('editar_diagnostico', datosFormulario)
