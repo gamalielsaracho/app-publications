@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import removeAccents from 'remove-accents'
 import jwtDecode from 'jwt-decode'
@@ -16,6 +17,8 @@ class Listar extends Component {
 		this.renderFormularioSintomaConsulta = this.renderFormularioSintomaConsulta.bind(this)
 
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+
+		this.renderBtnAuditByRol = this.renderBtnAuditByRol.bind(this)
 	}
 
 	// idConsulta -> es sacado desde la url en el cual está parado.
@@ -35,6 +38,25 @@ class Listar extends Component {
 	// 		return false
 	// 	}
 	// }
+
+	renderBtnAuditByRol() {
+		let rol = this.personalLocalSt.id_rol
+		
+		if(rol == 3) {
+			return <div className='row'>
+				<div className='col-xs-11 col-sm-11 col-md-11 col-lg-11 text-right'>
+					<br/>
+					<Link target="_blank" to={`/dashboard/modulos-auditados/${this.props.urls.idConsulta}/auditoria/consulta-sintomas`}>
+						<button type="button" className="btn btn-primary btn-md">
+							<span className="glyphicon glyphicon-search" aria-hidden="true"></span> Auditoría
+						</button>
+					</Link>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
 
 	renderFormularioSintomaConsulta() {
 		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
@@ -93,6 +115,9 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div>
+					{ this.renderBtnAuditByRol() }
+
+
 					<h3 className='text-center'>Síntomas</h3>
 											
 					<MensajeOerror error={error} mensaje={null}/>
