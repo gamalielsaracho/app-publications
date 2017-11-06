@@ -3,7 +3,8 @@ import { Link } from 'react-router'
 
 class MostrarModulos extends Component {
 	render() {
-		// ..
+
+		// ....
 		return <div>
 			<h1 className='text-center'>Módulos auditados</h1>
 
@@ -23,12 +24,112 @@ class MostrarModulos extends Component {
 				  	</Link>
 				</div>
 				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/pacientes'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Pacientes
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/departamentos'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Departamentos
+						</button>
+				  	</Link>
+				</div>
+			</div>
+
+			{/* ---------------------------------------------------------- */}
+			<br/>
+			<div className='row'>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+				  	<Link to='/dashboard/modulos-auditados/ciudades'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Ciudades
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/alergias'>
+						<button type="button" className="btn btn-primary btn-lg">
+							alérgias
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/unidades-parametro-preconsulta'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Unidades pre-consulta
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/parametros-preconsulta'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Parametros pre-consulta
+						</button>
+				  	</Link>
+				</div>
+			</div>
+
+
+			<h3 className=''>Algo</h3>
+			<div className='row'>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/diagnosticos'>
+						<button type="button" className="btn btn-primary btn-lg">
+							diagnósticos
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+				  	<Link to='/dashboard/modulos-auditados/sintomas'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Síntomas
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/'>
+						<button type="button" className="btn btn-primary btn-lg">
+							-----
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados/'>
+						<button type="button" className="btn btn-primary btn-lg">
+							-----
+						</button>
+				  	</Link>
+				</div>
+			</div>
+
+
+			<h3 className=''>Farmacia</h3>
+			<div className='row'>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+				  	<Link to='/dashboard/modulos-auditados/farmaceuticas'>
+						<button type="button" className="btn btn-primary btn-lg">
+							Farmaceuticas
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
+					<Link to='/dashboard/modulos-auditados'>
+						<button type="button" className="btn btn-primary btn-lg">
+							-----
+						</button>
+				  	</Link>
+				</div>
+				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
 
 				</div>
 				<div className='col-xs-12 col-sm-3 col-md-3 col-lg-3'>
 
 				</div>
-			</div>			
+			</div>
+
 		</div>
 	}
 }

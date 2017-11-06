@@ -27,6 +27,8 @@ class FiltrosApp extends Component {
 
 	componentWillMount() {
 		if(this.props.urls.tableName && this.props.urls.idTableFather) {
+			console.log("ENTRO!!! listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre")
+			
 			this.props.listarAuditoria1MovimientosPorPorNombreTablaYidTablaPadre(this.props.urls.tableName, this.props.urls.idTableFather)
 		} else if(this.props.urls.tableName) {
 			this.props.listarAuditoria1MovimientosPorNombreTabla(this.props.urls.tableName)
