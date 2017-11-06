@@ -120,7 +120,7 @@ export function eliminarSintoma(idSintoma) {
 
 		sintomaSocket.emit('eliminar_sintoma', {
 			id_sintoma: idSintoma,
-			id_personal: jwtDecode(localStorage.getItem('token')).id_personal
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		sintomaSocket.on('eliminar_sintoma', (data) => {
@@ -161,7 +161,7 @@ export function cerrarModalMostrarSintoma() {
 
 export function editarSintoma(datosFormulario) {
 	return (dispatch) => {
-		datosFormulario.id_personal = jwtDecode(localStorage.getItem('token')).id_personal
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 		
 		dispatch({ type: EDITAR_SINTOMA_REQUEST })
 
