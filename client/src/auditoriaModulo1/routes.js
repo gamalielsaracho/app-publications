@@ -8,8 +8,6 @@ import MostrarModulos from './components/MostrarModulos'
 import FiltrosAppContainer from './components/FiltrosApp'
 
 
-// import ListarAuditoria1MovimientosContainer from '../auditoriaModulo1/components/Listar'
-
 const auditoriaModulo1Routes = (
 	<Route path='/dashboard/modulos-auditados' component={ListarAuditoria1MovimientosAppContainer}>
 		<IndexRoute component={MostrarModulos}/>
