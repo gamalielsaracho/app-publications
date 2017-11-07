@@ -25,6 +25,6 @@ export default (app) => {
 	app.route('/api/consultaDiagnosticos/editar')
 	   .put(consultaDiagnosticoCtrl.editar)
 
-	app.route('/api/consultaDiagnosticos/:idConsultaDiagnostico/eliminar')
+	app.route('/api/consultaDiagnosticos/:idConsultaDiagnostico/eliminar/:idPersonal')
 	   .delete(consultaDiagnosticoCtrl.eliminar)
 }
