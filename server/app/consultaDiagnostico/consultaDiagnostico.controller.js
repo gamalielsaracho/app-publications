@@ -2,6 +2,9 @@ import ConsultaDiagnostico from './consultaDiagnostico.model'
 
 import Consulta from '../consulta/consulta.model'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 exports.listarCantidadDiagnosticosEnAnhos = function(req, res, next) {
 
 	Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
@@ -188,67 +191,130 @@ exports.mostrarParaEditar = function(req, res, next) {
 }
 
 exports.editar = function(req, res, next) {
-	let datos = {
+	let data = {
 		id_consultaDiagnostico: req.body.id_consultaDiagnostico,
 		observaciones: req.body.observaciones
 		// id_diagnostico: req.body.id_diagnostico,
 		// id_consulta: req.body.id_consulta,
 	}
 
-	ConsultaDiagnostico.update(datos, (err) => {
+	ConsultaDiagnostico.findById(data.id_consultaDiagnostico, (err, consultaDiagnosticoDatosAnterior) => {
+		let coDiaAnt = consultaDiagnosticoDatosAnterior[0]
+
 		if(err) {
 			console.log(err)
 			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		ConsultaDiagnostico.findById(datos.id_consultaDiagnostico, (err, consultaDiagnosticoEncontrada) => {
-			// console.log(consultaDiagnostico)
-			let consultaDiagnostico = consultaDiagnosticoEncontrada[0]
-
+		ConsultaDiagnostico.update(data, (err) => {
 			if(err) {
 				console.log(err)
 				return res.json({ error: 'Ocurrió un error, intente más tarde.' })
 			}
 
-			// let listaCampos = [
-			// 			{ 
-			// 				nombreCampo: 'Nombre',
-			// 				datoCampoAnterior: farmaceutica.nombre,
-			// 				datoCampoNuevo: data.nombre
-			// 			},
-			// 			{ 
-			// 				nombreCampo: 'Dirección',
-			// 				datoCampoAnterior: farmaceutica.direccion,
-			// 				datoCampoNuevo: data.direccion
-			// 			},
-			// 			{ 
-			// 				nombreCampo: 'Telefono',
-			// 				datoCampoAnterior: farmaceutica.telefono,
-			// 				datoCampoNuevo: data.telefono
-			// 			}
-			// ]
+			ConsultaDiagnostico.findById(data.id_consultaDiagnostico, (err, consultaDiagnosticoDatosNuevo) => {
+				let coDiaNue = consultaDiagnosticoDatosNuevo[0]
 
-			return res.json({ 
-				mensaje: 'Se actualizó exitósamente.',
-				consultaDiagnosticoActualizado: consultaDiagnostico
+				if(err) {
+					console.log(err)
+					return res.json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+				}
+
+				let listaCampos = [
+					{ 
+						nombreCampo: 'Nombre',
+						datoCampoAnterior: coDiaAnt.diagnostico.descripcion,
+						datoCampoNuevo: coDiaNue.diagnostico.descripcion
+					},
+					{ 
+						nombreCampo: 'Observaciones',
+						datoCampoAnterior: coDiaAnt.consultaDiagnostico.observaciones,
+						datoCampoNuevo: coDiaNue.consultaDiagnostico.observaciones
+					}
+				]
+
+				// console.log(listaCampos)
+				fieldsToEditData(data.id_consultaDiagnostico, listaCampos, 'actualización', 'consulta-diagnosticos', data.idPersonal, coDiaAnt.id_consulta, (err, datos) => {
+					if(err) {
+						console.log(err)
+						return res.json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+					}
+
+					// .. Ejecutar esto despues de editar el registro. 
+					console.log(datos)
+
+					AuditoriaModulo1.create(datos, (err) => {
+						if(err) {
+							console.log(err)
+							return res.json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+						}
+					})
+				})
+
+				return res.json({ 
+					mensaje: 'Se actualizó exitósamente.',
+					consultaDiagnosticoActualizado: coDiaNue
+				})
 			})
+		
 		})
-
 	})
 }
 
 exports.eliminar = function(req, res, next) {
 	let idConsultaDiagnostico = req.params.idConsultaDiagnostico
+	let idPersonal = req.params.idPersonal
 
-	ConsultaDiagnostico.delete(idConsultaDiagnostico, (err, result) => {
+
+	ConsultaDiagnostico.findById(idConsultaDiagnostico, (err, consultaDiagnosticoDatosAnterior) => {
+		let coDiaAnt = consultaDiagnosticoDatosAnterior[0]
+
 		if(err) {
 			console.log(err)
 			return res.json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		return res.json({ 
-			mensaje: 'Se Eliminó exitósamente.',
-			id_consultaDiagnostico: idConsultaDiagnostico
+		let listaCampos = [
+			{ 
+				nombreCampo: 'Nombre',
+				datoCampoAnterior: coDiaAnt.diagnostico.descripcion
+			},
+			{ 
+				nombreCampo: 'Observaciones',
+				datoCampoAnterior: coDiaAnt.consultaDiagnostico.observaciones
+			}
+		]
+
+
+		ConsultaDiagnostico.delete(idConsultaDiagnostico, (err, result) => {
+			if(err) {
+				console.log(err)
+				return res.json({ error: 'Ocurrió un error, intente más tarde.' })
+			}
+
+			// console.log(listaCampos)
+			fieldsToEditData(idConsultaDiagnostico, listaCampos, 'eliminación', 'consulta-diagnosticos', idPersonal, coDiaAnt.id_consulta, (err, datos) => {
+				if(err) {
+					console.log(err)
+					return res.json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+				}
+
+				// .. Ejecutar esto despues de eliminar el registro. 
+				console.log(datos)
+
+				AuditoriaModulo1.create(datos, (err) => {
+					if(err) {
+						console.log(err)
+						return res.json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
+					}
+				})
+			})
+
+			return res.json({
+				mensaje: 'Se Eliminó exitósamente.',
+				id_consultaDiagnostico: idConsultaDiagnostico
+			})
 		})
 	})
+
 }
