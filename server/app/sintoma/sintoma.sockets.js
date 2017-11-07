@@ -2,6 +2,10 @@ import Sintoma from './sintoma.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var sintomaNsp = io.of('/sintoma');
 	
@@ -66,16 +70,53 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_sintoma', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					Sintoma.delete(data, (err) => {
+					Sintoma.findById(data, (err, sintomaEncontrada) => {
+						let sintoma = sintomaEncontrada[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_sintoma', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_sintoma', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{ 
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: sintoma.descripcion
+							}
+						]
 
-						sintomas()
+						Sintoma.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_sintoma', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							sintomas()
+
+							fieldsToEditData(data.id_sintoma, listaCampos, 'eliminación', 'sintomas', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_sintoma', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return 
+								}
+								
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_sintoma', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_sintoma', { mensaje: 'Se Eliminó exitósamente.' })
+
+						})
+
 					})
 				}
 			})
@@ -95,18 +136,55 @@ export default (io) => {
 					return
 				}
 					
-					
-				Sintoma.update(data, (err) => {
+				Sintoma.findById(data, (err, sintomaEncontrada) => {
+					let sintoma = sintomaEncontrada[0]
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_sintoma', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_sintoma', { mensaje: 'Se actualizó exitósamente.' })
-					
-					sintomas()
+					let listaCampos = [
+						{ 
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: sintoma.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+
+					Sintoma.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_sintoma', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+						
+						sintomas()
+
+						fieldsToEditData(data.id_sintoma, listaCampos, 'actualización', 'sintomas', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_sintoma', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return 
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_sintoma', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_sintoma', { mensaje: 'Se actualizó exitósamente.' })
+					})
 				})
+					
 			})
 		})
 		
