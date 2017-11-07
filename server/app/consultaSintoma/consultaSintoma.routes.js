@@ -13,6 +13,6 @@ export default (app) => {
 	app.route('/api/consultasintomas/editar')
 	   .put(consultaSintomaCtrl.editar)
 
-	app.route('/api/consultasintomas/:idConsultaSintoma/eliminar')
+	app.route('/api/consultasintomas/:idConsultaSintoma/eliminar/:idPersonal')
 	   .delete(consultaSintomaCtrl.eliminar)
 }
