@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
+import moment from 'moment'
+
 
 import FiltrosApp from './FiltrosApp'
 
@@ -23,7 +25,10 @@ function mapStateToProps(state, ownProps) {
 			fecha: selector(state, 'fecha') || '',
 			hora: selector(state, 'hora') || '',
 			accion: selector(state, 'accion') || '',
-			id_personal: selector(state, 'id_personal') || ''
+			
+			nroDocumento: selector(state, 'nroDocumento') || '',
+			nombres: selector(state, 'nombres') || '',
+			apellidos: selector(state, 'apellidos') || ''
     	},
 
 		listar: state.auditoriaModulo1.listar
@@ -45,18 +50,27 @@ function mapDispatchToProps(dispatch) {
 			console.log('No FILTRADOS movimientos.... :)')
 			console.log(movimientos)
 
-			
-			// if(movimientos) {
-				movimientos = movimientos.filter((i) => {
-					return i.auditoria.idRegistro == valoresFiltro.idRegistro &&
-					i.auditoria.accion.match(valoresFiltro.accion)
-				})
+			// console.log(moment(valoresFiltro.fecha).format('MM-DD-YYYY'))
 
-				// movimientos = movimientos[0]
+			movimientos = movimientos.filter((i) => {
+					
+				// console.log(i.auditoria.fecha)
 
-				console.log('FILTRADOS movimientos.... :)')
-				console.log(movimientos)
-			// }
+				return i.auditoria.idRegistro.toString().match(valoresFiltro.idRegistro) &&
+				i.auditoria.accion.match(valoresFiltro.accion) &&
+				moment(i.auditoria.fecha).format('DD-MM-YYYY').match(moment(valoresFiltro.fecha).format('DD-MM-YYYY')) &&
+
+				i.auditoria.hora.match(valoresFiltro.hora) &&
+					
+				i.personal.nroDocumento.match(valoresFiltro.nroDocumento) &&
+				i.personal.nombres.match(valoresFiltro.nombres) &&
+				i.personal.apellidos.match(valoresFiltro.apellidos)
+			})
+
+			// movimientos = movimientos[0]
+
+			console.log('FILTRADOS movimientos.... :)')
+			console.log(movimientos)
 
 			return movimientos
 		}
