@@ -34,7 +34,7 @@ class Listar extends Component {
 			    		</td>
 			            <td><p>{ i.auditoria.tabla }</p></td>
 			            <td><p>{ i.auditoria.accion }</p></td>
-			            <td><p>{ moment(i.auditoria.fecha).format('L') }</p></td>
+			            <td><p>{ moment(i.auditoria.fecha).format('DD-MM-YYYY') }</p></td>
 			            <td><p>{ i.auditoria.hora }</p></td>
 			            
 			            <td>
