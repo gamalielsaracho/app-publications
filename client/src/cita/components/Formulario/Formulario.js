@@ -61,6 +61,8 @@ class Formulario extends Component {
 	}
 
 	render() {
+		// console.log('this.props.listar.citas ---------->')
+		// console.log(this.props.listar.citas)
 
 		// console.log(this.props.fechaOtenida)
 		const customStyles = {
@@ -95,7 +97,7 @@ class Formulario extends Component {
 						{ this.renderCargando(cargando) }
 
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-							<CalendarioCitaContainer 
+							<CalendarioCitaContainer
 								citas = {this.props.listaCitasEditedAndFilter(this.props.listar.citas, this.props.valoresFiltro)}
 								valoresFiltro={this.props.valoresFiltro}/>
 						</div>

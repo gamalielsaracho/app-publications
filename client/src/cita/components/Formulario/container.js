@@ -112,14 +112,16 @@ function mapDispatchToProps(dispatch) {
 				newList.push(cita)
 			})
 
-			if(valores.id_personal != undefined) {
-				valores.id_personal = valores.id_personal[0] 
-				// console.log(valores)
-			}
+			// Tocar luego.! cool :)
 
-			newList = newList.filter((i) => {
-				return i.id_personal == valores.id_personal
-			})
+			// if(valores.id_personal != undefined) {
+			// 	valores.id_personal = valores.id_personal[0] 
+			// 	// console.log(valores)
+			// }
+
+			// newList = newList.filter((i) => {
+			// 	return i.id_personal == valores.id_personal
+			// })
 
 			// console.log('newList |||||||||||||||||')
 			// console.log(newList)
