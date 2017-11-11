@@ -34,6 +34,8 @@ import {
 	ELIMINAR_PRESENTACION_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -116,7 +118,10 @@ export function eliminarPresentacion(idPresentacion) {
 
 		dispatch({ type: ELIMINAR_PRESENTACION_REQUEST })
 
-		presentacionSocket.emit('eliminar_presentacion', { id_presentacion: idPresentacion })
+		presentacionSocket.emit('eliminar_presentacion', { 
+			id_presentacion: idPresentacion,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		presentacionSocket.on('eliminar_presentacion', (data) => {
 			console.log(data)
@@ -156,6 +161,7 @@ export function cerrarModalMostrarPresentacion() {
 
 export function editarPresentacion(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
 
 		dispatch({ type: EDITAR_PRESENTACION_REQUEST })
 
