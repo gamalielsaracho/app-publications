@@ -193,7 +193,8 @@ exports.mostrarParaEditar = function(req, res, next) {
 exports.editar = function(req, res, next) {
 	let data = {
 		id_consultaDiagnostico: req.body.id_consultaDiagnostico,
-		observaciones: req.body.observaciones
+		observaciones: req.body.observaciones,
+		idPersonal: req.body.idPersonal
 		// id_diagnostico: req.body.id_diagnostico,
 		// id_consulta: req.body.id_consulta,
 	}
@@ -234,7 +235,7 @@ exports.editar = function(req, res, next) {
 				]
 
 				// console.log(listaCampos)
-				fieldsToEditData(data.id_consultaDiagnostico, listaCampos, 'actualización', 'consulta-diagnosticos', data.idPersonal, coDiaAnt.id_consulta, (err, datos) => {
+				fieldsToEditData(data.id_consultaDiagnostico, listaCampos, 'actualización', 'consulta-diagnosticos', data.idPersonal, coDiaAnt.consultaDiagnostico.id_consulta, (err, datos) => {
 					if(err) {
 						console.log(err)
 						return res.json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
@@ -293,7 +294,7 @@ exports.eliminar = function(req, res, next) {
 			}
 
 			// console.log(listaCampos)
-			fieldsToEditData(idConsultaDiagnostico, listaCampos, 'eliminación', 'consulta-diagnosticos', idPersonal, coDiaAnt.id_consulta, (err, datos) => {
+			fieldsToEditData(idConsultaDiagnostico, listaCampos, 'eliminación', 'consulta-diagnosticos', idPersonal, coDiaAnt.consultaDiagnostico.id_consulta, (err, datos) => {
 				if(err) {
 					console.log(err)
 					return res.json({ error: 'Ocurrió un error en la auditoría de este módulo.' })
