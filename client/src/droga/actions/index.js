@@ -34,6 +34,8 @@ import {
 	ELIMINAR_DROGA_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -116,7 +118,10 @@ export function eliminarDroga(idDroga) {
 
 		dispatch({ type: ELIMINAR_DROGA_REQUEST })
 
-		drogaSocket.emit('eliminar_droga', { id_droga: idDroga })
+		drogaSocket.emit('eliminar_droga', { 
+			id_droga: idDroga,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
+		})
 
 		drogaSocket.on('eliminar_droga', (data) => {
 			console.log(data)
@@ -154,7 +159,8 @@ export function cerrarModalMostrarDroga() {
 
 export function editarDroga(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_DROGA_REQUEST })
 
 		drogaSocket.emit('editar_droga', datosFormulario)
