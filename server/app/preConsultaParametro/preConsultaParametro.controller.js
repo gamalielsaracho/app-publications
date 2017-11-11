@@ -65,7 +65,11 @@ exports.crear = function(req, res, next) {
 					return res.json({ error: 'Ocurrió un error, intente más tarde.' })
 				}
 
-				PreConsultaParametro.findById(result.insertId, (err, parametroPreConsulta) => {
+				let data = {
+					id_preconsultaParametro: result.insertId
+				}
+
+				PreConsultaParametro.findById(data, (err, parametroPreConsulta) => {
 					// console.log(parametroPreConsulta)
 
 					if(err) {
@@ -173,7 +177,7 @@ exports.editar = function(req, res, next) {
 
 				return res.json({ 
 					mensaje: 'Se actualizó exitósamente.',
-					parametroPreConsultaActualizado: parametroPreConsultaDatosAnterior[0]
+					parametroPreConsultaActualizado: preNue
 				})
 									
 			})
