@@ -2,6 +2,9 @@ import NombreMedicamento from './nombreMedicamento.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var nombreMedicamentoNsp = io.of('/nombreMedicamento');
 	
@@ -65,17 +68,54 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_nombreMedicamento', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					NombreMedicamento.delete(data, (err) => {
+					NombreMedicamento.findById(data, (err, nombreMedicamentoDatosAnterior) => {
+						let nMeAnt = nombreMedicamentoDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_nombreMedicamento', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_nombreMedicamento', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: nMeAnt.descripcion
+							}
+						]
 
-						nombresMedicamentos()
+						NombreMedicamento.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_nombreMedicamento', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							nombresMedicamentos()
+
+							fieldsToEditData(data.id_nombreMedicamento, listaCampos, 'eliminación', 'nombres-medicamentos', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_nombreMedicamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return 
+								}
+								
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_nombreMedicamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_nombreMedicamento', { mensaje: 'Se Eliminó exitósamente.' })
+
+						})
 					})
+
 				}
 			})
 			
@@ -94,19 +134,57 @@ export default (io) => {
 					socket.emit('editar_nombreMedicamento', { error: 'Este nombre ya está registrado' })
 					return
 				}
-					
-					
-				NombreMedicamento.update(data, (err) => {
+
+				NombreMedicamento.findById(data, (err, nombreMedicamentoDatosAnterior) => {
+					let nMeAnt = nombreMedicamentoDatosAnterior[0]
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_nombreMedicamento', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_nombreMedicamento', { mensaje: 'Se actualizó exitósamente.' })
-					
-					nombresMedicamentos()
-				})
+					let listaCampos = [
+						{
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: nMeAnt.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+
+					NombreMedicamento.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_nombreMedicamento', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+
+						nombresMedicamentos()
+
+						fieldsToEditData(data.id_nombreMedicamento, listaCampos, 'actualización', 'nombres-medicamentos', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_nombreMedicamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return 
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_nombreMedicamento', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_nombreMedicamento', { mensaje: 'Se actualizó exitósamente.' })
+
+					})
+
+				})					
 			})
 		})
 		
