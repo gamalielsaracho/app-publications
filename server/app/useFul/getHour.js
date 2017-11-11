@@ -9,6 +9,9 @@ export default () => {
     var d = new Date();
     var h = addZero(d.getHours());
     var m = addZero(d.getMinutes());
-    var s = addZero(d.getSeconds());
-    return h + ":" + m + ":" + s;
+    // var s = addZero(d.getSeconds());
+    // return h + ":" + m + ":" + s;
+
+    console.log(m)
+    return h + ":" + m;
 }
