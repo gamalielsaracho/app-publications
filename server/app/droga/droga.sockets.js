@@ -2,6 +2,9 @@ import Droga from './droga.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var drogaNsp = io.of('/droga');
 	
@@ -65,17 +68,55 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_droga', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					Droga.delete(data, (err) => {
+					Droga.findById(data, (err, drogaDatosAnterior) => {
+						let droAnt = drogaDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_droga', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_droga', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: droAnt.descripcion
+							}
+						]
 
-						drogas()
+						Droga.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_droga', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							socket.emit('eliminar_droga', { mensaje: 'Se Eliminó exitósamente.' })
+
+							drogas()
+
+							fieldsToEditData(data.id_droga, listaCampos, 'eliminación', 'drogas', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_droga', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return 
+								}
+							
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_droga', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+						})
+
 					})
+
 				}
 			})
 		})
@@ -93,19 +134,57 @@ export default (io) => {
 					socket.emit('editar_droga', { error: 'Esta droga ya está registrada' })
 					return
 				}
-					
-					
-				Droga.update(data, (err) => {
+				
+				Droga.findById(data, (err, drogaDatosAnterior) => {
+					let droAnt = drogaDatosAnterior[0]
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_droga', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_droga', { mensaje: 'Se actualizó exitósamente.' })
-					
-					drogas()
+					let listaCampos = [
+						{
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: droAnt.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+					Droga.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_droga', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+						
+						drogas()
+
+						fieldsToEditData(data.id_droga, listaCampos, 'actualización', 'drogas', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_droga', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return 
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_droga', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_droga', { mensaje: 'Se actualizó exitósamente.' })
+
+					})
+
 				})
+					
 			})
 		})
 		
