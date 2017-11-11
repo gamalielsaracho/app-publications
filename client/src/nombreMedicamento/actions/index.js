@@ -34,6 +34,8 @@ import {
 	ELIMINAR_NOMBRE_MEDICAMENTO_FALLO
 } from './types'
 
+import jwtDecode from 'jwt-decode'
+
 import io from 'socket.io-client'
 
 import { browserHistory } from 'react-router'
@@ -119,7 +121,8 @@ export function eliminarNombreMedicamento(idNombreMedicamento) {
 		dispatch({ type: ELIMINAR_NOMBRE_MEDICAMENTO_REQUEST })
 
 		nombreMedSocket.emit('eliminar_nombreMedicamento', { 
-			id_nombreMedicamento: idNombreMedicamento 
+			id_nombreMedicamento: idNombreMedicamento,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		nombreMedSocket.on('eliminar_nombreMedicamento', (data) => {
@@ -162,7 +165,8 @@ export function cerrarModalMostrarNombreMedicamento() {
 
 export function editarNombreMedicamento(datosFormulario) {
 	return (dispatch) => {
-
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+		
 		dispatch({ type: EDITAR_NOMBRE_MEDICAMENTO_REQUEST })
 
 		nombreMedSocket.emit('editar_nombreMedicamento', datosFormulario)
