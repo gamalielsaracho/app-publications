@@ -77,8 +77,8 @@ export default (io) => {
 						let listaCampos = [
 							{
 								nombreCampo: 'Nombre',
-								datoCampoAnterior: aAnt.descripcion,
-								datoCampoNuevo: data.descripcion
+								datoCampoAnterior: aAnt.descripcion
+								// datoCampoNuevo: data.descripcion
 							}
 						]
 
@@ -134,7 +134,6 @@ export default (io) => {
 					
 				Nivel.findById(data, (err, nivelDatosAnterior) => {
 					let aAnt = nivelDatosAnterior[0]
-
 
 					if(err) {
 						console.log(err)
