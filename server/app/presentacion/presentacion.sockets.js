@@ -2,6 +2,9 @@ import Presentacion from './presentacion.model'
 
 import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
+import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
+import fieldsToEditData from './././../useFul/fieldsToEditData.js'
+
 export default (io) => {
 	var presentacionNsp = io.of('/presentacion');
 	
@@ -64,16 +67,53 @@ export default (io) => {
 				if(enUso[0]) {
 					socket.emit('eliminar_presentacion', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
-					Presentacion.delete(data, (err) => {
+					Presentacion.findById(data, (err, presentacionDatosAnterior) => {
+						let pAnt = presentacionDatosAnterior[0]
+
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_presentacion', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
 
-						socket.emit('eliminar_presentacion', { mensaje: 'Se Eliminó exitósamente.' })
+						let listaCampos = [
+							{
+								nombreCampo: 'Nombre',
+								datoCampoAnterior: pAnt.descripcion
+							}
+						]
 
-						presentaciones()
+						Presentacion.delete(data, (err) => {
+							if(err) {
+								console.log(err)
+								socket.emit('eliminar_presentacion', { error: 'Ocurrió un error, intente más tarde.' })
+								return
+							}
+
+							presentaciones()
+
+							fieldsToEditData(data.id_presentacion, listaCampos, 'eliminación', 'presentaciones', data.idPersonal, null, (err, datos) => {
+								if(err) {
+									console.log(err)
+									socket.emit('eliminar_presentacion', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							
+								// .. Ejecutar esto despues de eliminar el registro. 
+								// console.log(datos)
+								AuditoriaModulo1.create(datos, (err) => {
+									if(err) {
+										console.log(err)
+										socket.emit('eliminar_presentacion', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+										return
+									}
+								})
+							})
+
+							socket.emit('eliminar_presentacion', { mensaje: 'Se Eliminó exitósamente.' })
+
+						})
+
 					})
 				}
 			})
@@ -93,18 +133,55 @@ export default (io) => {
 					return
 				}
 					
-					
-				Presentacion.update(data, (err) => {
+				Presentacion.findById(data, (err, presentacionDatosAnterior) => {
+					let pAnt = presentacionDatosAnterior[0]
+
 					if(err) {
 						console.log(err)
 						socket.emit('editar_presentacion', { error: 'Ocurrió un error, intente más tarde.' })
 						return
 					}
 
-					socket.emit('editar_presentacion', { mensaje: 'Se actualizó exitósamente.' })
-					
-					presentaciones()
+					let listaCampos = [
+						{
+							nombreCampo: 'Nombre',
+							datoCampoAnterior: pAnt.descripcion,
+							datoCampoNuevo: data.descripcion
+						}
+					]
+
+					Presentacion.update(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('editar_presentacion', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
+						
+						presentaciones()
+
+						fieldsToEditData(data.id_presentacion, listaCampos, 'actualización', 'presentaciones', data.idPersonal, null, (err, datos) => {
+							if(err) {
+								console.log(err)
+								socket.emit('editar_presentacion', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+								return
+							}
+							
+							// .. Ejecutar esto despues de editar el registro. 
+							// console.log(datos)
+							AuditoriaModulo1.create(datos, (err) => {
+								if(err) {
+									console.log(err)
+									socket.emit('editar_presentacion', { error: 'Ocurrió un error en la auditoría de este módulo.' })
+									return
+								}
+							})
+						})
+
+						socket.emit('editar_presentacion', { mensaje: 'Se actualizó exitósamente.' })
+
+					})
 				})
+					
 			})
 		})
 		
