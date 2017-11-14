@@ -150,7 +150,7 @@ export default function (state = INITIAL_STATE, action) {
 			return state
 
 		case ABRIR_FORMULARIO_CREAR_CITA:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: true,
 					abirtoEditar: false,
@@ -161,6 +161,10 @@ export default function (state = INITIAL_STATE, action) {
 				},
 				mostrar: { abierto: false }
 			})
+
+			console.log(state.formulario)
+
+			return state
 
 		case ABRIR_FORMULARIO_EDITAR_CITA_REQUEST:
 			return Object.assign({}, state, {
