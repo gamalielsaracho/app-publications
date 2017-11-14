@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import {
-
+    alertaPrueba
 } from '../../actions'
 
 import Calendario from './Calendario'
@@ -15,6 +15,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+        // ver si corre esto..
         filtrarCitas: (citas, valores) => {
             console.log(valores)
             if(valores.id_personal) {
@@ -24,6 +25,10 @@ function mapDispatchToProps(dispatch) {
             }
             return citas
         }
+
+        // alertaPrueba: () => {
+        //     dispatch(alertaPrueba())
+        // }
 	}
 }
 
