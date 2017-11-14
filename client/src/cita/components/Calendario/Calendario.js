@@ -4,6 +4,15 @@ import ReactDOM from 'react-dom'
 import fullcalendar from 'fullcalendar'
 import moment from 'moment'
 
+import {
+	alertaPrueba,
+	editarCita
+} from '../../actions'
+
+import configureStore from '../../../store'
+
+const store = configureStore()
+
 class Calendario extends Component {
 	constructor(props) {
 		super(props)
@@ -37,7 +46,19 @@ class Calendario extends Component {
 					fI: ${event.start.format()}
 					fF: ${event.end.format()}
 				`
-				alert(contenido)
+				let data = {
+					id_cita: event.id_cita,
+					fecha: event.fecha,
+					start: event.start.format(),
+					end: event.end.format(),
+					pendiente: event.pendiente,
+					id_personal: event.id_personal,
+					id_paciente: event.id_paciente,
+					id_preconsulta: event.id_preconsulta,
+				}
+				// alert(contenido)
+				console.log(data)
+				store.dispatch(editarCita(data))
 			},
 			dayClick: function(date, jsEvent, view, resourceObj) {
 				// this.props.obtenerFecha(date.format())
@@ -46,6 +67,8 @@ class Calendario extends Component {
 
 				// let hInicio = date.format('h')
 				// let hFin = parseInt(date.format('mm')) + 30
+
+				store.dispatch(alertaPrueba('hola mundo :)'))
 
 
 				$(".fechaNodo").val(date.format('YYYY-MM-DD'));
@@ -56,10 +79,34 @@ class Calendario extends Component {
 				// this.props.s = date.format('YYYY-MM-DD') ? xD
 		        // alert('Date: ' + date.format('YYYY-MM-DD'));
 		        // alert('Date: ' + date.format());
-		        // alert('Hora: ' + date.format('h:mm'));
+		        alert('Hora: ' + date.format('h:mm'));
+
 		        alert(date)
 
 		        // alert('Resource ID: ' + resourceObj.id);
+		    },
+		    eventResize: function(event, delta, revertFunc) {
+		    	// alert(event.title + " end is now " + event.end.format('YYYY-MM-DD HH:mm:ss'));
+		    	
+		    	// si el usuario cancela.
+		    	if (!confirm("is this okay?")) {
+           			revertFunc();
+        		}
+
+        		let data = {
+					id_cita: event.id_cita,
+					fecha: event.fecha,
+					start: event.start.format(),
+					end: event.end.format(),
+					pendiente: event.pendiente,
+					id_personal: event.id_personal,
+					id_paciente: event.id_paciente,
+					id_preconsulta: event.id_preconsulta,
+				}
+
+				console.log("Editando la hora. cool! :)")
+				console.log(data)
+				store.dispatch(editarCita(data))
 		    },
 		    events: eventsList
 	  })
