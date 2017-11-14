@@ -1,6 +1,10 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
+// Solo para el de ventanilla y admin.
+import CalendarioCitasContainer from '././components/CalendarioCitas'
+
+
 // Listar.
 // import  from './././components/ListarApp'
 import ListarCitasAppContainer from '././components/ListarApp'
@@ -28,6 +32,8 @@ import ListarConsultaDiagnosticosContainer from '../consultaDiagnostico/componen
 const citaRoutes = (
 	<Route path='/dashboard/citas' component={ListarCitasAppContainer}>
 		<IndexRoute component={ListarCitasPage}/>
+		<Route path='/dashboard/citas-agendadas-calendario' component={CalendarioCitasContainer}/>
+
 		<Route path='/dashboard/citas/:idCita' component={MostrarCitaAppContainer}>
 			<Route path='/dashboard/citas/:idCita/preconsulta/:idPreConsulta' component={MostrarPreConsultaAppContainer}>
 
