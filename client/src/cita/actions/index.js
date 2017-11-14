@@ -49,6 +49,14 @@ import { reset } from 'redux-form'
 
 var citaSocket = io.connect('http://localhost:3000/cita');
 
+export function alertaPrueba(contenido) {
+	return (dispatch) => {
+        alert(contenido)
+
+		dispatch({ type: ABRIR_FORMULARIO_CREAR_CITA })
+	}
+}
+
 export function abrirFormularioCrearCita() {
 	return (dispatch) => {
 		dispatch(reset('FormularioCita'))
@@ -196,6 +204,7 @@ export function editarCita(datosFormulario) {
 		citaSocket.emit('editar_cita', datosFormulario)
 
 		citaSocket.on('editar_cita', (data) => {
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: EDITAR_CITA_FALLO, payload: data.error })
 			} else {
