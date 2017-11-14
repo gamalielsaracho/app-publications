@@ -30,6 +30,11 @@ class ListarApp extends Component {
 			  <li className="nav-item nav-link" className={activeMostrarCita}>
 			    <a className="nav-link">Detalle cita</a>
 			  </li>
+			  <li className="nav-item nav-link" className={activeMostrarCita}>
+			  	<Link to={`/dashboard/citas-agendadas-calendario`}>
+			    	<a className="nav-link">Agenda</a>
+			  	</Link>
+			  </li>
 			</ul>
 
 			{ this.props.children }
