@@ -67,45 +67,45 @@ class Listar extends Component {
 		}
 	}
 
-	renderBtnDelete(cita) {
-		if(cita.id_preconsulta) {
+	renderBtnDelete(i) {
+		if(i.id_preconsulta) {
 			return <span></span>
 		} else {
 			return <button type="button" 
-				onClick={() => { this.props.eliminarCita(cita.id_cita) }} className="btn btn-danger btn-space">
+				onClick={() => { this.props.eliminarCita(i.id_cita) }} className="btn btn-danger btn-space">
 				Eliminar
 			</button>
 		}
 	}
 
-	renderOptionsByRol(cita) {
+	renderOptionsByRol(i) {
 
 		switch(this.personalLocalSt.id_rol) {
 			case 3: // admin.
 				return <div>
-					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+					<Link to={`/dashboard/citas/${i.id_cita}`}>
 						<button type="button" className="btn btn-info btn-space">Mostrar</button>
 					</Link>
-					<button type="button" onClick={() => { this.props.abrirFormularioEditarCita(cita.id_cita) }} className="btn btn-warning btn-space">Editar</button>
-					{ this.renderBtnDelete(cita) }
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarCita(i.id_cita) }} className="btn btn-warning btn-space">Editar</button>
+					{ this.renderBtnDelete(i) }
 				</div>
 			case 4: // admisión.
 				return <div>
-					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+					<Link to={`/dashboard/citas/${i.id_cita}`}>
 						<button type="button" className="btn btn-info btn-space">Mostrar</button>
 					</Link>
-					<button type="button" onClick={() => { this.props.abrirFormularioEditarCita(cita.id_cita) }} className="btn btn-warning btn-space">Editar</button>
-					{ this.renderBtnDelete(cita) }
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarCita(i.id_cita) }} className="btn btn-warning btn-space">Editar</button>
+					{ this.renderBtnDelete(i) }
 				</div>
 			case 1: // médico.
 				return <div>
-					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+					<Link to={`/dashboard/citas/${i.id_cita}`}>
 						<button type="button" className="btn btn-info btn-space">Mostrar</button>
 					</Link>
 				</div>
 			case 2: // enfermería.
 				return <div>
-					<Link to={`/dashboard/citas/${cita.id_cita}`}>
+					<Link to={`/dashboard/citas/${i.id_cita}`}>
 						<button type="button" className="btn btn-info btn-space">Mostrar</button>
 					</Link>
 				</div>
@@ -143,7 +143,7 @@ class Listar extends Component {
 		let filtro = this.props.filtro
 
 		// console.log('EL FILTRO.')
-		// console.log(citas)
+		console.log(citas)
 
 			// Para filtrar información. 
 		// let con = { // Condiciones.
@@ -162,14 +162,14 @@ class Listar extends Component {
 
 			{
 				citas.map((i) => {
-					return <tr key={i.cita.id_cita}>
-			            <td>{ i.cita.id_cita }</td>
-			            <td>{ moment(i.cita.fecha).format('L') }</td>
-			            <td>{ moment(i.cita.start).format('LT') }</td>
-			            <td>{ moment(i.cita.end).format('LT') }</td>
-			            <td>{ this.renderEstadoCita(i.cita.pendiente) }</td>
+					return <tr key={i.id_cita}>
+			            <td>{ i.id_cita }</td>
+			            <td>{ moment(i.fecha).format('L') }</td>
+			            <td>{ moment(i.start).format('LT') }</td>
+			            <td>{ moment(i.end).format('LT') }</td>
+			            <td>{ this.renderEstadoCita(i.pendiente) }</td>
 			            <td>
-			            	{ this.renderOptionsByRol(i.cita) }
+			            	{ this.renderOptionsByRol(i) }
 			            </td>
 			        </tr>		
 				})
