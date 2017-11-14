@@ -1,5 +1,7 @@
 import Cita from './cita.model'
 
+import moment from 'moment'
+
 export default (io) => {
 	var citaNsp = io.of('/cita');
 	
@@ -15,6 +17,11 @@ export default (io) => {
 					socket.emit('listar_citas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 					return
 				}
+
+				citas.map((i) => {
+					i.start = moment(i.start).format('YYYY-MM-DD HH:mm:ss')
+					i.end = moment(i.end).format('YYYY-MM-DD HH:mm:ss')
+				})
 
 				citaNsp.emit('listar_citas', { citas: citas })
 			})
@@ -105,16 +112,29 @@ export default (io) => {
 
 
 		socket.on('editar_cita', (data) => {
-			Cita.update(data, (err) => {
+			Cita.verifyBeforeUpdate(data, (err, citaYaRealizada) => {
 				if(err) {
 					console.log(err)
 					socket.emit('editar_cita', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('editar_cita', { mensaje: 'Se actualizó exitósamente.' })
+				if(citaYaRealizada[0]) {
+					socket.emit('editar_cita', { error: 'No puedes editar los datos de las citas ya realizadas.' })
+					return
+				}
 				
-				citas()
+				Cita.update(data, (err) => {
+					if(err) {
+						console.log(err)
+						socket.emit('editar_cita', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('editar_cita', { mensaje: 'Se actualizó exitósamente.' })
+					
+					citas()
+				})
 			})
 		})
 		 
