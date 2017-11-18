@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Field, reset } from 'redux-form'
 import ReactModal from 'react-modal'
 
+import jwtDecode from 'jwt-decode'
+
 import _ from 'lodash'
 
 import Cargando from '../../../app/components/Cargando'
@@ -10,6 +12,10 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 // NIVEL.
 import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
+
+
+// Paciente.
+import FieldSelectPacientesContainer from '../../../paciente/components/FieldSelectPacientes'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -25,30 +31,21 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
-		this.props.listarNiveles()
-		// this.props.listarPreConsultas()
+		this.props.listarNivelesFuncion()
+		this.props.listarPacientesFuncion()
 	}
 
 	enviarFormulario(formProps) {
 
-		let datosCita = this.props.datosCita
-		let datosToken = this.props.datosToken
-
-
-		formProps.fecha = datosCita.cita.fecha
-		formProps.id_paciente = datosCita.paciente.id_paciente
-		formProps.id_personal = datosToken.personal.id_personal
-
-		// Para la ruta que redirecciona a la pre-consulta creada.
-		formProps.id_cita = datosCita.cita.id_cita
+		formProps.id_paciente = formProps.id_paciente[0]
+		formProps.id_personal = this.personalLocalSt.id_personal
 
 		console.log(formProps)
-
-		// console.log(this.props.personal)
 
 		if(this.props.editarContenido) {
 			this.props.editarPreConsulta(formProps)
@@ -57,23 +54,68 @@ class Formulario extends Component {
 		}
 	}
 
-	renderCargando(cargando) {
+	renderFormulario(cargando) {
+		const { handleSubmit, pristine, reset, submitting } = this.props		
+		
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			return <span></span>
+			return <div>
+				<form onSubmit={handleSubmit(this.enviarFormulario)}>
+					<div className='row'>
+						<div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+							<div className='row'>
+								<div className='col-xs-12 col-sm-6 col-md-3 col-lg-3'>
+									<Field name='nroDocumento' type='number' component={renderField} label='Nro de documento'/>
+								</div>
+								<div className='col-xs-12 col-sm-6 col-md-3 col-lg-3'>
+									<Field name='id_tipoDocumento' type='text' component={renderField} label='Tipo de documento'/>
+								</div>
+								<div className='col-xs-12 col-sm-6 col-md-3 col-lg-3'>
+									<Field name='nombres' type='text' component={renderField} label='Nombres'/>
+								</div>
+								<div className='col-xs-12 col-sm-6 col-md-3 col-lg-3'>
+									<Field name='apellidos' type='text' component={renderField} label='Apellidos'/>
+								</div>
+							</div>
+
+							<Field name='id_paciente' type='text' 
+								component={FieldSelectPacientesContainer}
+								listar={this.props.listarPacientes} 
+								valoresFiltro={this.props.valoresFiltro}
+								label='Paciente:'
+								showBtnAdd={true}/>
+						</div>
+
+						<div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+							<div className='row'>
+								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+									<Field name='id_nivel' type='text' 
+										component={FieldSelectNivelesContainer}
+										listar={this.props.listarNiveles} 
+										label='Nivel:'
+										showBtnAdd={false}/>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+					<button type="button" onClick={ this.props.cerrarFormularioPreConsulta } className="btn btn-primary btn-space">Cancelar</button>
+				</form>
+			</div>
 		}
 	}
+
+
 
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh',
+		  		height: '55vh',
 		  		position: 'none'
 		  	}
 		}
-
-		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
 			abirtoCrear, abirtoEditar, cargando, rol 
@@ -85,41 +127,18 @@ class Formulario extends Component {
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
-
-							// <form onSubmit={handleSubmit(this.enviarFormulario)}>
-								
-							// 	<Field name='id_nivel' type='text' component={FieldSelectNivelesContainer} listaNiveles={this.props.listaNiveles} label='Nivel:'/>
-														
-								
-							// </form>
-			// console.log(this.props.listaPreConsultas)
 		if(abierto) {
 			return <ReactModal isOpen={abierto}
 					       	contentLabel="Minimal Modal Example"
 					       	style={customStyles}>
 
-				<div className='container'>
+				<div className='container-fluid'>
 					<h4 className='text-center'>Formulario pre-consulta</h4>
 
 					<MensajeOerror error={error} mensaje={null}/>
-					{ this.renderCargando(cargando) }
 
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							
-							<form onSubmit={handleSubmit(this.enviarFormulario)}>
-								<div className='form-group'>
-									<Field name='id_nivel' type='text' 
-										component={FieldSelectNivelesContainer}
-										listaNiveles={this.props.listaNiveles} label='Nivel:'/>
-								</div>
+					{ this.renderFormulario(cargando) }
 
-								<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-								<button type="button" onClick={ this.props.cerrarFormularioPreConsulta } className="btn btn-primary btn-space">Cancelar</button>
-							</form>
-
-						</div>
-					</div>
 				</div>
 			</ReactModal>
 		} else {
