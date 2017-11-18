@@ -6,7 +6,7 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FieldSelectAreas from '../../../area/components/FieldSelectAreas'
+import FieldSelectAreasContainer from '../../../area/components/FieldSelectAreas'
 import FieldSelectCiudadesContainer from '../../../ciudad/components/FieldSelectCiudades'
 
 import FormularioContainer from '../../../ciudad/components/Formulario'
@@ -31,8 +31,8 @@ class Formulario extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarAreas()
-		this.props.listarCiudades()
+		this.props.listarAreasFuncion()
+		this.props.listarCiudadesFuncion()
 	}
 
 	renderFieldRadio({ input, name, label, type, value, meta: { touched, error, warning } }) {
@@ -64,7 +64,10 @@ class Formulario extends Component {
 								<Field name='sexo' type='radio' component={this.renderFieldRadio} value='femenino' label='Femenino'/>
 								<Field name='direccion' type='text' component={renderField} label='Dirección'/>
 								<Field name='celular' type='text' component={renderField} label='Celular'/>
-								<Field name='id_area' type='text' component={FieldSelectAreas} listaAreas={this.props.listaAreas} label='Area:'/>
+								<Field name='id_area' type='text' 
+									component={FieldSelectAreasContainer} 
+									listar={this.props.listarAreas} 
+									label='Area:'/>
 							</div>
 
 							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
@@ -72,7 +75,10 @@ class Formulario extends Component {
 								<Field name='apellidos' type='text' component={renderField} label='Apellidos'/>
 								<Field name='fechaNacimiento' type='date' component={renderField} label='Fecha de nacimiento'/>
 								<Field name='telefono' type='text' component={renderField} label='Telefono'/>
-								<Field name='id_ciudad' type='text' component={FieldSelectCiudadesContainer} listaCiudades={this.props.listaCiudades} label='Ciudad:'/>
+								<Field name='id_ciudad' type='text' 
+									component={FieldSelectCiudadesContainer} 
+									listar={this.props.listarCiudades} 
+									label='Ciudad:'/>
 							</div>
 						</div>
 
