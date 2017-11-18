@@ -19,7 +19,7 @@ import areaRoutes from './area/routes'
 
 import alergiaRoutes from './alergia/routes'
 
-import unidadParametroPreRoutes from './unidadParametroPre/routes'
+import preConsultaRoutes from './preconsulta/routes'
 
 import parametroPreConsultaRoutes from './parametroPreConsulta/routes'
 
@@ -195,12 +195,12 @@ export default (
 			{ ciudadRoutes }
 			{ areaRoutes }
 			{ alergiaRoutes }
-			{ unidadParametroPreRoutes }
 			{ parametroPreConsultaRoutes }
 			{ auditoriaModulo1Routes }
 			{ nivelRoutes }
 			{ diagnosticoRoutes }
 			{ sintomaRoutes }
+			{ preConsultaRoutes }
 
 				{/* Módulo farmacia. */}
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
