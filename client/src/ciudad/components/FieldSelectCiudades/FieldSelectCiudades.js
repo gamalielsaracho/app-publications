@@ -13,9 +13,9 @@ class FieldSelectCiudades extends Component {
 						<select {...input} name={name} className='form-control'>
 							<option value=''>Selecionar ciudad</option>
 							{
-								listaCiudades.ciudades.map((ciudad) => {
-									return <option key={ciudad.id_ciudad} value={ciudad.id_ciudad}>
-										{ ciudad.descripcion }
+								listaCiudades.ciudades.map((i) => {
+									return <option key={i.ciudad.id_ciudad} value={i.ciudad.id_ciudad}>
+										{ i.ciudad.descripcion }
 									</option>
 								})
 							}
