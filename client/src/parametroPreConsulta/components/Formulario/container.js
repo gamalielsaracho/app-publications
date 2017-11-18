@@ -8,8 +8,8 @@ import {
 } from '../../actions'
 
 import {
-	listarUnidadesParametroPre
-} from '../../../unidadParametroPre/actions'
+	listarUnidadesAnalisis
+} from '../../../unidadAnalisis/actions'
 
 
 import Formulario from './Formulario'
@@ -56,8 +56,9 @@ function mapStateToProps(state) {
 		editar: state.parametroPreConsulta.editar,
 
 		// Lista de las Unidades Para pasarle al componente
-		// FieldSelectUnidadesParametroPre.
-		listarUnidadesParametroPre: state.unidadParametroPre.listar
+		// FieldSelect.
+		listarUnidadesAnalisis: state.unidadAnalisis.listar
+
 	}
 }
 
@@ -79,8 +80,8 @@ function mapDispatchToProps(dispatch) {
 
 		// Acción para listar unidades de medidas
 		// y llamar el componentWillMount.
-		listarUnidadesParametroPreFuncion: () => {
-			dispatch(listarUnidadesParametroPre())
+		listarUnidadesAnalisisFuncion: () => {
+			dispatch(listarUnidadesAnalisis())
 		}
 	}
 }
