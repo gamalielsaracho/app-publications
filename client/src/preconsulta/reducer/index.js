@@ -38,7 +38,10 @@ import {
 
 	ELIMINAR_PRECONSULTA_REQUEST,
 	ELIMINAR_PRECONSULTA_EXITO,
-	ELIMINAR_PRECONSULTA_FALLO
+	ELIMINAR_PRECONSULTA_FALLO,
+
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -56,11 +59,28 @@ const INITIAL_STATE = {
 	listarPreConsultasFechaDia: { preConsultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, preConsulta: null, error: '' },
-	editar: { cargando: false, mensaje: '', error: '' }
+	editar: { cargando: false, mensaje: '', error: '' },
+
+	formularioFiltro: { abierto: false }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+
+		case ABRIR_FORMULARIO_FILTRO:
+			return Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: true
+				}
+			})
+
+		case CERRAR_FORMULARIO_FILTRO:
+			return Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: false
+				}
+			})
+
 
 		case ABRIR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA:
 			return Object.assign({}, state, {
@@ -175,7 +195,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_PRECONSULTAS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				formularioFiltro: INITIAL_STATE.formularioFiltro
 			})
 
 		case LISTAR_PRECONSULTAS_EXITO:
