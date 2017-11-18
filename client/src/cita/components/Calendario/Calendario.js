@@ -4,10 +4,20 @@ import ReactDOM from 'react-dom'
 import fullcalendar from 'fullcalendar'
 import moment from 'moment'
 
+import FormularioCitaContainer from '../Formulario'
+
 import {
 	alertaPrueba,
-	editarCita
+
+	editarCita,
+	eliminarCita,
+	abrirFormularioCrearCita,
+	abrirFormularioEditarCita
 } from '../../actions'
+
+import {
+	abrirFormularioCrearCiudad
+} from '../../../ciudad/actions'
 
 import configureStore from '../../../store'
 
@@ -68,20 +78,22 @@ class Calendario extends Component {
 				// let hInicio = date.format('h')
 				// let hFin = parseInt(date.format('mm')) + 30
 
-				store.dispatch(alertaPrueba('hola mundo :)'))
+				// store.dispatch(alertaPrueba('hola mundo :)'))
 
+				store.dispatch(abrirFormularioCrearCita())
+				// $('#myModal').modal()
 
-				$(".fechaNodo").val(date.format('YYYY-MM-DD'));
+				// $(".fechaNodo").val(date.format('YYYY-MM-DD'));
 
-				$(".horaInicioNodo").val(date.format('h:mm'));
-				$(".horaFinNodo").val(date.format('h:mm'));
+				// $(".horaInicioNodo").val(date.format('h:mm'));
+				// $(".horaFinNodo").val(date.format('h:mm'));
 
 				// this.props.s = date.format('YYYY-MM-DD') ? xD
 		        // alert('Date: ' + date.format('YYYY-MM-DD'));
 		        // alert('Date: ' + date.format());
-		        alert('Hora: ' + date.format('h:mm'));
+		        // alert('Hora: ' + date.format('h:mm'));
 
-		        alert(date)
+		        // alert(date)
 
 		        // alert('Resource ID: ' + resourceObj.id);
 		    },
@@ -108,6 +120,10 @@ class Calendario extends Component {
 				console.log(data)
 				store.dispatch(editarCita(data))
 		    },
+		    eventClick: (event, jsEvent, view) => {
+				// $('#myModal').modal()
+		    	alert('el id de la cita es: '+event.id_cita)
+		    },
 		    events: eventsList
 	  })
 	}
@@ -116,14 +132,36 @@ class Calendario extends Component {
 		this.updateEvents(this.props.citas)
 	}
 
-	// componentDidUpdate() {
-		// valoresFiltro
-		// console.log('prevProps HOLA')
-		// console.log(prevProps.valoresFiltro)
+	// componentDidUpdate(prevProps, prevState) {
+	// 	console.log('prevProps HOLA antes')
+	// 	console.log(prevProps.formulario)
 
-		// if(prevProps.valoresFiltro.id_personal) {
-			// this.updateEvents(this.props.citas)
-		// }
+	// 	console.log('prevState HOLA despues')
+	// 	console.log(this.props.formulario)
+
+	// 	if(prevProps.formulario !== this.props.formulario )  {
+	// 		this.updateEvents(this.props.citas)
+	// 	}
+	// }
+
+	// componentWillReceiveProps(next_props) {
+	// 	if(next_props.formulario !== this.props.formulario )  {
+	// 		return true
+	// 	} else {
+	// 		return false
+	// 	}
+	// }
+
+	// shouldComponentUpdate(nextProps) {
+	// 	let condition = (
+	// 		nextProps.formulario !== this.props.formulario
+	// 	)
+
+	// 	if(condition) {
+	// 		return true
+	// 	}else {
+	// 		return false
+	// 	}
 	// }
 
 	render() {

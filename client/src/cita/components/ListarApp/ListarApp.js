@@ -22,7 +22,7 @@ class ListarApp extends Component {
 			activeListarCitas = 'active'
 		}
 
-		return <div>
+		return <div>			
 			<ul className="nav nav-tabs no-print-data">
 			  <li className="nav-item nav-link" className={activeListarCitas}>
 			  	<Link to={`/dashboard/citas`}>Listar citas</Link>

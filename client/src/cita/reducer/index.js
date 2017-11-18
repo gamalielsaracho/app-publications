@@ -162,7 +162,7 @@ export default function (state = INITIAL_STATE, action) {
 				mostrar: { abierto: false }
 			})
 
-			console.log(state.formulario)
+			// console.log(state.formulario)
 
 			return state
 

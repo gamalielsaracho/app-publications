@@ -9,6 +9,8 @@ import jwtDecode from 'jwt-decode'
 
 import CalendarioCitaContainer from '../Calendario'
 
+import FormularioCitaContainer from '../Formulario'
+
 class CalendarioCitas extends Component {
 	constructor(props) {
 		super(props)
@@ -20,8 +22,7 @@ class CalendarioCitas extends Component {
 
 	// shouldComponentUpdate(nextProps) {
 	// 	let condition = (
-	// 		nextProps.citas !== this.props.citas ||
-	// 		nextProps.editar !== this.props.editar
+	// 		nextProps.formulario !== this.props.formulario
 	// 	)
 
 	// 	if(condition) {
@@ -30,6 +31,7 @@ class CalendarioCitas extends Component {
 	// 		return false
 	// 	}
 	// }
+
 
 	render() {
 		const { citas, cargando } = this.props.listar
@@ -48,6 +50,11 @@ class CalendarioCitas extends Component {
 				
 				<h2>El calendario aquí. Cool ! (solo para ventanilla y admin.)</h2>
 				
+				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+					<button onClick={ this.props.abrirFormularioCrearCita } className='btn btn-success'>Agregar</button>
+				</div>
+				
+				<FormularioCitaContainer/>
 				<br/>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-10 col-md-10 col-lg-10'>
