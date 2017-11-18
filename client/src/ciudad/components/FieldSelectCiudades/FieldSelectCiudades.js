@@ -2,9 +2,19 @@ import React, { Component } from 'react'
 
 class FieldSelectCiudades extends Component {
 	render() {
-		const { input, label, listaCiudades, type, meta: { touched, error, warning } } = this.props
+		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
-		if(listaCiudades.ciudades) {
+		if(listar.cargando) {
+			return <div className='form-group'>
+				<label htmlFor={label}>{label}</label>
+				
+				<div className='form-inline'>
+					<div className='form-group'>
+						<span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando ciudades...
+					</div>
+				</div>
+			</div>
+		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
@@ -13,7 +23,7 @@ class FieldSelectCiudades extends Component {
 						<select {...input} name={name} className='form-control'>
 							<option value=''>Selecionar ciudad</option>
 							{
-								listaCiudades.ciudades.map((i) => {
+								listar.ciudades.map((i) => {
 									return <option key={i.ciudad.id_ciudad} value={i.ciudad.id_ciudad}>
 										{ i.ciudad.descripcion }
 									</option>
@@ -29,8 +39,6 @@ class FieldSelectCiudades extends Component {
 			    	{ touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 }
