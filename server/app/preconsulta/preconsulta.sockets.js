@@ -90,8 +90,8 @@ export default (io) => {
 			socket.on('eliminar_preconsulta', (data) => {
 				let d = {
 					table1: 'consultas', 
-					table2: 'citas', 
-					table3: 'preconsultasparametros',
+					table2: 'preconsultasparametros', 
+					table3: null,
 					fieldPrimaryKey: 'id_preconsulta',
 					primaryKey: data.id_preconsulta
 				}
@@ -125,6 +125,19 @@ export default (io) => {
 
 			})
 
+
+			socket.on('mostrar_preconsulta_editar', (data) => {
+				Preconsulta.findByIdToUpdate(data, (err, preconsulta) => {
+					// console.log(preconsulta)
+					if(err) {
+						console.log(err)
+						socket.emit('mostrar_preconsulta_editar', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('mostrar_preconsulta_editar', preconsulta[0])
+				})
+			})
 
 			socket.on('editar_preconsulta', (data) => {
 				Preconsulta.update(data, (err) => {
