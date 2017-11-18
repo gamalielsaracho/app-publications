@@ -8,7 +8,7 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FieldSelectUnidadesParametroPreContainer from '../../../unidadParametroPre/components/FieldSelectUnidadesParametroPre'
+import FieldSelectUnidadesAnalisisContainer from '../../../unidadAnalisis/components/FieldSelectUnidadesAnalisis'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -28,7 +28,7 @@ class Formulario extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarUnidadesParametroPreFuncion()
+		this.props.listarUnidadesAnalisisFuncion()
 	}
 
 	enviarFormulario(formProps) {				
@@ -53,9 +53,9 @@ class Formulario extends Component {
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>
 						<Field name='descripcion' type='text' component={renderField} label='Descripción'/>
 								
-						<Field name='id_unidadParametroPre' type='text' 
-							listar={this.props.listarUnidadesParametroPre}
-							component={FieldSelectUnidadesParametroPreContainer} 
+						<Field name='id_unidadAnalisis' type='text' 
+							listar={this.props.listarUnidadesAnalisis}
+							component={FieldSelectUnidadesAnalisisContainer} 
 							label='Unidad'/>
 								
 						<Field name='valorNormal' type='text' component={renderField} label='Valor normal'/>
