@@ -37,6 +37,7 @@ class Listar extends Component {
 					return <tr key={unidad.id_unidadAnalisis}>
 			            <td>{ unidad.id_unidadAnalisis }</td>
 			            <td>{ unidad.descripcion }</td>
+			            <td>{ unidad.nombre }</td>
 			            <td>
 							<button type="button" onClick={() => { this.props.mostrarUnidadAnalisis(unidad.id_unidadAnalisis) }} className="btn btn-info btn-space">Mostrar</button>
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarUnidadAnalisis(unidad.id_unidadAnalisis) }} className="btn btn-warning btn-space">Editar</button>
@@ -59,7 +60,7 @@ class Listar extends Component {
 			return <Cargando/>
 		} else {
 				return <div>
-					<h1 className='text-center'>Unidades Análisis</h1>
+					<h1 className='text-center'>Unidades de Medidas</h1>
 					
 					<FormularioUnidadAnalisisContainer/>
 					<MostarUnidadAnalisisContainer/>
@@ -78,7 +79,9 @@ class Listar extends Component {
 							<thead>
 						    	<tr>
 						        	<th>Id</th>
+						        	<th>Descripción</th>
 						        	<th>Nombre</th>
+
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
