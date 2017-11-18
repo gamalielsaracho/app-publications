@@ -27,12 +27,12 @@ INSERT INTO `especialidades` (`id_especialidad`, `descripcion`)
 	(NULL, 'ginecología'), (NULL, 'medicina Interna');
 
 
--- UNIDADES DE MEDIDAS PARAMENTRO PRE-CONSULTA.
-INSERT INTO `unidadesparametropre` (`id_unidadParametroPre`, `descripcion`) 
-	VALUES (NULL, '%');
+-- UNIDADES DE MEDIDAS .
+INSERT INTO `unidadesanalisis` (`id_unidadAnalisis`, `nombre`, `descripcion`) 
+	VALUES (NULL, 'porcentaje', '%');
 
 -- PARAMETROS PRE-CONSULTA.
-INSERT INTO `parametrospreconsulta` (`id_parametroPreconsulta`, `descripcion`, `valorNormal`, `valorAlto`, `valorBajo`, `id_unidadParametroPre`) 
+INSERT INTO `parametrospreconsulta` (`id_parametroPreconsulta`, `descripcion`, `valorNormal`, `valorAlto`, `valorBajo`, `id_unidadAnalisis`) 
 	VALUES (NULL, 'temperatura', '43', '65', '12', '1'),
 		   (NULL, 'presión arterial', '321', '80', '42', '1');
 
