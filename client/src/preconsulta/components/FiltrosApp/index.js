@@ -1,0 +1,2 @@
+import FiltrosPreConsultasAppContainer from './container'
+export default FiltrosPreConsultasAppContainer
