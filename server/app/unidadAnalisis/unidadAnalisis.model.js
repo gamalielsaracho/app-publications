@@ -36,32 +36,48 @@ exports.verifyIfExist = (data, callback) => {
 	let q = `
 		SELECT * FROM unidadesAnalisis 
 			WHERE
-			descripcion = ?
+				nombre = ? AND
+				descripcion = ?
 	`
-	return connection.query(q, [data.descripcion.trim()], callback)
+
+	if(data.nombre) {
+		data.nombre = data.nombre.trim()
+	}
+
+	return connection.query(q, [data.nombre, data.descripcion.trim()], callback)
 
 	connection.end()
 }
 
+
 exports.create = (data, callback) => {
 	let q = `
-		INSERT INTO unidadesAnalisis (id_unidadAnalisis, descripcion)
-			VALUES (null, LOWER(?));
+		INSERT INTO unidadesAnalisis (id_unidadAnalisis, nombre, descripcion)
+			VALUES (null, LOWER(?), LOWER(?));
 	`
-	return connection.query(q, [data.descripcion.trim()], callback)
+	if(data.nombre) {
+		data.nombre = data.nombre.trim()
+	}
+
+	return connection.query(q, [ data.nombre, data.descripcion.trim()], callback)
 
 	connection.end()
 }
 
 exports.update = (data, callback) => {
 	let q = `
-		UPDATE unidadesAnalisis SET 
+		UPDATE unidadesAnalisis SET
+			nombre = LOWER(?),
 			descripcion = LOWER(?)
 			WHERE 
 				id_unidadAnalisis = ?
 	`
 
-	return connection.query(q, [data.descripcion.trim(), data.id_unidadAnalisis], callback)
+	if(data.nombre) {
+		data.nombre = data.nombre.trim()
+	}
+
+	return connection.query(q, [data.nombre, data.descripcion.trim(), data.id_unidadAnalisis], callback)
 
 	connection.end()
 }
