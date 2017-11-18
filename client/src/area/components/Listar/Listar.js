@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import FormularioContainer from '../Formulario'
+import FormularioAreaContainer from '../Formulario'
 import MostarContainer from '../Mostrar'
 
 class Listar extends Component {
@@ -60,7 +60,7 @@ class Listar extends Component {
 				return <div>
 					<h1 className='text-center'>Areas</h1>
 					
-					<FormularioContainer/>
+					<FormularioAreaContainer/>
 					<MostarContainer/>
 
 					<MensajeOerror error={error} mensaje={null}/>
