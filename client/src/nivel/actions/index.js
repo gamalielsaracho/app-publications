@@ -82,7 +82,7 @@ export function listarNiveles() {
 		var nivelSocket = io.connect('http://localhost:3000/nivel');
 
 		nivelSocket.on('listar_niveles', (data) => {
-
+			console.log(data)
 			if(data.error) {
 				dispatch({ type: LISTAR_NIVELES_FALLO, payload: data.error })
 			} else {

@@ -4,9 +4,11 @@ import FormularioNivelContainer from '../Formulario'
 
 class FieldSelectNiveles extends Component {
 	render() {
-		const { input, label, listaNiveles, type, meta: { touched, error, warning } } = this.props
+		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
-		if(listaNiveles.niveles) {
+		if(listar.cargando) {
+			return <p>Cargando tipos Doc...</p>
+		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 				
@@ -17,7 +19,7 @@ class FieldSelectNiveles extends Component {
 						<select {...input} name={name} className='form-control'>
 							<option value=''>Seleccionar nivel</option>
 							{
-								listaNiveles.niveles.map((nivel) => {
+								listar.niveles.map((nivel) => {
 									return <option key={nivel.id_nivel} value={nivel.id_nivel}>
 										{ nivel.descripcion }
 									</option>
@@ -33,8 +35,6 @@ class FieldSelectNiveles extends Component {
 			    	{ touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
 			</div>
-		} else {
-			return <span></span>
 		}
 	}
 }
