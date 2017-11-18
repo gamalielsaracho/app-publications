@@ -96,8 +96,8 @@ function mapStateToProps(state) {
 		editar: state.paciente.editar,
 
 		// Para listar en select, dentro del formulario. 
-    	listaAreas: state.area.listar,
-		listaCiudades: state.ciudad.listar
+    	listarAreas: state.area.listar,
+		listarCiudades: state.ciudad.listar
 	}
 }
 
@@ -117,10 +117,11 @@ function mapDispatchToProps(dispatch) {
 			dispatch(editarPaciente(datosFormulario))
 		},
 
-		listarAreas: () => {
+		// Select options.
+		listarAreasFuncion: () => {
 			dispatch(listarAreas())
 		},
-		listarCiudades: () => {
+		listarCiudadesFuncion: () => {
 			dispatch(listarCiudades())
 		}
 	}
