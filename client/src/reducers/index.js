@@ -21,7 +21,6 @@ import preConsultaReducer from '../preconsulta/reducer'
 import parametroPreConsultaReducer from '../parametroPreConsulta/reducer'
 
 import preConsultaParametroReducer from '../preConsultaParametro/reducer'
-import unidadParametroPreReducer from '../unidadParametroPre/reducer'
 
 import diagnosticoReducer from '../diagnostico/reducer'
 import consultaReducer from '../consulta/reducer'
@@ -93,7 +92,6 @@ const rootReducer = combineReducers({
 	preConsulta: preConsultaReducer,
 	parametroPreConsulta: parametroPreConsultaReducer,
 	preConsultaParametro: preConsultaParametroReducer,
-	unidadParametroPre: unidadParametroPreReducer,
 
 	diagnostico: diagnosticoReducer,
 	consulta: consultaReducer,
