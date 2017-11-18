@@ -18,6 +18,12 @@ const validate = (values) => {
    			errors.descripcion = 'Tienes que introducir una descripción.'
 	}
 
+	// if(!values.nombre) {
+	// 	errors.nombre = 'Tienes que introducir un nombre.'
+	// }else if (values.nombre.trim().length < 1) {
+ //   			errors.nombre = 'Tienes que introducir un nombre.'
+	// }
+
 	return errors
 }
 
