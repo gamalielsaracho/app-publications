@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
+
 
 import {
 	crearPreConsulta,
@@ -9,9 +10,14 @@ import {
 	listarPreConsultas
 } from '../../actions'
 
+// Select Options.
 import {
 	listarNiveles
 } from '../../../nivel/actions'
+
+import {
+	listarPacientes
+} from '../../../paciente/actions'
 
 import Formulario from './Formulario'
 
@@ -39,13 +45,22 @@ function mapStateToProps(state) {
 		crear: state.preConsulta.crear,
 		editar: state.preConsulta.editar,
 
+
+		// Obtenemos los valores de los inputs para pasarle
+		// el objeto valoresFiltro.
+		valoresFiltro: {
+			nroDocumento: selector(state, 'nroDocumento') || '',
+			id_tipoDocumento: selector(state, 'id_tipoDocumento') || '',
+			nombres: selector(state, 'nombres') || '',
+			apellidos: selector(state, 'apellidos') || ''
+    	},
+
 		// Para mostrar dentro del select option.
-    	listaNiveles: state.nivel.listar,
+    	listarNiveles: state.nivel.listar,
 
-    	datosToken: state.personal.usuarioEstado.datosToken
-
-    	// listaPreConsultas: state.preConsulta.listar
-	}
+    	// Pacientes.
+		listarPacientes: state.paciente.listar
+    }
 }
 
 
@@ -64,19 +79,22 @@ function mapDispatchToProps(dispatch) {
 			dispatch(editarPreConsulta(datosFormulario))
 		},
 
-		listarNiveles: () => {
+		// Select Options.
+		listarNivelesFuncion: () => {
 			dispatch(listarNiveles())
+		},
+		listarPacientesFuncion: () => {
+			dispatch(listarPacientes())
 		}
-
-		// listarPreConsultas: () => {
-		// 	dispatch(listarPreConsultas())
-		// }
 	}
 }
 
+
 const form = reduxForm({
-	form: 'FormularioRol',
+	form: 'FormularioPreConsulta',
 	validate
 })
+
+const selector = formValueSelector('FormularioPreConsulta')
 
 export default connect(mapStateToProps, mapDispatchToProps)(form(Formulario))
