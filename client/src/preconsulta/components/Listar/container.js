@@ -1,43 +1,40 @@
 import { connect } from 'react-redux'
 
 import {
-	listarRoles,
-	eliminarRole,
-	mostrarRol,
+	abrirFormularioCrearPreConsulta,
+	abrirFormularioEditarPreConsulta,
 
-	abrirFormularioCrearRol,
-	abrirFormularioEditarRol
+	eliminarPreConsulta
 } from '../../actions'
 
 import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		crear: state.rol.crear,
-		listar: state.rol.listar,
-		roles: state.rol.listar.roles
+		crear: state.preConsulta.crear,
+		listar: state.preConsulta.listar,
+		preConsultas: state.preConsulta.listar.preConsultas,
+
+
+		// Para hacer render del formulario únicamente si está abierto.
+		formulario: state.preConsulta.formulario
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarRoles: () => {
-			dispatch(listarRoles())
+		
+		abrirFormularioCrearPreConsulta: () => {
+			dispatch(abrirFormularioCrearPreConsulta())
 		},
-		eliminarRole: (idRol) => {
-			var r = confirm("Está seguro que desea eliminar el rol?");
+		abrirFormularioEditarPreConsulta: (idPreConsulta) => {
+			dispatch(abrirFormularioEditarPreConsulta(idPreConsulta))
+		},
+		eliminarPreConsulta: (idPreConsulta) => {
+			var r = confirm("Está seguro que desea eliminar ?");
 		    if (r == true) {
-				dispatch(eliminarRole(idRol))
+				dispatch(eliminarPreConsulta(idPreConsulta))
 		    }
-		},
-		mostrarRol: (idRol) => {
-			dispatch(mostrarRol(idRol))
-		},
-		abrirFormularioCrearRol: () => {
-			dispatch(abrirFormularioCrearRol())
-		},
-		abrirFormularioEditarRol: (idRol) => {
-			dispatch(abrirFormularioEditarRol(idRol))
 		}
 	}
 }
