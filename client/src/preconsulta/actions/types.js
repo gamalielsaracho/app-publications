@@ -48,3 +48,7 @@ export const ELIMINAR_PRECONSULTA_REQUEST = 'eliminair_preconsulta_request'
 export const ELIMINAR_PRECONSULTA_EXITO = 'eliminair_preconsulta_exito'
 export const ELIMINAR_PRECONSULTA_FALLO = 'eliminair_preconsulta_fallo'
 
+
+// FORMULARIO FILTRO.
+export const ABRIR_FORMULARIO_FILTRO = 'abrir_formulario_filtro'
+export const CERRAR_FORMULARIO_FILTRO = 'cerrar_formulario_filtro'
