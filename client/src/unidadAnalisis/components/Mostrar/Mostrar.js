@@ -16,7 +16,8 @@ class Mostrar extends Component {
 			return <Cargando/>
 		} else {
 			return <div>
-				<p><strong>Nombre:</strong> { unidadAnalisis.descripcion }</p>
+				<p><strong>Nombre:</strong> { unidadAnalisis.nombre }</p>
+				<p><strong>Descripción:</strong> { unidadAnalisis.descripcion }</p>
 			</div>
 		}
 	}
