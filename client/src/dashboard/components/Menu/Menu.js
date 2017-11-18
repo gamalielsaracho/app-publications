@@ -45,12 +45,13 @@ class Menu extends Component {
 			<li><Link to='/dashboard/areas'>Areas (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/alergias'>Alergias (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
-			<li><Link to='/dashboard/citas'>Citas (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/niveles'>Niveles (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/parametros-preconsulta'>Parametros pre-consulta (Adm) <span className="badge">8</span></Link></li>			
-			<li><Link to='/dashboard/unidades-parametro-preconsulta'>Unidades pre-consulta (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/sintomas'>Síntomas (Adm) <span className="badge">8</span></Link></li>			
+			
+			<li><Link to='/dashboard/pre-consultas'>Pre-consultas (Adm) <span className="badge">8</span></Link></li>			
+
 			<li><Link to='/dashboard/consultas'>Consultas (Adm) <span className="badge">8</span></Link></li>			
 
 
@@ -78,7 +79,7 @@ class Menu extends Component {
 
 			<h3>Laboratorio</h3>
 			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Adm) </Link></li>
-			<li><Link to='/dashboard/unidades-analisis'>Unidades (Adm) </Link></li>
+			<li><Link to='/dashboard/unidades-analisis'>Unidades Medidas (Adm) </Link></li>
 			<li><Link to='/dashboard/parametros-analisis'>Parametros (Adm) </Link></li>
 			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Adm) </Link></li>
 			
@@ -92,16 +93,13 @@ class Menu extends Component {
 			<li><Link to='/dashboard/departamentos'>Departamentos (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/areas'>Areas (Ven) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Ven) <span className="badge">8</span></Link></li>
-			<li><Link to='/dashboard/citas'>Citas (Ven) <span className="badge">8</span></Link></li>
 		</ul>
 	}
 
 	enfermeriaMenu() {
 		return <ul className="nav nav-sidebar">
 			<li><Link to='/dashboard/pacientes'>Pacientes (Enf) <span className="badge">8</span></Link></li>
-			<li><Link to='/dashboard/citas'>Citas (Enf) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/parametros-preconsulta'>Parametros pre-consulta (Enf) <span className="badge">8</span></Link></li>			
-			<li><Link to='/dashboard/unidades-parametro-preconsulta'>Unidades pre-consulta (Enf) <span className="badge">8</span></Link></li>			
 		</ul>
 	}
 
@@ -109,9 +107,9 @@ class Menu extends Component {
 		return <ul className="nav nav-sidebar">
 			<li><Link to='/dashboard/alergias'>Alergias (Med) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Med) <span className="badge">8</span></Link></li>
-			<li><Link to='/dashboard/citas'>Citas (Med) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Med) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/sintomas'>Síntomas (Med) <span className="badge">8</span></Link></li>			
+			<li><Link to='/dashboard/pre-consultas'>Pre-consultas (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/consultas'>Consultas (Med) <span className="badge">8</span></Link></li>			
 		</ul>
 	}
@@ -146,7 +144,7 @@ class Menu extends Component {
 	laboratorioMenu() {
 		return <ul className="nav nav-sidebar">
 			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Lap)</Link></li>
-			<li><Link to='/dashboard/unidades-analisis'>Unidades (Lap)</Link></li>
+			<li><Link to='/dashboard/unidades-analisis'>Unidades Medidas (Lap)</Link></li>
 			<li><Link to='/dashboard/parametros-analisis'>Parametros (Lap)</Link></li>
 			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Lap)</Link></li>
 			

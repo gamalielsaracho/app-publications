@@ -51,6 +51,7 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
 		case ABRIR_FORMULARIO_CREAR_CIUDAD:
+
 			return Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: true,
