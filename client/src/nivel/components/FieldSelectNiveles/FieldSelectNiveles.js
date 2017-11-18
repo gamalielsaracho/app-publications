@@ -3,11 +3,35 @@ import React, { Component } from 'react'
 import FormularioNivelContainer from '../Formulario'
 
 class FieldSelectNiveles extends Component {
+	constructor(props) {
+		super(props)
+		this.renderBtnAdd = this.renderBtnAdd.bind(this)
+	}
+
+	
+	renderBtnAdd(showBtnAdd) {
+		if(showBtnAdd) {
+			return <button type="button" onClick={this.props.abrirFormularioCrearNivel} className="btn btn-success btn-space btn-sm">
+				<span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo nivel
+			</button>
+		} else {
+			return <span></span>
+		}
+	}
+
 	render() {
-		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
+		const { input, label, showBtnAdd, listar, type, meta: { touched, error, warning } } = this.props
 
 		if(listar.cargando) {
-			return <p>Cargando tipos Doc...</p>
+			return <div className='form-group'>
+				<label htmlFor={label}>{label}</label>
+				
+				<div className='form-inline'>
+					<div className='form-group'>
+						<span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando niveles...
+					</div>
+				</div>
+			</div>
 		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
@@ -28,9 +52,8 @@ class FieldSelectNiveles extends Component {
 						</select>
 					</div>
 
-					<button type="button" onClick={this.props.abrirFormularioCrearNivel} className="btn btn-success btn-space btn-sm">
-						<span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo nivel
-					</button>
+					{ this.renderBtnAdd(showBtnAdd) }
+
 
 			    	{ touched && ((error && <div><br/><label className="text-danger">{ error }</label></div>)) }
 				</div>
