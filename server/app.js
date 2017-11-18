@@ -26,7 +26,6 @@ app.use(function(req, res, next) {
 routes(app)
 
 require('././app/pacienteAlergia/pacienteAlergia.sockets')(io)
-require('././app/cita/cita.sockets')(io)
 require('././app/preconsulta/preconsulta.sockets')(io)
 require('././app/nivel/nivel.sockets')(io)
 require('././app/parametroPreConsulta/parametroPreConsulta.sockets')(io)
@@ -39,8 +38,6 @@ require('././app/sintoma/sintoma.sockets')(io)
 
 // AJAX.
 // require('././app/preConsultaParametro/preConsultaParametro.sockets')(io)
-
-require('././app/unidadParametroPre/unidadParametroPre.sockets')(io)
 
 
 // Farmacia. VEEEER.!!
