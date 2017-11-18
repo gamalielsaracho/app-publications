@@ -39,7 +39,11 @@ import {
 	// Delete Rol.
 	ELIMINAR_PRECONSULTA_REQUEST,
 	ELIMINAR_PRECONSULTA_EXITO,
-	ELIMINAR_PRECONSULTA_FALLO
+	ELIMINAR_PRECONSULTA_FALLO,
+
+	// Formulario Filtro.
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO
 } from './types'
 
 import io from 'socket.io-client'
@@ -50,6 +54,18 @@ import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var preconsultaSocket = io.connect('http://localhost:3000/preconsulta');
+
+export function abrirFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: ABRIR_FORMULARIO_FILTRO })
+	}
+}
+
+export function cerrarFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_FORMULARIO_FILTRO })
+	}
+}
 
 
 export function abrirModalListarPreConsultasFechaDia() {
@@ -97,9 +113,9 @@ export function abrirFormularioEditarPreConsulta(idPreConsulta) {
 	return (dispatch) => {
 		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PRECONSULTA_REQUEST })
 
-		preconsultaSocket.emit('mostrar_preconsulta', { id_preconsulta: idPreConsulta })
+		preconsultaSocket.emit('mostrar_preconsulta_editar', { id_preconsulta: idPreConsulta })
 
-		preconsultaSocket.on('mostrar_preconsulta', (data) => {
+		preconsultaSocket.on('mostrar_preconsulta_editar', (data) => {
 			// console.log(data)
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PRECONSULTA_FALLO, payload: data.error })
