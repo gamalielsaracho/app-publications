@@ -4,10 +4,10 @@ exports.find = (callback) => {
 
 	let q = `
 		SELECT * FROM parametrosPreConsulta parametro,
-		unidadesParametroPre unidad 
+		unidadesanalisis unidad 
 
 		WHERE
-			parametro.id_unidadParametroPre = unidad.id_unidadParametroPre 
+			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis 
 	`
 
 	var options = {
@@ -24,9 +24,9 @@ exports.findById = (data, callback) => {
 
 	let q = `
 		SELECT * FROM parametrosPreConsulta parametro,
-			unidadesParametroPre unidad 
+			unidadesanalisis unidad 
 		WHERE
-			parametro.id_unidadParametroPre = unidad.id_unidadParametroPre AND
+			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			parametro.id_parametroPreconsulta = ?
 	`
 	var options = {
@@ -54,12 +54,12 @@ exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO parametrospreconsulta (
 			id_parametroPreconsulta, descripcion,
-			id_unidadParametroPre, valorNormal, valorAlto, valorBajo)
+			valorNormal, valorAlto, valorBajo, id_unidadAnalisis)
 			VALUES (null, LOWER(?), ?, ?, ?, ?);
 	`
-	return connection.query(q, [data.descripcion.trim(), 
-								data.id_unidadParametroPre, data.valorNormal.trim(),
-								data.valorAlto.trim(), data.valorBajo.trim()], callback)
+	return connection.query(q, [data.descripcion.trim(), data.valorNormal.trim(),
+								data.valorAlto.trim(), data.valorBajo.trim(),
+								data.id_unidadAnalisis], callback)
 
 	connection.end()
 }
@@ -84,17 +84,18 @@ exports.update = (data, callback) => {
 	let q = `
 		UPDATE parametrospreconsulta SET 
 			descripcion = LOWER(?),
-			id_unidadParametroPre = ?,
 			valorNormal = ?,
 			valorAlto = ?,
-			valorBajo = ?
+			valorBajo = ?,
+			id_unidadAnalisis = ?
 			WHERE 
 				id_parametroPreconsulta = ?
 	`
 
-	return connection.query(q, [data.descripcion.trim(), data.id_unidadParametroPre,
-								data.valorNormal.trim(), data.valorAlto.trim(),
-								data.valorBajo.trim(), data.id_parametroPreconsulta], callback)
+	return connection.query(q, [data.descripcion.trim(), data.valorNormal.trim(), 
+								data.valorAlto.trim(), data.valorBajo.trim(),
+								data.id_unidadAnalisis, 
+								data.id_parametroPreconsulta], callback)
 
 	connection.end()
 }
