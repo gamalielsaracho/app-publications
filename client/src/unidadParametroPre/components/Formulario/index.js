@@ -1,2 +1,0 @@
-import FormularioUnidadParametroPreContainer from './container'
-export default FormularioUnidadParametroPreContainer

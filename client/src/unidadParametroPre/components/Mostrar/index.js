@@ -1,2 +1,0 @@
-import MostarUnidadParametroPreContainer from './container'
-export default MostarUnidadParametroPreContainer

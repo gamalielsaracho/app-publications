@@ -1,2 +1,0 @@
-import ListarUnidadesParametroPreContainer from './container'
-export default ListarUnidadesParametroPreContainer

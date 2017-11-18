@@ -1,2 +1,0 @@
-import FieldSelectUnidadesParametroPreContainer from './container'
-export default FieldSelectUnidadesParametroPreContainer
