@@ -7,15 +7,11 @@ import removeAccents from 'remove-accents'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-// Formulario Modal para agregar solo una consulta por pre-consulta.
-import FormularioConsultaContainer from '../../../consulta/components/Formulario'
 
 class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderConsultas = this.renderConsultas.bind(this)
-		this.renderBtnAgregarConsultaByUrl = this.renderBtnAgregarConsultaByUrl.bind(this)
-
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
@@ -27,7 +23,7 @@ class Listar extends Component {
 		} else {
 			// 3 administración.
 			// 1 médico.
-			
+
 			if(idRol == 3) {
 				this.props.listarConsultas()
 			} else if (idRol == 1) {
@@ -42,21 +38,8 @@ class Listar extends Component {
 		}else {
 			return false
 		}
-	}	
-
-	renderBtnAgregarConsultaByUrl() {
-		let urlListarConsultasPorPaciente = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
-
-		if(this.props.pathname != urlListarConsultasPorPaciente) {
-			return <div className='row'>
-				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-					<button onClick={ this.props.abrirFormularioCrearConsulta } className='btn btn-success'>Agregar</button>
-				</div>
-			</div>
-		} else {
-			return <span></span>
-		}
 	}
+
 
 	renderConsultas(consultas) {
 		let urlMostrarConsulta
@@ -100,11 +83,7 @@ class Listar extends Component {
 					
 					<MensajeOerror error={error} mensaje={null}/>
 
-					{ this.renderBtnAgregarConsultaByUrl() }
 					<br/>
-
-					<FormularioConsultaContainer
-						idPreConsulta={this.props.urls.idPreConsulta}/>
 
 					{/* 
 						<FormularioConsultaContainer
