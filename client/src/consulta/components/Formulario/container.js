@@ -30,8 +30,11 @@ function mapStateToProps(state) {
 
 		// Para obtener el error al crear o editar.
 		crear: state.consulta.crear,
-		editar: state.consulta.editar
+		editar: state.consulta.editar,
 
+		// Obtenemos los datos de la pre-consulta para sacar id_paciente
+		// y pasarlo al formProps
+		preConsulta: state.preConsulta.mostrar.preConsulta
 	}
 }
 
