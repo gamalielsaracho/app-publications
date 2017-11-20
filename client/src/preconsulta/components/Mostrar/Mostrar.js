@@ -27,11 +27,11 @@ class Mostrar extends Component {
 	}
 
 	formularioPreConsultaParametroByRol() {
-		let rol = this.personalLocalSt.id_rol
+		let idRol = this.personalLocalSt.id_rol
 		
 		// 2 enfermeria.
 		// 3 administración.
-		if((rol == 2) || (rol == 4)) {
+		if((idRol == 2) || (idRol == 3)) {
 			return <FormularioPreConsultaParametroContainer
 						idPreConsulta={this.props.idPreConsulta}/>
 		} else {
@@ -62,11 +62,11 @@ class Mostrar extends Component {
 	}
 
 	render() {
-
 		const { cargando, preConsulta, abierto } = this.props.mostrar
 
 		let error = this.props.mostrar.error ? this.props.mostrar.error :
 			this.props.eliminar.error
+
 		// console.log(this.props.mostrar)
 		
 		return <div>
