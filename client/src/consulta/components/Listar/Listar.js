@@ -7,22 +7,30 @@ import removeAccents from 'remove-accents'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+// Formulario Modal para agregar solo una consulta por pre-consulta.
+import FormularioConsultaContainer from '../../../consulta/components/Formulario'
+
 class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderConsultas = this.renderConsultas.bind(this)
+		this.renderBtnAgregarConsultaByUrl = this.renderBtnAgregarConsultaByUrl.bind(this)
+
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
+		let idRol = this.personalLocalSt.id_rol
+
 		if(this.props.urls.idPaciente) {
 			this.props.listarConsultasPaciente(this.props.urls.idPaciente)
 		} else {
-			let rol = removeAccents(this.personalLocalSt.rol)
-
-			if(rol == 'administracion') {
+			// 3 administración.
+			// 1 médico.
+			
+			if(idRol == 3) {
 				this.props.listarConsultas()
-			} else if (rol == 'medico') {
+			} else if (idRol == 1) {
 				this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
 			}
 		}
@@ -36,9 +44,24 @@ class Listar extends Component {
 		}
 	}	
 
+	renderBtnAgregarConsultaByUrl() {
+		let urlListarConsultasPorPaciente = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
+
+		if(this.props.pathname != urlListarConsultasPorPaciente) {
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+					<button onClick={ this.props.abrirFormularioCrearConsulta } className='btn btn-success'>Agregar</button>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
 	renderConsultas(consultas) {
 		let urlMostrarConsulta
 
+		// Para cuando esté dentro del historial clínico.
 		if(this.props.urls.idPaciente) {
 			urlMostrarConsulta = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
 		} else {
@@ -77,7 +100,17 @@ class Listar extends Component {
 					
 					<MensajeOerror error={error} mensaje={null}/>
 
+					{ this.renderBtnAgregarConsultaByUrl() }
 					<br/>
+
+					<FormularioConsultaContainer
+						idPreConsulta={this.props.urls.idPreConsulta}/>
+
+					{/* 
+						<FormularioConsultaContainer
+							idPreConsulta={this.props.urls.idPreConsulta}
+							datosCita={this.props.datosCita}/>
+					*/}
 
 					<div className='table-responsive'>
 						<table className='table table-striped'>
