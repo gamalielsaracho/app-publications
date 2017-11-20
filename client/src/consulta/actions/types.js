@@ -40,3 +40,10 @@ export const ELIMINAR_CONSULTA_EXITO = 'eliminair_consulta_exito'
 export const ELIMINAR_CONSULTA_FALLO = 'eliminair_consulta_fallo'
 
 
+// TRAER LA CONSULTA QUE CREÓ EL MÉDICO LOGUEADO Y
+// QUE ESTÁ UTILIZADO EL ID_PREPRECONSULTA CUANDO ENTRA A VER UNA PRE-CONSULTA.
+export const MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST = 'mostrar_consulta_por_idpersonal_idpreconsulta_request'
+export const MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO = 'mostrar_consulta_por_idpersonal_idpreconsulta_exito'
+export const MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO = 'mostrar_consulta_por_idpersonal_idpreconsulta_fallo'
+
+
