@@ -14,6 +14,7 @@ class Mostrar extends Component {
 		super(props)
 		this.renderConsulta = this.renderConsulta.bind(this)
 		this.renderDatosPaciente = this.renderDatosPaciente.bind(this)
+		this.renderDatosPreConsulta = this.renderDatosPreConsulta.bind(this)
 	}
 
 	componentWillMount() {
@@ -24,7 +25,7 @@ class Mostrar extends Component {
 	}
 
 	renderDatosPaciente(dato) {
-		if(this.props.urls.idPaciente) {
+		if(this.props.urls.idPreConsulta || this.props.urls.idPaciente) {
 			return <span></span>
 		} else {
 			return <div>
@@ -41,6 +42,26 @@ class Mostrar extends Component {
 					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 						<p><strong>Sexo:</strong>{ dato.paciente.sexo }</p>
 					</div>
+				</div>
+			</div>
+		}
+	}
+
+	renderDatosPreConsulta(dato) {
+		if(this.props.urls.idPreConsulta) {
+			return <span></span>
+		} else {
+			return <div>
+				<h4 className='text-center'>Pre-consulta</h4>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+						<p><strong>Enfermero/a:</strong>{ dato.personalEnfermeria.nombres+' '+dato.personalEnfermeria.apellidos }</p>
+						<p><strong>Fecha:</strong> { formatDate(dato.preconsulta.fecha) }</p>
+						<p><strong>Nivel:</strong> { dato.nivel.descripcion }</p>				
+					</div>
+				</div>
+				<div className=''>
+					<ListarPreConsultaParametrosContainer idPreConsulta={dato.preconsulta.id_preconsulta}/>
 				</div>
 			</div>
 		}
@@ -66,17 +87,7 @@ class Mostrar extends Component {
 
 					{ this.renderDatosPaciente(dato) }
 
-					<h4 className='text-center'>Pre-consulta</h4>
-					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							<p><strong>Enfermero/a:</strong>{ dato.personalEnfermeria.nombres+' '+dato.personalEnfermeria.apellidos }</p>
-							<p><strong>Fecha:</strong> { formatDate(dato.preconsulta.fecha) }</p>
-							<p><strong>Nivel:</strong> { dato.nivel.descripcion }</p>				
-						</div>
-					</div>
-					<div className=''>
-						<ListarPreConsultaParametrosContainer idPreConsulta={dato.preconsulta.id_preconsulta}/>
-					</div>
+					{ this.renderDatosPreConsulta(dato) }
 
 				</div>
 		}
