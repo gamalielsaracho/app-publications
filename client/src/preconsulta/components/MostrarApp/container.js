@@ -2,10 +2,8 @@ import { connect } from 'react-redux'
 
 import MostrarApp from './MostrarApp'
 
-import {
-	listarConsultas,
-	abrirFormularioCrearConsulta
-} from '../../../consulta/actions'
+// import {
+// } from '../../actions'
 
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
@@ -13,26 +11,14 @@ function mapStateToProps(state, ownProps) {
 		// Obtenemos todos los parametros de la url.
 		urls: ownProps.params,
 
-		// obtenemos los datos de la cita que se está mostrando
-		// para pasarle a FormularioConsultaContainer con el objetivo de
-		// obtener id_paciente y pasarle a el objecto formProps del 
-		// formulario.
-		datosCita: state.cita.mostrar,
-
-		// Obtener las consultas para filtarla por id_preConsulta y id_personal
-		// para mostrarlo dentro del menu y pasarle el id_consulta.
-		listarConsultas: state.consulta.listar
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarConsultasFuncion: () => {
-			dispatch(listarConsultas())
-		},
-		abrirFormularioCrearConsulta: () => {
-			dispatch(abrirFormularioCrearConsulta())
-		}
+		
 	}
 }
 
