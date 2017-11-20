@@ -7,9 +7,7 @@ import {
 	mostrarConsulta
 } from '../../actions'
 
-import {
-	abrirFormularioCrearConsulta
-} from '../../../consulta/actions'
+
 
 import Listar from './Listar'
 
@@ -41,11 +39,6 @@ function mapDispatchToProps(dispatch) {
 		},
 		listarConsultasMedico: (idPersonal) => {
 			dispatch(listarConsultasMedico(idPersonal))
-		},
-
-
-		abrirFormularioCrearConsulta: () => {
-			dispatch(abrirFormularioCrearConsulta())
 		}
 	}
 }
