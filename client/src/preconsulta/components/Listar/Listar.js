@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import moment from 'moment'
 
@@ -73,7 +74,12 @@ class Listar extends Component {
 			            </td>
 
 			            <td>
-							<button type="button" onClick={() => { this.props.mostrarRol(i.preconsulta.id_preconsulta) }} className="btn btn-info btn-space">Mostrar</button>
+							<Link to={`/dashboard/pre-consultas/${i.preconsulta.id_preconsulta}`}>
+								<button type="button" className="btn btn-info btn-space">
+									Mostrar
+								</button>
+							</Link>
+							
 							<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-warning btn-space">Editar</button>
 							<button type="button" onClick={() => { this.props.eliminarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
