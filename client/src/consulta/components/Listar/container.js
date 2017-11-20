@@ -7,6 +7,10 @@ import {
 	mostrarConsulta
 } from '../../actions'
 
+import {
+	abrirFormularioCrearConsulta
+} from '../../../consulta/actions'
+
 import Listar from './Listar'
 
 function mapStateToProps(state, ownProps) {
@@ -17,7 +21,10 @@ function mapStateToProps(state, ownProps) {
 		consultas: state.consulta.listar.consultas,
 
 		// guardamos los parametros dentro del objeto urls.
-		urls: ownProps.params
+		urls: ownProps.params,
+
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname
 	}
 }
 
@@ -34,6 +41,11 @@ function mapDispatchToProps(dispatch) {
 		},
 		listarConsultasMedico: (idPersonal) => {
 			dispatch(listarConsultasMedico(idPersonal))
+		},
+
+
+		abrirFormularioCrearConsulta: () => {
+			dispatch(abrirFormularioCrearConsulta())
 		}
 	}
 }
