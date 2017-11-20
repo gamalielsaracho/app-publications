@@ -27,7 +27,9 @@ class MostrarApp extends Component {
 		let idPersonal = this.personalLocalSt.id_personal
 
 		if(rol == 'administracion' || rol == 'medico') {
-			return <button type="button" onClick={ () => { this.props.abrirFormularioCrearAnalisisSolicitado() } } className="text-center btn btn-success btn-space">Crear Solicitud para laboratorio</button>
+			return <button type="button" onClick={ () => { this.props.abrirFormularioCrearAnalisisSolicitado() } } className="text-center btn btn-success btn-space">
+				Crear Solicitud para laboratorio
+			</button>
 		} else {
 			return <span></span>
 		}
@@ -88,9 +90,12 @@ class MostrarApp extends Component {
 			urlListarDiagnosticos = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/diagnosticos`
 			urlMostrarSolicitudLaboratorio = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
 		} else {
-			urlListarSintomas = `/dashboard/consultas/${this.props.urls.idConsulta}/sintomas`
-			urlListarDiagnosticos = `/dashboard/consultas/${this.props.urls.idConsulta}/diagnosticos`
-			urlMostrarSolicitudLaboratorio = `/dashboard/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
+
+			// if(this.props.urls.idPreCosulta) {
+				urlListarSintomas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/sintomas`
+				urlListarDiagnosticos = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/diagnosticos`
+				urlMostrarSolicitudLaboratorio = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/solicitud-laboratorio`
+			// }
 		}
 
 		
