@@ -36,7 +36,12 @@ import {
 	// Delete Rol.
 	ELIMINAR_CONSULTA_REQUEST,
 	ELIMINAR_CONSULTA_EXITO,
-	ELIMINAR_CONSULTA_FALLO
+	ELIMINAR_CONSULTA_FALLO,
+
+
+	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST,
+	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO,
+	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO
 } from './types'
 
 import io from 'socket.io-client'
@@ -117,6 +122,31 @@ export function mostrarEstadistica2() {
 	}
 }
 
+export function mostrarConsultaPorIdPersonalYidPreConsulta(idPersonal, idPreConsulta) {
+	return (dispatch) => {
+
+		dispatch({ type: MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST })
+
+		var consultaSocket = io.connect('http://localhost:3000/consulta');
+
+		consultaSocket.emit('mostrar_consulta_idPesonalYidPreConsulta', { 
+			id_personal: idPersonal,
+			id_preconsulta: idPreConsulta 
+		})
+
+		consultaSocket.on('mostrar_consulta_idPesonalYidPreConsulta', (data) => {
+			console.log(data)
+
+			if(data.error) {
+				dispatch({ type: MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+
 export function listarConsultas() {
 	return (dispatch) => {
 
@@ -192,12 +222,11 @@ export function crearConsulta(datosFormulario) {
 				dispatch({ type: CREAR_CONSULTA_FALLO, payload: data.error })
 			} else {
 				let d = datosFormulario
-				console.log()
+
 				dispatch({ type: CREAR_CONSULTA_EXITO, payload: data })
 				dispatch(reset('FormularioConsulta'))
 
-
-				browserHistory.push(`/dashboard/citas/${d.id_cita}/preconsulta/${d.id_preconsulta}/consulta/${data.idConsultaInsertada}`)
+				browserHistory.push(`/dashboard/pre-consultas/${d.id_preconsulta}/consulta/${data.idConsultaInsertada}`)
 			}
 		})
 	
