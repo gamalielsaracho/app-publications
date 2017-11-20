@@ -1,5 +1,6 @@
 import connection from '../../config/connection'
 
+import getHour from '../useFul/getHour'
 
 exports.findOnlyDiagnosticos = (callback) => {
 
@@ -176,6 +177,28 @@ exports.findListByIdPaciente = (idPaciente, callback) => {
 	connection.end()
 }
 
+// Obtener una la consulta que creó el médico
+// y que usó la pre-consulta para esa consulta.
+exports.findByIdPesonalAndIdPreConsulta = (data, callback) => {
+	let q = `
+		SELECT * 
+			FROM
+				consultas consulta
+			WHERE
+				consulta.id_personal = ? AND
+				consulta.id_preconsulta = ?
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: false
+	}
+
+	return connection.query(options, [data.id_personal, data.id_preconsulta], callback)
+
+	connection.end()
+}
+
 exports.findById = (data, callback) => {
 	let q = `
 		SELECT * 
@@ -223,20 +246,16 @@ exports.create = (data, callback) => {
 	console.log(data)
 	let q = `
 		INSERT INTO consultas (
-			id_consulta, fecha, fechaProximaConsulta, 
-			id_personal, id_preconsulta, observacionDiagnostico, id_paciente)
+			id_consulta, fecha, hora, fechaProximaConsulta, 
+			id_personal, id_preconsulta, id_paciente)
 
-		VALUES (null, ?, ?, ?, ?, LOWER(?), ?)
+		VALUES (null, now(), ?, ?, ?, ?, ?)
 	`
-	if(data.observacionDiagnostico) {
-		data.observacionDiagnostico.trim()
-	}
 
-	return connection.query(q, [ data.fecha,
+	return connection.query(q, [ getHour(),
 								 data.fechaProximaConsulta,
 								 data.id_personal,
 								 data.id_preconsulta,
-								 data.observacionDiagnostico,
 								 data.id_paciente ], callback)
 
 	connection.end()
@@ -263,17 +282,11 @@ exports.update = (data, callback) => {
 	let q = `
 		UPDATE consultas SET 
 			fechaProximaConsulta = ?,
-			observacionDiagnostico = ?
 		WHERE
 			id_consulta = ?
 	`
 
-	if(data.observacionDiagnostico) {
-		data.observacionDiagnostico.trim()
-	}
-
 	return connection.query(q, [ data.fechaProximaConsulta,
-								 data.observacionDiagnostico,
 								 data.id_consulta ], callback)
 
 	connection.end()
