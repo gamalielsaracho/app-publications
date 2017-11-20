@@ -33,7 +33,12 @@ import {
 
 	ELIMINAR_CONSULTA_REQUEST,
 	ELIMINAR_CONSULTA_EXITO,
-	ELIMINAR_CONSULTA_FALLO
+	ELIMINAR_CONSULTA_FALLO,
+
+	// 
+	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST,
+	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO,
+	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -52,11 +57,37 @@ const INITIAL_STATE = {
 	mostrarValoresEstadisticos: { 
 		cargando: false, valoresEstadisticos: null, error: ''
 	},
-	editar: { cargando: false, mensaje: '', error: '' }
+	editar: { cargando: false, mensaje: '', error: '' },
+	mostrarPorIdPersonalYidPreConsulta: {
+		cargando: false, consulta: null, error: ''
+	}
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		case MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST:
+			return Object.assign({}, state, {
+				mostrarPorIdPersonalYidPreConsulta: { cargando: true }
+			})
+
+		case MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO:
+			return Object.assign({}, state, {
+				mostrarPorIdPersonalYidPreConsulta: {
+					cargando: false,
+					consulta: action.payload
+				}
+			})
+
+		case MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO:
+			return Object.assign({}, state, {
+				mostrarPorIdPersonalYidPreConsulta: {
+					cargando: false,
+					consulta: null,
+					error: action.payload
+				}
+			})
+
+
 		case ABRIR_FORMULARIO_CREAR_CONSULTA:
 			return Object.assign({}, state, {
 				formulario: {
@@ -71,6 +102,7 @@ export default function (state = INITIAL_STATE, action) {
 				editar: INITIAL_STATE.editar,
 				eliminar: INITIAL_STATE.eliminar
 			})
+
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_REQUEST:
 			return Object.assign({}, state, {
@@ -124,6 +156,7 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
+
 		// CREATE consulta.
 		case CREAR_CONSULTA_REQUEST:
 			return state = Object.assign({}, state, {
@@ -148,6 +181,7 @@ export default function (state = INITIAL_STATE, action) {
 				crear: { error: action.payload }
 			})
 
+
 		// LISTAR.
 		case LISTAR_CONSULTAS_REQUEST:
 			return Object.assign({}, state, {
@@ -160,7 +194,6 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				listar: { consultas: action.payload.consultas, cargando: false, error: '' }
 			})
-
 
 		case LISTAR_CONSULTAS_FALLO:
 			return Object.assign({}, state, {
@@ -190,6 +223,7 @@ export default function (state = INITIAL_STATE, action) {
 					error: action.payload
 				}
 			})
+
 
 		// MOSTRAR.
 		case MOSTRAR_CONSULTA_REQUEST:
