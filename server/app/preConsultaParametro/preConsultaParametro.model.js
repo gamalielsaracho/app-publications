@@ -22,11 +22,11 @@ exports.find = (idPreconsulta, callback) => {
 			preconsultaParametro.observaciones
 		FROM  
 			parametrosPreconsulta parametro,
-			unidadesParametroPre unidad,
+			unidadesanalisis unidad,
 			preconsultasParametros preconsultaParametro 
 		WHERE
 			preconsultaParametro.id_parametroPreconsulta = parametro.id_parametroPreconsulta AND
-			parametro.id_unidadParametroPre = unidad.id_unidadParametroPre AND
+			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			preconsultaParametro.id_preconsulta = ?
 
 	`
@@ -59,11 +59,11 @@ exports.findById = (data, callback) => {
 			preconsultaParametro.observaciones
 		FROM  
 			parametrosPreconsulta parametro, 
-			unidadesParametroPre unidad,
+			unidadesanalisis unidad,
 			preconsultasParametros preconsultaParametro 
 		WHERE
 			preconsultaParametro.id_parametroPreconsulta = parametro.id_parametroPreconsulta AND
-			parametro.id_unidadParametroPre = unidad.id_unidadParametroPre AND
+			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			preconsultaParametro.id_preconsultaParametro = ?
 
 	`
