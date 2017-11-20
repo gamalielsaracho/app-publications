@@ -26,6 +26,44 @@ export default (io) => {
 		consultas()
 
 
+		function consultasPorMedico(idPersonal) {
+			// Listar todas las consultas que realizó un médico/a.
+			// para mostrarlo al mismo.
+			Consulta.findListByIdPersonal(idPersonal, (err, consultas) => {
+				if(err) {
+					console.log(err)
+							
+					socket.emit('listar_consultas_medico', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+					return
+				}
+
+				socket.emit('listar_consultas_medico', { consultas: consultas })
+			})
+		}
+
+		socket.on('listar_consultas_medico', (data) => {
+			consultasPorMedico(data.id_personal)
+		})
+		
+		// Action.
+		function mostrarConsultaIdPesonalYidPreConsulta(data) {
+			Consulta.findByIdPesonalAndIdPreConsulta(data, (err, consulta) => {
+				if(err) {
+					console.log(err)
+					socket.emit('mostrar_consulta_idPesonalYidPreConsulta', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+					return
+				}
+
+				consultaNsp.emit('mostrar_consulta_idPesonalYidPreConsulta', consulta[0])
+			})
+		}
+		// ..
+
+		socket.on('mostrar_consulta_idPesonalYidPreConsulta', (data) => {
+			mostrarConsultaIdPesonalYidPreConsulta(data)
+		})
+
+
 		// Estadística 1.
 		Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
 				// console.log(diagnosticos)
@@ -113,21 +151,6 @@ export default (io) => {
 		})	
 
 
-		// Listar todas las consultas que realizó un médico/a.
-		// para mostrarlo al mismo.
-		socket.on('listar_consultas_medico', (data) => {
-			Consulta.findListByIdPersonal(data.id_personal, (err, consultas) => {
-				if(err) {
-					console.log(err)
-						
-					socket.emit('listar_consultas_medico', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-					return
-				}
-
-				socket.emit('listar_consultas_medico', { consultas: consultas })
-			})
-
-		})
 
 		// Para el historial clinico del paciente.
 		socket.on('listar_consultas_paciente', (data) => {
@@ -168,6 +191,7 @@ export default (io) => {
 						})
 
 						consultas()
+						mostrarConsultaIdPesonalYidPreConsulta(data)
 					})
 				// }
 			// })
