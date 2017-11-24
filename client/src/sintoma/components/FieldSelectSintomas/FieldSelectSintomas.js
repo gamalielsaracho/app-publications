@@ -7,7 +7,15 @@ class FieldSelectSintomas extends Component {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
 		if(listar.cargando) {
-			return <p>Cargando síntomas..</p>
+			return <div className='form-group'>
+				<label htmlFor={label}>{label}</label>
+				
+				<div className='form-inline'>
+					<div className='form-group'>
+						<span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando sintomas...
+					</div>
+				</div>
+			</div>
 		} else {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
