@@ -11,6 +11,10 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+// NIVEL.
+import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
+
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -31,11 +35,14 @@ class Formulario extends Component {
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
+	componentWillMount() {
+		this.props.listarNivelesFuncion()
+	}
 
 	enviarFormulario(formProps) {
 		if(this.props.editarContenido) {
 			console.log(formProps)
-			// this.props.editarConsulta(formProps)
+			this.props.editarConsulta(formProps)
 		} else {
 			// LAS CONSULTAS SOLO SE PODRÁN CREAR
 			// ÚNICAMENTE SI SE ESTÁ PARADO DENTRO DE UNA PRE-CONSULTA
@@ -83,6 +90,14 @@ class Formulario extends Component {
 						<div className='row'>
 							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 								<Field name='fechaProximaConsulta' type='date' component={renderField} label='Fecha próxima consulta'/>
+							</div>
+
+							<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+								<Field name='id_nivel' type='text' 
+									component={FieldSelectNivelesContainer}
+									listar={this.props.listarNiveles} 
+									label='Nivel:'
+									showBtnAdd={true}/>
 							</div>
 						</div>
 								
