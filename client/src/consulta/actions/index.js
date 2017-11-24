@@ -39,18 +39,25 @@ import {
 	ELIMINAR_CONSULTA_FALLO,
 
 
-	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST,
-	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO,
-	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO
+	LIMPIAR_MENSAJE_ERROR_CONSULTA
 } from './types'
 
 import io from 'socket.io-client'
 import { formatDate } from '../../globalActions'
 
+import moment from 'moment'
+
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var consultaSocket = io.connect('http://localhost:3000/consulta');
+
+export function limpiarMensajeErrorConsulta() {
+	return (dispatch) => {
+		dispatch({ type: LIMPIAR_MENSAJE_ERROR_CONSULTA })
+	}
+}
+
 
 export function abrirFormularioCrearConsulta() {
 	return (dispatch) => {
@@ -72,7 +79,7 @@ export function abrirFormularioEditarConsulta(idConsulta) {
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_CONSULTA_FALLO, payload: data.error })
 			} else {
-				data.fechaProximaConsulta = formatDate(data.fechaProximaConsulta)
+				data.fechaProximaConsulta = moment(data.fechaProximaConsulta).format('YYYY-MM-DD')
 
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_CONSULTA_EXITO, payload: data })
 			}
@@ -122,25 +129,24 @@ export function mostrarEstadistica2() {
 	}
 }
 
-export function mostrarConsultaPorIdPersonalYidPreConsulta(idPersonal, idPreConsulta) {
+export function listarConsultasPreConsulta(idPreConsulta) {
 	return (dispatch) => {
 
-		dispatch({ type: MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST })
+		dispatch({ type: LISTAR_CONSULTAS_REQUEST })
 
-		var consultaSocket = io.connect('http://localhost:3000/consulta');
+		// var consultaSocket = io.connect('http://localhost:3000/consulta');
 
-		consultaSocket.emit('mostrar_consulta_idPesonalYidPreConsulta', { 
-			id_personal: idPersonal,
-			id_preconsulta: idPreConsulta 
+		consultaSocket.emit('listar_consultas_preConsulta', { 
+			id_preconsulta: idPreConsulta
 		})
 
-		consultaSocket.on('mostrar_consulta_idPesonalYidPreConsulta', (data) => {
+		consultaSocket.on('listar_consultas_preConsulta', (data) => {
 			console.log(data)
 
 			if(data.error) {
-				dispatch({ type: MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO, payload: data.error })
+				dispatch({ type: LISTAR_CONSULTAS_FALLO, payload: data.error })
 			} else {
-				dispatch({ type: MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO, payload: data })
+				dispatch({ type: LISTAR_CONSULTAS_EXITO, payload: data })
 			}
 		})
 	}
@@ -226,7 +232,7 @@ export function crearConsulta(datosFormulario) {
 				dispatch({ type: CREAR_CONSULTA_EXITO, payload: data })
 				dispatch(reset('FormularioConsulta'))
 
-				browserHistory.push(`/dashboard/pre-consultas/${d.id_preconsulta}/consulta/${data.idConsultaInsertada}`)
+				// browserHistory.push(`/dashboard/pre-consultas/${d.id_preconsulta}/consulta/${data.idConsultaInsertada}`)
 			}
 		})
 	
