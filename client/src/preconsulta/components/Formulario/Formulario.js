@@ -10,10 +10,6 @@ import Cargando from '../../../app/components/Cargando'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-// NIVEL.
-import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
-
-
 // Paciente.
 import FieldSelectPacientesContainer from '../../../paciente/components/FieldSelectPacientes'
 
@@ -32,11 +28,12 @@ class Formulario extends Component {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
 		this.renderFormulario = this.renderFormulario.bind(this)
+		this.renderFieldTextArea = this.renderFieldTextArea.bind(this)
+
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
-		this.props.listarNivelesFuncion()
 		this.props.listarPacientesFuncion()
 	}
 
@@ -52,6 +49,18 @@ class Formulario extends Component {
 		} else {
 			this.props.crearPreConsulta(formProps)
 		}
+	}
+
+	renderFieldTextArea({ input, label, type, meta: { touched, error, warning } }) {
+		return <div>
+			<div className="form-group">
+			 	<label htmlFor={label}>{label}</label>
+		    	<textarea className="form-control" {...input} placeholder={label} type={type}>
+		    	</textarea>
+			</div>
+
+		    { touched && ((error && <label className="text-danger">{ error }</label>)) }
+		</div>
 	}
 
 	renderFormulario(cargando) {
@@ -88,15 +97,9 @@ class Formulario extends Component {
 						</div>
 
 						<div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-							<div className='row'>
-								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
-									<Field name='id_nivel' type='text' 
-										component={FieldSelectNivelesContainer}
-										listar={this.props.listarNiveles} 
-										label='Nivel:'
-										showBtnAdd={false}/>
-								</div>
-							</div>
+							<Field name='observaciones' type='textArea' 
+								component={this.renderFieldTextArea}
+								label='Observaciones:'/>
 						</div>
 					</div>
 
