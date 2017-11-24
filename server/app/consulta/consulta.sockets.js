@@ -45,22 +45,24 @@ export default (io) => {
 			consultasPorMedico(data.id_personal)
 		})
 		
-		// Action.
-		function mostrarConsultaIdPesonalYidPreConsulta(data) {
-			Consulta.findByIdPesonalAndIdPreConsulta(data, (err, consulta) => {
+		
+		// ..
+		function consultasPorPreConsulta(idPreConsulta) {
+			Consulta.findListByIdPreConsulta(idPreConsulta, (err, consultas) => {
 				if(err) {
 					console.log(err)
-					socket.emit('mostrar_consulta_idPesonalYidPreConsulta', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+					socket.emit('listar_consultas_preConsulta', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 					return
 				}
 
-				consultaNsp.emit('mostrar_consulta_idPesonalYidPreConsulta', consulta[0])
+				consultaNsp.emit('listar_consultas_preConsulta', {
+					consultas: consultas
+				})
 			})
 		}
-		// ..
 
-		socket.on('mostrar_consulta_idPesonalYidPreConsulta', (data) => {
-			mostrarConsultaIdPesonalYidPreConsulta(data)
+		socket.on('listar_consultas_preConsulta', (data) => {
+			consultasPorPreConsulta(data.id_preconsulta)
 		})
 
 
@@ -191,7 +193,8 @@ export default (io) => {
 						})
 
 						consultas()
-						mostrarConsultaIdPesonalYidPreConsulta(data)
+						consultasPorPreConsulta(data.id_preconsulta)
+
 					})
 				// }
 			// })
