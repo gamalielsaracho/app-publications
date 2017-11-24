@@ -110,12 +110,20 @@ exports.find = (callback) => {
 		SELECT * 
 			FROM
 				consultas consulta,
+				niveles nivel,
 				personales personal,
-				pacientes paciente
+				tiposdocumentos tpDocPersonal,
+				pacientes paciente,
+				tiposdocumentos tpDocPaciente
 			WHERE
+				consulta.id_nivel = nivel.id_nivel AND
 				consulta.id_personal = personal.id_personal AND
-				consulta.id_paciente = paciente.id_paciente
+				personal.id_tipoDocumento = tpDocPersonal.id_tipoDocumento AND
+				
+				consulta.id_paciente = paciente.id_paciente AND
+				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento
 	`
+
 
 	var options = {
 		sql: q, 
@@ -134,11 +142,18 @@ exports.findListByIdPersonal = (idPersonal, callback) => {
 		SELECT * 
 			FROM
 				consultas consulta,
+				niveles nivel,
 				personales personal,
-				pacientes paciente
+				tiposdocumentos tpDocPersonal,
+				pacientes paciente,
+				tiposdocumentos tpDocPaciente
 			WHERE
+				consulta.id_nivel = nivel.id_nivel AND
 				consulta.id_personal = personal.id_personal AND
+				personal.id_tipoDocumento = tpDocPersonal.id_tipoDocumento AND
+				
 				consulta.id_paciente = paciente.id_paciente AND
+				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
 				consulta.id_personal = ?
 	`
 
@@ -159,11 +174,18 @@ exports.findListByIdPaciente = (idPaciente, callback) => {
 		SELECT * 
 			FROM
 				consultas consulta,
+				niveles nivel,
 				personales personal,
-				pacientes paciente
+				tiposdocumentos tpDocPersonal,
+				pacientes paciente,
+				tiposdocumentos tpDocPaciente
 			WHERE
+				consulta.id_nivel = nivel.id_nivel AND
 				consulta.id_personal = personal.id_personal AND
+				personal.id_tipoDocumento = tpDocPersonal.id_tipoDocumento AND
+				
 				consulta.id_paciente = paciente.id_paciente AND
+				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
 				consulta.id_paciente = ?
 	`
 
@@ -177,24 +199,36 @@ exports.findListByIdPaciente = (idPaciente, callback) => {
 	connection.end()
 }
 
-// Obtener una la consulta que creó el médico
-// y que usó la pre-consulta para esa consulta.
-exports.findByIdPesonalAndIdPreConsulta = (data, callback) => {
+// Obtener la lista de todas las consultas que utilizan 
+// una pre-consulta.
+exports.findListByIdPreConsulta = (idPreConsulta, callback) => {
 	let q = `
 		SELECT * 
 			FROM
-				consultas consulta
+				consultas consulta,
+				niveles nivel,
+				personales personal,
+				tiposdocumentos tpDocPersonal,
+
+				pacientes paciente,
+				tiposdocumentos tpDocPaciente
+
 			WHERE
-				consulta.id_personal = ? AND
+				consulta.id_nivel = nivel.id_nivel AND
+				consulta.id_personal = personal.id_personal AND
+				personal.id_tipoDocumento = tpDocPersonal.id_tipoDocumento AND
+				
+				consulta.id_paciente = paciente.id_paciente AND
+				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
 				consulta.id_preconsulta = ?
 	`
 
 	var options = {
 		sql: q, 
-		nestTables: false
+		nestTables: true
 	}
 
-	return connection.query(options, [data.id_personal, data.id_preconsulta], callback)
+	return connection.query(options, [idPreConsulta], callback)
 
 	connection.end()
 }
@@ -204,19 +238,19 @@ exports.findById = (data, callback) => {
 		SELECT * 
 			FROM 
 				consultas consulta,
+				niveles nivel,
 				personales personal,
 				pacientes paciente,
 
 				preconsultas preconsulta,
-				personales personalEnfermeria,
-				niveles nivel
+				personales personalEnfermeria
 			WHERE
+				consulta.id_nivel = nivel.id_nivel AND
 				consulta.id_personal = personal.id_personal AND
 				consulta.id_paciente = paciente.id_paciente AND
 
 				consulta.id_preconsulta = preconsulta.id_preconsulta AND
 				preconsulta.id_personal = personalEnfermeria.id_personal AND
-				preconsulta.id_nivel = nivel.id_nivel AND
 				id_consulta = ?
 	`
 
@@ -230,6 +264,7 @@ exports.findById = (data, callback) => {
 	connection.end()
 }
 
+// Verificar 
 // exports.verifyIfExist = (data, callback) => {
 // 	let q = `
 // 		SELECT * FROM consultas 
@@ -247,16 +282,17 @@ exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO consultas (
 			id_consulta, fecha, hora, fechaProximaConsulta, 
-			id_personal, id_preconsulta, id_paciente)
+			id_personal, id_preconsulta, id_paciente, id_nivel)
 
-		VALUES (null, now(), ?, ?, ?, ?, ?)
+		VALUES (null, now(), ?, ?, ?, ?, ?, ?)
 	`
 
 	return connection.query(q, [ getHour(),
 								 data.fechaProximaConsulta,
 								 data.id_personal,
 								 data.id_preconsulta,
-								 data.id_paciente ], callback)
+								 data.id_paciente,
+								 data.id_nivel ], callback)
 
 	connection.end()
 }
@@ -282,11 +318,13 @@ exports.update = (data, callback) => {
 	let q = `
 		UPDATE consultas SET 
 			fechaProximaConsulta = ?,
+			id_nivel = ?
 		WHERE
 			id_consulta = ?
 	`
 
 	return connection.query(q, [ data.fechaProximaConsulta,
+								 data.id_nivel,
 								 data.id_consulta ], callback)
 
 	connection.end()
