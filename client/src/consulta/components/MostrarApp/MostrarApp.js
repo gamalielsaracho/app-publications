@@ -23,10 +23,9 @@ class MostrarApp extends Component {
 
 	renderBtnAgregarConsultaByRol() {
 
-		let rol = removeAccents(this.personalLocalSt.rol)
-		let idPersonal = this.personalLocalSt.id_personal
+		let idRol = this.personalLocalSt.id_rol
 
-		if(rol == 'administracion' || rol == 'medico') {
+		if(idRol == 3 || idRol == 1) {
 			return <button type="button" onClick={ () => { this.props.abrirFormularioCrearAnalisisSolicitado() } } className="text-center btn btn-success btn-space">
 				Crear Solicitud para laboratorio
 			</button>
@@ -92,9 +91,9 @@ class MostrarApp extends Component {
 		} else {
 
 			// if(this.props.urls.idPreCosulta) {
-				urlListarSintomas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/sintomas`
-				urlListarDiagnosticos = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/diagnosticos`
-				urlMostrarSolicitudLaboratorio = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${this.props.urls.idConsulta}/solicitud-laboratorio`
+				urlListarSintomas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/sintomas`
+				urlListarDiagnosticos = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/diagnosticos`
+				urlMostrarSolicitudLaboratorio = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
 			// }
 		}
 
