@@ -8,8 +8,6 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import ListarPreConsultasContainer from '../Listar'
 
-import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
-
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -27,7 +25,6 @@ class Filtros extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarNivelesFuncion()
 	}
 
 	render() {
@@ -47,12 +44,7 @@ class Filtros extends Component {
 							label='Hora'/>
 					</div>
 					<div className='col-xs-12 col-sm-12 col-md-2 col-lg-2'>
-						<Field name='id_nivel' 
-							type='text'
-							listar={this.props.listarNiveles}
-							component={FieldSelectNivelesContainer} 
-							label='Nivel' 
-							showBtnAdd={false}/>
+						
 					</div>
 				</div>
 
