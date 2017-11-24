@@ -44,14 +44,21 @@ const preConsultaRoutes = (
 				<IndexRoute component={}/>
 			*/}
 			
-			<Route path='/dashboard/pre-consultas/:idPreConsulta/consulta/:idConsulta' component={MostrarConsultaAppContainer}>
-				<Route path='/dashboard/pre-consultas/:idPreConsulta/consulta/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
-				<Route path='/dashboard/pre-consultas/:idPreConsulta/consulta/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
+			
+			<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas' component={ListarConsultasAppContainer}>
+				<IndexRoute component={ListarConsultasContainer}/>
+				
+				<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
+					<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
+					<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
 
-				<Route path='/dashboard/pre-consultas/:idPreConsulta/consulta/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
-					<Route path='/dashboard/pre-consultas/:idPreConsulta/consulta/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
-				</Route>
-			</Route>			
+					<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
+						<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
+					</Route>
+				</Route>			
+			</Route>
+
+
 
 		</Route>
 
