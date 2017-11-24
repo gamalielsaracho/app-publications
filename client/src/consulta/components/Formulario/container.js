@@ -7,15 +7,23 @@ import {
 	cerrarFormularioConsulta
 } from '../../actions'
 
+// Select Options.
+import {
+	listarNiveles
+} from '../../../nivel/actions'
+
 import Formulario from './Formulario'
 
 const validate = (values) => {
 	const errors = {}
 
-	if(!values.descripcion) {
-		errors.descripcion = 'Tienes que introducir una descripción.'
-	}else if (values.descripcion.trim().length < 5) {
-   			errors.descripcion = 'Tiene que ser por lo menos 5 characteres.'
+	
+	if(!values.fechaProximaConsulta) {
+		errors.fechaProximaConsulta = 'Tienes que introducir una fecha.'
+	}
+
+	if (!values.id_nivel) {
+   		errors.id_nivel = 'Tienes que introducir un nivel.'
 	}
 
 	return errors
@@ -34,7 +42,10 @@ function mapStateToProps(state) {
 
 		// Obtenemos los datos de la pre-consulta para sacar id_paciente
 		// y pasarlo al formProps
-		preConsulta: state.preConsulta.mostrar.preConsulta
+		preConsulta: state.preConsulta.mostrar.preConsulta,
+
+		// Para mostrar dentro del select option.
+    	listarNiveles: state.nivel.listar
 	}
 }
 
@@ -52,6 +63,11 @@ function mapDispatchToProps(dispatch) {
 		},
 		editarConsulta: (datosFormulario) => {
 			dispatch(editarConsulta(datosFormulario))
+		},
+
+		// Select Options.
+		listarNivelesFuncion: () => {
+			dispatch(listarNiveles())
 		}
 	}
 }
