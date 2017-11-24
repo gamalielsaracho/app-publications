@@ -118,9 +118,7 @@ class Formulario extends Component {
 				<div className='container'>
 					<h4 className='text-center'>Formulario síntomas</h4>
 
-					<div className='row'>
-						<MensajeOerror error={error} mensaje={null}/>
-					</div>
+					<MensajeOerror error={error} mensaje={null}/>
 
 					{ this.renderFormulario(cargando, sintomaConsulta) }
 
