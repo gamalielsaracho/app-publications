@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import {
 	mostrarConsulta,
 	abrirFormularioEditarConsulta,
-	eliminarConsulta
+	eliminarConsulta,
+
+	limpiarMensajeErrorConsulta
 } from '../../actions'
 
 import Mostrar from './Mostrar'
@@ -26,6 +28,10 @@ function mapDispatchToProps(dispatch) {
 		},
 		eliminarConsulta: (idConsulta) => {
 			dispatch(eliminarConsulta(idConsulta))
+
+			setTimeout(function () {
+				dispatch(limpiarMensajeErrorConsulta())
+			}, 5000)
 		}
 	}
 }
