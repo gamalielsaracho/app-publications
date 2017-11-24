@@ -35,10 +35,9 @@ import {
 	ELIMINAR_CONSULTA_EXITO,
 	ELIMINAR_CONSULTA_FALLO,
 
-	// 
-	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST,
-	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO,
-	MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO
+	
+	// ..
+	LIMPIAR_MENSAJE_ERROR_CONSULTA
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -57,39 +56,26 @@ const INITIAL_STATE = {
 	mostrarValoresEstadisticos: { 
 		cargando: false, valoresEstadisticos: null, error: ''
 	},
-	editar: { cargando: false, mensaje: '', error: '' },
-	mostrarPorIdPersonalYidPreConsulta: {
-		cargando: false, consulta: null, error: ''
-	}
+	editar: { cargando: false, mensaje: '', error: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
-		case MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_REQUEST:
-			return Object.assign({}, state, {
-				mostrarPorIdPersonalYidPreConsulta: { cargando: true }
+		
+		case LIMPIAR_MENSAJE_ERROR_CONSULTA:
+			state = Object.assign({}, state, {
+				crear: { error:'' },
+				eliminar: { error:'' },
+				editar: { error:'' }
 			})
 
-		case MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_EXITO:
-			return Object.assign({}, state, {
-				mostrarPorIdPersonalYidPreConsulta: {
-					cargando: false,
-					consulta: action.payload
-				}
-			})
+			return state
 
-		case MOSTRAR_CONSULTA_POR_IDPERSONAL_IDPRECONSULTA_FALLO:
-			return Object.assign({}, state, {
-				mostrarPorIdPersonalYidPreConsulta: {
-					cargando: false,
-					consulta: null,
-					error: action.payload
-				}
-			})
+
 
 
 		case ABRIR_FORMULARIO_CREAR_CONSULTA:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: true,
 					abirtoEditar: false,
@@ -103,9 +89,10 @@ export default function (state = INITIAL_STATE, action) {
 				eliminar: INITIAL_STATE.eliminar
 			})
 
+			return state
 
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_REQUEST:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
 					abirtoEditar: true,
@@ -119,8 +106,10 @@ export default function (state = INITIAL_STATE, action) {
 				eliminar: INITIAL_STATE.eliminar
 			})
 
+			return state
+
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_EXITO:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
 					abirtoEditar: true,
@@ -131,8 +120,10 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
+			return state
+
 		case ABRIR_FORMULARIO_EDITAR_CONSULTA_FALLO:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
 					abirtoEditar: true,
@@ -143,9 +134,10 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
+			return state
 
 		case CERRAR_FORMULARIO_CONSULTA:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formulario: {
 					abirtoCrear: false,
 					abirtoEditar: false,
@@ -156,6 +148,7 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
+			return state
 
 		// CREATE consulta.
 		case CREAR_CONSULTA_REQUEST:
