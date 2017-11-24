@@ -10,10 +10,6 @@ import {
 	listarPreConsultas
 } from '../../actions'
 
-// Select Options.
-import {
-	listarNiveles
-} from '../../../nivel/actions'
 
 import {
 	listarPacientes
@@ -55,8 +51,6 @@ function mapStateToProps(state) {
 			apellidos: selector(state, 'apellidos') || ''
     	},
 
-		// Para mostrar dentro del select option.
-    	listarNiveles: state.nivel.listar,
 
     	// Pacientes.
 		listarPacientes: state.paciente.listar
@@ -80,9 +74,6 @@ function mapDispatchToProps(dispatch) {
 		},
 
 		// Select Options.
-		listarNivelesFuncion: () => {
-			dispatch(listarNiveles())
-		},
 		listarPacientesFuncion: () => {
 			dispatch(listarPacientes())
 		}
