@@ -7,8 +7,7 @@ import MostrarApp from './MostrarApp'
 
 
 import {
-	abrirFormularioCrearConsulta,
-	mostrarConsultaPorIdPersonalYidPreConsulta
+	abrirFormularioCrearConsulta
 } from '../../../consulta/actions'
 
 function mapStateToProps(state, ownProps) {
@@ -30,9 +29,6 @@ function mapDispatchToProps(dispatch) {
 	return {
 		abrirFormularioCrearConsulta: () => {
 			dispatch(abrirFormularioCrearConsulta())
-		},
-		mostrarConsultaPorIdPersonalYidPreConsulta: (idPersonal, idPreConsulta) => {
-			dispatch(mostrarConsultaPorIdPersonalYidPreConsulta(idPersonal, idPreConsulta))
 		}
 	}
 }
