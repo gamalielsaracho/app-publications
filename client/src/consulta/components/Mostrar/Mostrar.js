@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 
 import ReactModal from 'react-modal'
+import moment from 'moment'
+
 import { formatDate, calcularEdad } from '../../../globalActions'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import Cargando from '../../../app/components/Cargando'
+
+import MostrarPreConsultaContainer from '../../../preconsulta/components/Mostrar'
 
 // PreConsulta X Parametro
 import ListarPreConsultaParametrosContainer from '../../../preConsultaParametro/components/Listar'
@@ -48,18 +52,18 @@ class Mostrar extends Component {
 	}
 
 	renderDatosPreConsulta(dato) {
+		// Esto es para ocultar los datos de la Pre-consulta si
+		// se está mostrando una pre-consulta por ID.
 		if(this.props.urls.idPreConsulta) {
 			return <span></span>
 		} else {
 			return <div>
 				<h4 className='text-center'>Pre-consulta</h4>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-						<p><strong>Enfermero/a:</strong>{ dato.personalEnfermeria.nombres+' '+dato.personalEnfermeria.apellidos }</p>
-						<p><strong>Fecha:</strong> { formatDate(dato.preconsulta.fecha) }</p>
-						<p><strong>Nivel:</strong> { dato.nivel.descripcion }</p>				
-					</div>
-				</div>
+				
+				<MostrarPreConsultaContainer 
+					idPreConsulta={dato.preconsulta.id_preconsulta}
+					urls = {this.props.urls}/>
+
 				<div className=''>
 					<ListarPreConsultaParametrosContainer idPreConsulta={dato.preconsulta.id_preconsulta}/>
 				</div>
@@ -73,11 +77,14 @@ class Mostrar extends Component {
 		} else if (dato){
 				return <div>
 					<h4 className='text-center'>Consulta</h4>
+					
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<p><strong>Médico/a:</strong>{ dato.personal.nombres +' '+ dato.personal.apellidos }</p>
-							<p><strong>Fecha:</strong>{ formatDate(dato.consulta.fecha) }</p>
-							<p><strong>Fecha próxima consulta:</strong>{ formatDate(dato.consulta.fechaProximaConsulta) }</p>
+							<p><strong>Fecha:</strong>{ moment(dato.consulta.fecha).format('DD-MM-YYYY') } <strong>Hora:</strong>{ dato.consulta.hora }</p>
+							<p><strong>Fecha próxima consulta:</strong>{ moment(dato.consulta.fechaProximaConsulta).format('DD-MM-YYYY') }</p>
+							<p><strong>Nivel:</strong>{ dato.nivel.descripcion }</p>				
+							
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<button onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
@@ -94,7 +101,6 @@ class Mostrar extends Component {
 	}
 
 	render() {
-
 		const { cargando, consulta } = this.props.mostrar
 
 		let error = this.props.mostrar.error ? this.props.mostrar.error :
