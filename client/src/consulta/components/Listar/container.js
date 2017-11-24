@@ -1,7 +1,10 @@
 import { connect } from 'react-redux'
 
 import {
+	abrirFormularioCrearConsulta,
+
 	listarConsultas,
+	listarConsultasPreConsulta,
 	listarConsultasMedico,
 	listarConsultasPaciente,
 	mostrarConsulta
@@ -22,14 +25,23 @@ function mapStateToProps(state, ownProps) {
 		urls: ownProps.params,
 
 		// para ver la url completa en el cual está parada el usuario.
-		pathname: ownProps.location.pathname
+		pathname: ownProps.location.pathname,
+
+		// Para hacer render del formulario únicamente si está abierto.
+		formulario: state.consulta.formulario
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
+		abrirFormularioCrearConsulta: () => {
+			dispatch(abrirFormularioCrearConsulta())
+		},
 		listarConsultas: () => {
 			dispatch(listarConsultas())
+		},
+		listarConsultasPreConsulta: (idPreConsulta) => {
+			dispatch(listarConsultasPreConsulta(idPreConsulta))
 		},
 		mostrarConsulta: (idConsulta) => {
 			dispatch(mostrarConsulta(idConsulta))
