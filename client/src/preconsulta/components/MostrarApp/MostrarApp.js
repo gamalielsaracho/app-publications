@@ -10,7 +10,7 @@ import MostrarPreConsultaContainer from '../Mostrar'
 import ListarPreConsultaParametrosContainer from '../../../preConsultaParametro/components/Listar'
 
 // Formulario Modal para agregar solo una consulta por pre-consulta.
-import FormularioConsultaContainer from '../../../consulta/components/Formulario'
+// import FormularioConsultaContainer from '../../../consulta/components/Formulario'
 
 class MostrarApp extends Component {
 	constructor(props) {
@@ -21,47 +21,50 @@ class MostrarApp extends Component {
 	}
 
 	componentWillMount() {
-		this.props.mostrarConsultaPorIdPersonalYidPreConsulta(this.personalLocalSt.id_personal, this.props.urls.idPreConsulta)
 	}
 
 	renderMenu(listar) {
 		// 1 médico.
 		// 3 administación.
-		let rol = this.personalLocalSt.id_rol
+		// let rol = this.personalLocalSt.id_rol
 
-		let activeMostrarConsulta = ''
+		// let activeMostrarConsulta = ''
 
-		if(this.props.urls.idPreConsulta && this.props.urls.idConsulta) {
-			activeMostrarConsulta = 'active'
-		}
+		// if(this.props.urls.idPreConsulta && this.props.urls.idConsulta) {
+		// 	activeMostrarConsulta = 'active'
+		// }
 
-		const { cargando, consulta, error } = this.props.mostrarPorIdPersonalYidPreConsulta
+		// const { cargando, consulta, error } = this.props.mostrarPorIdPersonalYidPreConsulta
 
-		if(!cargando && consulta) {
-			// console.log('consulta ............---->')
-			// console.log(consulta)
+		// // console.log(this.props.mostrarPorIdPersonalYidPreConsulta)
+		// if(!cargando && consulta) {
+		// 		return <div>
+		// 			<ul className="nav nav-tabs no-print-data">
+		// 				<li className="nav-item nav-link" className={activeMostrarConsulta}>
+		// 					<Link to={`/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${consulta.id_consulta}`}>Consulta</Link>
+		// 				</li>
+		// 			</ul>
+		// 		</div>
+		// } else {
+		// 		return <div>
+		// 			<FormularioConsultaContainer
+		// 					idPreConsulta={this.props.urls.idPreConsulta}/>
 
-			return <div>
-				<ul className="nav nav-tabs no-print-data">
-					<li className="nav-item nav-link" className={activeMostrarConsulta}>
-						<Link to={`/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consulta/${consulta.id_consulta}`}>Consulta</Link>
-					</li>
-				</ul>
-			</div>
-		} else {
-			return <div>
-				<FormularioConsultaContainer
-						idPreConsulta={this.props.urls.idPreConsulta}/>
+		// 			<ul className="nav nav-tabs no-print-data">
+		// 			  <li className="nav-item nav-link">
+		// 				<button onClick={ this.props.abrirFormularioCrearConsulta } className='btn btn-success'>Agregar</button>
+		// 			  	<br/>
+		// 			  	<br/>
+		// 			  </li> 
+		// 			</ul>
+		// 		</div>
+		// }
 
-				<ul className="nav nav-tabs no-print-data">
-				  <li className="nav-item nav-link">
-					<button onClick={ this.props.abrirFormularioCrearConsulta } className='btn btn-success'>Agregar</button>
-				  	<br/>
-				  	<br/>
-				  </li> 
-				</ul>
-			</div>
-		}
+
+
+		return <div>
+			
+		</div>
 	}
 
 	render() {
@@ -69,7 +72,8 @@ class MostrarApp extends Component {
 			<br/>
 
 			<MostrarPreConsultaContainer 
-				idPreConsulta={this.props.urls.idPreConsulta}/>
+				idPreConsulta={this.props.urls.idPreConsulta}
+				urls = {this.props.urls}/>
 
 			{/*  
 			*/}
