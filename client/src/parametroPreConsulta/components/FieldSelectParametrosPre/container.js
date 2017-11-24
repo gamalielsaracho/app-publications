@@ -8,10 +8,9 @@ import FieldSelectParametrosPre from './FieldSelectParametrosPre'
 
 function mapStateToProps(state) {
 	return {
-		// Esto es la lista de parametros con sus valores que 
-		// se obtiene de la taba intermedia de preconsultas y
-		// parametrosPreconsulta.
-		listarPreConsultaParametros: state.preConsultaParametro.listar
+
+		// Obtenemos el estado del formulario de parametros de preconsulta.
+		formulario: state.parametroPreConsulta.formulario
 	}
 }
 
