@@ -1,28 +1,42 @@
 import React, { Component } from 'react'
 
+import FormularioParametroPreConsultaContainer from '../../../parametroPreConsulta/components/Formulario'
+
 class FieldSelectParametrosPre extends Component {
+	constructor(props) {
+		super(props)
+		this.renderFormularioParametroPreConsulta = this.renderFormularioParametroPreConsulta.bind(this)
+	}
+
+	renderFormularioParametroPreConsulta() {
+		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
+			return <FormularioParametroPreConsultaContainer/>
+		} else {
+			return <span></span>
+		}
+	}
+
 	render() {
 		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
 
-		// let parametrosPreConsulta = this.props.listarPreConsultaParametros.parametrosPreConsulta
-		// console.log('this.props.listarPreConsultaParametros')
-		// console.log(parametrosPreConsulta)
-		
-		// if(parametrosPreConsulta != undefined) {
-		// 	parametrosPreConsulta.map((i) => {
-		// 		parametros = parametros.filter((j) => {
-		// 			return j.id_parametroPreconsulta != i.parametro.id_parametroPreconsulta
-		// 		})
-		// 	})
-		// }
 
 		if(listar.cargando) {
-			return <p>Cargando..</p>
+			return <div className='form-group'>
+				<label htmlFor={label}>{label}</label>
+				
+				<div className='form-inline'>
+					<div className='form-group'>
+						<span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando parametros...
+					</div>
+				</div>
+			</div>
 		} else {
 			let parametros = listar.parametros
 
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
+
+				{ this.renderFormularioParametroPreConsulta() }
 
 				<div className='form-inline'>
 					<div className='form-group'>
