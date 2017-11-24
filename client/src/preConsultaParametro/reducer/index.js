@@ -109,14 +109,15 @@ export default function (state = INITIAL_STATE, action) {
 		case CREAR_PRECONSULTA_PARAMETRO_EXITO:
 			
 			state = Object.assign({}, state, {
-				crear: { 
+				crear: {
+					cargando: false,
 					mensaje: action.payload.mensaje
 				},
 				listar: {
 					parametrosPreConsulta: [ ...state.listar.parametrosPreConsulta, 
 											 action.payload.datoInsertado ]
 				},
-				formulario: { abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 			// console.log(state)
@@ -125,7 +126,11 @@ export default function (state = INITIAL_STATE, action) {
 
 		case CREAR_PRECONSULTA_PARAMETRO_FALLO:
 			return Object.assign({}, state, {
-				crear: { error: action.payload }
+				crear: { 
+					cargando: false,
+					mensaje: '',
+					error: action.payload 
+				}
 			})
 
 		// LISTAR.
@@ -217,7 +222,7 @@ export default function (state = INITIAL_STATE, action) {
 					cargando: false, 
 					mensaje: action.payload.mensaje
 				},
-				formulario: { abirtoEditar: false },
+				formulario: INITIAL_STATE.formulario,
 				listar: {
 					parametrosPreConsulta: nuevaLista
 				}
