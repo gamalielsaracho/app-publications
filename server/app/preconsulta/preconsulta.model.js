@@ -13,14 +13,12 @@ exports.find = (callback) => {
 		FROM 
 			preconsultas preconsulta, 
 			pacientes paciente,
-			niveles nivel,
 			personales personal,
 			tiposdocumentos tpDocPaciente,
 			tiposdocumentos tpDocEnfermera
 		WHERE
 			preconsulta.id_paciente = paciente.id_paciente AND
 			paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
-			preconsulta.id_nivel = nivel.id_nivel AND
 			preconsulta.id_personal = personal.id_personal AND
 			personal.id_tipoDocumento = tpDocEnfermera.id_tipoDocumento
 	`
@@ -40,10 +38,8 @@ exports.listarPorFechaActualYidPaciente = (data, callback) => {
 		SELECT
 			*
 		FROM
-			preconsultas preconsulta,
-			niveles nivel 
+			preconsultas preconsulta
 		WHERE
-			preconsulta.id_nivel = nivel.id_nivel AND
 			preconsulta.fecha = ? AND 
 			preconsulta.id_paciente = ?
 	`
@@ -81,10 +77,9 @@ exports.findById = (data, callback) => {
 
 	let q = `
 		SELECT * FROM preconsultas preconsulta, pacientes paciente,
-		niveles nivel, personales personal
+			personales personal
 		WHERE
 			preconsulta.id_paciente = paciente.id_paciente AND
-			preconsulta.id_nivel = nivel.id_nivel AND
 			preconsulta.id_personal = personal.id_personal AND
 			id_preconsulta = ? 
 	`
@@ -101,10 +96,22 @@ exports.findById = (data, callback) => {
 exports.create = (data, callback) => {	
 
 	let q = `
-		INSERT INTO preconsultas (id_preconsulta, fecha, hora, id_nivel, id_paciente, id_personal)
+		INSERT INTO preconsultas (
+			id_preconsulta, 
+			fecha, 
+			hora, 
+			id_paciente, 
+			id_personal,
+			observaciones
+		)
 			VALUES (null, now(), ?, ?, ?, ?)
 	`
-	return connection.query(q, [getHour(), data.id_nivel, data.id_paciente, data.id_personal], callback)
+
+	if(data.observaciones) {
+		data.observaciones.trim()
+	}
+
+	return connection.query(q, [getHour(), data.id_paciente, data.id_personal, data.observaciones], callback)
 
 	connection.end()
 }
@@ -134,14 +141,18 @@ exports.findByIdToUpdate = (data, callback) => {
 exports.update = (data, callback) => {
 	let q = `
 		UPDATE preconsultas SET 
-			id_paciente = ?, 
-			id_nivel = ?
+			id_paciente = ?,
+			observaciones = ?
 			WHERE 
 				id_preconsulta = ?
 	`
 
+	if(data.observaciones) {
+		data.observaciones.trim()
+	}
+
 	return connection.query(q, [
-		data.id_paciente, data.id_nivel, data.id_preconsulta
+		data.id_paciente, data.observaciones, data.id_preconsulta
 	], callback)
 
 	connection.end()
