@@ -20,7 +20,7 @@ class ListarApp extends Component {
 		if(this.props.urls.idPaciente) {
 			urlListarConsultas = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
 		} else {
-			urlListarConsultas = `/dashboard/consultas`
+			urlListarConsultas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas`
 		}
 
 		return <div>
