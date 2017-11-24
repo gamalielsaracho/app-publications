@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
+import moment from 'moment'
+
 import jwtDecode from 'jwt-decode'
 import removeAccents from 'remove-accents'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+// Formulario Modal para agregar solo una consulta por pre-consulta.
+import FormularioConsultaContainer from '../../../consulta/components/Formulario'
 
 class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderConsultas = this.renderConsultas.bind(this)
+		this.renderFormularioConsulta = this.renderFormularioConsulta.bind(this)
+		this.renderBtnAddByUrlsParams = this.renderBtnAddByUrlsParams.bind(this)
+		
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
@@ -23,17 +30,52 @@ class Listar extends Component {
 		} else {
 			// 3 administración.
 			// 1 médico.
-
-			if(idRol == 3) {
+			if(this.props.urls.idPreConsulta) {
+				this.props.listarConsultasPreConsulta(this.props.urls.idPreConsulta)
+			} else {
 				this.props.listarConsultas()
-			} else if (idRol == 1) {
-				this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
 			}
+
+			// if(idRol == 3) {
+			// 	this.props.listarConsultas()
+			// } else if (idRol == 1) {
+			// 	this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
+			// }
 		}
 	}
 
+	renderBtnAddByUrlsParams() {
+		// Si el usuario está parado en el historial clínico del paciente.
+		// No Mostrar el Boton de agregar consulta.
+		if(this.props.urls.idPaciente) {
+			return <span></span>
+		} else {
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+					<button onClick={ this.props.abrirFormularioCrearConsulta } className='btn btn-success'>Agregar</button>
+				</div>
+			</div>
+		}
+	}
+
+	renderFormularioConsulta() {
+		
+		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
+			return <FormularioConsultaContainer
+				idPreConsulta={this.props.urls.idPreConsulta}/>
+		} else {
+			return <span></span>
+		}
+	}
+	
+
 	shouldComponentUpdate(nextProps) {
-		if(nextProps.consultas !== this.props.consultas) {
+		let condition = (
+			nextProps.consultas !== this.props.consultas ||
+			nextProps.formulario !== this.props.formulario
+		)
+
+		if(condition) {
 			return true
 		}else {
 			return false
@@ -48,7 +90,7 @@ class Listar extends Component {
 		if(this.props.urls.idPaciente) {
 			urlMostrarConsulta = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
 		} else {
-			urlMostrarConsulta = `/dashboard/consultas`
+			urlMostrarConsulta = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas`
 		}
 
 		return <tbody>
@@ -56,11 +98,16 @@ class Listar extends Component {
 				consultas.map((i) => {
 					return <tr key={i.consulta.id_consulta}>
 			            <td>{ i.consulta.id_consulta }</td>
-			            <td>{ i.paciente.nombres+' '+i.paciente.apellidos }</td>
-			            <td>{ i.consulta.fecha }</td>
-			            <td>{ i.consulta.fechaProximaConsulta }</td>
+			            <td>{ i.nivel.descripcion}</td>
+			            <td>{ moment(i.consulta.fecha).format('DD-MM-YYYY') }</td>
+			            <td>{ i.consulta.hora }</td>
+			            <td>{ moment(i.consulta.fechaProximaConsulta).format('DD-MM-YYYY') }</td>
 			            <td>
+			            	<p className='text-center'>{ i.personal.nroDocumento+' '+i.tpDocPersonal.descripcion }</p>
+			            	<p className='text-center'>{ i.personal.nombres+' '+i.personal.apellidos }</p>
+			            </td>
 
+			            <td>
 			            	<Link to={`${urlMostrarConsulta}/${i.consulta.id_consulta}`}>
 								<button type="button" className="btn btn-info btn-space">Mostrar</button>
 							</Link>
@@ -83,22 +130,23 @@ class Listar extends Component {
 					
 					<MensajeOerror error={error} mensaje={null}/>
 
+					{ this.renderBtnAddByUrlsParams() }
 					<br/>
 
-					{/* 
-						<FormularioConsultaContainer
-							idPreConsulta={this.props.urls.idPreConsulta}
-							datosCita={this.props.datosCita}/>
-					*/}
 
+					{ this.renderFormularioConsulta() }
+					
 					<div className='table-responsive'>
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
-						        	<th>Paciente</th>
+						        	<th>Código</th>
+						        	<th>Nivel</th>
 						        	<th>Fecha</th>
+						        	<th>Hora</th>
 						        	<th>Próxima consulta</th>
+						        	<th className='text-center'>Médico/ca</th>
+
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>
