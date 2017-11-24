@@ -8,14 +8,10 @@ import {
 	cerrarFormularioFiltro
 } from '../../actions'
 
-import {
-	listarNiveles,
-} from '../../../nivel/actions'
 
 function mapStateToProps(state, ownProps) {
 	// console.log(ownProps)
 	return {
-		listarNiveles: state.nivel.listar
 	}
 }
 
@@ -23,11 +19,6 @@ function mapDispatchToProps(dispatch) {
 	return {
 		cerrarFormularioFiltro: () => {
 			dispatch(cerrarFormularioFiltro())
-		},
-		
-		// Select Option.
-		listarNivelesFuncion: () => {
-			dispatch(listarNiveles())
 		}
 	}
 }
