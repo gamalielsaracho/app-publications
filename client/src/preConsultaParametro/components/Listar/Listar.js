@@ -34,11 +34,11 @@ class Listar extends Component {
 	}
 
 	renderBtnsOpcionesByRolYpersonal(i) {
-		let rol = this.personalLocalSt.id_rol
+		let idRol = this.personalLocalSt.id_rol
 
 		// 2 enfermería.
 		// 3 administración.
-		if((rol == 2) || (rol == 3)) {
+		if((idRol == 2) || (idRol == 3)) {
 			return <div>
 				<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-warning btn-space">Editar</button>
 				<button type="button" onClick={() => { this.props.eliminarPreConsultaParametro(i.preconsultaParametro.id_preconsultaParametro) }} className="btn btn-danger btn-space">Eliminar</button>
