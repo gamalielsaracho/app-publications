@@ -61,7 +61,6 @@ class Listar extends Component {
 					return <tr key={i.preconsulta.id_preconsulta}>
 			            <td>{ moment(i.preconsulta.fecha).format('DD-MM-YYYY') }</td>
 			            <td>{ i.preconsulta.hora }</td>
-			            <td>{ i.nivel.descripcion }</td>
 
 			            <td>
 			            	<p className='text-center'>{ i.paciente.nroDocumento+' '+i.tpDocPaciente.descripcion }</p>
@@ -73,8 +72,10 @@ class Listar extends Component {
 			            	<p className='text-center'>{ i.personal.nombres+' '+i.personal.apellidos }</p>
 			            </td>
 
+			            <td>{ i.preconsulta.observaciones }</td>
+			            
 			            <td>
-							<Link to={`/dashboard/pre-consultas/${i.preconsulta.id_preconsulta}`}>
+							<Link to={`/dashboard/pre-consultas/${i.preconsulta.id_preconsulta}/consultas`}>
 								<button type="button" className="btn btn-info btn-space">
 									Mostrar
 								</button>
@@ -109,9 +110,9 @@ class Listar extends Component {
 						<tr>
 							<th>Fecha</th>
 							<th>Hora</th>
-							<th>Nivel</th>
 							<th className='text-center'>Paciente</th>
 							<th className='text-center'>Enfermero/a</th>
+							<th>Observaciones</th>
 							<th className='text-center'>Opciones</th>
 						</tr>
 					</thead>
