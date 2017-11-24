@@ -7,7 +7,6 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import FieldSelectParametrosPreContainer from '../../../parametroPreConsulta/components/FieldSelectParametrosPre'
 
-import FormularioParametroPreConsultaContainer from '../../../parametroPreConsulta/components/Formulario'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
@@ -23,7 +22,7 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
 
 		this.renderFieldTextArea = this.renderFieldTextArea.bind(this)
 		this.renderFieldSelectParametrosPre = this.renderFieldSelectParametrosPre.bind(this)
@@ -45,6 +44,34 @@ class Formulario extends Component {
 		} else {
 
 			this.props.crearPreConsultaParametro(formProps)
+		}
+	}
+
+	renderFormulario(cargando, parametroPreConsulta) {
+		const { handleSubmit, pristine, reset, submitting } = this.props		
+
+		if(cargando) {
+			return <Cargando/>
+		} else if(parametroPreConsulta) {
+			return <form onSubmit={handleSubmit(this.enviarFormulario)}>
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-8 col-lg-8'>
+						{ this.renderFieldSelectParametrosPre(this.props.listarParametrosPreConsulta, parametroPreConsulta) }
+					</div>
+					<div className='col-xs-12 col-sm-12 col-md-3 col-lg-3'>
+						<Field name='valor' type='text' component={renderField} label='Valor'/>
+					</div>
+				</div>
+
+				<div className='row'>
+					<div className='col-xs-12 col-sm-12 col-md-8 col-lg-8'>
+						<Field name='observaciones' type='textarea' component={this.renderFieldTextArea} label='Observaciones'/>
+					</div>
+				</div>
+																	
+				<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+				{ this.renderBtnCancelar() }
+			</form>
 		}
 	}
 
@@ -80,23 +107,15 @@ class Formulario extends Component {
 		}
 	}
 
-	renderCargando(cargando) {
-		if(cargando) {
-			return <Cargando/>
-		} else {
-			return <span></span>
-		}
-	}
 
 	render() {
+		
 		const customStyles = {
 		    content : {
 		  		height: '40vh',
 		  		position: 'none'
 		  	}
 		}
-
-		const { handleSubmit, pristine, reset, submitting } = this.props		
 		
 		const { 
 			abirtoCrear, abirtoEditar, cargando, parametroPreConsulta 
@@ -111,31 +130,10 @@ class Formulario extends Component {
 
 		return <div>
 			<MensajeOerror error={error} mensaje={null}/>
-			{ this.renderCargando(cargando) }
 
 			<div className=''>
 
-				<FormularioParametroPreConsultaContainer/>
-
-				<form onSubmit={handleSubmit(this.enviarFormulario)}>
-					<div className='row'>
-						<div className='col-xs-12 col-sm-12 col-md-8 col-lg-8'>
-							{ this.renderFieldSelectParametrosPre(this.props.listarParametrosPreConsulta, parametroPreConsulta) }
-						</div>
-						<div className='col-xs-12 col-sm-12 col-md-3 col-lg-3'>
-							<Field name='valor' type='text' component={renderField} label='Valor'/>
-						</div>
-					</div>
-
-					<div className='row'>
-						<div className='col-xs-12 col-sm-12 col-md-8 col-lg-8'>
-							<Field name='observaciones' type='textarea' component={this.renderFieldTextArea} label='Observaciones'/>
-						</div>
-					</div>
-																	
-					<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
-					{ this.renderBtnCancelar() }
-				</form>
+				{ this.renderFormulario(cargando, parametroPreConsulta) }
 			</div>
 
 		</div>
