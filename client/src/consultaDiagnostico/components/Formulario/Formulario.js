@@ -64,7 +64,8 @@ class Formulario extends Component {
 				<Field name='id_diagnostico' type='text' 
 					component={FieldSelectDiagnosticosContainer}
 					listar={listarDiagnosticos} 
-					label='Diagnóstico'/>
+					label='Diagnóstico'
+					showBtnAdd = {true}/>
 			</div>
 		} else {
 			return <p><strong>Síntoma:</strong> { consultaDiagnostico.descripcion }</p>
@@ -128,9 +129,7 @@ class Formulario extends Component {
 				<div className='container'>
 					<h4 className='text-center'>Formulario diagnósticos</h4>
 
-					<div className='row'>
-						<MensajeOerror error={error} mensaje={null}/>
-					</div>
+					<MensajeOerror error={error} mensaje={null}/>
 
 					{ this.renderFormulario(cargando, consultaDiagnostico) }				
 
