@@ -6,8 +6,6 @@ import moment from 'moment'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import ListarPreConsultasContainer from '../Listar'
-
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
