@@ -32,22 +32,26 @@ class Mostrar extends Component {
 		if(this.props.urls.idPreConsulta || this.props.urls.idPaciente) {
 			return <span></span>
 		} else {
-			return <div>
-				<h4 className='text-center'>Paciente</h4>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-						<p><strong>Numero de Documento:</strong> { dato.paciente.nroDocumento }</p>
-						<p><strong>Dirección:</strong> { dato.paciente.direccion }</p>				
-					</div>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-						<p><strong>Nombre:</strong> { dato.paciente.nombres+' '+dato.paciente.apellidos }</p>
-						<p><strong>Edad:</strong> { calcularEdad(dato.paciente.fechaNacimiento) }</p>
-					</div>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-						<p><strong>Sexo:</strong>{ dato.paciente.sexo }</p>
+			if(this.props.urls.idConsulta) {
+				return <span></span>
+			} else {
+				return <div>
+					<h4 className='text-center'>Paciente</h4>
+					<div className='row'>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+							<p><strong>Numero de Documento:</strong> { dato.paciente.nroDocumento }</p>
+							<p><strong>Dirección:</strong> { dato.paciente.direccion }</p>				
+						</div>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+							<p><strong>Nombre:</strong> { dato.paciente.nombres+' '+dato.paciente.apellidos }</p>
+							<p><strong>Edad:</strong> { calcularEdad(dato.paciente.fechaNacimiento) }</p>
+						</div>
+						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
+							<p><strong>Sexo:</strong>{ dato.paciente.sexo }</p>
+						</div>
 					</div>
 				</div>
-			</div>
+			}
 		}
 	}
 
@@ -92,7 +96,6 @@ class Mostrar extends Component {
 						</div>
 					</div>
 
-					{ this.renderDatosPaciente(dato) }
 
 					{ this.renderDatosPreConsulta(dato) }
 
