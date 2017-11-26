@@ -20,8 +20,13 @@ class ListarApp extends Component {
 		if(this.props.urls.idPaciente) {
 			urlListarConsultas = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
 		} else {
-			urlListarConsultas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas`
+			if(this.props.urls.idPreConsulta) {
+				urlListarConsultas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas`
+			} else {
+				urlListarConsultas = `/dashboard/consultas`
+			}
 		}
+		
 
 		return <div>
 			<ul className="nav nav-tabs no-print-data">
