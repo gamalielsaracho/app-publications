@@ -89,12 +89,15 @@ class MostrarApp extends Component {
 			urlListarDiagnosticos = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/diagnosticos`
 			urlMostrarSolicitudLaboratorio = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
 		} else {
-
-			// if(this.props.urls.idPreCosulta) {
+			if(this.props.urls.idPreConsulta && this.props.urls.idConsulta) {
 				urlListarSintomas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/sintomas`
 				urlListarDiagnosticos = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/diagnosticos`
 				urlMostrarSolicitudLaboratorio = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
-			// }
+			} else {
+				urlListarSintomas = `/dashboard/consultas/${this.props.urls.idConsulta}/sintomas`
+				urlListarDiagnosticos = `/dashboard/consultas/${this.props.urls.idConsulta}/diagnosticos`
+				urlMostrarSolicitudLaboratorio = `/dashboard/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
+			}
 		}
 
 		
