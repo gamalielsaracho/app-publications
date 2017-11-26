@@ -22,13 +22,7 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-const form = reduxForm({
-  form: 'ListarPreConsultasApp'
-})
-
-const selector = formValueSelector('ListarPreConsultasApp')
-
-export default connect(mapStateToProps, mapDispatchToProps)(form(ListarApp))
+export default connect(mapStateToProps, mapDispatchToProps)(ListarApp)
 
 
 
