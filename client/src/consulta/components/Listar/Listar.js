@@ -22,41 +22,21 @@ class Listar extends Component {
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
-	componentWillMount() {
-		let idRol = this.personalLocalSt.id_rol
-
-		if(this.props.urls.idPaciente) {
-			this.props.listarConsultasPaciente(this.props.urls.idPaciente)
-		} else {
-			// 3 administración.
-			// 1 médico.
-			if(this.props.urls.idPreConsulta) {
-				this.props.listarConsultasPreConsulta(this.props.urls.idPreConsulta)
-			} else {
-				this.props.listarConsultas()
-			}
-
-			// if(idRol == 3) {
-			// 	this.props.listarConsultas()
-			// } else if (idRol == 1) {
-			// 	this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
-			// }
-		}
-	}
 
 	renderBtnAddByUrlsParams() {
-		// Si el usuario está parado en el historial clínico del paciente.
-		// No Mostrar el Boton de agregar consulta.
-		if(this.props.urls.idPaciente) {
-			return <span></span>
-		} else {
+		// Si el usuario está parado en una pre-cosulta.
+		// Mostrar el Boton de agregar consulta, de lo contrario NO..
+		if(this.props.urls.idPreConsulta) {
 			return <div className='row'>
 				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
 					<button onClick={ this.props.abrirFormularioCrearConsulta } className='btn btn-success'>Agregar</button>
 				</div>
 			</div>
+		} else {
+			return <span></span>
 		}
 	}
+
 
 	renderFormularioConsulta() {
 		
@@ -72,7 +52,8 @@ class Listar extends Component {
 	shouldComponentUpdate(nextProps) {
 		let condition = (
 			nextProps.consultas !== this.props.consultas ||
-			nextProps.formulario !== this.props.formulario
+			nextProps.formulario !== this.props.formulario ||
+			nextProps.consultasFiltradas !== this.props.consultasFiltradas
 		)
 
 		if(condition) {
@@ -90,7 +71,11 @@ class Listar extends Component {
 		if(this.props.urls.idPaciente) {
 			urlMostrarConsulta = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas`
 		} else {
-			urlMostrarConsulta = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas`
+			if(this.props.urls.idPreConsulta) {
+				urlMostrarConsulta = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas`
+			} else {
+				urlMostrarConsulta = `/dashboard/consultas`
+			}
 		}
 
 		return <tbody>
@@ -102,6 +87,12 @@ class Listar extends Component {
 			            <td>{ moment(i.consulta.fecha).format('DD-MM-YYYY') }</td>
 			            <td>{ i.consulta.hora }</td>
 			            <td>{ moment(i.consulta.fechaProximaConsulta).format('DD-MM-YYYY') }</td>
+			           
+			            <td>
+			            	<p className='text-center'>{ i.paciente.nroDocumento+' '+i.tpDocPaciente.descripcion }</p>
+			            	<p className='text-center'>{ i.paciente.nombres+' '+i.paciente.apellidos }</p>
+			            </td>
+
 			            <td>
 			            	<p className='text-center'>{ i.personal.nroDocumento+' '+i.tpDocPersonal.descripcion }</p>
 			            	<p className='text-center'>{ i.personal.nombres+' '+i.personal.apellidos }</p>
@@ -120,43 +111,36 @@ class Listar extends Component {
 
 	render() {
 
-		const { consultas, cargando, error } = this.props.listar
-
-		if(cargando) {
-			return <Cargando/>
-		} else {
-				return <div>
-					<h1 className='text-center'>Consultas</h1>
+		return <div>
+			<h1 className='text-center'>Consultas</h1>
 					
-					<MensajeOerror error={error} mensaje={null}/>
-
-					{ this.renderBtnAddByUrlsParams() }
-					<br/>
+			{ this.renderBtnAddByUrlsParams() }
+			<br/>
 
 
-					{ this.renderFormularioConsulta() }
+			{ this.renderFormularioConsulta() }
 					
-					<div className='table-responsive'>
-						<table className='table table-striped'>
-							<thead>
-						    	<tr>
-						        	<th>Código</th>
-						        	<th>Nivel</th>
-						        	<th>Fecha</th>
-						        	<th>Hora</th>
-						        	<th>Próxima consulta</th>
-						        	<th className='text-center'>Médico/ca</th>
+			<div className='table-responsive'>
+				<table className='table table-striped'>
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Nivel</th>
+							<th>Fecha</th>
+							<th>Hora</th>
+							<th>Próxima consulta</th>
+							<th className='text-center'>Paciente</th>
+							<th className='text-center'>Médico/ca</th>
 
-						        	<th>Opciones</th>
-						    	</tr>
-						    </thead>
+							<th>Opciones</th>
+						</tr>
+					</thead>
 
-							{ this.renderConsultas(consultas) }
+					{ this.renderConsultas(this.props.consultasFiltradas) }
 
-						</table>
-					</div>
-				</div>
-		}
+				</table>
+			</div>
+		</div>
 
 	}
 }
