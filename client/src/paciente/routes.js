@@ -1,14 +1,16 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
+// FILTROS APP.
+import FiltrosConsultasAppContainer from '../consulta/components/FiltrosApp'
 
 // Listar.
-import ListarPacientesApp from '../paciente/components/ListarApp'
+import ListarPacientesApp from './components/ListarApp'
 
 // PACIENTES
 import ListarPacientesPage from '../paciente/pages/ListarPacientesPage'
 
-import MostrarPacienteAppContainer from '../paciente/components/MostrarApp'
+import MostrarPacienteAppContainer from './components/MostrarApp'
 
 // PACIENTE ALERGIAS.
 	import ListarPacienteAlergiasPage from '../pacienteAlergia/pages/ListarPacienteAlergiasPage'
@@ -16,7 +18,6 @@ import MostrarPacienteAppContainer from '../paciente/components/MostrarApp'
 // CONSULTAS APP.
 import ListarConsultasAppContainer from '../consulta/components/ListarApp'
 
-import ListarConsultasContainer from '../consulta/components/Listar'
 
 // CONSULTA APP.
 import MostrarConsultaAppContainer from '../consulta/components/MostrarApp'
@@ -44,7 +45,10 @@ const pacienteRoutes = (
 			<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
 					
 			<Route path='/dashboard/pacientes/:idPaciente/consultas' component={ListarConsultasAppContainer}>
-				<IndexRoute component={ListarConsultasContainer}/>
+					<IndexRoute component={FiltrosConsultasAppContainer}/>
+				
+				{/*
+				*/}
 
 				<Route path='/dashboard/pacientes/:idPaciente/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
 					<Route path='/dashboard/pacientes/:idPaciente/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
