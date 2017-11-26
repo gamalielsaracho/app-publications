@@ -29,7 +29,14 @@ class FieldSelectEspecialidades extends Component {
 
 
 		if(listar.cargando) {
-			return <p>Cargando especialidades...</p>
+			return <div className='form-group'>
+				
+				<div className='form-inline'>
+					<div className='form-group'>
+						<span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando especialidades...
+					</div>
+				</div>
+			</div>
 		} else {
 			let especialidades = listar.especialidades
 
