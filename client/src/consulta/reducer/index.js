@@ -35,9 +35,11 @@ import {
 	ELIMINAR_CONSULTA_EXITO,
 	ELIMINAR_CONSULTA_FALLO,
 
-	
 	// ..
-	LIMPIAR_MENSAJE_ERROR_CONSULTA
+	LIMPIAR_MENSAJE_ERROR_CONSULTA,
+
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -56,7 +58,9 @@ const INITIAL_STATE = {
 	mostrarValoresEstadisticos: { 
 		cargando: false, valoresEstadisticos: null, error: ''
 	},
-	editar: { cargando: false, mensaje: '', error: '' }
+	editar: { cargando: false, mensaje: '', error: '' },
+
+	formularioFiltro: { abierto: false }
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -72,7 +76,23 @@ export default function (state = INITIAL_STATE, action) {
 			return state
 
 
+		case ABRIR_FORMULARIO_FILTRO:
+			state = Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: true
+				}
+			})
 
+			return state
+
+		case CERRAR_FORMULARIO_FILTRO:
+			state = Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: false
+				}
+			})
+
+			return state
 
 		case ABRIR_FORMULARIO_CREAR_CONSULTA:
 			state = Object.assign({}, state, {
@@ -180,7 +200,8 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' },
 				mostrar: INITIAL_STATE.mostrar,
-				eliminar: INITIAL_STATE.eliminar
+				eliminar: INITIAL_STATE.eliminar,
+				formularioFiltro: INITIAL_STATE.formularioFiltro
 			})
 
 		case LISTAR_CONSULTAS_EXITO:
