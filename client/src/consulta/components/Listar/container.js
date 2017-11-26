@@ -3,10 +3,6 @@ import { connect } from 'react-redux'
 import {
 	abrirFormularioCrearConsulta,
 
-	listarConsultas,
-	listarConsultasPreConsulta,
-	listarConsultasMedico,
-	listarConsultasPaciente,
 	mostrarConsulta
 } from '../../actions'
 
@@ -14,18 +10,19 @@ import {
 
 import Listar from './Listar'
 
-function mapStateToProps(state, ownProps) {
-	console.log(ownProps)
+// ownProps obtiene todas las properties que son pasados a
+// ListarConsultasContainer DENTRO DE FiltrosConsultasAppContainer
+//  Así que NO hace falta ya que no trae los parametros de la url
+// en donde el usuario está parado.
+
+// Vamos a pasarle urls a ListarConsultasContainer al ser llamado de 
+// FiltrosConsultasAppContainer (El componente Index en las rutas)
+
+function mapStateToProps(state) {
 	return {
 		crear: state.consulta.crear,
 		listar: state.consulta.listar,
 		consultas: state.consulta.listar.consultas,
-
-		// guardamos los parametros dentro del objeto urls.
-		urls: ownProps.params,
-
-		// para ver la url completa en el cual está parada el usuario.
-		pathname: ownProps.location.pathname,
 
 		// Para hacer render del formulario únicamente si está abierto.
 		formulario: state.consulta.formulario
@@ -37,20 +34,9 @@ function mapDispatchToProps(dispatch) {
 		abrirFormularioCrearConsulta: () => {
 			dispatch(abrirFormularioCrearConsulta())
 		},
-		listarConsultas: () => {
-			dispatch(listarConsultas())
-		},
-		listarConsultasPreConsulta: (idPreConsulta) => {
-			dispatch(listarConsultasPreConsulta(idPreConsulta))
-		},
+		
 		mostrarConsulta: (idConsulta) => {
 			dispatch(mostrarConsulta(idConsulta))
-		},
-		listarConsultasPaciente: (idPaciente) => {
-			dispatch(listarConsultasPaciente(idPaciente))
-		},
-		listarConsultasMedico: (idPersonal) => {
-			dispatch(listarConsultasMedico(idPersonal))
 		}
 	}
 }
