@@ -15,9 +15,6 @@ class Listar extends Component {
 		this.renderFormularioPreConsulta = this.renderFormularioPreConsulta.bind(this)
 	}
 
-	// componentWillMount() {
-	// 	this.props.listarRoles()
-	// }
 
 	renderFormularioPreConsulta() {
 		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
