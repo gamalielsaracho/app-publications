@@ -68,18 +68,22 @@ export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
 
 		case ABRIR_FORMULARIO_FILTRO:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formularioFiltro: {
 					abierto: true
 				}
 			})
 
+			return state
+
 		case CERRAR_FORMULARIO_FILTRO:
-			return Object.assign({}, state, {
+			state = Object.assign({}, state, {
 				formularioFiltro: {
 					abierto: false
 				}
 			})
+
+			return state
 
 
 		case ABRIR_MODAL_LISTAR_PRECONSULTAS_FECHA_DIA:
