@@ -31,6 +31,8 @@ import diagnosticoRoutes from './diagnostico/routes'
 
 import sintomaRoutes from './sintoma/routes'
 
+import consultaRoutes from './consulta/routes'
+
 
 import Estadistica1Container from './consulta/components/Estadistica1'
 
@@ -171,21 +173,6 @@ export default (
 			<Route path='/especialidades' component={ListarEspecialidadesPage}/>
 			
 
-			<Route path='/dashboard/consultas' component={ListarConsultasAppContainer}>
-				<IndexRoute component={ListarConsultasContainer}/>
-				
-				<Route path='/dashboard/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
-					<Route path='/dashboard/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
-					<Route path='/dashboard/consultas/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
-
-					<Route path='/dashboard/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
-						<Route path='/dashboard/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
-					</Route>
-
-				</Route>
-			</Route>
-
-
 			{ farmaceuticaRoutes }
 			{ medicamentoRoutes }
 			{ pacienteRoutes }
@@ -201,6 +188,7 @@ export default (
 			{ diagnosticoRoutes }
 			{ sintomaRoutes }
 			{ preConsultaRoutes }
+			{ consultaRoutes }
 
 				{/* Módulo farmacia. */}
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
