@@ -15,9 +15,7 @@ function mapStateToProps(state) {
 		crear: state.preConsulta.crear,
 		listar: state.preConsulta.listar,
 		preConsultas: state.preConsulta.listar.preConsultas,
-
-		// urls: ownProps.params,
-
+		
 
 		// Para hacer render del formulario únicamente si está abierto.
 		formulario: state.preConsulta.formulario
