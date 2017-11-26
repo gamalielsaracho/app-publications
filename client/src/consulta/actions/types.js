@@ -42,3 +42,7 @@ export const ELIMINAR_CONSULTA_FALLO = 'eliminair_consulta_fallo'
 
 export const LIMPIAR_MENSAJE_ERROR_CONSULTA = 'limpiar_mensaje_error_consulta'
 
+
+// FORMULARIO FILTRO.
+export const ABRIR_FORMULARIO_FILTRO = 'abrir_formulario_filtro'
+export const CERRAR_FORMULARIO_FILTRO = 'cerrar_formulario_filtro'

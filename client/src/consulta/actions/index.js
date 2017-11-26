@@ -39,7 +39,11 @@ import {
 	ELIMINAR_CONSULTA_FALLO,
 
 
-	LIMPIAR_MENSAJE_ERROR_CONSULTA
+	LIMPIAR_MENSAJE_ERROR_CONSULTA,
+
+	// Formulario Filtro.
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO
 } from './types'
 
 import io from 'socket.io-client'
@@ -55,6 +59,20 @@ var consultaSocket = io.connect('http://localhost:3000/consulta');
 export function limpiarMensajeErrorConsulta() {
 	return (dispatch) => {
 		dispatch({ type: LIMPIAR_MENSAJE_ERROR_CONSULTA })
+	}
+}
+
+
+export function abrirFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: ABRIR_FORMULARIO_FILTRO })
+	}
+}
+
+
+export function cerrarFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_FORMULARIO_FILTRO })
 	}
 }
 
