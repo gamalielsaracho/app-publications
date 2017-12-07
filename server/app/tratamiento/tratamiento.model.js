@@ -6,6 +6,21 @@ exports.find = (callback) => {
 	connection.end()
 }
 
+
+exports.update = (data, callback) => {
+	// console.log(data)
+	let q = `
+		UPDATE tratamientos SET
+			imprimido = true
+		WHERE
+			id_tratamiento = ?
+	`
+
+	return connection.query(q, [ data.id_tratamiento ], callback)
+
+	connection.end()
+}
+
 exports.findByIdConsulta = (data, callback) => {
 	let q = `
 		SELECT
