@@ -19,8 +19,9 @@ function mapStateToProps(state, ownProps) {
 		listar: state.consultaDiagnostico.listar,
 		consultaDiagnosticos: state.consultaDiagnostico.listar.consultaDiagnosticos,
 	
-		// Para obtener el id del personal que creó la consulta.
-		mostrarConsulta: state.consulta.mostrar,
+		// // Obtener datos de la consulta para Obtener el id del médico 
+		// // que creó.
+		// datosConsulta: state.consulta.mostrar,
 
 		// Obtenemos el estado del formulario, para ver si esta abierto
 		// y hacer render del mismo. 
