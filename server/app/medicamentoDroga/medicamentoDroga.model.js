@@ -1,5 +1,28 @@
 import connection from '../../config/connection'
 
+// exports.findDrogasByIdMedicamento = (idMedicamento, callback) => {
+
+// 	let q = `
+// 		SELECT
+// 			*
+// 		FROM  
+// 			medicamentosDrogas medicamentoDroga,
+// 			drogas droga 
+// 		WHERE
+// 			medicamentoDroga.id_droga = droga.id_droga AND
+// 			medicamentoDroga.id_medicamento = ?
+// 	`
+	
+// 	var options = {
+// 		sql: q, 
+// 		nestTables: true
+// 	}
+
+// 	return connection.query(options, [idMedicamento], callback)
+
+// 	connection.end()
+// }
+
 exports.findAllList = (callback) => {
 
 	let q = `
