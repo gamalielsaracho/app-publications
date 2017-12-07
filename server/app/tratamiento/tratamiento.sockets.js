@@ -27,10 +27,12 @@ export default (io) => {
 					return
 				}
 
-				socket.emit('crear_tratamiento', { mensaje: 'Se agregó exitósamente.' })
+				socket.emit('crear_tratamiento', { 
+					mensaje: 'Se agregó exitósamente.'
+				})
 						
 				fetchDataActions(tratamientoNsp, socket).mostrarTratamientoByIdConsulta({ 
-					id_consulta: tratamiento.insertId
+					id_consulta: data.id_consulta
 				})
 
 				fetchDataActions(tratamientoNsp, socket).listarTratamientos()
