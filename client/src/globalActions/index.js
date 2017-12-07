@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 
 import io from 'socket.io-client'
 
@@ -41,6 +42,55 @@ export function formatDate(date) {
 	if (day.length < 2) day = '0' + day;
 
 	return [year, month, day].join('-');
+}
+
+
+export function habilitadoSegunFecha(fechaCreacion) {
+	var fechaActual = new Date()
+
+	// var month = (d.getMonth() + 1)
+	// var day = d.getDate()
+	// var year = d.getFullYear()
+
+	let fechaCreacionDias = moment(fechaCreacion).format('DD')
+	// let fechaCreacionDias = '07'
+
+	let fechaActualDias = moment(fechaActual).format('DD')
+
+	let fechaCreacionMeses = moment(fechaCreacion).format('MM')
+	// let fechaCreacionMeses = '12'
+
+	let fechaActualMeses = moment(fechaActual).format('MM')
+
+	let fechaCreacionAnhos = moment(fechaCreacion).format('YYYY')
+	// let fechaCreacionAnhos = '2012'
+
+	let fechaActualAnhos = moment(fechaActual).format('YYYY')
+
+
+	let condition = (
+		fechaCreacionDias == fechaActualDias && 
+
+		fechaCreacionMeses == fechaActualMeses && 
+
+		fechaCreacionAnhos == fechaActualAnhos 
+	)
+	console.log('CREACIÓN')
+	console.log('dias: '+fechaCreacionDias)
+	console.log('meses: '+fechaCreacionMeses)
+	console.log('anos: '+fechaCreacionAnhos)
+
+
+	console.log('ACTUAL')
+	console.log('dias: '+fechaActualDias)
+	console.log('meses: '+fechaActualMeses)
+	console.log('anos: '+fechaActualAnhos)
+
+	if(condition) {
+		return 1
+	} else {
+		return 0
+	}
 }
 
 export const API_URL = 'http://localhost:3000/api'
