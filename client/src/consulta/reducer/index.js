@@ -242,7 +242,10 @@ export default function (state = INITIAL_STATE, action) {
 		// MOSTRAR.
 		case MOSTRAR_CONSULTA_REQUEST:
 			return Object.assign({}, state, {
-				mostrar: { cargando: true },
+				mostrar: { 
+					cargando: true,
+					consulta: null
+				},
 				formulario: { abirtoEditar: false, abirtoCrear: false },
 				eliminar: INITIAL_STATE.eliminar
 			})
