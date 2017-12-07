@@ -28,7 +28,8 @@ class Mostrar extends Component {
 				return <div>
 					<ListarMedicamentosTratamientoContainer
 						idTratamiento = { this.props.urls.idTratamiento }
-						fechaTratamiento = { tratamiento.fechaCreacion }/>
+						fechaTratamiento = { tratamiento.fechaCreacion }
+						tratamientoImprimido={ tratamiento.imprimido }/>
 				</div>
 			}
 		}
