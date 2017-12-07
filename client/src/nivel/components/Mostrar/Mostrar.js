@@ -14,7 +14,7 @@ class Mostrar extends Component {
 	renderNivel(nivel, cargando) {
 		if(cargando) {
 			return <Cargando/>
-		} else {
+		} else if(nivel){
 			return <div>
 				<p><strong>Nombre:</strong> { nivel.descripcion }</p>
 			</div>
@@ -31,6 +31,10 @@ class Mostrar extends Component {
 
 
 		const { cargando, nivel, error, abierto } = this.props.mostrar
+
+		console.log('this.props.mostrar NIVEL.')
+
+		console.log(this.props.mostrar)
 		
 		if(abierto) {
 			return <ReactModal isOpen={abierto}

@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		nivel: {}
+		nivel: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { niveles:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, nivel: {}, error: '', abierto: false },
+	mostrar: { cargando: false, nivel: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,7 +58,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					nivel: {}
+					nivel: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
@@ -74,7 +74,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					nivel: {}
+					nivel: null
 				},
 				crear: INITIAL_STATE.crear,
 				editar: INITIAL_STATE.editar,
@@ -103,7 +103,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					nivel: {}
+					nivel: null
 				},
 				mostrar: { abierto: false }
 			})
@@ -117,7 +117,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					nivel: {}
+					nivel: null
 				}
 			})
 
@@ -185,7 +185,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					nivel: {},
+					nivel: null,
 					error: action.payload,
 					abierto: true
 				},
@@ -196,7 +196,7 @@ export default function (state = INITIAL_STATE, action) {
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					nivel: {},
+					nivel: null,
 					error: '',
 					abierto: false
 				}
@@ -248,7 +248,7 @@ export default function (state = INITIAL_STATE, action) {
 				eliminar: {
 					cargando: false,
 					error: action.payload,
-					nivel: {}
+					nivel: null
 				}
 			})
 
