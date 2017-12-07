@@ -24,12 +24,6 @@ function mapStateToProps(state, ownProps) {
 		pathname: ownProps.location.pathname,
 
 
-		// Esto es para obtener el id del médico que creo la consulta
-		// para anular algunas acciones dentro de la vista.
-		// Lo cual, solamente el admin o médico podrá hacer.
-		datosConsulta: state.consulta.mostrar.consulta,
-
-
 		// Obtenemos el tratamiento por IdConsulta.
 		mostrarTratamientoIdConsulta: state.tratamiento.mostrarTratamientoIdConsulta
 	}
