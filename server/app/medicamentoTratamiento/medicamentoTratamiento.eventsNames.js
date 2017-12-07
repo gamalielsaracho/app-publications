@@ -1,0 +1,5 @@
+export default listar_medicamentosXtratamientos_byIdTratamiento = 'listar_medicamentosXtratamientos_byIdTratamiento'
+export default crear_medicamentosXtratamientos = 'crear_medicamentosXtratamientos'
+export default editar_medicamentosXtratamientos = 'editar_medicamentosXtratamientos'
+export default mostrar_medicamentosXtratamientos = 'mostrar_medicamentosXtratamientos'
+export default eliminar_medicamentosXtratamientos = 'eliminar_medicamentosXtratamientos'
