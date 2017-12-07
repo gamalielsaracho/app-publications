@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import ReactModal from 'react-modal'
 import moment from 'moment'
 
-import { formatDate, calcularEdad } from '../../../globalActions'
+import { formatDate, calcularEdad, habilitadoSegunFecha } from '../../../globalActions'
 
 import MensajeOerror from '../../../app/components/MensajeOerror'
 import Cargando from '../../../app/components/Cargando'
@@ -19,6 +19,7 @@ class Mostrar extends Component {
 		this.renderConsulta = this.renderConsulta.bind(this)
 		this.renderDatosPaciente = this.renderDatosPaciente.bind(this)
 		this.renderDatosPreConsulta = this.renderDatosPreConsulta.bind(this)
+		this.renderBtnsCrudByRolOrDate = this.renderBtnsCrudByRolOrDate.bind(this)
 	}
 
 	componentWillMount() {
@@ -75,11 +76,32 @@ class Mostrar extends Component {
 		}
 	}
 
+	renderBtnsCrudByRolOrDate(dato) {
+		let habilitado
+
+		if(habilitadoSegunFecha(dato.consulta.fecha)) {
+			habilitado = false
+		} else {
+			habilitado = true
+		}
+
+		return <div>
+			<button disabled={habilitado} 
+				onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
+			
+			<button disabled={habilitado} 
+				onClick={ () => { this.props.eliminarConsulta(dato.consulta.id_consulta) } } className='btn btn-danger btn-space'>Eliminar</button>
+		</div>
+	}
+
+
 	renderConsulta(cargando, dato) {
 		if(cargando) {
 			return <Cargando/>
 		} else if (dato){
-				return <div>
+				
+
+				return <div className='no-print-data'>
 					<h4 className='text-center'>Consulta</h4>
 					
 					<div className='row'>
@@ -88,8 +110,8 @@ class Mostrar extends Component {
 							<p><strong>Fecha:</strong>{ moment(dato.consulta.fecha).format('DD-MM-YYYY') } <strong>Hora:</strong>{ dato.consulta.hora }</p>
 							<p><strong>Fecha próxima consulta:</strong>{ moment(dato.consulta.fechaProximaConsulta).format('DD-MM-YYYY') }</p>
 							<p><strong>Nivel:</strong>{ dato.nivel.descripcion }</p>				
-							
 						</div>
+
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
 							<button onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
 							<button onClick={ () => { this.props.eliminarConsulta(dato.consulta.id_consulta) } } className='btn btn-danger btn-space'>Eliminar</button>
