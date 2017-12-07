@@ -24,3 +24,7 @@ export const ELIMINAR_TRATAMIENTO_FALLO = 'eliminair_tratamiento_fallo'
 export const LIMPIAR_MENSAJE_ERROR_TRATAMIENTO = 'limpiar_mensaje_error_tratamiento'
 
 
+// IMPRIMIR.
+export const IMPRIMIR_TRATAMIENTO = 'imprimir_tratamiento'
+
+
