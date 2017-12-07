@@ -35,6 +35,10 @@ require('././app/consulta/consulta.sockets')(io)
 require('././app/sintoma/sintoma.sockets')(io)
 
 
+require('././app/tratamiento/tratamiento.sockets')(io)
+
+require('././app/medicamentoTratamiento/medicamentoTratamiento.sockets')(io)
+
 
 // AJAX.
 // require('././app/preConsultaParametro/preConsultaParametro.sockets')(io)
