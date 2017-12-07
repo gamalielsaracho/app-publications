@@ -15,7 +15,9 @@ import {
 	ELIMINAR_TRATAMIENTO_EXITO,
 	ELIMINAR_TRATAMIENTO_FALLO,
 
-	LIMPIAR_MENSAJE_ERROR_TRATAMIENTO
+	LIMPIAR_MENSAJE_ERROR_TRATAMIENTO,
+
+	IMPRIMIR_TRATAMIENTO
 } from './types'
 
 import jwtDecode from 'jwt-decode'
@@ -27,6 +29,25 @@ import { reset } from 'redux-form'
 
 var tratamientoSocket = io.connect('http://localhost:3000/tratamiento');
 
+
+
+export function imprimirTratamiento(idTratamiento) {
+	return (dispatch) => {
+
+		tratamientoSocket.emit('actualizar_tratamiento_imprimido', { 
+			id_tratamiento: idTratamiento
+		})
+
+		tratamientoSocket.on('actualizar_tratamiento_imprimido', (data) => {
+
+			if(data.error) {
+				console.error(data.error)
+			} else {
+				dispatch({ type: IMPRIMIR_TRATAMIENTO })
+			}
+		})
+	}
+}
 
 export function limpiarMensajeErrorTratamiento() {
 	return (dispatch) => {
