@@ -8,6 +8,7 @@ exports.listar = function(req, res, next) {
 
 	MedicamentoXentregado.find(idMedicamentoEntregado, (err, medicamentosAgregados) => {
 		// console.log(medicamentosAgregados)
+		
 		if(err) {
 			console.log(err)
 						
