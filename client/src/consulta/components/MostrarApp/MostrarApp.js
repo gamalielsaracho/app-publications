@@ -19,10 +19,13 @@ class MostrarApp extends Component {
 		this.renderBtnAgregarTratamiento = this.renderBtnAgregarTratamiento.bind(this)
 
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+		this.idMedicoLocalSt = localStorage.getItem('idMedico')
 	}
 
 	componentWillMount() {
 		this.props.listarAnalisisSolicitados()
+		// console.log('EL ID ES ---------------------->')
+		// console.log(this.props.urls.idConsulta)
 		this.props.mostrarTratamientoIdConsultaFuncion(this.props.urls.idConsulta)
 	}
 
@@ -59,32 +62,26 @@ class MostrarApp extends Component {
 
 	renderBtnAgregarTratamiento() {
 		let idRol = this.personalLocalSt.id_rol
+		let idPersonal = this.personalLocalSt.id_personal
+
 		// 1 médico.
 		// 3 administración.
-
-		// Una vez que carga los datos de la consulta.
-		if(this.props.datosConsulta) {
-			// console.log('this.props.datosConsulta -----------> DATOS CONSULTA.')
-			// console.log(this.props.datosConsulta)
 			
-			const { consulta } = this.props.datosConsulta
+		let condition
 
-			let condition
+		condition = (
+			(idRol == 1 && idPersonal == this.idMedicoLocalSt) ||
+			(idRol == 3)
+		)
 
-			condition = (
-				(idRol == 1 && consulta.id_personal == idRol) ||
-				(idRol == 3)
-			)
-
-			if(condition) {
-				return <button type="button" onClick={ () => { 
-					this.props.crearTratamiento(this.props.urls.idConsulta) 
-				} } className="text-center btn btn-success btn-space">
-					Crear tratamiento
-				</button>
-			} else {
-				return <span></span>
-			}
+		if(condition) {
+			return <button type="button" onClick={ () => { 
+				this.props.crearTratamiento(this.props.urls.idConsulta) 
+			} } className="text-center btn btn-success btn-space">
+				Crear tratamiento
+			</button>
+		} else {
+			return <span></span>
 		}
 	}
 
