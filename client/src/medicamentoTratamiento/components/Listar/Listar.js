@@ -18,10 +18,28 @@ class Listar extends Component {
 		this.renderDetalleMedicamento = this.renderDetalleMedicamento.bind(this)
 		this.renderObservaciones = this.renderObservaciones.bind(this)
 		this.renderFormularioMedicamentoTratamiento = this.renderFormularioMedicamentoTratamiento.bind(this)
-		this.renderBtnsOpcionesByRolYEstadoImpreso = this.renderBtnsOpcionesByRolYEstadoImpreso.bind(this)
+		this.renderBtnsOpciones = this.renderBtnsOpciones.bind(this)
+		this.renderBtnAgregar = this.renderBtnAgregar.bind(this)
+		this.renderBtnImprimir = this.renderBtnImprimir.bind(this)
 		
+
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+		this.idMedicoLocalSt = localStorage.getItem('idMedico')
+
 		this.renderBtnAuditByRol = this.renderBtnAuditByRol.bind(this)
+		this.getEstadoHabilitado = this.getEstadoHabilitado.bind(this)
+	}
+
+	getEstadoHabilitado() {
+		let habilitado
+
+		if(this.props.tratamientoImprimido) {
+			habilitado = true
+		} else {
+			habilitado = false
+		}
+
+		return habilitado
 	}
 
 	componentWillMount() {
@@ -54,22 +72,58 @@ class Listar extends Component {
 	renderFormularioMedicamentoTratamiento() {
 		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
 			// console.log("FormularioPacienteContainer montado. cool.!!")
-				return <FormularioMedicamentoTratamientoContainer
-					idTratamiento={this.props.idTratamiento}/>
+			return <FormularioMedicamentoTratamientoContainer
+				idTratamiento={this.props.idTratamiento}/>
 		} else {
 			return <span></span>
 		}
 	}
 
-	renderBtnsOpcionesByRolYEstadoImpreso(i) {
+
+	renderBtnImprimir() {
 		let idRol = this.personalLocalSt.id_rol
+		let idPersonal = this.personalLocalSt.id_personal
+
+		if((idRol == 1 && idPersonal == this.idMedicoLocalSt) || (idRol == 3)) {
+			return <div className='row no-print-data'>
+				<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right'>
+					<button className='btn btn-success' 
+						onClick={() => { 
+							this.props.imprimirTratamiento(this.props.idTratamiento)
+						}}>Imprimir o Exportar a PDF</button>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
+
+	renderBtnAgregar() {
+		let idRol = this.personalLocalSt.id_rol
+		let idPersonal = this.personalLocalSt.id_personal
+
+		if((idRol == 1 && idPersonal == this.idMedicoLocalSt) || (idRol == 3)) {
+			return <div className='row no-print-data'>
+				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+					<button disabled={this.getEstadoHabilitado()} onClick={ this.props.abrirFormularioCrearMedicamentoTratamiento } className='btn btn-success'>Agregar</button>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderBtnsOpciones(i) {
+		let idRol = this.personalLocalSt.id_rol
+		let idPersonal = this.personalLocalSt.id_personal
 
 		// 1 médico.
 		// 3 administración.
-		if((idRol == 1) || (idRol == 3)) {
+		if((idRol == 1 && idPersonal == this.idMedicoLocalSt) || (idRol == 3)) {
 			return <div className='text-right no-print-data'>
-				<button type="button" onClick={() => { this.props.abrirFormularioEditarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-warning btn-space">Editar</button>
-				<button type="button" onClick={() => { this.props.eliminarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-danger btn-space">Eliminar</button>
+				<button disabled={this.getEstadoHabilitado()} type="button" onClick={() => { this.props.abrirFormularioEditarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-warning btn-space">Editar</button>
+				<button disabled={this.getEstadoHabilitado()} type="button" onClick={() => { this.props.eliminarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-danger btn-space">Eliminar</button>
 			</div>
 		} else {
 			return <span></span>
@@ -152,7 +206,7 @@ class Listar extends Component {
 							</div>
 							<div className='row'>
 								<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-									{ this.renderBtnsOpcionesByRolYEstadoImpreso(i) }
+									{ this.renderBtnsOpciones(i) }
 								</div>
 							</div>
 							<br/>
@@ -197,24 +251,12 @@ class Listar extends Component {
 
 				<h3 className='text-center'>Tratamiento</h3>
 
-				<div className='row no-print-data'>
-					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right'>
-						<button className='btn btn-success' 
-							onClick={() => { 
-								window.print()
-																
-							}}>Imprimir o Exportar a PDF</button>
-					</div>
-				</div>
+				{ this.renderBtnImprimir() }
 				<br/>
 
 				{ this.renderBtnAuditByRol() }
 
-				<div className='row no-print-data'>
-					<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-						<button onClick={ this.props.abrirFormularioCrearMedicamentoTratamiento } className='btn btn-success'>Agregar</button>
-					</div>
-				</div>
+				{ this.renderBtnAgregar() }
 				
 					
 				<div className=''>
