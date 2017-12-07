@@ -26,6 +26,10 @@ import ListarSintomasConsultaContainer from '../consultaSintoma/components/Lista
 // DIAGNÓSTICOS.
 import ListarConsultaDiagnosticosContainer from '../consultaDiagnostico/components/Listar'
 
+// TRATAMIENTO.
+import MostrarTratamientoContainer from '../tratamiento/components/Mostrar'
+
+
 // MOSTRAR ANÁLISIS SOLICITADO APP.
 import MostrarAnalisisSolicitadoAppContainer from '../analisisSolicitado/components/MostrarApp'
 
@@ -50,6 +54,10 @@ const preConsultaRoutes = (
 				<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
 					<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
 					<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
+
+
+					<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/tratamiento/:idTratamiento' component={MostrarTratamientoContainer}/>
+
 
 					<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
 						<Route path='/dashboard/pre-consultas/:idPreConsulta/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado/analisis/:idAnalisis/vista-general' component={MostrarVistaPreviaContainer}/>
