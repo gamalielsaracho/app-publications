@@ -290,6 +290,10 @@ export function mostrarConsulta(idConsulta) {
 			if(data.error) {
 				dispatch({ type: MOSTRAR_CONSULTA_FALLO, payload: data.error })
 			} else {
+				// console.log(data)
+				// Guardamos el id del médico de la consulta que se desea ver.
+				localStorage.setItem('idMedico', data.consulta.id_personal)
+
 				dispatch({ type: MOSTRAR_CONSULTA_EXITO, payload: data })
 			}
 		})
