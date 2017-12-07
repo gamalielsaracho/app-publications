@@ -29,8 +29,8 @@ exports.findById = (data, callback) => {
 
 exports.create = (data, callback) => {
 	let q = `
-		INSERT INTO tratamientos (id_tratamiento, id_consulta)
-			VALUES (null, ?);
+		INSERT INTO tratamientos (id_tratamiento, id_consulta, fechaCreacion)
+			VALUES (null, ?, now());
 	`
 	return connection.query(q, [ data.id_consulta ], callback)
 
