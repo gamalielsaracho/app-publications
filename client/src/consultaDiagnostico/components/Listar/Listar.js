@@ -13,10 +13,13 @@ class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderConsultaDiagnosticos = this.renderConsultaDiagnosticos.bind(this)
-		this.renderBtnsOpcionesByRolYpersonal = this.renderBtnsOpcionesByRolYpersonal.bind(this)
+		this.renderBtnsOpciones = this.renderBtnsOpciones.bind(this)
+		this.renderBtnAgregar = this.renderBtnAgregar.bind(this)
 		
+
 		this.renderFormularioConsultaDiagnostico = this.renderFormularioConsultaDiagnostico.bind(this)
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+		this.idMedicoLocalSt = localStorage.getItem('idMedico')
 
 		this.renderBtnAuditByRol = this.renderBtnAuditByRol.bind(this)
 	}
@@ -57,24 +60,36 @@ class Listar extends Component {
 		}
 	}
 
-	renderBtnsOpcionesByRolYpersonal(i) {
-
+	renderBtnAgregar() {
+		let idRol = this.personalLocalSt.id_rol
 		let idPersonal = this.personalLocalSt.id_personal
-		let rol = removeAccents(this.personalLocalSt.rol)
 
-		// this.props.mostrar
-		// console.log('HOLA DESDE renderBtnsOpcionesByRolYpersonal.! cool.!')
-		// &&  == personalPre.personal.id_personal
-
-		if((rol == 'medico' || rol == 'administracion')) {
-			return <div>
-					<button type="button" onClick={() => { this.props.abrirFormularioEditarConsultaDiagnostico(i.consultaDiagnostico.id_consultaDiagnostico) }} className="btn btn-warning btn-space">Editar</button>
-					<button type="button" onClick={() => { this.props.eliminarConsultaDiagnostico(i.consultaDiagnostico.id_consultaDiagnostico) }} className="btn btn-danger btn-space">Eliminar</button>
+		if((idRol == 1 && idPersonal == this.idMedicoLocalSt) || (idRol == 3)) {
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+					<button onClick={ this.props.abrirFormularioCrearConsultaDiagnostico } className='btn btn-success'>Agregar</button>
 				</div>
+			</div>
 		} else {
 			return <span></span>
 		}
+	}
 
+	renderBtnsOpciones(i) {
+		let idRol = this.personalLocalSt.id_rol
+		let idPersonal = this.personalLocalSt.id_personal
+
+		// 1 médico.
+		// 3 administración.
+
+		if((idRol == 1 && idPersonal == this.idMedicoLocalSt) || (idRol == 3)) {
+			return <div>
+				<button type="button" onClick={() => { this.props.abrirFormularioEditarConsultaDiagnostico(i.consultaDiagnostico.id_consultaDiagnostico) }} className="btn btn-warning btn-space">Editar</button>
+				<button type="button" onClick={() => { this.props.eliminarConsultaDiagnostico(i.consultaDiagnostico.id_consultaDiagnostico) }} className="btn btn-danger btn-space">Eliminar</button>
+			</div>
+		} else {
+			return <span></span>
+		}		
 	}
 
 	renderFormularioConsultaDiagnostico() {
@@ -97,7 +112,7 @@ class Listar extends Component {
 				            <td>{ i.diagnostico.descripcion }</td>
 				            <td>{ i.consultaDiagnostico.observaciones }</td>
 				            <td>
-								{ this.renderBtnsOpcionesByRolYpersonal(i) }
+								{ this.renderBtnsOpciones(i) }
 							</td>
 				        </tr>		
 					})
@@ -123,11 +138,7 @@ class Listar extends Component {
 											
 					<MensajeOerror error={error} mensaje={null}/>
 
-					<div className='row'>
-						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearConsultaDiagnostico } className='btn btn-success'>Agregar</button>
-						</div>
-					</div>
+					{ this.renderBtnAgregar() }
 					<br/>
 
 					{ this.renderFormularioConsultaDiagnostico() }
