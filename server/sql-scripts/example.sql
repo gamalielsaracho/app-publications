@@ -21,6 +21,32 @@ FROM
 WHERE
   cXd.id_consulta = consulta.id_consulta AND
     YEAR(consulta.fecha)
+
+
+
+SELECT
+     *,
+     cu.`fechaCreacion` AS cu_fechaCreacion,
+     cu.`fechaUmovimiento` AS cu_fechaUmovimiento,
+     cu.`saldo` AS cu_saldo,
+     cu.`sobreHabilitado` AS cu_sobreHabilitado,
+     mov.`fechaMovimiento` AS mov_fechaMovimiento,
+     mov.`monto` AS mov_monto,
+     mov.`tipo` AS mov_tipo,
+     mov.`id_cuenta` AS mov_id_cuenta,
+     cli.`nombre` AS cli_nombre,
+     cli.`apellido` AS cli_apellido,
+     cli.`sexo` AS cli_sexo,
+     cli.`edad` AS cli_edad,
+     ba.`Nombre` AS ba_Nombre
+FROM
+     `cuentas` cu, `movimientos` mov, `clientes` cli, `bancos` ba
+WHERE
+    cu.`id_cuenta` = mov.`id_cuenta` AND
+    cu.`id_cliente` = cli.`id_cliente` AND
+    cu.`id_banco` = ba.`id_banco`
+ORDER BY
+     cu.`id_cuenta` ASC
     
 
 -- --------------------
