@@ -8,6 +8,11 @@ import {
 	abrirFormularioEditarMedicamentoTratamiento
 } from '../../actions'
 
+
+import {
+	imprimirTratamiento
+} from '../../../tratamiento/actions'
+
 import Listar from './Listar'
 
 function mapStateToProps(state) {
@@ -18,6 +23,7 @@ function mapStateToProps(state) {
 	
 		// Para hacer render del formulario únicamente si está abierto.
 		formulario: state.medicamentoTratamiento.formulario
+
 	}
 }
 
@@ -37,6 +43,15 @@ function mapDispatchToProps(dispatch) {
 		},
 		abrirFormularioEditarMedicamentoTratamiento: (idMedicamentoTratamiento) => {
 			dispatch(abrirFormularioEditarMedicamentoTratamiento(idMedicamentoTratamiento))
+		},
+		imprimirTratamiento: (idTratamiento) => {
+			var r = confirm("Está seguro que desea Imprimir ?");
+		    
+		    if (r == true) {
+				window.print()
+		    }
+
+			// dispatch(imprimirTratamiento(idTratamiento))
 		}
 	}
 }
