@@ -15,6 +15,9 @@ import ListarSintomasConsultaContainer from '../consultaSintoma/components/Lista
 
 import ListarConsultaDiagnosticosContainer from '../consultaDiagnostico/components/Listar'
 
+import MostrarTratamientoContainer from '../tratamiento/components/Mostrar'
+
+
 // MOSTRAR ANÁLISIS SOLICITADO APP.
 import MostrarAnalisisSolicitadoAppContainer from '../analisisSolicitado/components/MostrarApp'
 
@@ -31,6 +34,8 @@ const consultaRoutes = (
 		<Route path='/dashboard/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
 			<Route path='/dashboard/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
 			<Route path='/dashboard/consultas/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
+
+			<Route path='/dashboard/consultas/:idConsulta/tratamiento/:idTratamiento' component={MostrarTratamientoContainer}/>
 
 
 			<Route path='/dashboard/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
