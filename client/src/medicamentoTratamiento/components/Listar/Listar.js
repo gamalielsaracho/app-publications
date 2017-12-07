@@ -1,0 +1,229 @@
+import React, { Component } from 'react'
+import jwtDecode from 'jwt-decode'
+
+import { Link } from 'react-router'
+
+import Cargando from '../../../app/components/Cargando'
+import MensajeOerror from '../../../app/components/MensajeOerror'
+
+import FormularioMedicamentoTratamientoContainer from '../Formulario'
+
+import CabeceraContainer from '../../../app/components/Cabecera'
+
+
+class Listar extends Component {
+	constructor(props) {
+		super(props)
+		this.renderMedicamentosTratamiento = this.renderMedicamentosTratamiento.bind(this)
+		this.renderDetalleMedicamento = this.renderDetalleMedicamento.bind(this)
+		this.renderObservaciones = this.renderObservaciones.bind(this)
+		this.renderFormularioMedicamentoTratamiento = this.renderFormularioMedicamentoTratamiento.bind(this)
+		this.renderBtnsOpcionesByRolYEstadoImpreso = this.renderBtnsOpcionesByRolYEstadoImpreso.bind(this)
+		
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+		this.renderBtnAuditByRol = this.renderBtnAuditByRol.bind(this)
+	}
+
+	componentWillMount() {
+		// idTratamiento es pasado como property al ser llamado dentro de 
+		// MostrarTratamientoContainer.
+		this.props.listarMedicamentosTratamientosByIdTratamiento(this.props.idTratamiento)
+	}
+
+
+	renderBtnAuditByRol() {
+		let idRol = this.personalLocalSt.id_rol
+		
+		if(idRol == 3) {
+			return <div className='row no-print-data'>
+				<div className='col-xs-11 col-sm-11 col-md-11 col-lg-11 text-right'>
+					<br/>
+					<Link target="_blank" to={`/dashboard/modulos-auditados/${this.props.idTratamiento}/auditoria/tratamiento-medicamentos`}>
+						<button type="button" className="btn btn-primary btn-md">
+							<span className="glyphicon glyphicon-search" aria-hidden="true"></span> Auditoría
+						</button>
+					</Link>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
+
+	renderFormularioMedicamentoTratamiento() {
+		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
+			// console.log("FormularioPacienteContainer montado. cool.!!")
+				return <FormularioMedicamentoTratamientoContainer
+					idTratamiento={this.props.idTratamiento}/>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderBtnsOpcionesByRolYEstadoImpreso(i) {
+		let idRol = this.personalLocalSt.id_rol
+
+		// 1 médico.
+		// 3 administración.
+		if((idRol == 1) || (idRol == 3)) {
+			return <div className='text-right no-print-data'>
+				<button type="button" onClick={() => { this.props.abrirFormularioEditarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-warning btn-space">Editar</button>
+				<button type="button" onClick={() => { this.props.eliminarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-danger btn-space">Eliminar</button>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
+	shouldComponentUpdate(nextProps) {
+		let condition = (
+			nextProps.medicamentosTratamiento !== this.props.medicamentosTratamiento ||
+			nextProps.eliminar !== this.props.eliminar ||
+			nextProps.formulario !== this.props.formulario
+		)
+		
+		if(condition) {
+			return true
+		}else {
+			return false
+		}
+	}
+
+	renderDetalleMedicamento(detalleMedicamento, medicamentoNoExistente) {
+		if(medicamentoNoExistente) {
+			return <div>
+				<h3 className=''>{ medicamentoNoExistente }</h3>
+			</div>
+		} else if(detalleMedicamento){
+			return <div>
+				<h3 className=''>{ detalleMedicamento.nombreMedicamento.descripcion }</h3>
+				<h4></h4>
+				{
+					detalleMedicamento.drogas.map((i) => {
+						return <ul key={i.droga.id_droga}>
+							<li>{i.droga.descripcion+' '+i.medicamentoDroga.descripcionProporcion }</li>
+						</ul>
+					})
+				}
+			</div>
+		}
+	}
+
+	renderObservaciones(observaciones) {
+		if(observaciones) {
+			return <div className=''>
+			<p><strong>Observaciones: </strong>{ observaciones }</p>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderMedicamentosTratamiento(medicamentosTratamiento) {
+		// console.log('<------------- medicamentosTratamiento -------->')
+		// console.log(medicamentosTratamiento)
+
+		return <div className='row'>
+			<div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+			{
+				medicamentosTratamiento.map((i) => {
+					return <div key={i.indicacion.id_medicamentoTratamiento}>
+							<div className='row'>
+								<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+									{ this.renderDetalleMedicamento(i.detalleMedicamento, i.indicacion.medicamentoNoExistente) }
+								</div>
+							</div>
+							<div className='row'>
+								<div className='col-xs-12 col-sm-6 col-md-6 col-lg-5'>
+									<p><strong>Consumir: </strong> { i.indicacion.cantidadConsumo }</p>
+								</div>
+								<div className='col-xs-12 col-sm-3 col-md-6 col-lg-3'>
+									<p><strong>Cada: </strong> { i.indicacion.cantidadTiempo }</p>
+								</div>
+								<div className='col-xs-12 col-sm-3 col-md-6 col-lg-4'>
+									<p><strong>Durante: </strong> { i.indicacion.duracionConsumo }</p>
+								</div>
+					   		</div>	
+							<div className='row'>
+								<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+									{ this.renderObservaciones(i.indicacion.observaciones) }
+								</div>
+							</div>
+							<div className='row'>
+								<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+									{ this.renderBtnsOpcionesByRolYEstadoImpreso(i) }
+								</div>
+							</div>
+							<br/>
+					</div>
+				})
+			}
+			</div>
+		</div>
+	}
+
+	render() {
+
+		const { medicamentosTratamiento, cargando } = this.props.listar
+
+		let error = this.props.listar.error ? this.props.listar.error :
+			this.props.eliminar.error
+
+		// window.onbeforeprint = function () {
+  //       	alert('Hello');
+  //   	}
+	    // window.onafterprint = function () {
+	    //     alert('Bye');
+	    // }
+		
+		//.. 
+		if(cargando) {
+			return <Cargando/>
+		} else {
+			return <div>
+				<h1 className='text-center'></h1>
+
+				{/*
+				*/}
+
+				{ this.renderFormularioMedicamentoTratamiento() }
+
+				<MensajeOerror error={error} mensaje={null}/>
+
+				<CabeceraContainer
+					styleData={'datos-cabecera-en-modal'}
+					fechaTratamiento = { this.props.fechaTratamiento }/>
+
+				<h3 className='text-center'>Tratamiento</h3>
+
+				<div className='row no-print-data'>
+					<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right'>
+						<button className='btn btn-success' 
+							onClick={() => { 
+								window.print()
+																
+							}}>Imprimir o Exportar a PDF</button>
+					</div>
+				</div>
+				<br/>
+
+				{ this.renderBtnAuditByRol() }
+
+				<div className='row no-print-data'>
+					<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+						<button onClick={ this.props.abrirFormularioCrearMedicamentoTratamiento } className='btn btn-success'>Agregar</button>
+					</div>
+				</div>
+				
+					
+				<div className=''>
+					{ this.renderMedicamentosTratamiento(medicamentosTratamiento) }
+				</div>
+			</div>
+		}
+
+	}
+}
+
+export default Listar

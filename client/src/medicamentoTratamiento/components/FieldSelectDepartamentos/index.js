@@ -1,0 +1,2 @@
+import FieldSelectDepartamentosContainer from './container'
+export default FieldSelectDepartamentosContainer
