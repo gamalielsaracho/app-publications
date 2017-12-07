@@ -40,6 +40,21 @@ export default (io) => {
 		})
 
 
+		socket.on('actualizar_tratamiento_imprimido', (data) => {
+			Tratamiento.update(data, (err, tratamiento) => {
+				// console.log(tratamiento)
+
+				if(err) {
+					console.log(err)
+					socket.emit('actualizar_tratamiento_imprimido', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				fetchDataActions(tratamientoNsp, socket).mostrarTratamientoById(data)
+			})
+		})
+
+
 		socket.on('eliminar_tratamiento', (data) => {
 			
 			referentialIntegritySimple('medicamentostratamientos', 'id_tratamiento', data.id_tratamiento, (err, enUso) => {
@@ -54,30 +69,18 @@ export default (io) => {
 					return
 				} else {
 					Tratamiento.delete(data, (err) => {
-							if(err) {
-								console.log(err)
-								socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
-								return
-							}
-
-
-							tiposAnalisis()
-
-
-							socket.emit('eliminar_tipoAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
 						if(err) {
 							console.log(err)
 							socket.emit('eliminar_tratamiento', { error: 'Ocurrió un error, intente más tarde.' })
 							return
 						}
-
+						
 						socket.emit('eliminar_tratamiento', { mensaje: 'Se Eliminó exitósamente.' })
 					
 						fetchDataActions(tratamientoNsp, socket).mostrarTratamientoByIdConsulta({ 
-							id_consulta: data.id_tratamiento
+							id_consulta: data.id_consulta
 						})
 
-						fetchDataActions(tratamientoNsp, socket).listarTratamientos()	
 					})
 				}
 			})
@@ -85,17 +88,7 @@ export default (io) => {
 		
 		
 		socket.on('mostrar_tratamiento', (data) => {
-			Tratamiento.findById(data, (err, tratamiento) => {
-				// console.log(tratamiento)
-
-				if(err) {
-					console.log(err)
-					socket.emit('mostrar_tratamiento', { error: 'Ocurrió un error, intente más tarde.' })
-					return
-				}
-
-				socket.emit('mostrar_tratamiento', tratamiento[0])
-			})
+			fetchDataActions(tratamientoNsp, socket).mostrarTratamientoById(data)
 		})
 
 
