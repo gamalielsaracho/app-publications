@@ -13,15 +13,82 @@ class MostrarApp extends Component {
 	constructor(props) {
 		super(props)
 		this.renderLinkSolicitudLaboratorio = this.renderLinkSolicitudLaboratorio.bind(this)
-		this.renderBtnAgregarConsultaByRol = this.renderBtnAgregarConsultaByRol.bind(this)
+		this.renderBtnAgregarSolicitudLaboratorioByRol = this.renderBtnAgregarSolicitudLaboratorioByRol.bind(this)
+		
+		this.renderLinkTratamiento = this.renderLinkTratamiento.bind(this)
+		this.renderBtnAgregarTratamiento = this.renderBtnAgregarTratamiento.bind(this)
+
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
 		this.props.listarAnalisisSolicitados()
+		this.props.mostrarTratamientoIdConsultaFuncion(this.props.urls.idConsulta)
 	}
 
-	renderBtnAgregarConsultaByRol() {
+	renderLinkTratamiento(urlMostrarTratamiento) {
+		const { tratamiento, cargando, error } = this.props.mostrarTratamientoIdConsulta
+
+		// let activeSolicitudLaboratorio
+		// console.log('this.props.mostrarTratamientoIdConsulta ---->')
+		// console.log(this.props.mostrarTratamientoIdConsulta)
+
+		if(cargando) {
+			return <p>Cargando..</p>
+		} else {
+			if(tratamiento) {
+				// ..
+
+				let url = `${urlMostrarTratamiento}/${tratamiento.id_tratamiento}`
+				let activeMostrarTratamiento
+
+				if(this.props.pathname == url) {
+					activeMostrarTratamiento = 'active'
+				}
+
+				return <li className="nav-item nav-link" className={activeMostrarTratamiento}>
+					<Link to={url}>Tratamiento</Link>
+				</li>
+			} else {
+				return <li className="nav-item nav-link">
+					{ this.renderBtnAgregarTratamiento() }
+				</li>
+			}
+		}
+	}
+
+	renderBtnAgregarTratamiento() {
+		let idRol = this.personalLocalSt.id_rol
+		// 1 médico.
+		// 3 administración.
+
+		// Una vez que carga los datos de la consulta.
+		if(this.props.datosConsulta) {
+			// console.log('this.props.datosConsulta -----------> DATOS CONSULTA.')
+			// console.log(this.props.datosConsulta)
+			
+			const { consulta } = this.props.datosConsulta
+
+			let condition
+
+			condition = (
+				(idRol == 1 && consulta.id_personal == idRol) ||
+				(idRol == 3)
+			)
+
+			if(condition) {
+				return <button type="button" onClick={ () => { 
+					this.props.crearTratamiento(this.props.urls.idConsulta) 
+				} } className="text-center btn btn-success btn-space">
+					Crear tratamiento
+				</button>
+			} else {
+				return <span></span>
+			}
+		}
+	}
+
+	renderBtnAgregarSolicitudLaboratorioByRol() {
 
 		let idRol = this.personalLocalSt.id_rol
 
@@ -51,9 +118,9 @@ class MostrarApp extends Component {
 
 
 			if(solicitudesLaboratorio.length == 0) {
-				return <div>
-					{ this.renderBtnAgregarConsultaByRol() }
-				</div>
+				return <li >
+					{ this.renderBtnAgregarSolicitudLaboratorioByRol() }
+				</li>
 			} else {	
 				let url = `${urlMostrarSolicitudLaboratorio}/${solicitudesLaboratorio[0].analisisSolicitado.id_analisisSolicitado}`
 				
@@ -61,13 +128,9 @@ class MostrarApp extends Component {
 					activeSolicitudLaboratorio = 'active'
 				}
 
-				return <div>
-					<ul className="nav nav-tabs">
-						<li className="nav-item nav-link" className={activeSolicitudLaboratorio}>
+				return <li className="nav-item nav-link" className={activeSolicitudLaboratorio}>
 						    <Link to={`${urlMostrarSolicitudLaboratorio}/${solicitudesLaboratorio[0].analisisSolicitado.id_analisisSolicitado}`}>Solicitud laboratorio</Link>
 						</li>
-					</ul>
-				</div>
 			}
 		}
 	}
@@ -75,30 +138,37 @@ class MostrarApp extends Component {
 	render() {
 		let urlListarSintomas
 		let urlListarDiagnosticos
+		let urlMostrarTratamiento
 		let urlMostrarSolicitudLaboratorio
+
 
 		let activeDiagnosticos
 		let activeSintomas
-		let activeSolicitudLaboratorio
-
 
 		// Rutas según el lugar en donde se encuentre el usuario.
-		
+
 		if(this.props.urls.idPaciente && this.props.urls.idConsulta) {
 			urlListarSintomas = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/sintomas`
 			urlListarDiagnosticos = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/diagnosticos`
 			urlMostrarSolicitudLaboratorio = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
+			urlMostrarTratamiento = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/tratamiento`
+		
 		} else {
 			if(this.props.urls.idPreConsulta && this.props.urls.idConsulta) {
 				urlListarSintomas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/sintomas`
 				urlListarDiagnosticos = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/diagnosticos`
 				urlMostrarSolicitudLaboratorio = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
+				urlMostrarTratamiento = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/tratamiento`
+			
 			} else {
 				urlListarSintomas = `/dashboard/consultas/${this.props.urls.idConsulta}/sintomas`
 				urlListarDiagnosticos = `/dashboard/consultas/${this.props.urls.idConsulta}/diagnosticos`
 				urlMostrarSolicitudLaboratorio = `/dashboard/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio`
+				urlMostrarTratamiento = `/dashboard/consultas/${this.props.urls.idConsulta}/tratamiento`
+			
 			}
 		}
+
 
 		
 		switch(this.props.pathname) {
@@ -123,7 +193,7 @@ class MostrarApp extends Component {
 			<FormularioConsultaContainer/>
 
 			<br/>
-			<ul className="nav nav-tabs">
+			<ul className="nav nav-tabs no-print-data">
 				<li className="nav-item nav-link" className={activeSintomas}>
 				    <Link to={urlListarSintomas}>Síntomas</Link>
 				</li>
@@ -131,8 +201,12 @@ class MostrarApp extends Component {
 				    <Link to={urlListarDiagnosticos}>Diagnósticos</Link>
 				</li>
 
+			
+				{ this.renderLinkTratamiento(urlMostrarTratamiento) }
 				{ this.renderLinkSolicitudLaboratorio(urlMostrarSolicitudLaboratorio) }
+			
 			</ul>
+
 			{ this.props.children }
 			<br/>
 			<br/>
