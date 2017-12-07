@@ -18,11 +18,13 @@ import MostrarPacienteAppContainer from './components/MostrarApp'
 // CONSULTAS APP.
 import ListarConsultasAppContainer from '../consulta/components/ListarApp'
 
-
-// CONSULTA APP.
+// HIJOS.
 import MostrarConsultaAppContainer from '../consulta/components/MostrarApp'
 
 import ListarSintomasConsultaContainer from '../consultaSintoma/components/Listar'
+
+import MostrarTratamientoContainer from '../tratamiento/components/Mostrar'
+
 
 // LISTAR ANÁLISIS SOLICITADOS APP.
 import ListarAppAnalisisSolicitadosContainer from '../analisisSolicitado/components/ListarApp'
@@ -45,7 +47,7 @@ const pacienteRoutes = (
 			<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>
 					
 			<Route path='/dashboard/pacientes/:idPaciente/consultas' component={ListarConsultasAppContainer}>
-					<IndexRoute component={FiltrosConsultasAppContainer}/>
+				<IndexRoute component={FiltrosConsultasAppContainer}/>
 				
 				{/*
 				*/}
@@ -53,6 +55,8 @@ const pacienteRoutes = (
 				<Route path='/dashboard/pacientes/:idPaciente/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
 					<Route path='/dashboard/pacientes/:idPaciente/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>
 					<Route path='/dashboard/pacientes/:idPaciente/consultas/:idConsulta/diagnosticos' component={ListarConsultaDiagnosticosContainer}/>
+
+					<Route path='/dashboard/pacientes/:idPaciente/consultas/:idConsulta/tratamiento/:idTratamiento' component={MostrarTratamientoContainer}/>
 
 
 					<Route path='/dashboard/pacientes/:idPaciente/consultas/:idConsulta/solicitud-laboratorio/:idAnalisisSolicitado' component={MostrarAnalisisSolicitadoAppContainer}>
