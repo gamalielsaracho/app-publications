@@ -15,9 +15,6 @@ function mapStateToProps(state, ownProps) {
 		listar: state.consultaSintoma.listar,
 		sintomasConsulta: state.consultaSintoma.listar.sintomasConsulta,
 
-		// Obtenemos el estado de la consulta para poder tener el id del
-		// personal que creó la consulta.
-		mostrarConsulta: state.consulta.mostrar,
 
 		// guardamos todos los parametros de la url en el objeto urls.
 		urls: ownProps.params,
