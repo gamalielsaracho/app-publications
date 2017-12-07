@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import jwtDecode from 'jwt-decode'
 
 import ReactModal from 'react-modal'
 import moment from 'moment'
@@ -19,7 +20,10 @@ class Mostrar extends Component {
 		this.renderConsulta = this.renderConsulta.bind(this)
 		this.renderDatosPaciente = this.renderDatosPaciente.bind(this)
 		this.renderDatosPreConsulta = this.renderDatosPreConsulta.bind(this)
-		this.renderBtnsCrudByRolOrDate = this.renderBtnsCrudByRolOrDate.bind(this)
+		this.renderBtnsCrud = this.renderBtnsCrud.bind(this)
+
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+		// this.idMedicoLocalSt = localStorage.getItem('idMedico')
 	}
 
 	componentWillMount() {
@@ -76,22 +80,34 @@ class Mostrar extends Component {
 		}
 	}
 
-	renderBtnsCrudByRolOrDate(dato) {
-		let habilitado
+	renderBtnsCrud(dato) {
+		let idRol = this.personalLocalSt.id_rol
+		let idPersonal = this.personalLocalSt.id_personal
 
-		if(habilitadoSegunFecha(dato.consulta.fecha)) {
-			habilitado = false
+		// 1 médico.
+		// 3 administración.
+		console.log('this.idMedicoLocalSt CREADOR')
+		console.log(localStorage.getItem('idMedico'))
+			
+		console.log('ID PERSONAL LOGEADO')
+		console.log(idPersonal)
+
+		let condition
+
+		condition = (
+			(idRol == 1 && idPersonal == localStorage.getItem('idMedico')) ||
+			(idRol == 3)
+		)
+
+		if(condition) {
+			return <div>
+				<button onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
+				<button onClick={ () => { this.props.eliminarConsulta(dato.consulta.id_consulta) } } className='btn btn-danger btn-space'>Eliminar</button>
+			</div>
 		} else {
-			habilitado = true
+			return <span></span>
 		}
 
-		return <div>
-			<button disabled={habilitado} 
-				onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
-			
-			<button disabled={habilitado} 
-				onClick={ () => { this.props.eliminarConsulta(dato.consulta.id_consulta) } } className='btn btn-danger btn-space'>Eliminar</button>
-		</div>
 	}
 
 
@@ -113,8 +129,7 @@ class Mostrar extends Component {
 						</div>
 
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-4'>
-							<button onClick={ () => { this.props.abrirFormularioEditarConsulta(dato.consulta.id_consulta) } } className='btn btn-info btn-space'>Editar</button>
-							<button onClick={ () => { this.props.eliminarConsulta(dato.consulta.id_consulta) } } className='btn btn-danger btn-space'>Eliminar</button>
+							{ this.renderBtnsCrud(dato) }
 						</div>
 					</div>
 
