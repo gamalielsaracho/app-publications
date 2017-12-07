@@ -39,8 +39,21 @@ export default (nsp, socket) => {
 				// por IdConsulta retorna null el servidor.
 				// y null no es un Objeto. 
 				nsp.emit('mostrar_tratamiento_idConsulta', { 
-					tratamiento: tratamiento[0]
+					tratamiento: tratamiento[0] ? tratamiento[0] : null
 				})
+			})
+		},
+		mostrarTratamientoById: (data) => {
+			Tratamiento.findById(data, (err, tratamiento) => {
+				// console.log(tratamiento)
+
+				if(err) {
+					console.log(err)
+					socket.emit('mostrar_tratamiento', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				socket.emit('mostrar_tratamiento', tratamiento[0])
 			})
 		}
 		
