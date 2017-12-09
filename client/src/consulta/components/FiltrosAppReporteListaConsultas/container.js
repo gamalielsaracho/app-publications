@@ -2,10 +2,11 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import moment from 'moment'
 
-import FiltrosApp from './FiltrosApp'
+import FiltrosAppReporteListaConsultas from './FiltrosAppReporteListaConsultas'
 
 import {
-	listarConsultas,
+	reporteListarConsultas,
+
 	listarConsultasMedico,
 	listarConsultasPaciente,
 	listarConsultasPreConsulta,
@@ -14,14 +15,14 @@ import {
 } from '../../actions'
 
 function mapStateToProps(state, ownProps) {
-	// console.log('ownProps ------------------->')
-	// console.log(ownProps)
+
 	return {
 		urls: ownProps.params,
 		
 		// para ver la url completa en el cual está parada el usuario.
 		pathname: ownProps.location.pathname,
 
+		
 		valoresFiltro: {
     		// Para filtrar .
     		fecha: selector(state, 'fecha') || '',
@@ -45,7 +46,7 @@ function mapStateToProps(state, ownProps) {
 			apellidos_medico: selector(state, 'apellidos_medico') || ''
     	},
 
-		listar: state.consulta.listar,
+		listarReportes: state.consulta.listarReportes,
 
 		formularioFiltro: state.consulta.formularioFiltro
 
@@ -54,8 +55,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarConsultas: () => {
-			dispatch(listarConsultas())
+		reporteListarConsultas: () => {
+			dispatch(reporteListarConsultas())
 		},
 		listarConsultasPaciente: (idPaciente) => {
 			dispatch(listarConsultasPaciente(idPaciente))
@@ -71,21 +72,6 @@ function mapDispatchToProps(dispatch) {
 		},
 
 
-		// ..................................
-		// fechaDesde
-		// fechaHasta
-		// hora
-		// fechaProximaConsulta
-		// id_nivel
-		// id_especialidad
-		// nroDocumento_paciente
-		// id_tipoDocumento_paciente
-		// nombres_paciente
-		// apellidos_paciente
-		// nroDocumento_medico
-		// id_tipoDocumento_medico
-		// nombres_medico
-		// apellidos_medico
 		consultasFiltradasEnGeneral: (consultas, v) => {
 			console.log("Entro en EnGeneral ............")
 			console.log(v)
@@ -137,7 +123,7 @@ function mapDispatchToProps(dispatch) {
 					consultaFiltro = (
 						i.consulta.id_nivel.toString().match(v.id_nivel) &&
 						i.consulta.fechaProximaConsulta.match(v.fechaProximaConsulta) &&
-						i.personal.id_especialidad.toString().match(v.id_especialidad) &&
+						i.medico.id_especialidad.toString().match(v.id_especialidad) &&
 						i.consulta.hora.match(v.hora)
 					)
 				} else {
@@ -173,10 +159,10 @@ function mapDispatchToProps(dispatch) {
 				
 				if(condicionFieldsMedico) {
 					medicoFiltro = (
-						i.personal.nroDocumento.match(v.nroDocumento_medico) &&
-						i.personal.id_tipoDocumento.toString().match(v.id_tipoDocumento_medico) &&
-						i.personal.nombres.match(v.nombres_medico) &&
-						i.personal.apellidos.match(v.apellidos_medico)
+						i.medico.nroDocumento.match(v.nroDocumento_medico) &&
+						i.medico.id_tipoDocumento.toString().match(v.id_tipoDocumento_medico) &&
+						i.medico.nombres.match(v.nombres_medico) &&
+						i.medico.apellidos.match(v.apellidos_medico)
 					)
 				} else {
 					medicoFiltro = true
@@ -206,12 +192,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 const form = reduxForm({
-  form: 'FiltrosAppConsultas'
+  form: 'FiltrosAppReporteListaConsultas'
 })
 
-const selector = formValueSelector('FiltrosAppConsultas')
+const selector = formValueSelector('FiltrosAppReporteListaConsultas')
 
-export default connect(mapStateToProps, mapDispatchToProps)(form(FiltrosApp))
+export default connect(mapStateToProps, mapDispatchToProps)(form(FiltrosAppReporteListaConsultas))
 
 
 

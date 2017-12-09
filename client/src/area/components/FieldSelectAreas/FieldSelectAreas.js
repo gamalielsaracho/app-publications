@@ -3,8 +3,23 @@ import React, { Component } from 'react'
 import FormularioAreaContainer from '../Formulario'
 
 class FieldSelectAreas extends Component {
+	constructor(props) {
+		super(props)
+		this.renderBtnAdd = this.renderBtnAdd.bind(this)
+	}
+
+	renderBtnAdd(showBtnAdd) {
+		if(showBtnAdd) {
+			return <button type="button" onClick={this.props.abrirFormularioCrearArea} className="btn btn-success btn-space btn-sm">
+				<span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Nueva area
+			</button>
+		} else {
+			return <span></span>
+		}
+	}
+
 	render() {
-		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
+		const { input, label, showBtnAdd, listar, type, meta: { touched, error, warning } } = this.props
 
 		if(listar.cargando) {
 			return <div className='form-group'>
@@ -36,9 +51,7 @@ class FieldSelectAreas extends Component {
 						</select>
 					</div>
 
-					<button type="button" onClick={this.props.abrirFormularioCrearArea} className="btn btn-success btn-space btn-sm">
-						<span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Nueva area
-					</button>
+					{ this.renderBtnAdd(showBtnAdd) }
 
 			   		{ touched && ((error && <label className="text-danger text-center">{ error }</label>)) }
 				</div>

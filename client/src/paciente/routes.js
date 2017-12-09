@@ -4,11 +4,12 @@ import { Route, IndexRoute } from 'react-router'
 // FILTROS APP.
 import FiltrosConsultasAppContainer from '../consulta/components/FiltrosApp'
 
-// Listar.
+// PACIENTES APP.
 import ListarPacientesApp from './components/ListarApp'
 
-// PACIENTES
-import ListarPacientesPage from '../paciente/pages/ListarPacientesPage'
+// FILTROS PACIENTES APP.
+import FiltrosPacientesAppContainer from './components/FiltrosApp'
+
 
 import MostrarPacienteAppContainer from './components/MostrarApp'
 
@@ -41,7 +42,7 @@ import ListarConsultaDiagnosticosContainer from '../consultaDiagnostico/componen
 {/* Historial clínico. */}
 const pacienteRoutes = (
 	<Route path='/dashboard/pacientes' component={ListarPacientesApp}>
-		<IndexRoute component={ListarPacientesPage}/>
+		<IndexRoute component={FiltrosPacientesAppContainer}/>
 				
 		<Route path='/dashboard/pacientes/:idPaciente' component={MostrarPacienteAppContainer}>
 			<Route path='/dashboard/pacientes/:idPaciente/alergias' component={ListarPacienteAlergiasPage}/>

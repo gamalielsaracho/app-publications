@@ -24,12 +24,16 @@ import MostrarAnalisisSolicitadoAppContainer from '../analisisSolicitado/compone
 import MostrarVistaPreviaContainer from '../analisis/components/MostrarVistaPrevia'
 
 
+import FiltrosAppReporteListaConsultasContainer from './components/FiltrosAppReporteListaConsultas'
+
 
 {/* Módulo de consultas. */}
 const consultaRoutes = (
 	<Route path='/dashboard/consultas' component={ListarConsultasAppContainer}>
 		<IndexRoute component={FiltrosConsultasAppContainer}/>
+		
 				
+		<Route path='/dashboard/consultas/lista-consultas-vista-general-reportes' component={FiltrosAppReporteListaConsultasContainer}/>
 					
 		<Route path='/dashboard/consultas/:idConsulta' component={MostrarConsultaAppContainer}>
 			<Route path='/dashboard/consultas/:idConsulta/sintomas' component={ListarSintomasConsultaContainer}/>

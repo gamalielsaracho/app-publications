@@ -10,17 +10,8 @@ exports.findListByIdTratamiento = (data, callback) => {
 		WHERE
 			id_tratamiento = ?
 	`
-		// SELECT 
-		// 	*
-		// FROM 
-		// 	medicamentostratamientos indicacion,
-		// 	nombresMedicamentos nombreMedicamento
-		// LEFT JOIN 
-		// 	medicamentos medicamento ON 
-		// 		indicacion.id_medicamento = medicamento.id_medicamento AND
-		// 		medicamento.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento
 
-				// ORDER BY Customers.CustomerName
+	
 	var options = {
 		sql: q, 
 		nestTables: true
@@ -30,6 +21,47 @@ exports.findListByIdTratamiento = (data, callback) => {
 
 	connection.end()
 }
+
+
+exports.findListByIdTratamientoReporteConsultas = (data, callback) => {
+	let q = `
+		SELECT
+			*
+		FROM
+			(SELECT
+				indicacion.id_medicamentoTratamiento,
+				indicacion.medicamentoNoExistente,
+				indicacion.cantidadConsumo,
+				indicacion.cantidadTiempo,
+				indicacion.duracionConsumo,
+				indicacion.observaciones,
+				indicacion.id_tratamiento,
+				indicacion.id_medicamento,
+
+				medicamento.id_nombreMedicamento
+			FROM
+				medicamentostratamientos indicacion
+
+	 			LEFT JOIN medicamentos medicamento 
+	 			ON indicacion.id_medicamento = medicamento.id_medicamento
+	 		WHERE indicacion.id_tratamiento = ?) indicacion,
+
+			nombresMedicamentos nombreMedicamento
+
+		WHERE
+			indicacion.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento
+	`
+	 			
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, [data.id_tratamiento], callback)
+
+	connection.end()
+}
+
 
 
 exports.findById = (data, callback) => {

@@ -39,7 +39,12 @@ import {
 	LIMPIAR_MENSAJE_ERROR_CONSULTA,
 
 	ABRIR_FORMULARIO_FILTRO,
-	CERRAR_FORMULARIO_FILTRO
+	CERRAR_FORMULARIO_FILTRO,
+
+
+	REPORTE_LISTAR_CONSULTAS_REQUEST,
+	REPORTE_LISTAR_CONSULTAS_EXITO,
+	REPORTE_LISTAR_CONSULTAS_FALLO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -53,6 +58,7 @@ const INITIAL_STATE = {
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { consultas:[], cargando: false, error: '' },
+	listarReportes: { consultas:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, consulta: null, error: '' },
 	mostrarValoresEstadisticos: { 
@@ -65,6 +71,27 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+
+		case REPORTE_LISTAR_CONSULTAS_REQUEST:
+			return Object.assign({}, state, {
+				listarReportes: { cargando: true, error: '' },
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar,
+				formularioFiltro: INITIAL_STATE.formularioFiltro
+			})
+
+		case REPORTE_LISTAR_CONSULTAS_EXITO:
+			return Object.assign({}, state, {
+				listarReportes: { consultas: action.payload.consultas, cargando: false, error: '' }
+			})
+
+		case REPORTE_LISTAR_CONSULTAS_FALLO:
+			return Object.assign({}, state, {
+				listarReportes: { error: action.payload, consultas:[], cargando: false }
+			})
+
+
+
 		
 		case LIMPIAR_MENSAJE_ERROR_CONSULTA:
 			state = Object.assign({}, state, {

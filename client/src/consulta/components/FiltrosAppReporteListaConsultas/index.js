@@ -1,0 +1,2 @@
+import FiltrosAppReporteListaConsultasContainer from './container'
+export default FiltrosAppReporteListaConsultasContainer

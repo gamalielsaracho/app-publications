@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 
 import {
-	listarPacientes,
 	eliminarPaciente,
 
 	abrirFormularioCrearPaciente,
@@ -12,8 +11,6 @@ import Listar from './Listar'
 
 function mapStateToProps(state) {
 	return {
-		eliminar: state.paciente.eliminar,
-		listar: state.paciente.listar,
 		pacientes: state.paciente.listar.pacientes,
 
 
@@ -24,9 +21,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarPacientes: () => {
-			dispatch(listarPacientes())
-		},
 		eliminarPaciente: (idPaciente) => {
 			var r = confirm("Está seguro que desea eliminar?");
 		    if (r == true) {

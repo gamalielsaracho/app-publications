@@ -86,11 +86,11 @@ class Mostrar extends Component {
 
 		// 1 médico.
 		// 3 administración.
-		console.log('this.idMedicoLocalSt CREADOR')
-		console.log(localStorage.getItem('idMedico'))
+		// console.log('this.idMedicoLocalSt CREADOR')
+		// console.log(localStorage.getItem('idMedico'))
 			
-		console.log('ID PERSONAL LOGEADO')
-		console.log(idPersonal)
+		// console.log('ID PERSONAL LOGEADO')
+		// console.log(idPersonal)
 
 		let condition
 

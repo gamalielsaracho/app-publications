@@ -31,11 +31,18 @@ class Listar extends Component {
 	}
 
 	getEstadoHabilitado() {
+		let idRol = this.personalLocalSt.id_rol
+
 		let habilitado
 
 		if(this.props.tratamientoImprimido) {
 			habilitado = true
 		} else {
+			habilitado = false
+		}
+
+		// 3 administración.
+		if(idRol == 3) {
 			habilitado = false
 		}
 
@@ -247,7 +254,8 @@ class Listar extends Component {
 
 				<CabeceraContainer
 					styleData={'datos-cabecera-en-modal'}
-					fechaTratamiento = { this.props.fechaTratamiento }/>
+					fechaCreacion = { this.props.fechaTratamiento }
+					fechaImpresion = { new Date() }/>
 
 				<h3 className='text-center'>Tratamiento</h3>
 

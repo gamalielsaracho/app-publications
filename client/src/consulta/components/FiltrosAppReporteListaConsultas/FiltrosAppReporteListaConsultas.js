@@ -8,7 +8,7 @@ import moment from 'moment'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import ListarConsultasContainer from '../Listar'
+import ReporteListaConsultasContainer from '../ReporteListaConsultas'
 
 import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
 
@@ -25,7 +25,7 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
   </div>
 )
 
-class FiltrosApp extends Component {
+class FiltrosAppReporteListaConsultas extends Component {
 	constructor(props) {
 		super(props)
 		this.renderFormularioFiltros = this.renderFormularioFiltros.bind(this)
@@ -44,14 +44,8 @@ class FiltrosApp extends Component {
 			if(this.props.urls.idPreConsulta) {
 				this.props.listarConsultasPreConsulta(this.props.urls.idPreConsulta)
 			} else {
-				this.props.listarConsultas()
+				this.props.reporteListarConsultas()
 			}
-
-			// if(idRol == 3) {
-			// 	this.props.listarConsultas()
-			// } else if (idRol == 1) {
-			// 	this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
-			// }
 		}
 	}
 
@@ -65,7 +59,7 @@ class FiltrosApp extends Component {
 				reset={reset}
 				urls = { this.props.urls }/>
 		} else {
-			return <div>
+			return <div className='no-print-data'>
 				<br/>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-8 col-md-6 col-lg-6'>
@@ -79,13 +73,11 @@ class FiltrosApp extends Component {
 
 	render() {
 
-		const { consultas, cargando, error } = this.props.listar
+		const { consultas, cargando, error } = this.props.listarReportes
 
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			console.log('this.props.urls --------------->')
-			console.log(this.props.urls)
 
 			// console.log(consultas)
 
@@ -127,13 +119,12 @@ class FiltrosApp extends Component {
 
 				{ this.renderFormularioFiltros() }
  
-				<ListarConsultasContainer 
-					consultasFiltradas={ consultasFiltradas }
-					urls = { this.props.urls }/>
+				<ReporteListaConsultasContainer 
+					consultasFiltradas={ consultasFiltradas }/>
 			</div>
 		}
 
 	}
 }
 
-export default FiltrosApp
+export default FiltrosAppReporteListaConsultas

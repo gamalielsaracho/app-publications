@@ -7,8 +7,8 @@ export default (nsp, socket) => {
 
 	return {
 		listarByIdTratamiento: (data) => {
-			MedicamentoTratamiento.findListByIdTratamiento(data, (err, medicamentosTratamiento) => {
 				// console.log(medicamentosTratamiento)
+			MedicamentoTratamiento.findListByIdTratamiento(data, (err, medicamentosTratamiento) => {
 				if(err) {
 					console.log(err)
 						

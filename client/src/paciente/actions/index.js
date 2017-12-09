@@ -31,7 +31,12 @@ import {
 	// Delete Rol.
 	ELIMINAR_PACIENTE_REQUEST,
 	ELIMINAR_PACIENTE_EXITO,
-	ELIMINAR_PACIENTE_FALLO
+	ELIMINAR_PACIENTE_FALLO,
+
+
+	// Formulario Filtro.
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO
 } from './types'
 
 import io from 'socket.io-client'
@@ -42,6 +47,21 @@ import moment from 'moment'
 
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
+
+
+export function abrirFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: ABRIR_FORMULARIO_FILTRO })
+	}
+}
+
+
+export function cerrarFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_FORMULARIO_FILTRO })
+	}
+}
+
 
 export function abrirFormularioCrearPaciente() {
 	return (dispatch) => {

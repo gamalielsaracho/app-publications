@@ -1,4 +1,13 @@
 import Consulta from './consulta.model'
+import PreConsultaParametro from '../preConsultaParametro/preConsultaParametro.model'
+import ConsultaSintoma from '../consultaSintoma/consultaSintoma.model'
+import ConsultaDiagnostico from '../consultaDiagnostico/consultaDiagnostico.model'
+
+// ............
+import MedicamentoTratamiento from '../medicamentoTratamiento/medicamentoTratamiento.model'
+import Medicamento from '../medicamento/medicamento.model'
+import MedicamentoDroga from '../medicamentoDroga/medicamentoDroga.model'
+
 
 import verifyRef from './././../validations/verifyRef.js'
 
@@ -66,9 +75,144 @@ export default (io) => {
 		})
 
 
+
+
+		Consulta.findListaConsultasDetalladasReporte((err, consultas) => {
+			// console.log(consultas)
+			if(err) {
+				console.log(err)
+				socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+				return
+			}
+
+
+			let longConsultas = consultas.length
+
+			consultas.map((i) => {
+				PreConsultaParametro.find(i.preConsulta.id_preconsulta, (err, resultadosPreconsulta) => {
+					if(err) {
+						console.log(err)	
+						socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+						return
+					}
+
+					i.resultadosPreconsulta = resultadosPreconsulta
+
+					ConsultaSintoma.find(i.consulta.id_consulta, (err, sintomas) => {
+						if(err) { 
+							console.log(err)	
+							socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })				
+							return
+						}
+
+						i.sintomas = sintomas
+
+						ConsultaDiagnostico.find(i.consulta.id_consulta, (err, diagnosticos) => {
+							if(err) {
+								console.log(err)	
+								socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })				
+								return
+							}
+
+							i.diagnosticos = diagnosticos
+
+							// if(i.consulta.id_tratamiento) {
+							// 	MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
+							// 		if(err) {
+							// 			console.log(err)
+							// 			socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })					
+							// 			return
+							// 		}
+
+							// 		// console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+							// 		// console.log(medicamentosTratamiento)
+
+							// 		// let longMedicamentosTratamiento = medicamentosTratamiento.length
+
+							// 		// if(longMedicamentosTratamiento) {
+							// 			// medicamentosTratamiento.map((j) => {
+							// 			// 	let idMedicamento = j.indicacion.id_medicamento
+
+							// 			// 		MedicamentoDroga.find(idMedicamento , (err, drogas) => {
+							// 			// 			if(err) {
+							// 			// 				console.log(err)
+							// 			// 				socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+							// 			// 				return
+							// 			// 			}
+														
+							// 			// 			j.drogas = drogas
+
+													
+							// 			// 		})
+							// 			// })
+
+							// 			i.tratamientos = medicamentosTratamiento
+										
+							// 			if(i == consultas[longConsultas-1]) {
+							// 				consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+							// 			}
+							// 		// } 
+							// 		// else {
+							// 		// 	i.tratamientos = []
+
+							// 		// 	if(i == consultas[longConsultas-1]) {
+							// 		// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+							// 		// 	}
+							// 		// }
+
+							// 	})
+
+							// } else {
+							// 	i.tratamientos = []
+							// 	if(i == consultas[longConsultas-1]) {
+							// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+							// 	}
+							// }
+
+							if(i.consulta.id_tratamiento) {
+								// i.tratamientos = [{ hola: "dddd" }]
+								console.log("------> "+i.consulta.id_tratamiento)
+								MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
+									
+									medicamentosTratamiento.map((j) => {
+										let idMedicamento = j.indicacion.id_medicamento
+
+										MedicamentoDroga.find(idMedicamento , (err, drogas) => {
+											if(err) {
+												console.log(err)
+												socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+												return
+											}
+														
+											j.drogas = drogas
+
+													
+										})
+									})
+									i.tratamientos = medicamentosTratamiento
+
+									if(i == consultas[longConsultas-1]) {
+										consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+									}
+								})
+
+							} else {
+								i.tratamientos = []
+
+								if(i == consultas[longConsultas-1]) {
+									consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+								}
+							}
+						})
+					})
+				})
+			})
+		})
+
+
+
 		// Estadística 1.
 		Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
-				// console.log(diagnosticos)
 			if(err) {
 				console.log(err)
 				socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
@@ -80,6 +224,7 @@ export default (io) => {
 			diagnosticos.map((i) => {
 				Consulta.findCantidadDiagnosticosEnAnhos(i.id_diagnostico, (err, consultas) => {
 						// console.log(consultas)
+
 					if(err) {
 						console.log(err)
 						socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })

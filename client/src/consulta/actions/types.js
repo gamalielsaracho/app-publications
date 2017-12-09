@@ -46,3 +46,9 @@ export const LIMPIAR_MENSAJE_ERROR_CONSULTA = 'limpiar_mensaje_error_consulta'
 // FORMULARIO FILTRO.
 export const ABRIR_FORMULARIO_FILTRO = 'abrir_formulario_filtro'
 export const CERRAR_FORMULARIO_FILTRO = 'cerrar_formulario_filtro'
+
+
+
+export const REPORTE_LISTAR_CONSULTAS_REQUEST = 'reporte_listar_consultas_request'
+export const REPORTE_LISTAR_CONSULTAS_EXITO = 'reporte_listar_consultas_exito'
+export const REPORTE_LISTAR_CONSULTAS_FALLO = 'reporte_listar_consultas_fallo'

@@ -1,0 +1,2 @@
+import ReporteListaConsultasContainer from './container'
+export default ReporteListaConsultasContainer

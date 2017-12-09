@@ -8,11 +8,11 @@ import moment from 'moment'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import ListarConsultasContainer from '../Listar'
+import ListarContainer from '../Listar'
 
 import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
 
-import FiltrosConsultasContainer from '../Filtros'
+import FiltrosPacientesContainer from '../Filtros'
 
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
@@ -34,26 +34,9 @@ class FiltrosApp extends Component {
 	}
 
 	componentWillMount() {
-		let idRol = this.personalLocalSt.id_rol
-
-		if(this.props.urls.idPaciente) {
-			this.props.listarConsultasPaciente(this.props.urls.idPaciente)
-		} else {
-			// 3 administración.
-			// 1 médico.
-			if(this.props.urls.idPreConsulta) {
-				this.props.listarConsultasPreConsulta(this.props.urls.idPreConsulta)
-			} else {
-				this.props.listarConsultas()
-			}
-
-			// if(idRol == 3) {
-			// 	this.props.listarConsultas()
-			// } else if (idRol == 1) {
-			// 	this.props.listarConsultasMedico(this.personalLocalSt.id_personal)
-			// }
-		}
+		this.props.listarPacientes()
 	}
+
 
 	renderFormularioFiltros() {
 		const { handleSubmit, pristine, reset, submitting } = this.props		
@@ -61,9 +44,8 @@ class FiltrosApp extends Component {
 		const { abierto } = this.props.formularioFiltro
 
 		if(abierto) {
-			return <FiltrosConsultasContainer 
-				reset={reset}
-				urls = { this.props.urls }/>
+			return <FiltrosPacientesContainer 
+				reset={reset}/>
 		} else {
 			return <div>
 				<br/>
@@ -79,18 +61,18 @@ class FiltrosApp extends Component {
 
 	render() {
 
-		const { consultas, cargando, error } = this.props.listar
+		const { pacientes, cargando } = this.props.listar
+
+		let error = this.props.listar.error ? this.props.listar.error :
+			this.props.eliminar.error
 
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			console.log('this.props.urls --------------->')
-			console.log(this.props.urls)
-
-			// console.log(consultas)
+			
 
 			let v = this.props.valoresFiltro
-			let consultasFiltradas = consultas
+			let pacientesFiltrados = pacientes
 
 			let condition = (
 				v.fechaDesde.length > 0 || v.fechaHasta.length > 0 ||
@@ -118,7 +100,7 @@ class FiltrosApp extends Component {
 
 			
 			if(condition){
-				consultasFiltradas = this.props.consultasFiltradasEnGeneral(consultasFiltradas, v)
+				pacientesFiltrados = this.props.pacientesFiltradosEnGeneral(pacientesFiltrados, v)
 			}
 
 
@@ -127,9 +109,8 @@ class FiltrosApp extends Component {
 
 				{ this.renderFormularioFiltros() }
  
-				<ListarConsultasContainer 
-					consultasFiltradas={ consultasFiltradas }
-					urls = { this.props.urls }/>
+				<ListarContainer 
+					pacientesFiltrados={ pacientesFiltrados }/>
 			</div>
 		}
 

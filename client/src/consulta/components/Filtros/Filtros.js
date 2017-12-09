@@ -278,7 +278,7 @@ class Filtros extends Component {
 	}
 
 	render() {
-			return <form>
+			return <form className='no-print-data'>
 				<br/>
 
 				{ this.renderFormularioByParams() }

@@ -3,7 +3,9 @@ import { Link } from 'react-router'
 
 import jwtDecode from 'jwt-decode'
 
-import { formatDate } from '../../../globalActions'
+import moment from 'moment'
+
+// import {  } from '../../../globalActions'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -21,9 +23,6 @@ class Listar extends Component {
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
-	componentWillMount() {
-		this.props.listarPacientes()
-	}
 
 	shouldComponentUpdate(nextProps) {
 		let condition = (
@@ -90,10 +89,11 @@ class Listar extends Component {
 				pacientes.map((paciente) => {
 					return <tr key={paciente.pa.id_paciente}>
 			            <td>{ paciente.pa.nroDocumento }</td>
-			            <td>{ paciente.tipoDocumento.descripcion }</td>
+			            <td>{ paciente.pa.nombreTipoDocumento }</td>
+			            <td>{ moment(paciente.fecha).format('DD-MM-YYYY') }</td>
 			            <td>{ paciente.pa.nombres }</td>
 			            <td>{ paciente.pa.apellidos }</td>
-			            <td>{ formatDate(paciente.pa.fechaNacimiento) }</td>
+			            <td>{ moment(paciente.pa.fechaNacimiento).format('DD-MM-YYYY') }</td>
 			            <td>{ paciente.pa.direccion }</td>
 			            <td>{ paciente.pa.sexo }</td>
 			            <td>{ paciente.area.descripcion }</td>
@@ -110,19 +110,9 @@ class Listar extends Component {
 
 	render() {
 
-		const { pacientes, cargando } = this.props.listar
-
-		let error = this.props.listar.error ? this.props.listar.error :
-			this.props.eliminar.error
-
-		if(cargando) {
-			return <Cargando/>
-		} else {
 				return <div>
 					<h1 className='text-center'>Pacientes</h1>
 					
-					<MensajeOerror error={error} mensaje={null}/>
-
 					{ this.renderFormularioPaciente() }
 
 					<div className='row'>
@@ -138,6 +128,7 @@ class Listar extends Component {
 						    	<tr>
 						        	<th className='text-center'>Nro.Doc</th>
 						        	<th className='text-center'>Tipo Doc</th>
+						        	<th className='text-center'>Ingreso</th>
 						        	<th className='text-center'>Nombres</th>
 						        	<th className='text-center'>Apellidos</th>
 						        	<th className='text-center'>Nacimiento</th>
@@ -149,12 +140,12 @@ class Listar extends Component {
 						    	</tr>
 						    </thead>
 
-							{ this.renderPacientes(pacientes) }
+							{ this.renderPacientes(this.props.pacientesFiltrados) }
 
 						</table>
 					</div>
 				</div>
-		}
+		
 
 	}
 }

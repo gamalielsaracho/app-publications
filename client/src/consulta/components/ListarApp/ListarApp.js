@@ -4,16 +4,41 @@ import { Link } from 'react-router'
 class ListarApp extends Component {
 	render() {
 		let urlListarConsultas
+		let urlReportesListaConsultas
+
 
 		let activeList
 		let activeShow
+		let activeMostrarReportes
 
-		if(this.props.urls.idConsulta) {
-			activeList = ''
-			activeShow = 'active'
-		} else {
+		let condicionActiveUrlListarConsultas = (
+			this.props.pathname == `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas` ||
+			this.props.pathname == `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas` ||
+			this.props.pathname == `/dashboard/consultas`
+		)
+
+
+		let condicionActiveUrlMostrarReportesConsultas = (
+			this.props.pathname == `/dashboard/consultas/lista-consultas-vista-general-reportes`
+			// this.props.pathname == `/dashboard/consultas/lista-consultas-vista-general-reportes` ||
+			// this.props.pathname == `/dashboard/consultas/lista-consultas-vista-general-reportes`
+		)
+
+		if(condicionActiveUrlListarConsultas) {
 			activeList = 'active'
 			activeShow = ''
+			activeMostrarReportes = ''
+
+		} else {
+			if(condicionActiveUrlMostrarReportesConsultas) {
+				activeMostrarReportes = 'active'
+				activeShow = ''
+				activeList = ''
+			}
+		}
+
+		if(this.props.urls.idConsulta) {
+			activeShow = 'active'
 		}
 
 		// Si está parado en el historial clínico del paciente.
@@ -24,6 +49,7 @@ class ListarApp extends Component {
 				urlListarConsultas = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas`
 			} else {
 				urlListarConsultas = `/dashboard/consultas`
+				urlReportesListaConsultas = `/dashboard/consultas/lista-consultas-vista-general-reportes`
 			}
 		}
 		
@@ -35,6 +61,9 @@ class ListarApp extends Component {
 			  </li>
 			  <li className="nav-item nav-link" className={activeShow}>
 			    <a className="nav-link">Detalle Consulta</a>
+			  </li>
+			  <li className="nav-item nav-link" className={activeMostrarReportes}>
+			  	<Link to={urlReportesListaConsultas}>Reportes</Link>
 			  </li>
 			</ul>
 

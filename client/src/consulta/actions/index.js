@@ -43,7 +43,12 @@ import {
 
 	// Formulario Filtro.
 	ABRIR_FORMULARIO_FILTRO,
-	CERRAR_FORMULARIO_FILTRO
+	CERRAR_FORMULARIO_FILTRO,
+
+
+	REPORTE_LISTAR_CONSULTAS_REQUEST,
+	REPORTE_LISTAR_CONSULTAS_EXITO,
+	REPORTE_LISTAR_CONSULTAS_FALLO
 } from './types'
 
 import io from 'socket.io-client'
@@ -55,6 +60,25 @@ import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var consultaSocket = io.connect('http://localhost:3000/consulta');
+
+
+export function reporteListarConsultas() {
+	return (dispatch) => {
+
+		dispatch({ type: REPORTE_LISTAR_CONSULTAS_REQUEST })
+		var consultaSocket = io.connect('http://localhost:3000/consulta');
+
+		consultaSocket.on('reporte_listar_consultas', (data) => {
+			// console.log(data)
+			
+			if(data.error) {
+				dispatch({ type: REPORTE_LISTAR_CONSULTAS_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: REPORTE_LISTAR_CONSULTAS_EXITO, payload: data })
+			}
+		})
+	}
+}
 
 export function limpiarMensajeErrorConsulta() {
 	return (dispatch) => {

@@ -29,7 +29,11 @@ import {
 
 	ELIMINAR_PACIENTE_REQUEST,
 	ELIMINAR_PACIENTE_EXITO,
-	ELIMINAR_PACIENTE_FALLO
+	ELIMINAR_PACIENTE_FALLO,
+
+
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -45,12 +49,32 @@ const INITIAL_STATE = {
 	listar: { pacientes:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, paciente: null, error: '' },
-	editar: { cargando: false, mensaje: '', error: '' }
+	editar: { cargando: false, mensaje: '', error: '' },
+	formularioFiltro: { abierto: false }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
-		
+
+		case ABRIR_FORMULARIO_FILTRO:
+			state = Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: true
+				}
+			})
+
+			return state
+
+		case CERRAR_FORMULARIO_FILTRO:
+			state = Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: false
+				}
+			})
+
+			return state
+
+
 		case ABRIR_FORMULARIO_CREAR_PACIENTE:
 			return Object.assign({}, state, {
 				formulario: {
@@ -139,7 +163,8 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_PACIENTES_REQUEST:
 			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' },
-				eliminar: INITIAL_STATE.eliminar
+				eliminar: INITIAL_STATE.eliminar,
+				formularioFiltro: INITIAL_STATE.formularioFiltro
 			})
 
 

@@ -5,17 +5,13 @@ import moment from 'moment'
 import FiltrosApp from './FiltrosApp'
 
 import {
-	listarConsultas,
-	listarConsultasMedico,
-	listarConsultasPaciente,
-	listarConsultasPreConsulta,
+	listarPacientes,
 
 	abrirFormularioFiltro
 } from '../../actions'
 
 function mapStateToProps(state, ownProps) {
-	// console.log('ownProps ------------------->')
-	// console.log(ownProps)
+	
 	return {
 		urls: ownProps.params,
 		
@@ -45,26 +41,18 @@ function mapStateToProps(state, ownProps) {
 			apellidos_medico: selector(state, 'apellidos_medico') || ''
     	},
 
-		listar: state.consulta.listar,
+		listar: state.paciente.listar,
+		eliminar: state.paciente.eliminar,
 
-		formularioFiltro: state.consulta.formularioFiltro
+		formularioFiltro: state.paciente.formularioFiltro
 
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarConsultas: () => {
-			dispatch(listarConsultas())
-		},
-		listarConsultasPaciente: (idPaciente) => {
-			dispatch(listarConsultasPaciente(idPaciente))
-		},
-		listarConsultasMedico: (idPersonal) => {
-			dispatch(listarConsultasMedico(idPersonal))
-		},
-		listarConsultasPreConsulta: (idPreConsulta) => {
-			dispatch(listarConsultasPreConsulta(idPreConsulta))
+		listarPacientes: () => {
+			dispatch(listarPacientes())
 		},
 		abrirFormularioFiltro: () => {
 			dispatch(abrirFormularioFiltro())
@@ -86,7 +74,7 @@ function mapDispatchToProps(dispatch) {
 		// id_tipoDocumento_medico
 		// nombres_medico
 		// apellidos_medico
-		consultasFiltradasEnGeneral: (consultas, v) => {
+		pacientesFiltradosEnGeneral: (pacientes, v) => {
 			console.log("Entro en EnGeneral ............")
 			console.log(v)
 
@@ -130,7 +118,7 @@ function mapDispatchToProps(dispatch) {
 				v.apellidos_medico
 			)
 
-			consultas = consultas.filter((i) => {
+			pacientes = pacientes.filter((i) => {
 
 
 				if(condicionFieldsConsulta) {
@@ -200,16 +188,16 @@ function mapDispatchToProps(dispatch) {
 
 			})
 
-			return consultas
+			return pacientes
 		}
 	}
 }
 
 const form = reduxForm({
-  form: 'FiltrosAppConsultas'
+  form: 'FiltrosAppPacientes'
 })
 
-const selector = formValueSelector('FiltrosAppConsultas')
+const selector = formValueSelector('FiltrosAppPacientes')
 
 export default connect(mapStateToProps, mapDispatchToProps)(form(FiltrosApp))
 

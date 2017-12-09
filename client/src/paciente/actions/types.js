@@ -34,3 +34,6 @@ export const ELIMINAR_PACIENTE_EXITO = 'eliminair_paciente_exito'
 export const ELIMINAR_PACIENTE_FALLO = 'eliminair_paciente_fallo'
 
 
+// FORMULARIO FILTRO.
+export const ABRIR_FORMULARIO_FILTRO = 'abrir_formulario_filtro'
+export const CERRAR_FORMULARIO_FILTRO = 'cerrar_formulario_filtro'

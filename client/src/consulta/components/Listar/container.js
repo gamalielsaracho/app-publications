@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import {
 	abrirFormularioCrearConsulta,
-
+ 
 	mostrarConsulta
 } from '../../actions'
 
