@@ -28,7 +28,17 @@ import {
 
 	ELIMINAR_MEDICAMENTO_ENTREGADO_REQUEST,
 	ELIMINAR_MEDICAMENTO_ENTREGADO_EXITO,
-	ELIMINAR_MEDICAMENTO_ENTREGADO_FALLO
+	ELIMINAR_MEDICAMENTO_ENTREGADO_FALLO,
+
+
+	// Formulario Filtro.
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO,
+
+
+	MEDICAMENTO_ENTREGADO_IMPRESION_REQUEST,
+	MEDICAMENTO_ENTREGADO_IMPRESION_EXITO,
+	MEDICAMENTO_ENTREGADO_IMPRESION_FALLO
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -44,11 +54,62 @@ const INITIAL_STATE = {
 	listar: { medicamentosEntregados:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
 	mostrar: { cargando: false, medicamentoEntregado: null, error: '' },
-	editar: { cargando: false, mensaje: '', error: '' }
+	editar: { cargando: false, mensaje: '', error: '' },
+	formularioFiltro: { abierto: false },
+	medicamentoEntregadoImpresion: { cargando: false, medicamentoEntregado: null, error: '' }
 }
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+
+		// PARA IMPRIMIR UN COMPROBANTE DE MEDICAMENTOS ENTREGADOS POR ID.
+		case MEDICAMENTO_ENTREGADO_IMPRESION_REQUEST:
+			return Object.assign({}, state, {
+				medicamentoEntregadoImpresion: { 
+					cargando: true,
+					medicamentoEntregado: null,
+					error: ''
+				}
+			})
+
+		case MEDICAMENTO_ENTREGADO_IMPRESION_EXITO:
+			return Object.assign({}, state, {
+				medicamentoEntregadoImpresion: {
+					cargando: false,
+					medicamentoEntregado: action.payload
+				}
+			})
+
+		case MEDICAMENTO_ENTREGADO_IMPRESION_FALLO:
+			return Object.assign({}, state, {
+				medicamentoEntregadoImpresion: {
+					cargando: false,
+					medicamentoEntregado: null,
+					error: action.payload
+				}
+			})
+
+
+		// FILTROS.
+		case ABRIR_FORMULARIO_FILTRO:
+			state = Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: true
+				}
+			})
+
+			return state
+
+		case CERRAR_FORMULARIO_FILTRO:
+			state = Object.assign({}, state, {
+				formularioFiltro: {
+					abierto: false
+				}
+			})
+
+			return state
+
+
 		case ABRIR_FORMULARIO_CREAR_MEDICAMENTO_ENTREGADO:
 			return Object.assign({}, state, {
 				formulario: {
@@ -132,7 +193,8 @@ export default function (state = INITIAL_STATE, action) {
 		// LISTAR.
 		case LISTAR_MEDICAMENTOS_ENTREGADOS_REQUEST:
 			return Object.assign({}, state, {
-				listar: { cargando: true, error: '' }
+				listar: { cargando: true, error: '' },
+				formularioFiltro: INITIAL_STATE.formularioFiltro
 			})
 
 		case LISTAR_MEDICAMENTOS_ENTREGADOS_EXITO:

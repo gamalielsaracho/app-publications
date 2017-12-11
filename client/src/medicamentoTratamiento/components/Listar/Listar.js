@@ -254,8 +254,7 @@ class Listar extends Component {
 
 				<CabeceraContainer
 					styleData={'datos-cabecera-en-modal'}
-					fechaCreacion = { this.props.fechaTratamiento }
-					fechaImpresion = { new Date() }/>
+					fechaCreacion = { this.props.fechaTratamiento }/>
 
 				<h3 className='text-center'>Tratamiento</h3>
 

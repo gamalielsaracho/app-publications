@@ -27,14 +27,20 @@ class MostrarApp extends Component {
 
 	render() {
 		let urlListarMedicamentos = `/dashboard/medicamentos-entregados/${this.props.urls.idMedicamentoEntregado}/medicamentos`
-
 		let activeListarMedicamentos = ''
+
+		let urlMedicamentosEntrgadosImpresion = `/dashboard/medicamentos-entregados/${this.props.urls.idMedicamentoEntregado}/vista-general-comprobante`
+		let activeMedicamentosEntrgadosImpresion = ''
 
 		if(this.props.pathname == urlListarMedicamentos) {
 			activeListarMedicamentos = 'active'
 		}
 
-		return <div>
+		if(this.props.pathname == urlMedicamentosEntrgadosImpresion) {
+			activeMedicamentosEntrgadosImpresion = 'active'
+		}
+
+		return <div className=''>
 			<br/>
 
 			<MostarMedicamentoEntregadoContainer 
@@ -43,9 +49,13 @@ class MostrarApp extends Component {
 			{ this.renderFormularioMedicamentoEntregado() }
 
 			<br/>
-			<ul className="nav nav-tabs">
+			<ul className="nav nav-tabs no-print-data">
 				<li className="nav-item nav-link" className={activeListarMedicamentos}>
 				    <Link to={urlListarMedicamentos}>Medicamentos</Link>
+				</li>
+
+				<li className="nav-item nav-link" className={activeMedicamentosEntrgadosImpresion}>
+				    <Link to={urlMedicamentosEntrgadosImpresion}>Vista general impresión</Link>
 				</li>
 			</ul>
 				

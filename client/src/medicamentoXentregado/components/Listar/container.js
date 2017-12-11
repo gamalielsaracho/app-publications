@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 
 import {
+	mostrarMedicamentoEntregado
+} from '../../../medicamentoEntregado/actions'
+
+import {
 	listarMedicamentosAgregados,
 	eliminarMedicamentoAgregado,
 	abrirFormularioCrearMedicamentoAgregado,
@@ -21,7 +25,10 @@ function mapStateToProps(state, ownProps) {
 
 		// Obtenemos el estado del formulario, para ver si esta abierto
 		// y hacer render del mismo. 
-		formulario: state.medicamentoAgregado.formulario
+		formulario: state.medicamentoAgregado.formulario,
+
+		// Obtener el estado de impresion de un comprobante.
+		mostrar: state.medicamentoEntregado.mostrar
 	}
 }
 
@@ -44,6 +51,12 @@ function mapDispatchToProps(dispatch) {
 		},
 		mostrarMedicamentoAgregado: (idMedicamentoXentregado) => {
 			dispatch(mostrarMedicamentoAgregado(idMedicamentoXentregado))
+		},
+
+
+		// Para obtener el estado del comprobante de medicamentos entregados.
+		mostrarMedicamentoEntregado: (idMedicamentoEntregado) => {
+			dispatch(mostrarMedicamentoEntregado(idMedicamentoEntregado))
 		}
 	}
 }

@@ -27,6 +27,7 @@ class Listar extends Component {
 	shouldComponentUpdate(nextProps) {
 		let condition = (
 			nextProps.pacientes !== this.props.pacientes ||
+			nextProps.pacientesFiltrados  !== this.props.pacientesFiltrados ||
 			nextProps.eliminar !== this.props.eliminar ||
 			nextProps.formulario !== this.props.formulario
 		)

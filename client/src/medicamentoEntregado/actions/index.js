@@ -29,7 +29,19 @@ import {
 	// Delete Rol.
 	ELIMINAR_MEDICAMENTO_ENTREGADO_REQUEST,
 	ELIMINAR_MEDICAMENTO_ENTREGADO_EXITO,
-	ELIMINAR_MEDICAMENTO_ENTREGADO_FALLO
+	ELIMINAR_MEDICAMENTO_ENTREGADO_FALLO,
+
+
+	// Formulario Filtro.
+	ABRIR_FORMULARIO_FILTRO,
+	CERRAR_FORMULARIO_FILTRO,
+
+
+	MEDICAMENTO_ENTREGADO_IMPRESION_REQUEST,
+	MEDICAMENTO_ENTREGADO_IMPRESION_EXITO,
+	MEDICAMENTO_ENTREGADO_IMPRESION_FALLO,
+
+	ACTUALIZAR_ESTADO_IMPRESION_MEDICAMENTO_ENTREGADO
 } from './types'
 
 import io from 'socket.io-client'
@@ -38,6 +50,60 @@ import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var medEntregadoSocket = io.connect('http://localhost:3000/medicamentoEntregado');
+
+
+export function actualizarEstadoImpresionMedicamentoEntregado(idMedicamentoEntregado) {
+	return (dispatch) => {
+	
+		medEntregadoSocket.emit('atualizar_estado_impresion_medicamentoEntregado', { 
+			id_medicamentoEntregado: idMedicamentoEntregado 
+		})
+
+		medEntregadoSocket.on('atualizar_estado_impresion_medicamentoEntregado', (data) => {
+			console.log(data)
+			// if(data.error) {
+			// 	dispatch({ type: ACTUALIZAR_ESTADO_IMPRESION_MEDICAMENTO_ENTREGADO, payload: data.error })
+			// } else {
+			// 	dispatch({ type: ACTUALIZAR_ESTADO_IMPRESION_MEDICAMENTO_ENTREGADO, payload: data })
+			// }
+		})
+	}
+}
+
+
+export function medicamentoEntregadoImpresion(idMedicamentoEntregado) {
+	return (dispatch) => {
+		dispatch({ type: MEDICAMENTO_ENTREGADO_IMPRESION_REQUEST })
+
+		medEntregadoSocket.emit('medicamentoEntregado_impresion', { 
+			id_medicamentoEntregado: idMedicamentoEntregado 
+		})
+
+		medEntregadoSocket.on('medicamentoEntregado_impresion', (data) => {
+			// console.log(data)
+			if(data.error) {
+				dispatch({ type: MEDICAMENTO_ENTREGADO_IMPRESION_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MEDICAMENTO_ENTREGADO_IMPRESION_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+
+export function abrirFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: ABRIR_FORMULARIO_FILTRO })
+	}
+}
+
+
+export function cerrarFormularioFiltro() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_FORMULARIO_FILTRO })
+	}
+}
+
 
 export function abrirFormularioCrearMedicamentoEntregado() {
 	return (dispatch) => {
@@ -144,10 +210,13 @@ export function mostrarMedicamentoEntregado(idMedicamentoEntregado) {
 		})
 
 		medEntregadoSocket.on('mostrar_medicamentoEntregado', (data) => {
-			// console.log(data)
 			if(data.error) {
 				dispatch({ type: MOSTRAR_MEDICAMENTO_ENTREGADO_FALLO, payload: data.error })
 			} else {
+			console.log(data)
+				// Guardamos el estado de impresión..
+				localStorage.setItem('medicamentoEntregadoImprimido', data.medicamentoEntregado.imprimido)
+
 				dispatch({ type: MOSTRAR_MEDICAMENTO_ENTREGADO_EXITO, payload: data })
 			}
 		})

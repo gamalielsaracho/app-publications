@@ -8,11 +8,9 @@ import moment from 'moment'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
-import ListarContainer from '../Listar'
+import ListarMedicamentosEntregadosContainer from '../Listar'
 
-import FieldSelectNivelesContainer from '../../../nivel/components/FieldSelectNiveles'
-
-import FiltrosPacientesContainer from '../Filtros'
+import FiltrosMedicamentosEntregadosContainer from '../Filtros'
 
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
@@ -34,7 +32,7 @@ class FiltrosApp extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarPacientes()
+		this.props.listarMedicamentosEntregados()
 	}
 
 
@@ -44,8 +42,8 @@ class FiltrosApp extends Component {
 		const { abierto } = this.props.formularioFiltro
 
 		if(abierto) {
-			return <FiltrosPacientesContainer 
-				reset={reset}/>
+			return <FiltrosMedicamentosEntregadosContainer 
+						reset={reset}/>
 		} else {
 			return <div>
 				<br/>
@@ -61,9 +59,10 @@ class FiltrosApp extends Component {
 
 	render() {
 
-		const { pacientes, cargando } = this.props.listar
+		const { medicamentosEntregados, cargando } = this.props.listar
 
-		console.log(pacientes)
+
+		console.log(medicamentosEntregados)
 
 		let error = this.props.listar.error ? this.props.listar.error :
 			this.props.eliminar.error
@@ -71,35 +70,41 @@ class FiltrosApp extends Component {
 		if(cargando) {
 			return <Cargando/>
 		} else {
-			
 
 			let v = this.props.valoresFiltro
-			let pacientesFiltrados = pacientes
+			let medicamentosEntregadosFiltrados = medicamentosEntregados
 
 			let condition = (
 				v.nroDocumento_paciente.length > 0 ||
 				v.id_tipoDocumento_paciente.length > 0 ||
 				v.nombres_paciente.length > 0 ||
 				v.apellidos_paciente.length > 0 ||
-				v.sexo.length > 0 ||
-				v.fechaNacimiento_paciente.length > 0 ||
-				v.direccion_paciente.length > 0 ||
-				v.fechaMuerte_paciente.length > 0 ||
-				v.id_area.length > 0 ||
-				v.id_ciudad.length > 0 ||
-				v.fechaIngresoDesde_paciente.length > 0 ||
-				v.fechaIngresoHasta_paciente.length > 0 
-
+				v.nroDocumento_farmaceutico.length > 0 ||
+				v.id_tipoDocumento_farmaceutico.length > 0 ||
+				v.nombres_farmaceutico.length > 0 ||
+				v.apellidos_farmaceutico.length > 0 ||
+				v.fechaEmisionDesde_medicamentosEntregados.length > 0 ||
+				v.fechaEmisionHasta_medicamentosEntregados.length > 0 ||
+				v.hora_medicamentosEntregados.length > 0 ||
+				
+				v.impreso_medicamentosEntregados == 'si' ||
+				v.impreso_medicamentosEntregados == 'no'
 			)
 
+			if(v.impreso_medicamentosEntregados == 'si') {
+				v.impreso_medicamentosEntregados = 1
+			} else {
+				v.impreso_medicamentosEntregados = 0
+			}
 
-			if(v.fechaIngresoHasta_paciente.length && !v.fechaIngresoDesde_paciente.length) {
-				v.fechaIngresoDesde_paciente = v.fechaIngresoHasta_paciente
+
+			if(v.fechaEmisionHasta_medicamentosEntregados.length && !v.fechaEmisionDesde_medicamentosEntregados.length) {
+				v.fechaEmisionDesde_medicamentosEntregados = v.fechaEmisionHasta_medicamentosEntregados
 			}
 
 			
 			if(condition){
-				pacientesFiltrados = this.props.pacientesFiltradosEnGeneral(pacientesFiltrados, v)
+				medicamentosEntregadosFiltrados = this.props.medicamentosEntregadosFiltradosEnGeneral(medicamentosEntregadosFiltrados, v)
 			}
 
 
@@ -108,8 +113,8 @@ class FiltrosApp extends Component {
 
 				{ this.renderFormularioFiltros() }
  
-				<ListarContainer 
-					pacientesFiltrados={ pacientesFiltrados }/>
+				<ListarMedicamentosEntregadosContainer 
+					medicamentosEntregadosFiltrados={ medicamentosEntregadosFiltrados }/>
 			</div>
 		}
 

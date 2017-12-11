@@ -20,25 +20,22 @@ function mapStateToProps(state, ownProps) {
 
 		valoresFiltro: {
     		// Para filtrar .
-    		fecha: selector(state, 'fecha') || '',
-			hora: selector(state, 'hora') || '',
-			fechaProximaConsulta: selector(state, 'fechaProximaConsulta') || '',
-			fechaDesde: selector(state, 'fechaDesde') || '',
-			fechaHasta: selector(state, 'fechaHasta') || '',
-			id_nivel: selector(state, 'id_nivel') || '',
-			id_especialidad: selector(state, 'id_especialidad') || '',
-
-
-			nroDocumento_paciente: selector(state, 'nroDocumento_paciente') || '',
+    		nroDocumento_paciente: selector(state, 'nroDocumento_paciente') || '',
 			id_tipoDocumento_paciente: selector(state, 'id_tipoDocumento_paciente') || '',
 			nombres_paciente: selector(state, 'nombres_paciente') || '',
 			apellidos_paciente: selector(state, 'apellidos_paciente') || '',
+			sexo: selector(state, 'sexo') || '',
+			fechaNacimiento_paciente: selector(state, 'fechaNacimiento_paciente') || '',
+			direccion_paciente: selector(state, 'direccion_paciente') || '',
+
+
+			fechaMuerte_paciente: selector(state, 'fechaMuerte_paciente') || '',
+			id_area: selector(state, 'id_area') || '',
+			id_ciudad: selector(state, 'id_ciudad') || '',
+			fechaIngresoDesde_paciente: selector(state, 'fechaIngresoDesde_paciente') || '',
 			
 			
-			nroDocumento_medico: selector(state, 'nroDocumento_medico') || '',
-			id_tipoDocumento_medico: selector(state, 'id_tipoDocumento_medico') || '',
-			nombres_medico: selector(state, 'nombres_medico') || '',
-			apellidos_medico: selector(state, 'apellidos_medico') || ''
+			fechaIngresoHasta_paciente: selector(state, 'fechaIngresoHasta_paciente') || ''
     	},
 
 		listar: state.paciente.listar,
@@ -60,29 +57,28 @@ function mapDispatchToProps(dispatch) {
 
 
 		// ..................................
-		// fechaDesde
-		// fechaHasta
-		// hora
-		// fechaProximaConsulta
-		// id_nivel
-		// id_especialidad
 		// nroDocumento_paciente
 		// id_tipoDocumento_paciente
 		// nombres_paciente
 		// apellidos_paciente
-		// nroDocumento_medico
-		// id_tipoDocumento_medico
-		// nombres_medico
-		// apellidos_medico
+		// sexo
+		// fechaNacimiento_paciente
+		// direccion_paciente
+		// fechaMuerte_paciente
+		// id_area
+		// id_ciudad
+		// fechaIngresoDesde_paciente
+		// fechaIngresoHasta_paciente
+
 		pacientesFiltradosEnGeneral: (pacientes, v) => {
-			console.log("Entro en EnGeneral ............")
-			console.log(v)
+			// console.log("Entro en EnGeneral ............")
+			// console.log(v)
 
-			let condicionFieldsConsulta
-			let consultaFiltro
+			let condicionDatosPersonalesPaciente
+			let DatosPersonalesPacienteFiltro
 
-			let condicionFieldsFechas
-			let rangofechasFiltro
+			let condicionRangoFechasIngreso
+			let rangoFechasIngresoFiltro
 
 			let condicionFieldsPaciente
 			let pacienteFiltro
@@ -90,100 +86,81 @@ function mapDispatchToProps(dispatch) {
 			let condicionFieldsMedico
 			let medicoFiltro
 
-			// let condicionHistorial
-			// let condicionPreConsulta
 
-			condicionFieldsConsulta = (
-				v.id_nivel ||
-				v.fechaProximaConsulta ||
-				v.id_especialidad ||
-				v.hora ||
-				v.fechaDesde || 
-				v.fechaHasta
+			condicionDatosPersonalesPaciente = (				
+				v.nroDocumento_paciente.length > 0 ||
+				v.id_tipoDocumento_paciente.length > 0 ||
+				v.nombres_paciente.length > 0 ||
+				v.apellidos_paciente.length > 0 ||
+				v.sexo.length > 0 ||
+				v.fechaNacimiento_paciente.length > 0 ||
+				v.direccion_paciente.length > 0 ||
+				v.fechaMuerte_paciente.length > 0 ||
+				v.id_area.length > 0 ||
+				v.id_ciudad.length > 0
 			)
 
-			condicionFieldsFechas = (
-				v.fechaDesde || v.fechaHasta
+			condicionRangoFechasIngreso = (
+				v.fechaIngresoDesde_paciente ||
+				v.fechaIngresoHasta_paciente
 			)
 
-			condicionFieldsPaciente = (
-				v.nroDocumento_paciente || v.id_tipoDocumento_paciente ||
-				v.nombres_paciente || v.apellidos_paciente
-			)
-
-			condicionFieldsMedico = (
-				v.nroDocumento_medico ||
-				v.id_tipoDocumento_medico ||
-				v.nombres_medico ||
-				v.apellidos_medico
-			)
 
 			pacientes = pacientes.filter((i) => {
-
-
-				if(condicionFieldsConsulta) {
-					consultaFiltro = (
-						i.consulta.id_nivel.toString().match(v.id_nivel) &&
-						i.consulta.fechaProximaConsulta.match(v.fechaProximaConsulta) &&
-						i.personal.id_especialidad.toString().match(v.id_especialidad) &&
-						i.consulta.hora.match(v.hora)
-					)
-				} else {
-					consultaFiltro = true
+				if(i.pa.fechaMuerte == null) {
+					i.pa.fechaMuerte = ''
 				}
 
-				if(condicionFieldsFechas) {
-					rangofechasFiltro = (
-						(moment(v.fechaDesde).format('DD') <= (moment(i.consulta.fecha).format('DD')) && 
-						(moment(i.consulta.fecha).format('DD')  <= moment(v.fechaHasta).format('DD')) && 
-
-						moment(v.fechaDesde).format('MM') <= (moment(i.consulta.fecha).format('MM')) && 
-						(moment(i.consulta.fecha).format('MM')  <= moment(v.fechaHasta).format('MM')) && 
-
-						moment(v.fechaDesde).format('YYYY') <= (moment(i.consulta.fecha).format('YYYY')) && 
-						(moment(i.consulta.fecha).format('YYYY')  <= moment(v.fechaHasta).format('YYYY')))
-					)
-				} else {
-					rangofechasFiltro = true	
+				if(i.pa.nroDocumento == null) {
+					i.pa.nroDocumento = ''
 				}
 
-				if(condicionFieldsPaciente) {
-					pacienteFiltro = (
-						(i.paciente.nroDocumento.match(v.nroDocumento_paciente) &&
-						i.paciente.id_tipoDocumento.toString().match(v.id_tipoDocumento_paciente) &&
-						i.paciente.nombres.match(v.nombres_paciente) &&
-						i.paciente.apellidos.match(v.apellidos_paciente))
-					)
-				} else {
-					pacienteFiltro = true
+				if(i.pa.id_tipoDocumento == null) {
+					i.pa.id_tipoDocumento = ''
 				}
 
+				if(condicionDatosPersonalesPaciente) {
+					DatosPersonalesPacienteFiltro = (
+						i.pa.nroDocumento.toString().match(v.nroDocumento_paciente) &&
+						i.pa.id_tipoDocumento.toString().match(v.id_tipoDocumento_paciente) &&
+						
+						i.pa.nombres.toString().match(v.nombres_paciente) &&
+						i.pa.apellidos.toString().match(v.apellidos_paciente) &&
+						i.pa.sexo.toString().match(v.sexo) &&
+						i.pa.fechaNacimiento.toString().match(v.fechaNacimiento_paciente) &&
+						i.pa.direccion.toString().match(v.direccion_paciente) &&
+						i.pa.fechaMuerte.toString().match(v.fechaMuerte_paciente) &&
+						i.pa.id_area.toString().match(v.id_area) &&
+						i.pa.id_ciudad.toString().match(v.id_ciudad)
+					)
+				} else {
+					DatosPersonalesPacienteFiltro = true
+				}
+
+				if(condicionRangoFechasIngreso) {
+					rangoFechasIngresoFiltro = (
+						(moment(v.fechaIngresoDesde_paciente).format('DD') <= (moment(i.pa.fecha).format('DD')) && 
+						(moment(i.pa.fecha).format('DD')  <= moment(v.fechaIngresoHasta_paciente).format('DD')) && 
+
+						moment(v.fechaIngresoDesde_paciente).format('MM') <= (moment(i.pa.fecha).format('MM')) && 
+						(moment(i.pa.fecha).format('MM')  <= moment(v.fechaIngresoHasta_paciente).format('MM')) && 
+
+						moment(v.fechaIngresoDesde_paciente).format('YYYY') <= (moment(i.pa.fecha).format('YYYY')) && 
+						(moment(i.pa.fecha).format('YYYY')  <= moment(v.fechaIngresoHasta_paciente).format('YYYY')))
+					)
+				} else {
+					rangoFechasIngresoFiltro = true	
+				}
 				
-				if(condicionFieldsMedico) {
-					medicoFiltro = (
-						i.personal.nroDocumento.match(v.nroDocumento_medico) &&
-						i.personal.id_tipoDocumento.toString().match(v.id_tipoDocumento_medico) &&
-						i.personal.nombres.match(v.nombres_medico) &&
-						i.personal.apellidos.match(v.apellidos_medico)
-					)
-				} else {
-					medicoFiltro = true
-				}
+
 				console.log('pacienteFiltro --------->')
 				console.log(pacienteFiltro)
 
 				return (
-					// moment(i.consulta.fecha).format('DD-MM-YYY') == moment(v.fechaDesde).format('DD-MM-YYY') &&
+					// moment(i.consulta.fecha).format('DD-MM-YYY') == moment(v.fechaIngresoDesde_paciente).format('DD-MM-YYY') &&
 					
-					consultaFiltro &&
-					
-					rangofechasFiltro &&		
-
-					// Datos paciente.
-					pacienteFiltro &&
-
-					// Datos Médico
-					medicoFiltro
+					DatosPersonalesPacienteFiltro &&
+					rangoFechasIngresoFiltro
 				)
 
 			})

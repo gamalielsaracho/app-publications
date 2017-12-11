@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 
 import {
-	listarMedicamentosEntregados,
 	eliminarMedicamentoEntregado,
 
 	abrirFormularioCrearMedicamentoEntregado,
@@ -23,9 +22,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarMedicamentosEntregados: () => {
-			dispatch(listarMedicamentosEntregados())
-		},
 		eliminarMedicamentoEntregado: (idMedicamentoEntregado) => {
 			var r = confirm("Está seguro que desea eliminar ?");
 		    if (r == true) {

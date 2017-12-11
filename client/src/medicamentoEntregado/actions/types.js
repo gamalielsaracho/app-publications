@@ -34,3 +34,15 @@ export const ELIMINAR_MEDICAMENTO_ENTREGADO_EXITO = 'eliminair_medicamento_entre
 export const ELIMINAR_MEDICAMENTO_ENTREGADO_FALLO = 'eliminair_medicamento_entregado_fallo'
 
 
+// FORMULARIO FILTRO.
+export const ABRIR_FORMULARIO_FILTRO = 'abrir_formulario_filtro'
+export const CERRAR_FORMULARIO_FILTRO = 'cerrar_formulario_filtro'
+
+
+// SHOW TO PRINT ONE REPORT.
+export const MEDICAMENTO_ENTREGADO_IMPRESION_REQUEST = 'medicamento_entregado_impresion_request'
+export const MEDICAMENTO_ENTREGADO_IMPRESION_EXITO = 'medicamento_entregado_impresion_exito'
+export const MEDICAMENTO_ENTREGADO_IMPRESION_FALLO = 'medicamento_entregado_impresion_fallo'
+
+
+export const ACTUALIZAR_ESTADO_IMPRESION_MEDICAMENTO_ENTREGADO = 'actualizar_estado_impresion_medicamento_entregado'

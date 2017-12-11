@@ -1,0 +1,2 @@
+import FiltrosMedicamentosEntregadosContainer from './container'
+export default FiltrosMedicamentosEntregadosContainer

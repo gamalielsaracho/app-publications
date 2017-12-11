@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 
+import { horaActual } from '../../../globalActions'
+
 
 class Cabecera extends Component {
 	constructor(props) {
@@ -38,7 +40,10 @@ class Cabecera extends Component {
 					</h4>
 					<br/>
 					<h4 className='text-right datos-cabecera-en-modal'><strong>Fecha impresión:</strong>
-						{ moment(this.props.fechaImpresion).format('DD-MM-YYYY') }
+						{ moment(new Date()).format('DD-MM-YYYY') }
+					</h4>
+					<h4 className='text-right datos-cabecera-en-modal'><strong>Hora impresión:</strong>
+						{ horaActual() }
 					</h4>
 				</div>
 			</div>

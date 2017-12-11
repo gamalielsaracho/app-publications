@@ -148,13 +148,13 @@ class Filtros extends Component {
 					<Field name='fechaIngresoDesde_paciente' 
 						type='date'
 						component={renderField} 
-						label='Fecha ingreso Hasta'/>
+						label='Fecha ingreso Desde'/>
 				</div>
 				<div className='col-xs-12 col-sm-12 col-md-2 col-lg-2'>
 					<Field name='fechaIngresoHasta_paciente' 
 						type='date'
 						component={renderField} 
-						label='Fecha ingreso Desde'/>
+						label='Fecha ingreso Hasta'/>
 				</div>
 
 			</div>
@@ -181,7 +181,7 @@ class Filtros extends Component {
 
 
 	render() {
-			return <form className='no-print-data'>
+			return <div className='no-print-data'>
 				<br/>
 
 				{ this.renderFormulario() }
@@ -193,7 +193,7 @@ class Filtros extends Component {
 						<button onClick={this.props.reset} type="button" className="btn btn-danger btn-space">Limpiar Filtros</button>
 					</div>
 				</div>												
-			</form>
+			</div>
 	}
 }
 

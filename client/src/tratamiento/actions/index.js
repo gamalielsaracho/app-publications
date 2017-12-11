@@ -17,7 +17,12 @@ import {
 
 	LIMPIAR_MENSAJE_ERROR_TRATAMIENTO,
 
-	IMPRIMIR_TRATAMIENTO
+	IMPRIMIR_TRATAMIENTO,
+
+	// FIND LIST.
+	LISTAR_TRATAMIENTOS_REQUEST,
+	LISTAR_TRATAMIENTOS_EXITO,
+	LISTAR_TRATAMIENTOS_FALLO
 } from './types'
 
 import jwtDecode from 'jwt-decode'
@@ -28,6 +33,24 @@ import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var tratamientoSocket = io.connect('http://localhost:3000/tratamiento');
+
+
+export function listarTratamientos() {
+	return (dispatch) => {
+
+		dispatch({ type: LISTAR_TRATAMIENTOS_REQUEST })
+
+		var tratamientoSocket = io.connect('http://localhost:3000/tratamiento');
+
+		tratamientoSocket.on('listar_tratamientos', (data) => {
+			if(data.error) {
+				dispatch({ type: LISTAR_TRATAMIENTOS_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: LISTAR_TRATAMIENTOS_EXITO, payload: data })
+			}
+		})
+	}
+}
 
 
 

@@ -32,46 +32,46 @@ import Formulario from './Formulario'
 const validate = (values) => {
 	const errors = {}
 
-	if (!values.nroDocumento) {
-    	errors.nroDocumento = 'Nro de documento obligatorio.'
-	} else {
-		if (values.nroDocumento.length < 7) {
-			errors.nroDocumento = 'Por lo menos 7 caracteres.'
-		}
-	}
+	// if (!values.nroDocumento) {
+ //    	errors.nroDocumento = 'Nro de documento obligatorio.'
+	// } else {
+	// 	if (values.nroDocumento.length < 7) {
+	// 		errors.nroDocumento = 'Por lo menos 7 caracteres.'
+	// 	}
+	// }
 		
 
-	if (!values.id_tipoDocumento) {
-		errors.id_tipoDocumento = 'Tipo de documento obligatorio.'
-	}
+	// if (!values.id_tipoDocumento) {
+	// 	errors.id_tipoDocumento = 'Tipo de documento obligatorio.'
+	// }
 
 	if (!values.nombres) {
 	    errors.nombres = 'Nombre completo es obligatorio.'
-	} else if (values.nombres.length <= 10) {
-		errors.nombres = 'Por lo menos 10 caracteres.'
+	} else if (values.nombres.length <= 3) {
+		errors.nombres = 'Por lo menos 3 caracteres.'
 	}
  
 	if (!values.apellidos) {
 	    errors.apellidos = 'Apellido completo obligatorio.'
-	} else if (values.apellidos.length < 10) {
-	    errors.apellidos = 'Por lo menos 10 caracteres'
+	} else if (values.apellidos.length < 3) {
+	    errors.apellidos = 'Por lo menos 3 caracteres'
 	}	
 
-	if (!values.celular) {
-	    errors.celular = 'Nro de celular obligatorio.'
-	} else if (values.celular.length <= 7) {
-	    errors.celular = 'Como minimo 7 caracteres.'
-	}
+	// if (!values.celular) {
+	//     errors.celular = 'Nro de celular obligatorio.'
+	// } else if (values.celular.length <= 7) {
+	//     errors.celular = 'Como minimo 7 caracteres.'
+	// }
 
 	if (!values.direccion) {
 	    errors.direccion = 'Dirección obligatorio.'
-	} else if (values.direccion.length < 10) {
-	    errors.direccion = 'Como minimo 10 caracteres.'
+	} else if (values.direccion.length < 5) {
+	    errors.direccion = 'Como minimo 5 caracteres.'
 	}
 
-	if (!values.fechaNacimiento) {
-		errors.fechaNacimiento = 'Fecha de nacimiento obligatorio.'
-	}
+	// if (!values.fechaNacimiento) {
+	// 	errors.fechaNacimiento = 'Fecha de nacimiento obligatorio.'
+	// }
 
 	if(!values.id_area) {
 		errors.id_area = 'El campo area obligatorio.'

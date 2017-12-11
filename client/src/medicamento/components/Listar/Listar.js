@@ -42,11 +42,9 @@ class Listar extends Component {
 			{
 				medicamentos.map((i) => {
 					return <tr key={i.medicamento.id_medicamento}>
-			            <td>{ i.nombreMedicamento.descripcion +' '+
-			            	  i.medicamento.cantidadXunidad +' '+
-			            	  i.presentacion.descripcion
-			            }</td>
-
+			            <td>{ i.nombreMedicamento.descripcion }</td>
+			            <td>{ i.presentacion.descripcion }</td>
+			            <td>{ i.medicamento.cantidadXunidad }</td>
 			            <td>{ i.farmaceutica.nombre }</td>
 			            <td>{ i.medicamento.observaciones }</td>
 			            <td>
@@ -86,6 +84,8 @@ class Listar extends Component {
 							<thead>
 						    	<tr>
 						        	<th>Nombre</th>
+						        	<th>Presentación</th>
+						        	<th>Cantidad por unidad</th>
 						        	<th>Farmaceutica</th>
 						        	<th>Observaciones</th>
 

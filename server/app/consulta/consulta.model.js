@@ -116,23 +116,50 @@ exports.findCantidadDiagnosticosEnAnhos = (idDiagnostico, callback) => {
 	let q = `
 	SELECT 
 		* 
-  	FROM
-      (SELECT
-          DISTINCT(cXd.id_diagnostico),
-          YEAR(consulta.fecha) fecha,
-          diagnostico.descripcion,
-          (SELECT COUNT(cXdA.id_diagnostico) FROM consultasdiagnosticos cXdA, consultas con WHERE cXdA.id_diagnostico = diagnostico.id_diagnostico AND cXdA.id_consulta = con.id_consulta AND con.fecha = consulta.fecha) cantidad
-         FROM
-          consultasdiagnosticos cXd,
-          diagnosticos diagnostico,
-          consultas consulta
-        WHERE
-          cXd.id_diagnostico = diagnostico.id_diagnostico AND 
-          diagnostico.id_diagnostico = ? AND
-          cXd.id_consulta = consulta.id_consulta) tGral
-        
-        ORDER BY fecha ASC
-	`
+	  	FROM
+	      (SELECT
+	          DISTINCT(cXd.id_diagnostico),
+	          YEAR(consulta.fecha) fecha,
+	          diagnostico.descripcion,
+	          (SELECT COUNT(cXdA.id_diagnostico) FROM consultasdiagnosticos cXdA, consultas con WHERE cXdA.id_diagnostico = diagnostico.id_diagnostico AND cXdA.id_consulta = con.id_consulta AND con.fecha = consulta.fecha) cantidad
+	         FROM
+	          consultasdiagnosticos cXd,
+	          diagnosticos diagnostico,
+	          consultas consulta
+	        WHERE
+	          cXd.id_diagnostico = diagnostico.id_diagnostico AND 
+	          diagnostico.id_diagnostico = ? AND
+	          cXd.id_consulta = consulta.id_consulta) tGral
+	        
+	        ORDER BY fecha ASC
+		`
+  //       SELECT 
+		// * 
+	 //  	FROM
+	 //      (SELECT
+	 //          DISTINCT(cXd.id_diagnostico),
+	 //          YEAR(consulta.fecha) fecha,
+	 //          diagnostico.descripcion,
+	 //          (SELECT 
+	 //          		COUNT(cXdA.id_diagnostico) 
+	 //          	FROM 
+		//           	consultasdiagnosticos cXdA, 
+		//           	consultas con 
+	 //          	WHERE 
+	 //          		cXdA.id_diagnostico = diagnostico.id_diagnostico AND 
+	 //          		con.fecha = consulta.fecha) cantidad
+	 //         FROM
+	 //          consultasdiagnosticos cXd,
+	 //          diagnosticos diagnostico,
+	 //          consultas consulta
+	 //        WHERE
+	 //          cXd.id_diagnostico = diagnostico.id_diagnostico AND 
+	 //          diagnostico.id_diagnostico = ? AND
+	 //          cXd.id_consulta = consulta.id_consulta) tGral
+	        
+	 //        ORDER BY fecha ASC
+
+		
 
 	var options = {
 		sql: q, 

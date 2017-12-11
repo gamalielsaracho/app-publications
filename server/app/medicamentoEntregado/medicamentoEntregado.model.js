@@ -1,5 +1,7 @@
 import connection from '../../config/connection'
 
+import getHour from '../useFul/getHour'
+
 exports.find = (callback) => {
 
 	let q = `
@@ -7,11 +9,16 @@ exports.find = (callback) => {
 			* 
 		FROM 
 			medicamentosEntregados medicamentoEntregado,
-			personales personal,
-			pacientes paciente
+
+			pacientes paciente,
+			personales farmaceutico,
+			tiposdocumentos tpDocPaciente,
+			tiposdocumentos tpDocFarmaceutico
 		WHERE
-			medicamentoEntregado.id_personal =	personal.id_personal AND
-			medicamentoEntregado.id_paciente =	paciente.id_paciente
+			medicamentoEntregado.id_paciente = paciente.id_paciente AND
+			paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
+			medicamentoEntregado.id_personal = farmaceutico.id_personal AND
+			farmaceutico.id_tipoDocumento = tpDocFarmaceutico.id_tipoDocumento
 	`
 
 	var options = {
@@ -31,13 +38,19 @@ exports.findById = (data, callback) => {
 			* 
 		FROM 
 			medicamentosEntregados medicamentoEntregado,
-			personales personal,
-			pacientes paciente
+
+			pacientes paciente,
+			personales farmaceutico,
+			tiposdocumentos tpDocPaciente,
+			tiposdocumentos tpDocFarmaceutico
 		WHERE
-			medicamentoEntregado.id_personal =	personal.id_personal AND
-			medicamentoEntregado.id_paciente =	paciente.id_paciente AND
+			medicamentoEntregado.id_paciente = paciente.id_paciente AND
+			paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
+			medicamentoEntregado.id_personal = farmaceutico.id_personal AND
+			farmaceutico.id_tipoDocumento = tpDocFarmaceutico.id_tipoDocumento AND
 			medicamentoEntregado.id_medicamentoEntregado = ?
 	`
+		
 	var options = {
 		sql: q,
 		nestTables: true
@@ -55,13 +68,15 @@ exports.create = (data, callback) => {
 			id_medicamentoEntregado,
 			id_personal,
 			id_paciente,
-			fecha
+			fecha,
+			hora
 		)
 
-		VALUES (null, ?, ?, now())
+		VALUES (null, ?, ?, now(), ?)
 	`
 	return connection.query(q, [ data.id_personal,
-								 data.id_paciente ], callback)
+								 data.id_paciente,
+								 getHour() ], callback)
 
 	connection.end()
 }
@@ -96,6 +111,20 @@ exports.update = (data, callback) => {
 
 	return connection.query(q, [ data.id_paciente,
 								 data.id_medicamentoEntregado ], callback)
+
+	connection.end()
+}
+
+
+exports.updateStatePrint = (data, callback) => {
+	let q = `
+		UPDATE medicamentosEntregados SET 
+			imprimido = 1
+			WHERE
+				id_medicamentoEntregado = ?
+	`
+
+	return connection.query(q, [ data.id_medicamentoEntregado ], callback)
 
 	connection.end()
 }

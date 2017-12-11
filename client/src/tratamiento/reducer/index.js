@@ -16,10 +16,15 @@ import {
 	ELIMINAR_TRATAMIENTO_FALLO,
 
 
-	LIMPIAR_MENSAJE_ERROR_TRATAMIENTO
+	LIMPIAR_MENSAJE_ERROR_TRATAMIENTO,
+
+	LISTAR_TRATAMIENTOS_REQUEST,
+	LISTAR_TRATAMIENTOS_EXITO,
+	LISTAR_TRATAMIENTOS_FALLO
 } from '../actions/types'
 
 const INITIAL_STATE = {
+	listar: { tratamientos:[], cargando: false, error: '' },
 	crear: { mensaje: '', cargando: false, error:'' },
 	mostrarTratamientoIdConsulta: { tratamiento: null, cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
@@ -28,6 +33,30 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		
+		// LISTAR.
+		case LISTAR_TRATAMIENTOS_REQUEST:
+			return Object.assign({}, state, {
+				listar: { cargando: true, error: '' },
+				eliminar: INITIAL_STATE.eliminar
+			})
+
+
+		case LISTAR_TRATAMIENTOS_EXITO:
+			return Object.assign({}, state, {
+				listar: { tratamientos: action.payload.tratamientos, cargando: false, error: '' }
+			})
+
+
+		case LISTAR_TRATAMIENTOS_FALLO:
+			return Object.assign({}, state, {
+				listar: { 
+					error: action.payload,
+					tratamientos:[],
+					cargando: false 
+				}
+			})
+
 
 		case LIMPIAR_MENSAJE_ERROR_TRATAMIENTO:
 			state = Object.assign({}, state, {

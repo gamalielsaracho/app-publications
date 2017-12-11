@@ -1,3 +1,8 @@
+// FIND LIST.
+export const LISTAR_TRATAMIENTOS_REQUEST = 'listar_tratamientos_request'
+export const LISTAR_TRATAMIENTOS_EXITO = 'listar_tratamientos_exito'
+export const LISTAR_TRATAMIENTOS_FALLO = 'listar_tratamientos_fallo'
+
 // FIND.
 export const MOSTRAR_TRATAMIENTO_IDCONSULTA_REQUEST = 'mostrar_tratamiento_idconsulta_request'
 export const MOSTRAR_TRATAMIENTO_IDCONSULTA_EXITO = 'mostrar_tratamiento_idconsulta_exito'

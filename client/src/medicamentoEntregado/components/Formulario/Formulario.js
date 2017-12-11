@@ -86,6 +86,7 @@ class Formulario extends Component {
 						</div>
 					</div>
 					
+					
 					<br/>
 					<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 					<button type="button" onClick={ this.props.cerrarFormularioMedicamentoEntregado } className="btn btn-primary btn-space">Cancelar</button>

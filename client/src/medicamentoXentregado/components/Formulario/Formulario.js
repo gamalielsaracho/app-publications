@@ -7,6 +7,11 @@ import MensajeOerror from '../../../app/components/MensajeOerror'
 
 import FieldSelectMedicamentosContainer from '../../../medicamento/components/FieldSelectMedicamentos'
 
+import 
+	FieldSelectPresentacionesContainer 
+from '../../../presentacion/components/FieldSelectPresentaciones'
+
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
 	<div className="form-group">
@@ -25,13 +30,14 @@ class Formulario extends Component {
 		this.renderListaDrogasByIdMedicamento = this.renderListaDrogasByIdMedicamento.bind(this)
 		this.renderDrogasToEdit = this.renderDrogasToEdit.bind(this)
 
-
+		this.renderFiltersToEdit = this.renderFiltersToEdit.bind(this)
 		this.renderFieldSelectMedicamentos = this.renderFieldSelectMedicamentos.bind(this)
 	}
 
 	componentWillMount() {
 		this.props.listarMedicamentosFuncion()
 		this.props.listarTodaLaListaMedicamentoDrogasFuntion()
+		this.props.listarPresentacionesFuncion()
 	}
 
 	// idMedicamentoEntregado es pasado como property al ser llamado 
@@ -48,6 +54,22 @@ class Formulario extends Component {
 		}
 
 		console.log(formProps)
+	}
+
+	renderFiltersToEdit() {
+		if(!this.props.editarContenido) {
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-6 col-md-3 col-lg-3'>
+					<Field name='id_presentacion' type='text' 
+						component={FieldSelectPresentacionesContainer} 
+						listar={this.props.listarPresentaciones}
+						label='Presentación'
+						showBtnAdd={false}/>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
 	}
 
 	renderListaDrogasByIdMedicamento() {
@@ -107,7 +129,8 @@ class Formulario extends Component {
 			return <div>
 				<Field name='id_medicamento' type='text' 
 					component={FieldSelectMedicamentosContainer}
-					listar={this.props.listarMedicamentos} 
+					listar={this.props.listarMedicamentos}
+					valoresFiltro={this.props.valoresFiltro}
 					label='Medicamento'/>
 			</div>
 		} else {
@@ -136,6 +159,8 @@ class Formulario extends Component {
 		} else {
 			return <div>
 				<form onSubmit={handleSubmit(this.enviarFormulario)}>
+					{ this.renderFiltersToEdit() }
+
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
 							{ this.renderFieldSelectMedicamentos(medicamentoAgregado) }

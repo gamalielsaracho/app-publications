@@ -306,8 +306,7 @@ class ReporteListaConsultas extends Component {
 							<hr></hr>
 				            <CabeceraContainer
 								styleData={null}
-								fechaCreacion = { i.consulta.fecha }
-								fechaImpresion = { new Date() }/>
+								fechaCreacion = { i.consulta.fecha }/>
 
 							{ this.renderDatosPaciente(i) }
 

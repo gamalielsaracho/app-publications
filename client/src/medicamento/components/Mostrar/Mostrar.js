@@ -18,16 +18,12 @@ class Mostrar extends Component {
 	renderMedicamento(i) {
 		if(i) {
 			return <div>
-				<div className='row'>
-					<div className='col-xs-12 col-sm-6 col-md-6 col-lg-3'>
-						<p><strong>Medicamento:</strong>{
-							i.nombreMedicamento.descripcion +' '+
-			            	i.medicamento.cantidadXunidad +' '+
-			            	i.presentacion.descripcion
-			            }</p>
+				<div className=''>
+					<p><strong>Medicamento:</strong>{ i.nombreMedicamento.descripcion }</p>
+					<p><strong>Presentación:</strong>{ i.presentacion.descripcion }</p>				
+					<p><strong>Cantidad por unidad:</strong>{ i.medicamento.cantidadXunidad }</p>				
 
-						<p><strong>Observaciones:</strong>{ i.medicamento.observaciones }</p>				
-					</div>
+					<p><strong>Observaciones:</strong>{ i.medicamento.observaciones }</p>				
 				</div>
 
 				<h3>Farmacéutica</h3>

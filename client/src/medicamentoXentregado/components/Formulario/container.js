@@ -15,6 +15,12 @@ import {
 	listarTodaLaListaMedicamentoDrogas
 } from '../../../medicamentoDroga/actions'
 
+
+// Filtro medicamentos.
+import {
+	listarPresentaciones
+} from '../../../presentacion/actions'
+
 import Formulario from './Formulario'
 
 const validate = (values) => {
@@ -56,13 +62,24 @@ function mapStateToProps(state) {
 		listarMedicamentos: state.medicamento.listar,
 
 
+		// DATOS DEL FORMUARIO DE FILTRO PARA FILTRAR LOS MEDICAMENTOS.
+		// Obtenemos los valores de los inputs para pasarle
+		// el objeto valoresFiltro.
+		valoresFiltro: {
+			id_presentacion: selector(state, 'id_presentacion') || ''
+    	},
+
 		// Para filtrar las drogas según el id_medicamento obtenido desde
 		// el select option.
 		id_medicamento: selector(state, 'id_medicamento'),
 
 		// Listar todas las drogas para poder filtrarlas despues 
 		// por id_medicamento.
-		listarMedicamentoDrogas: state.medicamentoDroga.listar
+		listarMedicamentoDrogas: state.medicamentoDroga.listar,
+
+
+		// listar todas las presentaciones.
+		listarPresentaciones: state.presentacion.listar,
 	}
 }
 
@@ -77,6 +94,11 @@ function mapDispatchToProps(dispatch) {
 		},
 		cerrarFormularioMedicamentoAgregado: () => {
 			dispatch(cerrarFormularioMedicamentoAgregado())
+		},
+
+		// Listar las presentaciones para filtrar los medicamentos.
+		listarPresentacionesFuncion: () => {
+			dispatch(listarPresentaciones())
 		},
 
 		// Función para llamarlo en componentWillMount.

@@ -45,6 +45,25 @@ export function formatDate(date) {
 }
 
 
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+export function horaActual() {
+    var d = new Date();
+    var h = addZero(d.getHours());
+    var m = addZero(d.getMinutes());
+    // var s = addZero(d.getSeconds());
+    // return h + ":" + m + ":" + s;
+
+    console.log(m)
+    return h + ":" + m;
+}
+
+
 export function habilitadoSegunFecha(fechaCreacion) {
 	var fechaActual = new Date()
 

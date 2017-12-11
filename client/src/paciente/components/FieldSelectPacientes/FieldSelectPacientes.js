@@ -76,6 +76,18 @@ class FieldSelectPacientes extends Component {
 
 				if(condition){
 					pacientes = pacientes.filter((i) => {
+						if(i.pa.fechaMuerte == null) {
+							i.pa.fechaMuerte = ''
+						}
+
+						if(i.pa.nroDocumento == null) {
+							i.pa.nroDocumento = ''
+						}
+
+						if(i.pa.id_tipoDocumento == null) {
+							i.pa.id_tipoDocumento = ''
+						}
+
 	 					return i.pa.nroDocumento.toString().match(data.nroDocumento) &&
 		 					i.pa.nombres.toString().match(data.nombres) &&
 		 					i.pa.apellidos.toString().match(data.apellidos)
@@ -97,7 +109,7 @@ class FieldSelectPacientes extends Component {
 						{
 							pacientes.map((i) => {
 								return <option key={i.pa.id_paciente} value={i.pa.id_paciente}>
-									{ i.pa.nroDocumento+' | '+i.tipoDocumento.descripcion+' | '+i.pa.nombres+' '+i.pa.apellidos+' | '+i.pa.sexo }
+									{ i.pa.nroDocumento+' | '+i.pa.nombreTipoDocumento+' | '+i.pa.nombres+' '+i.pa.apellidos+' | '+i.pa.sexo }
 								</option>
 							})
 						}
