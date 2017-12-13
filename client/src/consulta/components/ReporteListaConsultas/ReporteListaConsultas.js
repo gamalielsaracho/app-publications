@@ -298,56 +298,31 @@ class ReporteListaConsultas extends Component {
 
 
 	renderConsultas(consultas) {
+		console.log(consultas)
 		return <div>
 
-			{
-				consultas.map((i) => {
-					return <div key={i.consulta.id_consulta} className='pageBreakHere'>
-							<hr></hr>
-				            <CabeceraContainer
-								styleData={null}
-								fechaCreacion = { i.consulta.fecha }/>
-
-							{ this.renderDatosPaciente(i) }
-
-							{ this.renderDatosPreConsulta(i) }
-
-							{ this.renderDatosConsulta(i) }
-
-							<br/>
-							<br/>
-							<hr></hr>
-			        </div>		
-				})
-			}
 		</div>
 			// {
 			// 	consultas.map((i) => {
-			// 		return <tr key={i.consulta.id_consulta}>
-			//             <td>{ i.consulta.id_consulta }</td>
-			//             <td>{ i.nivel.descripcion}</td>
-			//             <td>{ moment(i.consulta.fecha).format('DD-MM-YYYY') }</td>
-			//             <td>{ i.consulta.hora }</td>
-			//             <td>{ moment(i.consulta.fechaProximaConsulta).format('DD-MM-YYYY') }</td>
-			           
-			//             <td>
-			//             	<p className='text-center'>{ i.paciente.nroDocumento+' '+i.tpDocPaciente.descripcion }</p>
-			//             	<p className='text-center'>{ i.paciente.nombres+' '+i.paciente.apellidos }</p>
-			//             </td>
+			// 		return <div key={i.consulta.id_consulta} className='pageBreakHere'>
+			// 				<hr></hr>
+			// 	            <CabeceraContainer
+			// 					styleData={null}
+			// 					fechaCreacion = { i.consulta.fecha }/>
 
-			//             <td>
-			//             	<p className='text-center'>{ i.medico.nroDocumento+' '+i.tpDocPersonal.descripcion }</p>
-			//             	<p className='text-center'>{ i.personal.nombres+' '+i.personal.apellidos }</p>
-			//             </td>
+			// 				{ this.renderDatosPaciente(i) }
 
-			//             <td>
-			//             	<Link to={`${urlMostrarConsulta}/${i.consulta.id_consulta}`}>
-			// 					<button type="button" className="btn btn-info btn-space">Mostrar</button>
-			// 				</Link>
-			//             </td>
-			//         </tr>		
+			// 				{ this.renderDatosPreConsulta(i) }
+
+			// 				{ this.renderDatosConsulta(i) }
+
+			// 				<br/>
+			// 				<br/>
+			// 				<hr></hr>
+			//         </div>		
 			// 	})
 			// }
+			
 	}
 
 	render() {

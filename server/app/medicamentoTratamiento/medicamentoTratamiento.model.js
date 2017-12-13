@@ -44,13 +44,15 @@ exports.findListByIdTratamientoReporteConsultas = (data, callback) => {
 
 	 			LEFT JOIN medicamentos medicamento 
 	 			ON indicacion.id_medicamento = medicamento.id_medicamento
-	 		WHERE indicacion.id_tratamiento = ?) indicacion,
+	 		WHERE indicacion.id_tratamiento = ?) indicacion
 
-			nombresMedicamentos nombreMedicamento
 
-		WHERE
-			indicacion.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento
+	 		LEFT JOIN nombresMedicamentos nombreMedicamento
+	 			ON indicacion.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento
 	`
+
+		// WHERE
+		// 	indicacion.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento
 	 			
 	var options = {
 		sql: q, 

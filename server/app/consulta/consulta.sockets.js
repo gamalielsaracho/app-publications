@@ -78,6 +78,7 @@ export default (io) => {
 
 
 
+		let listaDetalladaConsultas = []
 
 		Consulta.findListaConsultasDetalladasReporte((err, consultas) => {
 			// console.log(consultas)
@@ -90,7 +91,10 @@ export default (io) => {
 
 			let longConsultas = consultas.length
 
+			// consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+			let op
 			consultas.map((i) => {
+
 				PreConsultaParametro.find(i.preConsulta.id_preconsulta, (err, resultadosPreconsulta) => {
 					if(err) {
 						console.log(err)	
@@ -117,6 +121,39 @@ export default (io) => {
 							}
 
 							i.diagnosticos = diagnosticos
+
+
+							// if(i.consulta.id_tratamiento) {
+								MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
+
+									if(medicamentosTratamiento.length) {
+										i.tratamientos = medicamentosTratamiento
+										
+										if(i == consultas[longConsultas-1]) {
+											consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+										}
+
+									} else {
+										i.tratamientos = medicamentosTratamiento
+										console.log(medicamentosTratamiento)
+										
+										if(i == consultas[longConsultas-1]) {
+											consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+										}
+									}
+
+								})
+								
+							// } else {
+
+							// 	i.tratamientos = []
+
+							// 	if(i == consultas[longConsultas-1]) {
+							// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+							// 	}
+							// }
+
+
 
 							// if(i.consulta.id_tratamiento) {
 							// 	MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
@@ -171,45 +208,52 @@ export default (io) => {
 							// 	}
 							// }
 
-							if(i.consulta.id_tratamiento) {
-								// i.tratamientos = [{ hola: "dddd" }]
-								console.log("------> "+i.consulta.id_tratamiento)
-								MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
+							// if(i.consulta.id_tratamiento) {
+							// 	// i.tratamientos = [{ hola: "dddd" }]
+							// 	console.log("------> "+i.consulta.id_tratamiento)
+							// 	MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
 									
-									medicamentosTratamiento.map((j) => {
-										let idMedicamento = j.indicacion.id_medicamento
+							// 		medicamentosTratamiento.map((j) => {
+							// 			let idMedicamento = j.indicacion.id_medicamento
 
-										MedicamentoDroga.find(idMedicamento , (err, drogas) => {
-											if(err) {
-												console.log(err)
-												socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-												return
-											}
+							// 			MedicamentoDroga.find(idMedicamento , (err, drogas) => {
+							// 				if(err) {
+							// 					console.log(err)
+							// 					socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+							// 					return
+							// 				}
 														
-											j.drogas = drogas
+							// 				j.drogas = drogas
 
 													
-										})
-									})
-									i.tratamientos = medicamentosTratamiento
+							// 			})
+							// 		})
+							// 		i.tratamientos = medicamentosTratamiento
 
-									if(i == consultas[longConsultas-1]) {
-										consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-									}
-								})
+							// 		if(i == consultas[longConsultas-1]) {
+							// 			consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+							// 		}
+							// 	})
 
-							} else {
-								i.tratamientos = []
+							// } else {
+							// 	i.tratamientos = []
 
-								if(i == consultas[longConsultas-1]) {
-									consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-								}
-							}
+							// 	if(i == consultas[longConsultas-1]) {
+							// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+							// 	}
+							// }
 						})
 					})
+
+
 				})
+				
 			})
+
+
+			// consultaNsp.emit('reporte_listar_consultas', { consultas: listaDetalladaConsultas })			
 		})
+			console.log(listaDetalladaConsultas)
 
 
 
