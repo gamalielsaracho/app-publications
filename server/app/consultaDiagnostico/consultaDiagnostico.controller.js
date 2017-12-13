@@ -1,98 +1,214 @@
 import ConsultaDiagnostico from './consultaDiagnostico.model'
 
 import Consulta from '../consulta/consulta.model'
+import moment from 'moment'
 
 import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
 import fieldsToEditData from './././../useFul/fieldsToEditData.js'
 
 exports.listarCantidadDiagnosticosEnAnhos = function(req, res, next) {
+	
+	let esta1 = []
+	
+	let cantidad
+	Consulta.findOnlyYears((err, years) => {
 
-	Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
-		// console.log(diagnosticos)
-		if(err) {
-			console.log(err)
-			return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
-		}
-
-		let longDiag = diagnosticos.length
-
-		diagnosticos.map((i) => {
-			Consulta.findCantidadDiagnosticosEnAnhos(i.id_diagnostico, (err, consultas) => {
-				// console.log(consultas)
+			if(err) {
+				console.log(err)
+				return
+			}
+			Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
 				if(err) {
 					console.log(err)
-					return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+					return
 				}
+				Consulta.diagnosticosXconsultas((err, datos) => {
+					if(err) {
+						console.log(err)
+						return
+					}
+					// console.log(datos)	
 
-					i.labels = []
-					i.data = []
-				consultas.map((c) => {
-					// console.log(c)
-					i.data.push(c.cantidad)
-					// i.data.sort()
+					diagnosticos.map((di) => {
+						// cantidad = 0
+						let content = {}
+						content.id_diagnostico = di.id_diagnostico
+						content.descripcion = di.descripcion
+						content.labels = []
+						content.data = []
 
-					c.fecha = c.fecha.toString()
-					i.labels.push((c.fecha))
-					// i.labels.sort()
+
+						esta1.push(content)		
+					})
+
+
+					let logEsta1 = esta1.length
+
+					esta1.map((es) => {
+
+						years.map((y) => {
+							// console.log(y.fecha+' ---->')
+							es.labels.push(y.fecha)
+							cantidad = 0
+							// let logDatos = datos.length
+
+							datos.map((cd) => {
+								// console.log('y.fecha -->'+y.fecha)
+								// console.log('d.con.fecha -->'+cd.con.fecha)
+
+								if(y.fecha == moment(cd.con.fecha).format('YYYY')) {
+									if(cd.conDiag.id_diagnostico == es.id_diagnostico) {
+
+										cantidad++
+									}
+								}
+							})
+							es.data.push(cantidad)
+
+						})
+
+					})
+
+					return res.json(esta1)
+
+					// console.log('-----------------------------------------')
+					// console.log(esta1)
 
 				})
-
-				// i.contenido = consultas
-
-				if(i == diagnosticos[longDiag-1]) {
-					return res.json(diagnosticos)
-				}
 			})
 		})
-
-		// return res.json(diagnosticos)
-	})	
 }
 
 
 exports.listarCantidadDiagnosticosPorAnho = function(req, res, next) {
 
-	Consulta.findOnlyYears((err, anhos) => {
-		// console.log(anhos)
-		if(err) {
-			console.log(err)
-			return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
-		}
+	// Consulta.findOnlyYears((err, anhos) => {
+	// 	// console.log(anhos)
+	// 	if(err) {
+	// 		console.log(err)
+	// 		return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+	// 	}
 
-		let longAnhos = anhos.length
+	// 	let longAnhos = anhos.length
 
-		anhos.map((i) => {
-			// console.log(i.fecha)
-			Consulta.findCantidadDiagnosticosPorAnho(i.fecha, (err, diagnosticos) => {
+	// 	anhos.map((i) => {
+	// 		// console.log(i.fecha)
+	// 		Consulta.findCantidadDiagnosticosPorAnho(i.fecha, (err, diagnosticos) => {
+	// 			if(err) {
+	// 				console.log(err)
+	// 				return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+	// 			}
+
+	// 				i.labels = []
+	// 				i.data = []
+	// 			diagnosticos.map((d) => {
+
+	// 				i.data.push(d.cantidad)
+	// 				// i.data.sort()
+
+	// 				// d.fecha = d.fecha.toString()
+	// 				i.labels.push((d.descripcion))
+	// 				// i.labels.sort()
+
+	// 			})
+
+	// 			// i.contenido = consultas
+
+	// 			if(i == anhos[longAnhos-1]) {
+	// 				return res.json(anhos)
+	// 			}
+
+	// 		})
+	// 	})
+
+	// 	// return res.json(diagnosticos)
+	// })	
+
+
+
+	// ----------------------------------------------
+	let esta2 = []
+	
+	let cantidad
+
+	Consulta.findOnlyYears((err, years) => {
+
+			if(err) {
+				console.log(err)
+				return
+			}
+			Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
 				if(err) {
 					console.log(err)
-					return res.status(422).json({ error: 'Lo sentimos, acurrió un error. intente más tarde.' });
+					return
 				}
+				Consulta.diagnosticosXconsultas((err, datos) => {
+					if(err) {
+						console.log(err)
+						return
+					}
+					// console.log(datos)	
 
-					i.labels = []
-					i.data = []
-				diagnosticos.map((d) => {
+					years.map((y) => {
+						// cantidad = 0
+						let content = {}
+						content.fecha = y.fecha
+						content.labels = []
+						content.data = []
 
-					i.data.push(d.cantidad)
-					// i.data.sort()
 
-					// d.fecha = d.fecha.toString()
-					i.labels.push((d.descripcion))
-					// i.labels.sort()
+						esta2.push(content)		
+					})
+
+					// diagnosticos.map((di) => {
+					// 	// cantidad = 0
+					// 	let content = {}
+					// 	content.id_diagnostico = di.id_diagnostico
+					// 	content.descripcion = di.descripcion
+					// 	content.labels = []
+					// 	content.data = []
+
+
+					// 	esta2.push(content)		
+					// })
+
+
+					let logEsta2 = esta2.length
+
+					esta2.map((es) => {
+
+						diagnosticos.map((d) => {
+							// console.log(y.fecha+' ---->')
+							es.labels.push(d.descripcion)
+							cantidad = 0
+							// let logDatos = datos.length
+
+							datos.map((cd) => {
+								// console.log('y.fecha -->'+y.fecha)
+								// console.log('d.con.fecha -->'+cd.con.fecha)
+
+								if(es.fecha == moment(cd.con.fecha).format('YYYY')) {
+									if(cd.conDiag.id_diagnostico == d.id_diagnostico) {
+
+										cantidad++
+									}
+								}
+							})
+
+							es.data.push(cantidad)
+
+						})
+
+					})
+
+					return res.json(esta2)
+
+					// console.log('-----------------------------------------')
+					// console.log(esta2)
 
 				})
-
-				// i.contenido = consultas
-
-				if(i == anhos[longAnhos-1]) {
-					return res.json(anhos)
-				}
-
 			})
 		})
-
-		// return res.json(diagnosticos)
-	})	
 }
 
 

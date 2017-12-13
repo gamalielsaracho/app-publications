@@ -79,31 +79,31 @@ class Formulario extends Component {
 				<form onSubmit={handleSubmit(this.enviarFormulario)}>
 					<div className='row'>
 						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='diasMaximos' type='text' component={renderField} label='Días máximos'/>
+							<Field name='diasMinimos' type='number' component={renderField} label='Días mínimos'/>
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='mesesMaximos' type='text' component={renderField} label='Meses máximos'/>
+							<Field name='diasMaximos' type='number' component={renderField} label='Días máximos'/>
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='anosMaximos' type='text' component={renderField} label='Años máximos'/>
+							<Field name='mesesMinimos' type='number' component={renderField} label='Meses mínimos'/>
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='superior' type='text' component={renderField} label='Valor superior'/>
+							<Field name='mesesMaximos' type='number' component={renderField} label='Meses máximos'/>
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='inferior' type='text' component={renderField} label='Valor inferior'/>
+							<Field name='anosMinimos' type='number' component={renderField} label='Años mínimos'/>
 						</div>
 						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='diasMinimos' type='text' component={renderField} label='Días mínimos'/>
+							<Field name='anosMaximos' type='number' component={renderField} label='Años máximos'/>
+						</div>
+						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
+							<Field name='superior' type='number' component={renderField} label='Valor superior'/>
+						</div>
+						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
+							<Field name='inferior' type='number' component={renderField} label='Valor inferior'/>
 						</div>
 					</div>
 					<div className='row'>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='mesesMinimos' type='text' component={renderField} label='Meses mínimos'/>
-						</div>
-						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
-							<Field name='anosMinimos' type='text' component={renderField} label='Años mínimos'/>
-						</div>
 						<div className='col-xs-12 col-sm-6 col-md-4 col-lg-2'>
 							<Field name='sexo' type='radio' component={this.renderFieldRadio} value='masculino' label='Masculino'/>
 							<Field name='sexo' type='radio' component={this.renderFieldRadio} value='femenino' label='Femenino'/>
@@ -121,7 +121,7 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '40vh',
+		  		height: '60vh',
 		  		position: 'none'
 		  	}
 		}

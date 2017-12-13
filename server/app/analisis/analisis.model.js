@@ -119,6 +119,7 @@ exports.verifyIfExist = (data, callback) => {
 	connection.end()
 }
 
+
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO analisis (id_analisis, fecha, id_analisisSolicitado, id_personal)
@@ -130,18 +131,19 @@ exports.create = (data, callback) => {
 	connection.end()
 }
 
-// exports.update = (data, callback) => {
-// 	let q = `
-// 		UPDATE analisis SET 
-// 			descripcion = ?
-// 			WHERE 
-// 				id_analisis = ?
-// 	`
 
-// 	return connection.query(q, [data.descripcion.trim(), data.id_analisis], callback)
+exports.updatePrinted = (data, callback) => {
+	let q = `
+		UPDATE analisis SET 
+			impreso = 1
+			WHERE 
+				id_analisis = ?
+	`
 
-// 	connection.end()
-// }
+	return connection.query(q, [data.id_analisis], callback)
+
+	connection.end()
+}
 
 exports.delete = (data, callback) => {	
 

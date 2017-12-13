@@ -16,6 +16,9 @@ function mapStateToProps(state, ownProps) {
 		// guardamos todos los parametros de la url en el objeto urls.
 		urls: ownProps.params,
 
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname,
+
 		// Obtenemos el estado de la solicitud de laboratorio para 
 		// ver si está pendiente, (y así mostrar o no el menú de 
 		// detalle general).

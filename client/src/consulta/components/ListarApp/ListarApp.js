@@ -1,15 +1,51 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import jwtDecode from 'jwt-decode'
 
 class ListarApp extends Component {
+	constructor(props) {
+		super(props)
+		this.renderBtnReportes = this.renderBtnReportes.bind(this)
+		this.renderBtnEstadisticas = this.renderBtnEstadisticas.bind(this)
+
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+	}
+
+	renderBtnEstadisticas(urlEstadisticas, activeEstadisticas) {
+		let idRol = this.personalLocalSt.id_rol
+		
+		if((idRol == 3) && (this.props.pathname == '/dashboard/consultas')) {
+			return <li className="nav-item nav-link" className={activeEstadisticas}>
+				<Link to={urlEstadisticas}>Estadisticas</Link>
+			</li>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderBtnReportes(urlReportesListaConsultas, activeMostrarReportes) {
+		let idRol = this.personalLocalSt.id_rol
+		
+		if((idRol == 3) && (this.props.pathname == '/dashboard/consultas')) {
+			return <li className="nav-item nav-link" className={activeMostrarReportes}>
+				<Link to={urlReportesListaConsultas}>Reportes</Link>
+			</li>
+		} else {
+			return <span></span>
+		}
+
+	}
+
 	render() {
 		let urlListarConsultas
 		let urlReportesListaConsultas
+		let urlEstadisticas = '/dashboard/consultas/estadisticas'
 
 
 		let activeList
 		let activeShow
 		let activeMostrarReportes
+		let activeEstadisticas
 
 		let condicionActiveUrlListarConsultas = (
 			this.props.pathname == `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas` ||
@@ -18,28 +54,24 @@ class ListarApp extends Component {
 		)
 
 
-		let condicionActiveUrlMostrarReportesConsultas = (
-			this.props.pathname == `/dashboard/consultas/lista-consultas-vista-general-reportes`
-			// this.props.pathname == `/dashboard/consultas/lista-consultas-vista-general-reportes` ||
-			// this.props.pathname == `/dashboard/consultas/lista-consultas-vista-general-reportes`
-		)
-
 		if(condicionActiveUrlListarConsultas) {
 			activeList = 'active'
-			activeShow = ''
-			activeMostrarReportes = ''
+			// activeShow = ''
+			// activeMostrarReportes = ''
+		}
+			
+		if(this.props.pathname == `/dashboard/consultas/lista-consultas-vista-general-reportes`) {
+			activeMostrarReportes = 'active'
+		}
 
-		} else {
-			if(condicionActiveUrlMostrarReportesConsultas) {
-				activeMostrarReportes = 'active'
-				activeShow = ''
-				activeList = ''
-			}
+		if(this.props.pathname == urlEstadisticas) {
+			activeEstadisticas = 'active'
 		}
 
 		if(this.props.urls.idConsulta) {
 			activeShow = 'active'
 		}
+
 
 		// Si está parado en el historial clínico del paciente.
 		if(this.props.urls.idPaciente) {
@@ -62,9 +94,9 @@ class ListarApp extends Component {
 			  <li className="nav-item nav-link" className={activeShow}>
 			    <a className="nav-link">Detalle Consulta</a>
 			  </li>
-			  <li className="nav-item nav-link" className={activeMostrarReportes}>
-			  	<Link to={urlReportesListaConsultas}>Reportes</Link>
-			  </li>
+
+			  { this.renderBtnReportes(urlReportesListaConsultas, activeMostrarReportes) }
+			  { this.renderBtnEstadisticas(urlEstadisticas, activeEstadisticas) }
 			</ul>
 
 			{ this.props.children }

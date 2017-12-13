@@ -37,3 +37,5 @@ export const ELIMINAR_REFERENCIA_EXITO = 'eliminair_referencia_exito'
 export const ELIMINAR_REFERENCIA_FALLO = 'eliminair_referencia_fallo'
 
 
+export const LIMPIAR_MENSAJE_ERROR_REFERENCIA = 'limpiar_mensaje_error_referencia'
+

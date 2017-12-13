@@ -21,7 +21,9 @@ import {
 
 	ELIMINAR_ANALISIS_REQUEST,
 	ELIMINAR_ANALISIS_EXITO,
-	ELIMINAR_ANALISIS_FALLO
+	ELIMINAR_ANALISIS_FALLO,
+
+	LIMPIAR_MENSAJE_ERROR_ANALISIS
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -36,6 +38,16 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		case LIMPIAR_MENSAJE_ERROR_ANALISIS:
+			
+			state = Object.assign({}, state, {
+				crear: { error:'' },
+				eliminar: { error:'' },
+				editar: { error:'' }
+			})
+
+			return state
+
 		
 		case MOSTRAR_ANALISIS_POR_ID_ANALISIS_SOLICITADO_REQUEST:
 			return Object.assign({}, state, {

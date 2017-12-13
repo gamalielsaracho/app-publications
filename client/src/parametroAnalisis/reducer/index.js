@@ -1,9 +1,9 @@
 import {
 	CERRAR_FORMULARIO_PARAMETRO_ANALISIS,
 
-	LISTAR_PARAMETROS_ANALISIS_REQUEST,
-	LISTAR_PARAMETROS_ANALISIS_EXITO,
-	LISTAR_PARAMETROS_ANALISIS_FALLO,
+	LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_REQUEST,
+	LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_EXITO,
+	LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_FALLO,
 
 	ABRIR_FORMULARIO_CREAR_PARAMETRO_ANALISIS,
 
@@ -27,7 +27,10 @@ import {
 
 	ELIMINAR_PARAMETRO_ANALISIS_REQUEST,
 	ELIMINAR_PARAMETRO_ANALISIS_EXITO,
-	ELIMINAR_PARAMETRO_ANALISIS_FALLO
+	ELIMINAR_PARAMETRO_ANALISIS_FALLO,
+
+
+	LIMPIAR_MENSAJE_ERROR_PARAMETRO_ANALISIS
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -48,6 +51,17 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+
+		case LIMPIAR_MENSAJE_ERROR_PARAMETRO_ANALISIS:
+			state = Object.assign({}, state, {
+				crear: { error:'' },
+				eliminar: { error:'' },
+				editar: { error:'' }
+			})
+
+			return state
+
+
 		case ABRIR_FORMULARIO_CREAR_PARAMETRO_ANALISIS:
 			return Object.assign({}, state, {
 				formulario: {
@@ -141,18 +155,22 @@ export default function (state = INITIAL_STATE, action) {
 
 
 		// LISTAR.
-		case LISTAR_PARAMETROS_ANALISIS_REQUEST:
+		case LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_REQUEST:
 			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' },
 				eliminar: INITIAL_STATE.eliminar
 			})
 
-		case LISTAR_PARAMETROS_ANALISIS_EXITO:
+		case LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_EXITO:
 			return Object.assign({}, state, {
-				listar: { parametrosAnalisis: action.payload.parametrosAnalisis, cargando: false, error: '' }
+				listar: {
+					parametrosAnalisis: action.payload.parametrosAnalisis, 
+					cargando: false,
+					error: '' 
+				}
 			})
 
-		case LISTAR_PARAMETROS_ANALISIS_FALLO:
+		case LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_FALLO:
 			return Object.assign({}, state, {
 				listar: { error: action.payload, parametrosAnalisis:[], cargando: false }
 			})

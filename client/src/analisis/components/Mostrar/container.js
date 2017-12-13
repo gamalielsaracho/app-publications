@@ -2,7 +2,9 @@ import { connect } from 'react-redux'
 
 import {
 	mostrarAnalisis,
-	eliminarAnalisis
+	eliminarAnalisis,
+
+	limpiarMensajeErrorAnalisis
 } from '../../actions'
 
 import Mostrar from './Mostrar'
@@ -21,7 +23,16 @@ function mapDispatchToProps(dispatch) {
 			dispatch(mostrarAnalisis(idAnalisis))
 		},
 		eliminarAnalisis: (urlToRedirect, idAnalisis) => {
-			dispatch(eliminarAnalisis(urlToRedirect, idAnalisis))
+			var r = confirm("Está seguro que desea eliminar ?");
+		    
+		    if (r == true) {
+				dispatch(eliminarAnalisis(urlToRedirect, idAnalisis))
+				
+				setTimeout(function () {
+					dispatch(limpiarMensajeErrorAnalisis())
+				}, 5000)
+		    }
+
 		}
 	}
 }

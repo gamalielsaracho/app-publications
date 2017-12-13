@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 
 import MostrarApp from './MostrarApp'
 
+
 import {
 	mostrarTratamientoIdConsulta,
 	crearTratamiento
@@ -9,7 +10,8 @@ import {
 
 
 import {
-	listarAnalisisSolicitados
+	listarAnalisisSolicitados,
+	abrirFormularioCrearAnalisisSolicitado
 } from '../../../analisisSolicitado/actions'
 
 function mapStateToProps(state, ownProps) {
@@ -43,6 +45,9 @@ function mapDispatchToProps(dispatch) {
 		    if (r == true) {
 				dispatch(crearTratamiento(idConsulta))
 		    }
+		},
+		abrirFormularioCrearAnalisisSolicitado: () => {
+			dispatch(abrirFormularioCrearAnalisisSolicitado())
 		}
 	}
 }

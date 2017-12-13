@@ -130,6 +130,38 @@ export default (io) => {
 
 		})
 
+
+		// Acutalizar el estado de impreso a true.
+		
+		socket.on('actualizar_analisis_estadoImpreso', (data) => {
+			Analisis.updatePrinted(data, (err, content) => {
+				// console.log(analisis)
+
+				if(err) {
+					console.log(err)
+					socket.emit('actualizar_analisis_estadoImpreso', { error: 'Ocurrió un error, intente más tarde.' })
+					return
+				}
+
+				Analisis.findById(data, (err, analisis) => {
+				// console.log(analisis)
+
+					if(err) {
+						console.log(err)
+						socket.emit('mostrar_analisis', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('mostrar_analisis', analisis[0])
+				})
+
+				// socket.emit('actualizar_analisis_estadoImpreso', { 
+				// 	mensaje: 'Se actualizó exitósamente.'
+				// })
+			})
+		})
+
+
 		socket.on('mostrar_analisis', (data) => {
 			Analisis.findById(data, (err, analisis) => {
 				// console.log(analisis)

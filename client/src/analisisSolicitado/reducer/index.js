@@ -28,6 +28,7 @@ import {
 	ELIMINAR_ANALISIS_SOLICITADO_REQUEST,
 	ELIMINAR_ANALISIS_SOLICITADO_EXITO,
 	ELIMINAR_ANALISIS_SOLICITADO_FALLO
+
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -48,6 +49,7 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+
 		case ABRIR_FORMULARIO_CREAR_ANALISIS_SOLICITADO:
 			return Object.assign({}, state, {
 				formulario: {

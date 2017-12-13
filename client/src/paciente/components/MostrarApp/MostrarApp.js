@@ -51,9 +51,9 @@ class MostrarApp extends Component {
 		// 3 administración.
 		if((rol == 1) || (rol == 3)) {
 			return <div>
-				<h3 className='text-center'>Historial Clínico</h3>
+				<h3 className='text-center no-print-data'>Historial Clínico</h3>
 
-				<ul className="nav nav-tabs">
+				<ul className="nav nav-tabs no-print-data">
 					<li className="nav-item nav-link" className={activeAlergias}>
 				    	<Link to={urlListarAlergias}>Alergias</Link>
 					</li>

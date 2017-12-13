@@ -8,6 +8,8 @@ import Cargando from '../../../app/components/Cargando'
 
 import Estadistica2Container from '../Estadistica2'
 
+import CabeceraEstadisticaContainer from '../../../app/components/CabeceraEstadistica'
+
 class Estadistica2App extends Component {
 	constructor(props) {
 		super(props)
@@ -81,7 +83,14 @@ class Estadistica2App extends Component {
 
 				<MensajeOerror error={error} mensaje={null}/>
 
-				<h3 className='text-center'>Reporte 2 estadístico de enfermedad detectada</h3>
+
+				<br/>
+				<hr/>
+				<CabeceraEstadisticaContainer
+					styleData={''}
+					fechaCreacion = { this.props.fechaTratamiento }/>
+
+				<h3 className='text-center'>Reporte estadístico de enfermedades detectadas</h3>
 				<Estadistica2Container
 					valoresFiltro = { this.props.valoresFiltro }
 					datos = {this.props.datosFiltradosPorAnho(valoresEstadisticos, this.props.valoresFiltro) }/>

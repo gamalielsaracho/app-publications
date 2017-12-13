@@ -189,7 +189,7 @@ exports.eliminar = function(req, res, next) {
 			}
 
 			// console.log(listaCampos)
-			fieldsToEditData(aTpRefAnt.id_analisisTipoReferencia, listaCampos, 'eliminación', 'resultados-analisis', idPersonal, aTpRefAnt.id_analisisTipo, (err, datos) => {
+			fieldsToEditData(aTpRefAnt.analisisTipoReferencia.id_analisisTipoReferencia, listaCampos, 'eliminación', 'resultados-analisis', idPersonal, aTpRefAnt.id_analisisTipo, (err, datos) => {
 				if(err) {
 					console.log(err)
 					return res.status(422).json({ error: 'Ocurrió un error en la auditoría de este módulo.' })

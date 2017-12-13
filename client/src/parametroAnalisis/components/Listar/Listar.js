@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -13,12 +14,13 @@ class Listar extends Component {
 	}
 
 	componentWillMount() {
-		this.props.listarParametrosAnalisis()
+		this.props.listarParametrosAnalisisByIdTipoAnalisis(this.props.urls.idTipoAnalisis)
 	}
 
 	renderParametroAnalisisFormulario() {
 		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
-			return <FormularioParametroAnalisisContainer/>
+			return <FormularioParametroAnalisisContainer
+				idTipoAnalisis={ this.props.urls.idTipoAnalisis }/>
 		} else {
 			return <span></span>
 		}
@@ -51,6 +53,9 @@ class Listar extends Component {
 				            <td>{ i.tipoExamen.descripcion }</td>
 				            <td>{ i.unidad.descripcion }</td>
 				            <td>
+				            	<Link to={`/dashboard/tipos-analisis/${this.props.urls.idTipoAnalisis}/parametros/${i.parametro.id_parametroAnalisis}/referencias`}>
+									<button type="button" className="btn btn-info btn-space">Mostrar</button>
+								</Link>
 								<button type="button" onClick={() => { this.props.abrirFormularioEditarParametroAnalisis(i.parametro.id_parametroAnalisis) }} className="btn btn-warning btn-space">Editar</button>
 								<button type="button" onClick={() => { this.props.eliminarParametroAnalisis(i.parametro.id_parametroAnalisis) }} className="btn btn-danger btn-space">Eliminar</button>
 				            </td>

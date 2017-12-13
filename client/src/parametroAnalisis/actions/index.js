@@ -7,9 +7,9 @@ import {
 
 	CERRAR_FORMULARIO_PARAMETRO_ANALISIS,
 
-	LISTAR_PARAMETROS_ANALISIS_REQUEST,
-	LISTAR_PARAMETROS_ANALISIS_EXITO,
-	LISTAR_PARAMETROS_ANALISIS_FALLO,
+	LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_REQUEST,
+	LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_EXITO,
+	LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_FALLO,
 
 	// Create rol.
 	CREAR_PARAMETRO_ANALISIS_REQUEST,
@@ -29,7 +29,10 @@ import {
 	// Delete Rol.
 	ELIMINAR_PARAMETRO_ANALISIS_REQUEST,
 	ELIMINAR_PARAMETRO_ANALISIS_EXITO,
-	ELIMINAR_PARAMETRO_ANALISIS_FALLO
+	ELIMINAR_PARAMETRO_ANALISIS_FALLO,
+
+
+	LIMPIAR_MENSAJE_ERROR_PARAMETRO_ANALISIS
 } from './types'
 
 import io from 'socket.io-client'
@@ -37,7 +40,17 @@ import io from 'socket.io-client'
 import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
+import jwtDecode from 'jwt-decode'
+
 var parametroAnalisisSocket = io.connect('http://localhost:3000/parametroAnalisis');
+
+
+export function limpiarMensajeErrorParametroAnalisis() {
+	return (dispatch) => {
+		dispatch({ type: LIMPIAR_MENSAJE_ERROR_PARAMETRO_ANALISIS })
+	}
+}
+
 
 export function abrirFormularioCrearParametroAnalisis() {
 	return (dispatch) => {
@@ -72,19 +85,24 @@ export function cerrarFormularioParametroAnalisis() {
 	}
 }
 
-export function listarParametrosAnalisis() {
+
+export function listarParametrosAnalisisByIdTipoAnalisis(idTipoAnalisis) {
 	return (dispatch) => {
 
-		dispatch({ type: LISTAR_PARAMETROS_ANALISIS_REQUEST })
+		dispatch({ type: LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_REQUEST })
 
 		var parametroAnalisisSocket = io.connect('http://localhost:3000/parametroAnalisis');
 
-		parametroAnalisisSocket.on('listar_parametrosAnalisis', (data) => {
+		parametroAnalisisSocket.emit('listar_parametrosAnalisis_byIdTipoAnalisis', {
+			id_tipoAnalisis: idTipoAnalisis
+		})
+
+		parametroAnalisisSocket.on('listar_parametrosAnalisis_byIdTipoAnalisis', (data) => {
 
 			if(data.error) {
-				dispatch({ type: LISTAR_PARAMETROS_ANALISIS_FALLO, payload: data.error })
+				dispatch({ type: LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_FALLO, payload: data.error })
 			} else {
-				dispatch({ type: LISTAR_PARAMETROS_ANALISIS_EXITO, payload: data })
+				dispatch({ type: LISTAR_PARAMETROS_ANALISIS_BY_IDTIPOANALISIS_EXITO, payload: data })
 			}
 		})
 	}
@@ -117,7 +135,8 @@ export function eliminarParametroAnalisis(idParametroAnalisis) {
 		dispatch({ type: ELIMINAR_PARAMETRO_ANALISIS_REQUEST })
 
 		parametroAnalisisSocket.emit('eliminar_parametroAnalisis', { 
-			id_parametroAnalisis: idParametroAnalisis 
+			id_parametroAnalisis: idParametroAnalisis,
+			idPersonal: jwtDecode(localStorage.getItem('token')).id_personal
 		})
 
 		parametroAnalisisSocket.on('eliminar_parametroAnalisis', (data) => {
@@ -154,6 +173,8 @@ export function mostrarParametroAnalisis(idParametroAnalisis) {
 
 export function editarParametroAnalisis(datosFormulario) {
 	return (dispatch) => {
+		datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
 
 		dispatch({ type: EDITAR_PARAMETRO_ANALISIS_REQUEST })
 

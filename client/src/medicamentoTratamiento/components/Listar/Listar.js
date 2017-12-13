@@ -110,10 +110,12 @@ class Listar extends Component {
 		let idRol = this.personalLocalSt.id_rol
 		let idPersonal = this.personalLocalSt.id_personal
 
+		// disabled={this.getEstadoHabilitado()}
+
 		if((idRol == 1 && idPersonal == this.idMedicoLocalSt) || (idRol == 3)) {
 			return <div className='row no-print-data'>
 				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-					<button disabled={this.getEstadoHabilitado()} onClick={ this.props.abrirFormularioCrearMedicamentoTratamiento } className='btn btn-success'>Agregar</button>
+					<button onClick={ this.props.abrirFormularioCrearMedicamentoTratamiento } className='btn btn-success'>Agregar</button>
 				</div>
 			</div>
 		} else {
@@ -125,12 +127,14 @@ class Listar extends Component {
 		let idRol = this.personalLocalSt.id_rol
 		let idPersonal = this.personalLocalSt.id_personal
 
+		// disabled={this.getEstadoHabilitado()}
+
 		// 1 médico.
 		// 3 administración.
 		if((idRol == 1 && idPersonal == this.idMedicoLocalSt) || (idRol == 3)) {
 			return <div className='text-right no-print-data'>
-				<button disabled={this.getEstadoHabilitado()} type="button" onClick={() => { this.props.abrirFormularioEditarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-warning btn-space">Editar</button>
-				<button disabled={this.getEstadoHabilitado()} type="button" onClick={() => { this.props.eliminarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-danger btn-space">Eliminar</button>
+				<button type="button" onClick={() => { this.props.abrirFormularioEditarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-warning btn-space">Editar</button>
+				<button type="button" onClick={() => { this.props.eliminarMedicamentoTratamiento(i.indicacion.id_medicamentoTratamiento) }} className="btn btn-danger btn-space">Eliminar</button>
 			</div>
 		} else {
 			return <span></span>

@@ -24,7 +24,10 @@ import {
 	// Delete Rol.
 	ELIMINAR_ANALISIS_REQUEST,
 	ELIMINAR_ANALISIS_EXITO,
-	ELIMINAR_ANALISIS_FALLO
+	ELIMINAR_ANALISIS_FALLO,
+
+
+	LIMPIAR_MENSAJE_ERROR_ANALISIS
 } from './types'
 
 import io from 'socket.io-client'
@@ -33,6 +36,28 @@ import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var analisisSocket = io.connect('http://localhost:3000/analisis');
+
+
+export function actualizarEstadoImpresionAnalisis(idAnalisis) {
+	return (dispatch) => {
+	
+		analisisSocket.emit('actualizar_analisis_estadoImpreso', { 
+			id_analisis: idAnalisis 
+		})
+
+		analisisSocket.on('actualizar_analisis_estadoImpreso', (data) => {
+			console.log(data)
+		})
+	}
+}
+
+
+export function limpiarMensajeErrorAnalisis() {
+	return (dispatch) => {
+		dispatch({ type: LIMPIAR_MENSAJE_ERROR_ANALISIS })
+	}
+}
+
 
 export function listarAnalisis() {
 	return (dispatch) => {
@@ -106,6 +131,10 @@ export function mostrarAnalisis(idAnalisis) {
 			if(data.error) {
 				dispatch({ type: MOSTRAR_ANALISIS_FALLO, payload: data.error })
 			} else {
+				// Guardamos el estado de impresión..
+				localStorage.setItem('analisisImpreso', data.ana.impreso)
+
+				// alert('localStorage.!!!')
 				dispatch({ type: MOSTRAR_ANALISIS_EXITO, payload: data })
 			}
 		})

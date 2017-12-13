@@ -20,7 +20,10 @@ import {
 	// Delete Rol.
 	ELIMINAR_ANALISIS_TIPO_REQUEST,
 	ELIMINAR_ANALISIS_TIPO_EXITO,
-	ELIMINAR_ANALISIS_TIPO_FALLO
+	ELIMINAR_ANALISIS_TIPO_FALLO,
+
+
+	LIMPIAR_MENSAJE_ERROR_ANALISIS_TIPO
 } from './types'
 
 import io from 'socket.io-client'
@@ -41,6 +44,14 @@ import {
 
 	API_URL
 } from '../../globalActions'
+
+
+export function limpiarMensajeErrorAnalisisTipo() {
+	return (dispatch) => {
+		dispatch({ type: LIMPIAR_MENSAJE_ERROR_ANALISIS_TIPO })
+	}
+}
+
 
 export function abrirFormularioCrearAnalisisTipo() {
 	return (dispatch) => {

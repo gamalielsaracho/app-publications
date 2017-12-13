@@ -33,6 +33,9 @@ import sintomaRoutes from './sintoma/routes'
 
 import consultaRoutes from './consulta/routes'
 
+import tipoAnalisisRoutes from './tipoAnalisis/routes'
+
+
 
 import Estadistica1Container from './consulta/components/Estadistica1'
 
@@ -120,23 +123,7 @@ import ListarUnidadesAnalisisPage from '././unidadAnalisis/pages/ListarUnidadesA
 
 import ListarParametrosAnalisisPage from '././parametroAnalisis/pages/ListarParametrosAnalisisPage'
 	
-	// MOSTRAR PARAMETRO ANALISIS APP.
-import MostrarParametroAnalisisAppContainer from '././parametroAnalisis/components/MostrarApp'
-
-import ListarReferenciasContainer from '././referencia/components/Listar'
-
-
-	// LISTAR TIPOS DE ANALISIS APP.
-import ListarTiposAnalisisApp from '././tipoAnalisis/components/ListarApp'
-import ListarTiposAnalisisPage from '././tipoAnalisis/pages/ListarTiposAnalisisPage'
 	
-	// MOSTRAR TIPO DE ANALISIS APP.
-import MostrarTipoAnalisisAppContainer from '././tipoAnalisis/components/MostrarApp'
-
-// LISTAR (TIPO ANALISIS X PARAMETROS).
-import ListarTipoAnalisisParametrosContainer from '././tipoAnalisisParametro/components/Listar'
-
-
 
 // ===================================================================
 	
@@ -148,11 +135,6 @@ import ListarLotesMedicamentosPage from '././loteMedicamento/pages/ListarLotesMe
 import MostrarLoteMedicamentoAppContainer from '././loteMedicamento/components/MostrarApp'
 
 
-// Estadística.
-import EstadisticasAppContainer from '././consulta/components/EstadisticasApp'
-import Estadistica1AppContainer from '././consulta/components/Estadistica1App'
-import Estadistica2AppContainer from '././consulta/components/Estadistica2App'
-
 
 export default (
 	<Route path='/' component={AppContainer}>
@@ -160,13 +142,7 @@ export default (
 		<Route path='/registrarse' component={RegistrarPage}/>
 		<Route path='/entrar' component={AutenticarPage}/>
 
-		<Route path='/dashboard' component={DashBoardContainer}>
-			<Route path='/estadisticas' component={EstadisticasAppContainer}>
-				<Route path='/estadisticas/diagnosticos-anuales' component={Estadistica1AppContainer}/>
-				<Route path='/estadisticas/diagnosticos-anual' component={Estadistica2AppContainer}/>
-			</Route>
-			
-
+		<Route path='/dashboard' component={DashBoardContainer}>			
 
 			<Route path='/usuarios' component={ListarPage}/>
 			<Route path='/roles' component={ListarRolesPage}/>
@@ -189,6 +165,7 @@ export default (
 			{ sintomaRoutes }
 			{ preConsultaRoutes }
 			{ consultaRoutes }
+			{ tipoAnalisisRoutes }
 
 				{/* Módulo farmacia. */}
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
@@ -230,16 +207,6 @@ export default (
 			</Route>
 
 
-			<Route path='/dashboard/tipos-analisis' component={ListarTiposAnalisisApp}>
-				<IndexRoute component={ListarTiposAnalisisPage}/>
-				<Route path='/dashboard/tipos-analisis/:idTipoAnalisis' component={MostrarTipoAnalisisAppContainer}>
-					<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros' component={ListarTipoAnalisisParametrosContainer}/>
-					
-					<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros/:idParametroAnalisis' component={MostrarParametroAnalisisAppContainer}>
-						<Route path='/dashboard/tipos-analisis/:idTipoAnalisis/parametros/:idParametroAnalisis/referencias' component={ListarReferenciasContainer}/>						
-					</Route>
-				</Route>
-			</Route>
 
 		</Route>
 

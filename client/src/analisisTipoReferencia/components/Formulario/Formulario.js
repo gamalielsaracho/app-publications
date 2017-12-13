@@ -88,7 +88,7 @@ class Formulario extends Component {
 							{ this.renderFieldSelectParametrosPre(this.props.listarReferenciasFiltradas, analisisTipoReferencia) }
 						</div>
 						<div className='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
-							<Field name='valor' type='text' component={renderField} label='Resultado'/>
+							<Field name='valor' type='number' component={renderField} label='Resultado'/>
 						</div>
 					</div>
 																		
@@ -120,9 +120,7 @@ class Formulario extends Component {
 		// let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 
 		return <div>
-			<div className='row'>
-				<MensajeOerror error={error} mensaje={null}/>
-			</div>
+			<MensajeOerror error={error} mensaje={null}/>
 
 			<div className='row'>
 				{ this.renderFormulario(cargando, analisisTipoReferencia) }

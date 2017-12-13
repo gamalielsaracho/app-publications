@@ -52,7 +52,18 @@ import {
 } from './types'
 
 import io from 'socket.io-client'
-import { formatDate } from '../../globalActions'
+
+import axios from 'axios'
+
+import {
+	postData,
+	getData,
+	putData,
+	deleteData,
+	errorHandler,
+
+	API_URL
+} from '../../globalActions'
 
 import moment from 'moment'
 
@@ -138,18 +149,12 @@ export function cerrarFormularioConsulta() {
 
 export function mostrarEstadistica1() {
 	return (dispatch) => {
+		let url = `/consultaDiagnosticos/grafica1`
+
 		dispatch({ type: MOSTRAR_ESTADISTICA_REQUEST })
 
-		var consultaSocket = io.connect('http://localhost:3000/consulta');
+		getData(MOSTRAR_ESTADISTICA_EXITO, MOSTRAR_ESTADISTICA_FALLO, true, url, dispatch)
 
-		consultaSocket.on('cantidad_diagnosticos_enAnhos', (data) => {
-			// console.log(data)
-			if(data.error) {
-				dispatch({ type: MOSTRAR_ESTADISTICA_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: MOSTRAR_ESTADISTICA_EXITO, payload: data })
-			}
-		})
 	}
 }
 
@@ -158,16 +163,10 @@ export function mostrarEstadistica2() {
 	return (dispatch) => {
 		dispatch({ type: MOSTRAR_ESTADISTICA_REQUEST })
 
-		var consultaSocket = io.connect('http://localhost:3000/consulta');
+		let url = `/consultaDiagnosticos/grafica2`
 
-		consultaSocket.on('cantidad_diagnosticos_porAnho', (data) => {
-			// console.log(data)
-			if(data.error) {
-				dispatch({ type: MOSTRAR_ESTADISTICA_FALLO, payload: data.error })
-			} else {
-				dispatch({ type: MOSTRAR_ESTADISTICA_EXITO, payload: data })
-			}
-		})
+		getData(MOSTRAR_ESTADISTICA_EXITO, MOSTRAR_ESTADISTICA_FALLO, true, url, dispatch)
+
 	}
 }
 

@@ -8,6 +8,8 @@ import MedicamentoTratamiento from '../medicamentoTratamiento/medicamentoTratami
 import Medicamento from '../medicamento/medicamento.model'
 import MedicamentoDroga from '../medicamentoDroga/medicamentoDroga.model'
 
+import moment from 'moment'
+
 
 import verifyRef from './././../validations/verifyRef.js'
 
@@ -212,90 +214,91 @@ export default (io) => {
 
 
 		// Estadística 1.
-		Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
-			if(err) {
-				console.log(err)
-				socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-				return
-			}
+		// Consulta.findOnlyDiagnosticos((err, diagnosticos) => {
+		// 	if(err) {
+		// 		console.log(err)
+		// 		socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+		// 		return
+		// 	}
 
-			let longDiag = diagnosticos.length
+		// 	let longDiag = diagnosticos.length
 
-			diagnosticos.map((i) => {
-				Consulta.findCantidadDiagnosticosEnAnhos(i.id_diagnostico, (err, consultas) => {
-						// console.log(consultas)
+		// 	diagnosticos.map((i) => {
+		// 		Consulta.findCantidadDiagnosticosEnAnhos(i.id_diagnostico, (err, consultas) => {
+		// 				// console.log(consultas)
 
-					if(err) {
-						console.log(err)
-						socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-						return
-					}
+		// 			if(err) {
+		// 				console.log(err)
+		// 				socket.emit('cantidad_diagnosticos_enAnhos', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+		// 				return
+		// 			}
 
-						i.labels = []
-						i.data = []
-					consultas.map((c) => {
-						// console.log(c)
-						i.data.push(c.cantidad)
-						// i.data.sort()
+		// 				i.labels = []
+		// 				i.data = []
+		// 			consultas.map((c) => {
+		// 				// console.log(c)
+		// 				i.data.push(c.cantidad)
+		// 				// i.data.sort()
 
-						c.fecha = c.fecha.toString()
-						i.labels.push((c.fecha))
-						// i.labels.sort()
+		// 				c.fecha = c.fecha.toString()
+		// 				i.labels.push((c.fecha))
+		// 				// i.labels.sort()
 
-					})
+		// 			})
 
-						// i.contenido = consultas
+		// 				// i.contenido = consultas
 
-					if(i == diagnosticos[longDiag-1]) {
-						consultaNsp.emit('cantidad_diagnosticos_enAnhos', diagnosticos)
-					}
-				})
-			})
-		})
+		// 			if(i == diagnosticos[longDiag-1]) {
+		// 				console.log(diagnosticos)
+		// 				consultaNsp.emit('cantidad_diagnosticos_enAnhos', diagnosticos)
+		// 			}
+		// 		})
+		// 	})
+		// })
 
 
 
 		// Estadística 2.
-		Consulta.findOnlyYears((err, anhos) => {
-			// console.log(anhos)
-			if(err) {
-				console.log(err)
-				socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-				return
-			}
+		// Consulta.findOnlyYears((err, anhos) => {
+		// 	// console.log(anhos)
+		// 	if(err) {
+		// 		console.log(err)
+		// 		socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+		// 		return
+		// 	}
 
-			let longAnhos = anhos.length
+		// 	let longAnhos = anhos.length
 
-			anhos.map((i) => {
-				// console.log(i.fecha)
-				Consulta.findCantidadDiagnosticosPorAnho(i.fecha, (err, diagnosticos) => {
-					if(err) {
-						console.log(err)
-						socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-						return
-					}
+		// 	anhos.map((i) => {
+		// 		// console.log(i.fecha)
+		// 		Consulta.findCantidadDiagnosticosPorAnho(i.fecha, (err, diagnosticos) => {
+		// 			if(err) {
+		// 				console.log(err)
+		// 				socket.emit('cantidad_diagnosticos_porAnho', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+		// 				return
+		// 			}
 
-						i.labels = []
-						i.data = []
-					diagnosticos.map((d) => {
-						i.data.push(d.cantidad)
-						// i.data.sort()
+		// 				i.labels = []
+		// 				i.data = []
+		// 			diagnosticos.map((d) => {
+		// 				i.data.push(d.cantidad)
+		// 				// i.data.sort()
 
-						// d.fecha = d.fecha.toString()
-						i.labels.push((d.descripcion))
-						// i.labels.sort()
+		// 				// d.fecha = d.fecha.toString()
+		// 				i.labels.push((d.descripcion))
+		// 				// i.labels.sort()
 
-					})
+		// 			})
 
-					// i.contenido = consultas
+		// 			// i.contenido = consultas
 
-					if(i == anhos[longAnhos-1]) {
-						consultaNsp.emit('cantidad_diagnosticos_porAnho', anhos)
-					}
+		// 			if(i == anhos[longAnhos-1]) {
+		// 				consultaNsp.emit('cantidad_diagnosticos_porAnho', anhos)
+		// 			}
 
-				})
-			})
-		})	
+		// 		})
+		// 	})
+		// })	
 
 
 

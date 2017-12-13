@@ -30,5 +30,3 @@ export const MOSTRAR_ANALISIS_SOLICITADO_FALLO = 'mostrar_analisis_solicitado_fa
 export const ELIMINAR_ANALISIS_SOLICITADO_REQUEST = 'eliminair_analisis_solicitado_request'
 export const ELIMINAR_ANALISIS_SOLICITADO_EXITO = 'eliminair_analisis_solicitado_exito'
 export const ELIMINAR_ANALISIS_SOLICITADO_FALLO = 'eliminair_analisis_solicitado_fallo'
-
-

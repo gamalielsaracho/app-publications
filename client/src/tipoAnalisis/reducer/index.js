@@ -29,7 +29,10 @@ import {
 
 	ELIMINAR_TIPO_ANALISIS_REQUEST,
 	ELIMINAR_TIPO_ANALISIS_EXITO,
-	ELIMINAR_TIPO_ANALISIS_FALLO
+	ELIMINAR_TIPO_ANALISIS_FALLO,
+
+
+	LIMPIAR_MENSAJE_ERROR_TIPO_ANALISIS
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -50,6 +53,16 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+
+		case LIMPIAR_MENSAJE_ERROR_TIPO_ANALISIS:
+			state = Object.assign({}, state, {
+				crear: { error:'' },
+				eliminar: { error:'' },
+				editar: { error:'' }
+			})
+
+			return state
+
 		case ABRIR_FORMULARIO_CREAR_TIPO_ANALISIS:
 			return Object.assign({}, state, {
 				formulario: {

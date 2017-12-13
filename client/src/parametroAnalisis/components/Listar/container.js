@@ -1,18 +1,27 @@
 import { connect } from 'react-redux'
 
 import {
-	listarParametrosAnalisis,
+	listarParametrosAnalisisByIdTipoAnalisis,
 	eliminarParametroAnalisis,
 	mostrarParametroAnalisis,
 
 	abrirFormularioCrearParametroAnalisis,
-	abrirFormularioEditarParametroAnalisis
+	abrirFormularioEditarParametroAnalisis,
+
+	limpiarMensajeErrorParametroAnalisis
 } from '../../actions'
 
 import Listar from './Listar'
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
+		// para obtener los parametros de las urls.
+		urls: ownProps.params,
+
+		// para ver la url completa en el cual está parada el usuario.
+		pathname: ownProps.location.pathname,
+
+
 		eliminar: state.parametroAnalisis.eliminar,
 		listar: state.parametroAnalisis.listar,
 		parametrosAnalisis: state.parametroAnalisis.listar.parametrosAnalisis,
@@ -25,13 +34,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		listarParametrosAnalisis: () => {
-			dispatch(listarParametrosAnalisis())
+		listarParametrosAnalisisByIdTipoAnalisis: (idTipoAnalisis) => {
+			dispatch(listarParametrosAnalisisByIdTipoAnalisis(idTipoAnalisis))
 		},
 		eliminarParametroAnalisis: (idParametroAnalisis) => {
 			var r = confirm("Está seguro que desea eliminar ?");
 		    if (r == true) {
 				dispatch(eliminarParametroAnalisis(idParametroAnalisis))
+
+				setTimeout(function () {
+					dispatch(limpiarMensajeErrorParametroAnalisis())
+				}, 5000)
 		    }
 		},
 		mostrarParametroAnalisis: (idParametroAnalisis) => {

@@ -44,6 +44,10 @@ class Formulario extends Component {
 		if(this.props.editarContenido) {
 			this.props.editarParametroAnalisis(formProps)
 		} else {
+			// idTipoAnalisis es pasado como property al ser llamado en
+			// ListarParametrosAnalisisContainer
+			formProps.id_tipoAnalisis = this.props.idTipoAnalisis
+
 			this.props.crearParametroAnalisis(formProps)
 		}
 	}

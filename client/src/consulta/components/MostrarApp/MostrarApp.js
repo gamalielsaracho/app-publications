@@ -9,6 +9,12 @@ import MostrarConsultaContainer from '../Mostrar'
 // Formulario Modal para EDITAR una consulta.
 import FormularioConsultaContainer from '../../../consulta/components/Formulario'
 
+
+import 
+	FormularioAnalisisSolicitadoContainer 
+from '../../../analisisSolicitado/components/Formulario'
+
+
 class MostrarApp extends Component {
 	constructor(props) {
 		super(props)
@@ -188,6 +194,8 @@ class MostrarApp extends Component {
 				urls = {this.props.urls}/>
 
 			<FormularioConsultaContainer/>
+			<FormularioAnalisisSolicitadoContainer
+				urls = {this.props.urls} />
 
 			<br/>
 			<ul className="nav nav-tabs no-print-data">

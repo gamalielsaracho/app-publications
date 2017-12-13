@@ -52,7 +52,7 @@ class Mostrar extends Component {
 		if(this.props.urls.idPaciente) {
 			return <span></span>
 		} else {
-			return <div>
+			return <div className='no-print-data'>
 				<h3>Paciente</h3>
 				<div className='row'>
 					<div className='col-xs-12 col-sm-12 col-md-3 col-lg-3'>
@@ -101,7 +101,7 @@ class Mostrar extends Component {
 		let rol = this.personalLocalSt.id_rol
 		
 		if(rol == 3) {
-			return <div className='row'>
+			return <div className='row no-print-data'>
 				<div className='col-xs-11 col-sm-11 col-md-11 col-lg-11 text-right'>
 					<br/>
 					<Link target="_blank" to={`/dashboard/modulos-auditados/${this.props.idPreConsulta}/auditoria/pre-consulta-parametro`}>
@@ -121,7 +121,7 @@ class Mostrar extends Component {
 			return <Cargando/>
 		} else if (preConsulta){
 
-			return <div>
+			return <div className='no-print-data'>
 				{ this.renderDatosPaciente(preConsulta) }
 
 				<div className='row'>

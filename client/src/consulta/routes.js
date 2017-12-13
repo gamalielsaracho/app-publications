@@ -27,11 +27,22 @@ import MostrarVistaPreviaContainer from '../analisis/components/MostrarVistaPrev
 import FiltrosAppReporteListaConsultasContainer from './components/FiltrosAppReporteListaConsultas'
 
 
+// Estadística.
+import EstadisticasAppContainer from './components/EstadisticasApp'
+import Estadistica1AppContainer from './components/Estadistica1App'
+import Estadistica2AppContainer from './components/Estadistica2App'
+
+
+
 {/* Módulo de consultas. */}
 const consultaRoutes = (
 	<Route path='/dashboard/consultas' component={ListarConsultasAppContainer}>
 		<IndexRoute component={FiltrosConsultasAppContainer}/>
 		
+		<Route path='/dashboard/consultas/estadisticas' component={EstadisticasAppContainer}>
+			<Route path='/dashboard/consultas/estadisticas/diagnosticos-anuales' component={Estadistica1AppContainer}/>
+			<Route path='/dashboard/consultas/estadisticas/diagnosticos-anual' component={Estadistica2AppContainer}/>
+		</Route>
 				
 		<Route path='/dashboard/consultas/lista-consultas-vista-general-reportes' component={FiltrosAppReporteListaConsultasContainer}/>
 					

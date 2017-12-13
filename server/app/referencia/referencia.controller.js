@@ -5,6 +5,8 @@ import referentialIntegritySimple from './././../validations/referentialIntegrit
 import AuditoriaModulo1 from './././../auditoriaModulo1/auditoriaModulo1.model'
 import fieldsToEditData from './././../useFul/fieldsToEditData.js'
 
+import moment from 'moment'
+
 exports.listar = function(req, res, next) {
 	Referencia.find((err, referencias) => {
 		// console.log(referencias)
@@ -32,6 +34,62 @@ exports.listarPorParametroAnalisis = function(req, res, next) {
 	})
 }
 
+function filtrandoParametrosSegunReferencia(referencias, dato) {
+	let referenciasFiltradas = referencias
+
+	var diaActual = moment(new Date()).format('DD')
+	var mesActual = moment(new Date()).format('MM')
+	var anhoActual = moment(new Date()).format('YYYY')
+
+
+	var diaPaciente = moment(dato.fechaNacimiento).format('DD')
+	var mesPaciente = moment(dato.fechaNacimiento).format('MM')
+	var anhoPaciente = moment(dato.fechaNacimiento).format('YYYY')
+
+	// edad del paciente
+	var cantidadAnhos 
+	var cantidadMeses
+	var cantidadDias
+
+
+	// Edad.
+	if(anhoActual == anhoPaciente) {
+		if(mesActual == mesPaciente) { // Estamos Hablando de días.
+			cantidadDias = (diaActual - diaPaciente)
+		
+			referenciasFiltradas = referenciasFiltradas.filter((i) => {
+				return (i.ref.general == true || i.ref.sexo == dato.sexo) && 
+					i.ref.diasMinimos < cantidadDias && 
+					cantidadDias < i.ref.diasMaximos
+			})
+
+			return referenciasFiltradas
+		} else {
+			// Estamos hablando de meses.
+			cantidadMeses = mesActual - mesPaciente
+
+			referenciasFiltradas = referenciasFiltradas.filter((i) => {
+				return (i.ref.general == true || i.ref.sexo == dato.sexo) && 
+					i.ref.mesesMinimos <= cantidadMeses && 
+					cantidadMeses <= i.ref.mesesMaximos
+			})
+
+			return referenciasFiltradas
+		}
+	} else {
+		cantidadAnhos = anhoActual - anhoPaciente
+
+		referenciasFiltradas = referenciasFiltradas.filter((i) => {
+			return (i.ref.general == true || i.ref.sexo == dato.sexo) && 
+				i.ref.anosMinimos < cantidadAnhos && 
+				cantidadAnhos < i.ref.anosMaximos
+		})
+
+		console.log("Estamos hablando de una persona con años. -> " + cantidadAnhos)
+		return referenciasFiltradas
+	}
+}
+
 
 exports.listarReferenciasParaInsertar = function(req, res, next) {
 	let dato = {
@@ -40,65 +98,20 @@ exports.listarReferenciasParaInsertar = function(req, res, next) {
 		id_tipoAnalisis: req.params.idTipoAnalisis
 	}
 
-	var dateNow = new Date() 
-	var datePaciente = new Date(dato.fechaNacimiento)
+	console.log(dato)
 
-	var anhoActual = dateNow.getFullYear()
-	var mesActual = dateNow.getMonth() + 1
-	var diaActual = dateNow.getDay()
-
-
-	// var diaActual = dateNow.getFullYear()
-
-	var anhoPaciente = datePaciente.getFullYear()
-	var mesPaciente = datePaciente.getMonth() + 1
-	var diaPaciente = datePaciente.getDay()
-
-
-	// edad del paciente
-	var cantidadAnhos = anhoActual - anhoPaciente
-	var cantidadMeses = 12 - mesPaciente
-
-	var cantidadMesesRecienNacido = mesActual - mesPaciente
-
-	if(cantidadMesesRecienNacido == 0) {
-		var cantidadDias =  diaActual - diaPaciente
-	}
-
-	// let condition
-
-	if(cantidadAnhos) {
-		cantidadMeses = null
-		cantidadDias = null
-	} else {
-		if(cantidadMeses) {
-			cantidadAnhos = null
-			cantidadDias = null
-		} else {
-			cantidadMeses = null
-			cantidadAnhos = null
-		}
-	}
 
 	let referenciasFiltradas = []
 	Referencia.findListToInsert(dato, (err, referencias) => {
-		referenciasFiltradas = referencias
 
 		if(err) {
 			console.log(err)
 			return res.status(422).json({ error: 'Ocurrió un error, intente más tarde.' })
 		}
 
-		referenciasFiltradas = referenciasFiltradas.filter((i) => {
-			return (i.ref.general == true || i.ref.sexo == dato.sexo || 
-				(i.ref.anosMinimos < cantidadAnhos && cantidadAnhos <i.ref.anosMaximos) ||
-				(i.ref.mesesMinimos < cantidadMeses && cantidadMeses <i.ref.mesesMaximos) ||
-				(i.ref.diasMinimos < cantidadDias && cantidadDias <i.ref.diasMaximos)
-			)
+		console.log(filtrandoParametrosSegunReferencia(referencias, dato))
 
-		})
-
-		return res.json({ referencias: referenciasFiltradas })
+		return res.json({ referencias: filtrandoParametrosSegunReferencia(referencias, dato) })
 	})
 }
 

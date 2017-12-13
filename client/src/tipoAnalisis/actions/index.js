@@ -31,7 +31,10 @@ import {
 	// Delete Rol.
 	ELIMINAR_TIPO_ANALISIS_REQUEST,
 	ELIMINAR_TIPO_ANALISIS_EXITO,
-	ELIMINAR_TIPO_ANALISIS_FALLO
+	ELIMINAR_TIPO_ANALISIS_FALLO,
+
+
+	LIMPIAR_MENSAJE_ERROR_TIPO_ANALISIS
 } from './types'
 
 import jwtDecode from 'jwt-decode'
@@ -42,6 +45,13 @@ import { browserHistory } from 'react-router'
 import { reset } from 'redux-form'
 
 var tipoAnalisisSocket = io.connect('http://localhost:3000/tipoAnalisis');
+
+
+export function limpiarMensajeErrorTipoAnalisis() {
+	return (dispatch) => {
+		dispatch({ type: LIMPIAR_MENSAJE_ERROR_TIPO_ANALISIS })
+	}
+}
 
 export function abrirFormularioCrearTipoAnalisis() {
 	return (dispatch) => {

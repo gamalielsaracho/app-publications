@@ -15,15 +15,10 @@ import Formulario from './Formulario'
 const validate = (values) => {
 	const errors = {}
 
-	if(!values.id_parametroPreconsulta) {
-		errors.id_parametroPreconsulta = 'Parametro obligatorio.'
+	if(!values.id_tipoAnalisis) {
+		errors.id_tipoAnalisis = 'Campo obligatorio.'
 	}
 
-	if(!values.valor) {
-		errors.valor = 'Obligatorio.'
-	} else if (values.valor.toString().trim() == '') {
-   		errors.valor = 'Obligatorio.'
-	}
 
 	return errors
 }

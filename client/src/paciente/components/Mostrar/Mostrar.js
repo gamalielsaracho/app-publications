@@ -53,7 +53,7 @@ class Mostrar extends Component {
 
 		const { cargando, paciente, error } = this.props.mostrar
 		// ...
-		return <div className='row'>
+		return <div className='row no-print-data'>
 			<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12 col-centered'>
 				<MensajeOerror error={error} mensaje={null}/>
 

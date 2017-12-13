@@ -3,20 +3,24 @@ import connection from '../../config/connection'
 // LISTAR TODOS LAS SOLICITUDES POR PACIENTE,
 // PARA LISTAR DENTRO DEL HISTORIAL CLÍNICO.
 exports.findByIdPaciente = (IdPaciente, callback) => {
-
 	let q = `
 		SELECT * 
-			FROM 
+			FROM
 				analisisSolicitados analisisSolicitado,
 				consultas consulta,
 				pacientes paciente,
 				personales personal,
-				especialidades especialidad
+				especialidades especialidad,
+				tiposdocumentos tpDocPersonal,
+				tiposdocumentos tpDocPaciente
 			WHERE
 				analisisSolicitado.id_consulta = consulta.id_consulta AND
 				consulta.id_paciente = paciente.id_paciente AND
+				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
+				
 				consulta.id_personal = personal.id_personal AND
 				personal.id_especialidad = especialidad.id_especialidad AND
+				personal.id_tipoDocumento = tpDocPersonal.id_tipoDocumento AND				
 				consulta.id_paciente = ?
 	`
 
@@ -31,22 +35,42 @@ exports.findByIdPaciente = (IdPaciente, callback) => {
 }
 
 exports.find = (callback) => {
-
 	let q = `
 		SELECT * 
-			FROM 
+			FROM
 				analisisSolicitados analisisSolicitado,
 				consultas consulta,
 				pacientes paciente,
 				personales personal,
-				especialidades especialidad
+				especialidades especialidad,
+				tiposdocumentos tpDocPersonal,
+				tiposdocumentos tpDocPaciente
 			WHERE
 				analisisSolicitado.id_consulta = consulta.id_consulta AND
 				consulta.id_paciente = paciente.id_paciente AND
+				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
+				
 				consulta.id_personal = personal.id_personal AND
-				personal.id_especialidad = especialidad.id_especialidad
-
+				personal.id_especialidad = especialidad.id_especialidad AND
+				personal.id_tipoDocumento = tpDocPersonal.id_tipoDocumento				
 	`
+
+
+	// let q = `
+	// 	SELECT * 
+	// 		FROM 
+	// 			analisisSolicitados analisisSolicitado,
+	// 			consultas consulta,
+	// 			pacientes paciente,
+	// 			personales personal,
+	// 			especialidades especialidad
+	// 		WHERE
+	// 			analisisSolicitado.id_consulta = consulta.id_consulta AND
+	// 			consulta.id_paciente = paciente.id_paciente AND
+	// 			consulta.id_personal = personal.id_personal AND
+	// 			personal.id_especialidad = especialidad.id_especialidad
+
+	// `
 	var options = {
 		sql: q, 
 		nestTables: true

@@ -3,6 +3,7 @@ import connection from '../../config/connection'
 import getHour from '../useFul/getHour'
 
 
+
 exports.findListaConsultasDetalladasReporte = (callback) => {
 
 	// let q = `
@@ -111,6 +112,31 @@ exports.findOnlyYears = (callback) => {
 }
 
 
+exports.diagnosticosXconsultas = (callback) => {
+
+	let q = `
+		SELECT
+			*
+		FROM
+			consultas con,
+			consultasdiagnosticos conDiag,
+			diagnosticos diag
+		WHERE
+			conDiag.id_consulta = con.id_consulta AND
+			conDiag.id_diagnostico = diag.id_diagnostico
+	`
+
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, callback)
+
+	connection.end()
+}
+
+
 exports.findCantidadDiagnosticosEnAnhos = (idDiagnostico, callback) => {
 
 	let q = `
@@ -133,34 +159,7 @@ exports.findCantidadDiagnosticosEnAnhos = (idDiagnostico, callback) => {
 	        
 	        ORDER BY fecha ASC
 		`
-  //       SELECT 
-		// * 
-	 //  	FROM
-	 //      (SELECT
-	 //          DISTINCT(cXd.id_diagnostico),
-	 //          YEAR(consulta.fecha) fecha,
-	 //          diagnostico.descripcion,
-	 //          (SELECT 
-	 //          		COUNT(cXdA.id_diagnostico) 
-	 //          	FROM 
-		//           	consultasdiagnosticos cXdA, 
-		//           	consultas con 
-	 //          	WHERE 
-	 //          		cXdA.id_diagnostico = diagnostico.id_diagnostico AND 
-	 //          		con.fecha = consulta.fecha) cantidad
-	 //         FROM
-	 //          consultasdiagnosticos cXd,
-	 //          diagnosticos diagnostico,
-	 //          consultas consulta
-	 //        WHERE
-	 //          cXd.id_diagnostico = diagnostico.id_diagnostico AND 
-	 //          diagnostico.id_diagnostico = ? AND
-	 //          cXd.id_consulta = consulta.id_consulta) tGral
-	        
-	 //        ORDER BY fecha ASC
-
 		
-
 	var options = {
 		sql: q, 
 		nestTables: false

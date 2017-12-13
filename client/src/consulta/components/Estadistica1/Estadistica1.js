@@ -45,7 +45,10 @@ class Estadistica1 extends Component {
 		    	scales: {
 		            yAxes: [{
 		                ticks: {
-		                    beginAtZero:true
+		                    beginAtZero:true,
+		                    // min: 0,
+					        stepSize: 1
+					        // max: 4
 		                }
 		            }]
 	        	}

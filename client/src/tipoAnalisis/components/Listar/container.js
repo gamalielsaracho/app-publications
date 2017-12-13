@@ -6,7 +6,9 @@ import {
 	mostrarTipoAnalisis,
 
 	abrirFormularioCrearTipoAnalisis,
-	abrirFormularioEditarTipoAnalisis
+	abrirFormularioEditarTipoAnalisis,
+
+	limpiarMensajeErrorTipoAnalisis
 } from '../../actions'
 
 import Listar from './Listar'
@@ -29,6 +31,10 @@ function mapDispatchToProps(dispatch) {
 			var r = confirm("Está seguro que desea eliminar?");
 		    if (r == true) {
 				dispatch(eliminarTipoAnalisis(idTipoAnalisis))
+
+				setTimeout(function () {
+					dispatch(limpiarMensajeErrorTipoAnalisis())
+				}, 5000)
 		    }
 		},
 		mostrarTipoAnalisis: (idTipoAnalisis) => {

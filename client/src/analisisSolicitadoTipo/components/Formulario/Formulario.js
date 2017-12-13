@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Field, reset } from 'redux-form'
 import ReactModal from 'react-modal'
 
+import jwtDecode from 'jwt-decode'
+
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
@@ -21,6 +23,9 @@ class Formulario extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
+
+		this.getEstadoHabilitado = this.getEstadoHabilitado.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
@@ -34,6 +39,25 @@ class Formulario extends Component {
 		// console.log(formProps)
 
 		this.props.crearAnalisisSolicitadoTipo(formProps)
+	}
+
+	getEstadoHabilitado() {
+		let idRol = this.personalLocalSt.id_rol
+
+		let desabilitado
+
+		if(this.props.solicitudPendiente) {
+			desabilitado = false
+		} else {
+			desabilitado = true
+		}
+
+		// 3 administración.
+		if(idRol == 3) {
+			desabilitado = false
+		}
+
+		return desabilitado
 	}
 
 	render() {
@@ -56,10 +80,11 @@ class Formulario extends Component {
 							<Field name='id_tipoAnalisis' type='text' 
 								component={FieldSelectTiposAnalisisContainer} 
 								listar={this.props.listarTiposAnalisis}
+								disabled={this.getEstadoHabilitado()}
 								label=''/>
 						</div>
 						<div className='form-group'>
-							<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
+							<button disabled={this.getEstadoHabilitado()} type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>
 						</div>
 					</form>
 				</div>

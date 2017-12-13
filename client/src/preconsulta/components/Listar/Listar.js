@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 
 import moment from 'moment'
+import jwtDecode from 'jwt-decode'
 
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
@@ -13,29 +14,10 @@ class Listar extends Component {
 		super(props)
 		this.renderPreConsultas = this.renderPreConsultas.bind(this)
 		this.renderFormularioPreConsulta = this.renderFormularioPreConsulta.bind(this)
+		this.renderOptiones = this.renderOptiones.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
-
-	renderFormularioPreConsulta() {
-		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
-			return <FormularioPreConsultaContainer/>
-		} else {
-			return <span></span>
-		}
-	}
-
-	shouldComponentUpdate(nextProps) {
-		let condition = (
-			nextProps.medicamentosEntregados !== this.props.medicamentosEntregados ||
-			nextProps.formulario !== this.props.formulario
-		)
-
-		if(condition) {
-			return true
-		}else {
-			return false
-		}
-	}
 
 	shouldComponentUpdate(nextProps) {
 		let condition = (
@@ -49,6 +31,62 @@ class Listar extends Component {
 			return false
 		}
 	}	
+
+	renderFormularioPreConsulta() {
+		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
+			return <FormularioPreConsultaContainer/>
+		} else {
+			return <span></span>
+		}
+	}
+
+	renderOptiones(i) {
+		let idRol = this.personalLocalSt.id_rol
+
+		switch(idRol) {
+			case 3: // admin.
+				return <div>
+					<Link to={`/dashboard/pre-consultas/${i.preconsulta.id_preconsulta}/consultas`}>
+						<button type="button" className="btn btn-info btn-space">
+							Mostrar
+						</button>
+					</Link>
+							
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-warning btn-space">Editar</button>
+					<button type="button" onClick={() => { this.props.eliminarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
+			       
+				</div>
+			break
+
+			case 2: // enfermería.
+				return <div>
+					<Link to={`/dashboard/pre-consultas/${i.preconsulta.id_preconsulta}/consultas`}>
+						<button type="button" className="btn btn-info btn-space">
+							Mostrar
+						</button>
+					</Link>
+								
+					<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-warning btn-space">Editar</button>
+					<button type="button" onClick={() => { this.props.eliminarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
+				       
+				</div>
+			break
+
+			case 1: // médico.
+				return <div>
+					<Link to={`/dashboard/pre-consultas/${i.preconsulta.id_preconsulta}/consultas`}>
+						<button type="button" className="btn btn-info btn-space">
+							Mostrar
+						</button>
+					</Link>
+				</div>
+			break
+
+			default:
+				return <span></span>
+			break
+		}
+	}
 
 	renderPreConsultas(preConsultas) {
 
@@ -72,15 +110,8 @@ class Listar extends Component {
 			            <td>{ i.preconsulta.observaciones }</td>
 			            
 			            <td>
-							<Link to={`/dashboard/pre-consultas/${i.preconsulta.id_preconsulta}/consultas`}>
-								<button type="button" className="btn btn-info btn-space">
-									Mostrar
-								</button>
-							</Link>
-							
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarPreConsulta(i.preconsulta.id_preconsulta) }} className="btn btn-danger btn-space">Eliminar</button>
-			            </td>
+							{ this.renderOptiones(i) }	  
+						</td>
 			        </tr>		
 				})
 			}

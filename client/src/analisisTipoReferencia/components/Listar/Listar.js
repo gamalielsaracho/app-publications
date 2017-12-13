@@ -12,7 +12,8 @@ class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderAnalisisTipoReferencias = this.renderAnalisisTipoReferencias.bind(this)
-		this.renderBtnsOpcionesByRolYpersonal = this.renderBtnsOpcionesByRolYpersonal.bind(this)
+		this.getEstadoHabilitado = this.getEstadoHabilitado.bind(this)
+		this.renderBtnsOpciones = this.renderBtnsOpciones.bind(this)
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
@@ -28,14 +29,36 @@ class Listar extends Component {
 		return nextProps.analisisTipoReferencias !== this.props.analisisTipoReferencias
 	}
 
-	renderBtnsOpcionesByRolYpersonal(i) {
-		let rol = removeAccents(this.personalLocalSt.rol)
-		let idPersonal = this.personalLocalSt.id_personal
 
-		if((rol == 'administracion') || (rol == 'laboratorio' && idPersonal == i.analisis.id_personal)) {
+	getEstadoHabilitado() {
+		let idRol = this.personalLocalSt.id_rol
+
+		let desabilitado
+
+		if(localStorage.getItem('analisisImpreso') == 1) {
+			desabilitado = true
+		} else {
+			desabilitado = false
+		}
+
+		// 3 administración.
+		if(idRol == 3) {
+			desabilitado = false
+		}
+
+		return desabilitado
+	}
+
+
+	renderBtnsOpciones(i) {
+		let idRol = this.personalLocalSt.id_rol
+
+		// 6 laboratorio.
+		// 3 administración.
+		if((idRol == 6) || (idRol == 3)) {
 			return <div>
-				<button type="button" onClick={() => { this.props.abrirFormularioEditarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoReferencia) }} className="btn btn-warning btn-sm btn-space">Editar</button>
-				<button type="button" onClick={() => { this.props.eliminarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoReferencia) }} className="btn btn-danger btn-sm btn-space">Eliminar</button>
+				<button disabled={this.getEstadoHabilitado()} type="button" onClick={() => { this.props.abrirFormularioEditarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoReferencia) }} className="btn btn-warning btn-sm btn-space">Editar</button>
+				<button disabled={this.getEstadoHabilitado()} type="button" onClick={() => { this.props.eliminarAnalisisTipoReferencia(i.analisisTipoReferencia.id_analisisTipoReferencia) }} className="btn btn-danger btn-sm btn-space">Eliminar</button>
 			</div>
 		} else {
 			return <span></span>
@@ -55,7 +78,7 @@ class Listar extends Component {
 			            <td>{ i.referencia.inferior }</td>
 			            <td>{ i.referencia.superior }</td>
 			            <td>
-							{ this.renderBtnsOpcionesByRolYpersonal(i) }
+							{ this.renderBtnsOpciones(i) }
 						</td>
 			        </tr>		
 				})

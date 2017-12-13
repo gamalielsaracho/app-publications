@@ -25,3 +25,4 @@ export const ELIMINAR_ANALISIS_TIPO_REFERENCIA_EXITO = 'eliminair_analisis_tipo_
 export const ELIMINAR_ANALISIS_TIPO_REFERENCIA_FALLO = 'eliminair_analisis_tipo_referencia_fallo'
 
 
+export const LIMPIAR_MENSAJE_ERROR_ANALISIS_TIPO_REFERENCIA = 'limpiar_mensaje_error_analisis_tipo_referencia'

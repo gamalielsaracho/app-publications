@@ -23,7 +23,6 @@ class Listar extends Component {
 			} else {
 				return <p>Masculino</p>
 			}
-			
 		}
 	}
 
@@ -56,7 +55,7 @@ class Listar extends Component {
 			            <td>{ i.diasMaximos }</td>
 			            <td>{ i.mesesMinimos }</td>
 			            <td>{ i.mesesMaximos }</td>
-			            <td>{ i.mesesMinimos }</td>
+			            <td>{ i.anosMinimos }</td>
 			            <td>{ i.anosMaximos }</td>
 			            <td>{ this.renderSexo(i.sexo, i.general) }</td>
 			            <td>{ i.superior }</td>

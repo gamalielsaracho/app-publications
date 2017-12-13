@@ -44,7 +44,7 @@ class MostrarApp extends Component {
 				    <Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${this.props.urls.idAnalisis}/analisis-tipos`}>Tipos de análisis</Link>
 				</li>
 				<li className="nav-item nav-link" className={activeAnalisisTipoDetalle}>
-				    <Link to={`/dashboard`}>Detalle tipo de análisis</Link>
+				    <a>Detalle tipo de análisis</a>
 				</li>
 			</ul>
 			<br/>

@@ -24,3 +24,5 @@ export const ELIMINAR_ANALISIS_TIPO_EXITO = 'eliminair_analisis_tipo_exito'
 export const ELIMINAR_ANALISIS_TIPO_FALLO = 'eliminair_analisis_tipo_fallo'
 
 
+export const LIMPIAR_MENSAJE_ERROR_ANALISIS_TIPO = 'limpiar_mensaje_error_analisis_tipo'
+

@@ -78,7 +78,9 @@ class MostrarApp extends Component {
 			{/*  
 			*/}
 
+			<div className='no-print-data'>
 			<ListarPreConsultaParametrosContainer idPreConsulta={this.props.urls.idPreConsulta}/>
+			</div>
 
 			{ this.renderMenu() }
 

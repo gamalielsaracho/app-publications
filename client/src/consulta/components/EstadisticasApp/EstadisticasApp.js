@@ -6,14 +6,10 @@ class EstadisticasApp extends Component {
 		super(props)
 	}
 
-	// componentWillMount() {
-	// 	this.props.mostrarEstadistica1()
-	// }
-	
 	
 	render() {
-		let urlEstadistica1 = '/estadisticas/diagnosticos-anuales'
-		let urlEstadistica2 = '/estadisticas/diagnosticos-anual'
+		let urlEstadistica1 = '/dashboard/consultas/estadisticas/diagnosticos-anuales'
+		let urlEstadistica2 = '/dashboard/consultas/estadisticas/diagnosticos-anual'
 
 		let activeEstadistica1 = ''
 		let activeEstadistica2 = ''
@@ -31,6 +27,7 @@ class EstadisticasApp extends Component {
 		}
 
 		return <div>
+			<br/>
 			<ul className="nav nav-tabs no-print-data">
 				<li className="nav-item nav-link" className={activeEstadistica1}>
 				    <Link to={urlEstadistica1}>Anuales</Link>

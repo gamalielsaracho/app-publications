@@ -30,3 +30,6 @@ export const ELIMINAR_ANALISIS_EXITO = 'eliminair_analisis_exito'
 export const ELIMINAR_ANALISIS_FALLO = 'eliminair_analisis_fallo'
 
 
+ 
+export const LIMPIAR_MENSAJE_ERROR_ANALISIS = 'limpiar_mensaje_error_analisis'
+

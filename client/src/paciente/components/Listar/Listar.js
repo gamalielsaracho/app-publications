@@ -19,6 +19,8 @@ class Listar extends Component {
 		this.renderPacientes = this.renderPacientes.bind(this)
 		this.renderOptionsByRol = this.renderOptionsByRol.bind(this)
 
+		this.renderBtnAdd = this.renderBtnAdd.bind(this)
+
 		this.renderFormularioPaciente = this.renderFormularioPaciente.bind(this)
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
@@ -38,6 +40,20 @@ class Listar extends Component {
 			return false
 		}
 	}	
+
+	renderBtnAdd() {
+		let idRol = this.personalLocalSt.id_rol
+
+		if((idRol == 3) || (idRol == 4) || (idRol == 2)) {
+			return <div className='row'>
+				<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+					<button onClick={ this.props.abrirFormularioCrearPaciente } className='btn btn-success'>Agregar</button>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
 
 	renderFormularioPaciente() {
 		if(this.props.formulario.abirtoCrear || this.props.formulario.abirtoEditar) {
@@ -116,11 +132,7 @@ class Listar extends Component {
 					
 					{ this.renderFormularioPaciente() }
 
-					<div className='row'>
-						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearPaciente } className='btn btn-success'>Agregar</button>
-						</div>
-					</div>
+					{ this.renderBtnAdd() }
 					<br/>
 
 					<div className='table-responsive'>

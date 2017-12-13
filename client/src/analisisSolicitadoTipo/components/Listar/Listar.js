@@ -12,10 +12,12 @@ class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderAnalisisSolicitadoTipos = this.renderAnalisisSolicitadoTipos.bind(this)
-		this.renderBtnsOpcionesByRolYpersonal = this.renderBtnsOpcionesByRolYpersonal.bind(this)
+		this.renderBtnsOpciones = this.renderBtnsOpciones.bind(this)
 		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 
-		this.renderFormularioByRolYpersonal = this.renderFormularioByRolYpersonal.bind(this)
+		this.getEstadoHabilitado = this.getEstadoHabilitado.bind(this)
+
+		this.renderFormularioByRolYIdPersonal = this.renderFormularioByRolYIdPersonal.bind(this)
 	}
 
 	// this.props.idAnalisisSolicitado -> es pasado como property.
@@ -27,13 +29,32 @@ class Listar extends Component {
 		return nextProps.analisisSolicitadoTipos !== this.props.analisisSolicitadoTipos
 	}
 
-	renderBtnsOpcionesByRolYpersonal(i) {
-		let rol = removeAccents(this.personalLocalSt.rol)
+	getEstadoHabilitado() {
+		let idRol = this.personalLocalSt.id_rol
+
+		let desabilitado
+
+		if(this.props.solicitudPendiente) {
+			desabilitado = false
+		} else {
+			desabilitado = true
+		}
+
+		// 3 administración.
+		if(idRol == 3) {
+			desabilitado = false
+		}
+
+		return desabilitado
+	}
+
+	renderBtnsOpciones(i) {
+		let idRol = this.personalLocalSt.id_rol
 		let idPersonal = this.personalLocalSt.id_personal
 
-		if((rol == 'administracion') || (rol == 'medico' && idPersonal == i.consulta.id_personal)) {
+		if((idRol == 3) || (idRol == 1 && idPersonal == i.consulta.id_personal)) {
 			return <div>
-				<button type="button" onClick={() => { this.props.eliminarAnalisisSolicitadoTipo(i.analisisSolicitadoTipo.id_analisisSolicitadoTipo) }} className="btn btn-danger btn-sm btn-space">
+				<button disabled={this.getEstadoHabilitado()} type="button" onClick={() => { this.props.eliminarAnalisisSolicitadoTipo(i.analisisSolicitadoTipo.id_analisisSolicitadoTipo) }} className="btn btn-danger btn-sm btn-space">
 					<span className="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Eliminar
 				</button>
 			</div>
@@ -42,17 +63,18 @@ class Listar extends Component {
 		}
 	}
 
-	renderFormularioByRolYpersonal() {
-		let rol = removeAccents(this.personalLocalSt.rol)
+	renderFormularioByRolYIdPersonal() {
+		let idRol = this.personalLocalSt.id_rol
 		let idPersonal = this.personalLocalSt.id_personal
 
 		const { cargando, analisisSolicitado, error } = this.props.mostrar
 
 		if(!cargando && analisisSolicitado) {
 				if(analisisSolicitado.personal.id_personal) {
-					if((rol == 'administracion') || (rol == 'medico' && idPersonal == analisisSolicitado.personal.id_personal)) {
+					if((idRol == 3) || (idRol == 1 && idPersonal == analisisSolicitado.personal.id_personal)) {
 						return <div>
 							<FormularioAnalisisSolicitadoTipoContainer
+								solicitudPendiente = { this.props.solicitudPendiente }
 								idAnalisisSolicitado={this.props.idAnalisisSolicitado}/>
 							<br/>
 						</div>
@@ -74,7 +96,7 @@ class Listar extends Component {
 						<br/>
 			            <td><li>{ i.tipoAnalisis.descripcion }</li></td>
 			            <td>
-							{ this.renderBtnsOpcionesByRolYpersonal(i) }
+							{ this.renderBtnsOpciones(i) }
 						</td>
 			        </tr>		
 				})
@@ -95,7 +117,7 @@ class Listar extends Component {
 
 				<MensajeOerror error={error} mensaje={null}/>
 
-				{ this.renderFormularioByRolYpersonal() }
+				{ this.renderFormularioByRolYIdPersonal() }
 
 				{ this.renderAnalisisSolicitadoTipos(analisisSolicitadoTipos) }
 			</div>

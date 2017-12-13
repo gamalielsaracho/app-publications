@@ -1,6 +1,6 @@
 import connection from '../../config/connection'
 
-exports.find = (callback) => {
+exports.findListByIdTipoAnalisis = (idTipoAnalisis, callback) => {
 
 	let q = `
 		SELECT * 
@@ -10,7 +10,33 @@ exports.find = (callback) => {
 				unidadesanalisis unidad
 			WHERE
 				parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
-				parametro.id_unidadAnalisis = unidad.id_unidadAnalisis
+				parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
+				parametro.id_tipoAnalisis = ?
+	`
+	var options = {
+		sql: q, 
+		nestTables: true
+	}
+
+	return connection.query(options, [idTipoAnalisis], callback)
+
+	connection.end()
+}
+
+
+exports.find = (callback) => {
+
+	let q = `
+		SELECT * 
+			FROM 
+				parametrosAnalisis parametro,
+				tiposexamenes tipoExamen,
+				unidadesanalisis unidad,
+				tiposanalisis tipoAnalisis
+			WHERE
+				parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
+				parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
+				parametro.id_tipoAnalisis = tipoAnalisis.id_tipoAnalisis
 	`
 	var options = {
 		sql: q, 
@@ -30,12 +56,13 @@ exports.findById = (data, callback) => {
 		FROM 
 			parametrosAnalisis parametro,
 			tiposexamenes tipoExamen,
-			unidadesanalisis unidad			 
+			unidadesanalisis unidad
 		WHERE
 			parametro.id_tipoExamen = tipoExamen.id_tipoExamen AND
 			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
-			id_parametroAnalisis = ?
+			parametro.id_parametroAnalisis = ?
 	`
+
 	var options = {
 		sql: q,
 		nestTables: true
@@ -46,27 +73,43 @@ exports.findById = (data, callback) => {
 	connection.end()
 }
 
-// exports.verifyIfExist = (data, callback) => {
-// 	let q = `
-// 		SELECT * FROM parametrosAnalisis 
-// 			WHERE
-// 			descripcion = ?
-// 	`
-// 	return connection.query(q, [data.descripcion.trim()], callback)
+exports.verifyIfExist = (data, callback) => {
+	let q = `
+		SELECT 
+			*
+		FROM 
+			parametrosAnalisis 
+		WHERE
+			descripcion = ? AND
+			id_unidadAnalisis = ? AND
+			id_tipoExamen = ? AND
+			id_tipoAnalisis = ?
 
-// 	connection.end()
-// }
+	`
+
+	return connection.query(q, [ data.descripcion.trim(),
+								 data.id_unidadAnalisis,
+								 data.id_tipoExamen, 
+								 data.id_tipoAnalisis], callback)
+
+	connection.end()
+}
 
 exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO parametrosAnalisis (
-			id_parametroAnalisis, descripcion, id_unidadAnalisis, id_tipoExamen
+			id_parametroAnalisis, 
+			descripcion, 
+			id_unidadAnalisis,
+			id_tipoExamen,
+			id_tipoAnalisis
 		)
-			VALUES (null, LOWER(?), ?, ?);
+			VALUES (null, LOWER(?), ?, ?, ?);
 	`
 	return connection.query(q, [ data.descripcion.trim(),
 							 	 data.id_unidadAnalisis,
-							 	 data.id_tipoExamen ], callback)
+							 	 data.id_tipoExamen,
+							 	 data.id_tipoAnalisis ], callback)
 
 	connection.end()
 }

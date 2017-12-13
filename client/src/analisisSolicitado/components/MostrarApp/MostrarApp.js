@@ -81,15 +81,23 @@ class MostrarApp extends Component {
 
 				if(rol == 'administracion' || rol == 'laboratorio') {
 					
-					if(this.props.urls.idPaciente) {
-						let url = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+					if(this.props.urls.idPaciente && this.props.urls.idConsulta) {
+						let url = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
 
 						return <ul className="nav nav-tabs no-print-data">
 							{ this.renderLinkDetalleGral(analisis[0].id_analisis, detalleGeneral, url) }
 						</ul>
+					} 
+
+					if(!this.props.urls.idConsulta && this.props.urls.idPaciente) {
+						let url = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitud-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+							
+						return <ul className="nav nav-tabs no-print-data">
+							{ this.renderLinkDetalleGral(analisis[0].id_analisis, detalleGeneral, url) }
+						</ul>
 					} else {
+						// Para laboratorio...
 						let url = `/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
-						
 						return <ul className="nav nav-tabs no-print-data">
 							<li className="nav-item nav-link" className={detalleAnalisis}>
 								<Link to={`/dashboard/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/analisis-tipos`}>Análisis</Link>
@@ -97,8 +105,34 @@ class MostrarApp extends Component {
 							{ this.renderLinkDetalleGral(analisis[0].id_analisis, detalleGeneral, url) }
 						</ul>
 					}
+
+
 				} else {
-					let url = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+					let url
+					if(this.props.urls.idPaciente && this.props.urls.idConsulta && !this.props.urls.idPreConsulta) {
+						url = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+					}
+
+					// if(this.props.urls.idPaciente && !this.props.urls.idConsulta) {
+					// 	url = `/dashboard/pacientes/${this.props.urls.idPaciente}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+					// }
+
+					if(!this.props.urls.idPaciente && this.props.urls.idConsulta && this.props.urls.idPreConsulta) {
+						url = `/dashboard/pre-consultas/${this.props.urls.idPreConsulta}/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+					}
+
+					// Para cunsultas
+					if(this.props.urls.idConsulta && !this.props.urls.idPreConsulta && !this.props.urls.idPaciente) {
+						url = `/dashboard/consultas/${this.props.urls.idConsulta}/solicitud-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+					} else {
+						// Solicitudes dentro del historial clinico.
+						if(this.props.urls.idPaciente && !this.props.urls.idConsulta && !this.props.urls.idPreConsulta) {
+							url = `/dashboard/pacientes/${this.props.urls.idPaciente}/solicitudes-laboratorio/${this.props.urls.idAnalisisSolicitado}/analisis/${analisis[0].id_analisis}/vista-general`
+						}
+					}
+
+					
+
 					
 					return <ul className="nav nav-tabs no-print-data">
 						{ this.renderLinkDetalleGral(analisis[0].id_analisis, detalleGeneral, url) }

@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 
 import {
-	mostrarAnalisisVistaPrevia
+	mostrarAnalisisVistaPrevia,
+
+	actualizarEstadoImpresionAnalisis
 } from '../../actions'
 
 import MostrarVistaPrevia from './MostrarVistaPrevia'
@@ -17,6 +19,20 @@ function mapDispatchToProps(dispatch) {
 	return {
 		mostrarAnalisisVistaPrevia: (idAnalisis) => {
 			dispatch(mostrarAnalisisVistaPrevia(idAnalisis))
+		},
+
+		imprimirAnalisis: (idAnalisis) => {
+			var r = confirm("Está seguro que desea Imprimir ?");
+		    
+		    if (r == true) {
+				window.print()
+
+			    window.onafterprint = function(){
+
+				   // alert("..."+ idAnalisis)
+					dispatch(actualizarEstadoImpresionAnalisis(idAnalisis))
+				}
+		    }
 		}
 	}
 }

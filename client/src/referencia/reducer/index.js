@@ -31,7 +31,9 @@ import {
 
 	ELIMINAR_REFERENCIA_REQUEST,
 	ELIMINAR_REFERENCIA_EXITO,
-	ELIMINAR_REFERENCIA_FALLO
+	ELIMINAR_REFERENCIA_FALLO,
+
+	LIMPIAR_MENSAJE_ERROR_REFERENCIA
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -53,6 +55,17 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+
+		case LIMPIAR_MENSAJE_ERROR_REFERENCIA:
+			state = Object.assign({}, state, {
+				crear: { error:'' },
+				eliminar: { error:'' },
+				editar: { error:'' }
+			})
+
+			return state
+
+
 		case ABRIR_FORMULARIO_CREAR_REFERENCIA:
 			return Object.assign({}, state, {
 				formulario: {

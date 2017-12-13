@@ -48,7 +48,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		crearAnalisisSolicitado: (datosFormulario) => {
-			dispatch(crearAnalisisSolicitado(datosFormulario))
+			var r = confirm("Está seguro que desea crear una solicitud ?");
+		    
+		    if (r == true) {
+				dispatch(crearAnalisisSolicitado(datosFormulario))
+		    }
 		},
 		cerrarFormularioAnalisisSolicitado: () => {
 			// var r = confirm("Está seguro que desea cancelar?");

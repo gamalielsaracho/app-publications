@@ -6,7 +6,9 @@ import {
 	mostrarReferencia,
 
 	abrirFormularioCrearReferencia,
-	abrirFormularioEditarReferencia
+	abrirFormularioEditarReferencia,
+
+	limpiarMensajeErrorReferencia
 } from '../../actions'
 
 import Listar from './Listar'
@@ -32,6 +34,10 @@ function mapDispatchToProps(dispatch) {
 			var r = confirm("Está seguro que desea eliminar ?");
 		    if (r == true) {
 				dispatch(eliminarReferencia(idReferencia))
+
+				setTimeout(function () {
+					dispatch(limpiarMensajeErrorReferencia())
+				}, 5000)
 		    }
 		},
 		mostrarReferencia: (idReferencia) => {

@@ -48,13 +48,19 @@ class Listar extends Component {
 				{
 					analisisSolicitados.map((i) => {
 						return <tr key={i.analisisSolicitado.id_analisisSolicitado}>
-				            <td>{ i.analisisSolicitado.id_analisisSolicitado }</td>
-				            <td>{ moment(i.analisisSolicitado.fechaArealizar).format('LL') }</td>
+				            <td>{ moment(i.analisisSolicitado.fechaArealizar).format('DD-MM-YYYY') }</td>
+				           
+				            <td>{ this.renderEstado(i.analisisSolicitado.pendiente) }</td>
+				           
 				            <td>
-				            	{ this.renderEstado(i.analisisSolicitado.pendiente) }
+				            	<p className='text-center'>{ i.paciente.nroDocumento+' '+i.tpDocPaciente.descripcion }</p>
+				            	<p className='text-center'>{ i.paciente.nombres+' '+i.paciente.apellidos }</p>
 				            </td>
-				            <td>{ i.personal.nombres+' '+i.personal.apellidos }</td>
-				            <td>{ i.especialidad.descripcion }</td>
+
+				            <td>
+				            	<p className='text-center'>{ i.personal.nroDocumento+' '+i.tpDocPersonal.descripcion }</p>
+				            	<p className='text-center'>{ i.personal.nombres+' '+i.personal.apellidos }</p>
+				            </td>	
 
 				            <td>
 				            	<Link to={`${dataUrl}/${i.analisisSolicitado.id_analisisSolicitado}`}>
@@ -88,11 +94,10 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
-						        	<th>Fecha</th>
+						        	<th>Fecha a realizar</th>
 						        	<th>Estado</th>
-						        	<th>Solicitante</th>
-						        	<th>Especialidad</th>
+						        	<th className='text-center'>Paciente</th>
+						        	<th className='text-center'>Solicitante</th>
 						        	<th>Opciones</th>
 						    	</tr>
 						    </thead>

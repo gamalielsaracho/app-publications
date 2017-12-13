@@ -10,6 +10,8 @@ import FieldSelectDiagnosticos from '../../../diagnostico/components/FieldSelect
 
 import Estadistica1Container from '../Estadistica1'
 
+import CabeceraEstadisticaContainer from '../../../app/components/CabeceraEstadistica'
+
 class Estadistica1App extends Component {
 	constructor(props) {
 		super(props)
@@ -29,6 +31,9 @@ class Estadistica1App extends Component {
 		if(cargando) {
 			return <Cargando/>
 		} else {
+			console.log('valoresEstadisticos')
+
+			console.log(valoresEstadisticos)
 			return <div>
 				<form className='no-print-data'>
 					<Field name='id_diagnostico' 
@@ -44,6 +49,13 @@ class Estadistica1App extends Component {
 						}}>Imprimir o Exportar a PDF</button>
 				</form>
 				<MensajeOerror error={error} mensaje={null}/>
+
+
+				<br/>
+				<hr/>
+				<CabeceraEstadisticaContainer
+					styleData={''}
+					fechaCreacion = { this.props.fechaTratamiento }/>
 
 				<h3 className='text-center'>Reporte estadístico de enfermedad detectada</h3>
 				<Estadistica1Container

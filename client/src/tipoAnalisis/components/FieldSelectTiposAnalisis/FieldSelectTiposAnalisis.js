@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class FieldSelectTiposAnalisis extends Component {
 	render() {
-		const { input, label, listar, type, meta: { touched, error, warning } } = this.props
+		const { input, label, listar, disabled, type, meta: { touched, error, warning } } = this.props
 
 		if(listar.cargando) {
 			return <p>Cargando...</p>
@@ -10,7 +10,7 @@ class FieldSelectTiposAnalisis extends Component {
 			return <div className='form-group'>
 				<label htmlFor={label}>{label}</label>
 
-				<select {...input} name={name} className='form-control'>
+				<select disabled={disabled} {...input} name={name} className='form-control'>
 					<option value=''>Seleccionar Tipo de análisis</option>
 					{
 						listar.tiposAnalisis.map((tipo) => {

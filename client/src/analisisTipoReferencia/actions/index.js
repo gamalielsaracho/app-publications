@@ -23,7 +23,9 @@ import {
 	// Delete Rol.
 	ELIMINAR_ANALISIS_TIPO_REFERENCIA_REQUEST,
 	ELIMINAR_ANALISIS_TIPO_REFERENCIA_EXITO,
-	ELIMINAR_ANALISIS_TIPO_REFERENCIA_FALLO
+	ELIMINAR_ANALISIS_TIPO_REFERENCIA_FALLO,
+
+	LIMPIAR_MENSAJE_ERROR_ANALISIS_TIPO_REFERENCIA
 } from './types'
 
 import jwtDecode from 'jwt-decode'
@@ -45,6 +47,13 @@ import {
 
 	API_URL
 } from '../../globalActions'
+
+
+export function limpiarMensajeErrorAnalisisTipoReferencia() {
+	return (dispatch) => {
+		dispatch({ type: LIMPIAR_MENSAJE_ERROR_ANALISIS_TIPO_REFERENCIA })
+	}
+}
 
 export function abrirFormularioEditarAnalisisTipoReferencia(idAnalisisTipoAnalisisReferencia) {
 	return (dispatch) => {

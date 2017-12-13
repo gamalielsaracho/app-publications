@@ -4,7 +4,9 @@ import { Field, reduxForm } from 'redux-form'
 import {
 	crearAnalisisTipoReferencia,
 	editarAnalisisTipoReferencia,
-	cerrarFormularioAnalisisTipoReferencia
+	cerrarFormularioAnalisisTipoReferencia,
+
+	limpiarMensajeErrorAnalisisTipoReferencia
 } from '../../actions'
 
 import {
@@ -16,8 +18,8 @@ import Formulario from './Formulario'
 const validate = (values) => {
 	const errors = {}
 
-	if(!values.id_parametroPreconsulta) {
-		errors.id_parametroPreconsulta = 'Parametro obligatorio.'
+	if(!values.id_referencia) {
+		errors.id_referencia = 'Parametro obligatorio.'
 	}
 
 	if(!values.valor) {
@@ -52,6 +54,10 @@ function mapDispatchToProps(dispatch) {
 	return {
 		crearAnalisisTipoReferencia: (datosFormulario) => {
 			dispatch(crearAnalisisTipoReferencia(datosFormulario))
+
+			setTimeout(function () {
+				dispatch(limpiarMensajeErrorAnalisisTipoReferencia())
+			}, 5000)
 		},
 		editarAnalisisTipoReferencia: (datosFormulario) => {
 			dispatch(editarAnalisisTipoReferencia(datosFormulario))

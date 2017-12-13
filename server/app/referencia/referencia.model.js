@@ -26,16 +26,14 @@ exports.findListToInsert = (data, callback) => {
   			*
   		FROM 
   			referencias ref,
-  			tiposanalisisparametros tipPa,
-
   			parametrosAnalisis parametro
   		WHERE 
-  			tipPa.id_tipoAnalisis = ? AND
-  			tipPa.id_parametroAnalisis = ref.id_parametroAnalisis AND
-
-  			ref.id_parametroAnalisis = parametro.id_parametroAnalisis
+  			parametro.id_parametroAnalisis = ref.id_parametroAnalisis AND
+  			parametro.id_tipoAnalisis = ? 
+  			
 	`
-	
+  			// ref.id_parametroAnalisis = parametro.id_parametroAnalisis AND
+
 	var options = {
 		sql: q, 
 		nestTables: true
@@ -103,8 +101,8 @@ exports.create = (data, callback) => {
 	let q = `
 		INSERT INTO referencias (
 			id_referencia, diasMaximos, mesesMaximos, anosMaximos, superior,
-			inferior, diasMinimos, mesesMinimos, anosMinimos, sexo, general,
-			id_parametroAnalisis
+			inferior, diasMinimos, mesesMinimos, anosMinimos, sexo, id_parametroAnalisis,
+			general
 		)
 			VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`
@@ -118,8 +116,8 @@ exports.create = (data, callback) => {
 								 data.mesesMinimos,
 								 data.anosMinimos,
 								 data.sexo,
-								 data.general,
-								 data.id_parametroAnalisis ], callback)
+								 data.id_parametroAnalisis,
+								 data.general ], callback)
 
 	connection.end()
 }
