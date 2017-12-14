@@ -86,13 +86,14 @@ class Formulario extends Component {
 							<Field name='id_presentacion'
 								type='text' component={FieldSelectPresentacionesContainer}
 								listar={this.props.listarPresentaciones}
+								showBtnAdd= {true}
 								label='Presentación'/>
 						</div>
 					</div>
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
-							<Field name='cantidadXunidad' type='text' component={renderField} label='Cantidad x unidad'/>
+							<Field name='cantidadXunidad' type='number' component={renderField} label='Cantidad x unidad'/>
 						</div>
 						<div className='col-xs-12 col-sm-12 col-md-6 col-lg-4'>
 							<Field name='observaciones' type='text' component={renderField} label='Observaciones'/>

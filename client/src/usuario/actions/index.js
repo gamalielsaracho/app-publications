@@ -20,14 +20,109 @@ import {
 	LISTAR_MEDICOS_EXITO,
 	LISTAR_MEDICOS_FALLO,
 
-	ACTUALIZAR_FORMULARIO_FILTRO
+	ACTUALIZAR_FORMULARIO_FILTRO,
+
+
+	ABRIR_FORMULARIO_EDITAR_PERSONAL_REQUEST,
+	ABRIR_FORMULARIO_EDITAR_PERSONAL_EXITO,
+	ABRIR_FORMULARIO_EDITAR_PERSONAL_FALLO,
+
+	EDITAR_PERSONAL_REQUEST,
+	EDITAR_PERSONAL_EXITO,
+	EDITAR_PERSONAL_FALLO,
+
+	ABRIR_FORMULARIO_CREAR_PERSONAL,
+
+	CERRAR_FORMULARIO_PERSONAL,
+
+	MOSTRAR_PERSONAL_REQUEST,
+	MOSTRAR_PERSONAL_EXITO,
+	MOSTRAR_PERSONAL_FALLO
 } from './types'
 
 import io from 'socket.io-client'
+import { reset } from 'redux-form'
 
 import { browserHistory } from 'react-router'
 
+import moment from 'moment'
+
 var socketPersonal = io('http://localhost:3000')
+
+
+export function abrirFormularioCrearPersonal() {
+	return (dispatch) => {
+		dispatch(reset('FormularioPersonal'))
+
+		dispatch({ type: ABRIR_FORMULARIO_CREAR_PERSONAL })
+	}
+}
+
+
+export function abrirFormularioEditarPersonal(idPersonal) {
+	return (dispatch) => {
+		dispatch({ type: ABRIR_FORMULARIO_EDITAR_PERSONAL_REQUEST })
+
+		socketPersonal.emit('mostrar_personal_editar', { id_personal: idPersonal })
+
+		socketPersonal.on('mostrar_personal_editar', (data) => {
+			if(data.error) {
+				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PERSONAL_FALLO, payload: data.error })
+			} else {
+				data.fecha_nacimiento = moment(data.fecha_nacimiento).format('YYYY-MM-DD')
+				
+				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PERSONAL_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+
+export function editarPersonal(datosFormulario) {
+	return (dispatch) => {
+		// datosFormulario.idPersonal = jwtDecode(localStorage.getItem('token')).id_personal
+
+		dispatch({ type: EDITAR_PERSONAL_REQUEST })
+
+		socketPersonal.emit('editar_personal', datosFormulario)
+
+		socketPersonal.on('editar_personal', (data) => {
+			console.log(data)
+			if(data.error) {
+				dispatch({ type: EDITAR_PERSONAL_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: EDITAR_PERSONAL_EXITO, payload: data })
+			}
+		})
+
+	}
+}
+
+export function cerrarFormularioPersonal() {
+	return (dispatch) => {
+		dispatch({ type: CERRAR_FORMULARIO_PERSONAL })
+	}
+}
+
+
+export function mostrarPersonal(idPersonal) {
+	return (dispatch) => {
+		dispatch({ type: MOSTRAR_PERSONAL_REQUEST })
+
+		socketPersonal.emit('mostrar_personal', { id_personal: idPersonal })
+
+		socketPersonal.on('mostrar_personal', (data) => {
+			console.log(data)
+			if(data.error) {
+				dispatch({ type: MOSTRAR_PERSONAL_FALLO, payload: data.error })
+			} else {
+				dispatch({ type: MOSTRAR_PERSONAL_EXITO, payload: data })
+			}
+		})
+	}
+}
+
+
 
 export function registrarPersonal(datosFormulario) {
 

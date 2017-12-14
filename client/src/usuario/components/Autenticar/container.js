@@ -12,13 +12,12 @@ const validate = values => {
   
   if (!values.correo) {
     errors.correo = 'Tienes que introducir un correo.'
-  } else if (values.correo.length < 8) {
-    errors.correo = 'Tiene que ser por lo menos 8 characteres.'
   }
+
   if (!values.contrasena) {
     errors.contrasena = 'Tienes que introducir una contraseña.'
-  } else if (values.contrasena.length < 7) {
-    errors.contrasena = 'Tiene que ser por lo menos 7 characteres.'
+  } else if (values.contrasena.length < 5) {
+    errors.contrasena = 'Tiene que ser por lo menos 5 caracteres.'
   }
   
   return errors

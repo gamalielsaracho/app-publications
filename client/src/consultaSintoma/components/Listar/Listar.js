@@ -109,7 +109,6 @@ class Listar extends Component {
 			{
 				sintomasConsulta.map((i) => {
 					return <tr key={i.consultaSintoma.id_consultaSintoma}>
-			            <td>{ i.consultaSintoma.id_consultaSintoma }</td>
 			            <td>{ i.sintoma.descripcion }</td>
 			            <td>{ i.consultaSintoma.observaciones }</td>
 
@@ -148,7 +147,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
 						        	<th>Nombre</th>
 						        	<th>Observaciones</th>
 						        	<th></th>

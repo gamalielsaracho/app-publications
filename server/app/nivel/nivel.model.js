@@ -3,7 +3,7 @@ import connection from '../../config/connection'
 exports.find = (callback) => {
 
 	let q = `
-		SELECT * FROM niveles
+		SELECT * FROM niveles ORDER BY id_nivel DESC
 	`
 	var options = {
 		sql: q, 

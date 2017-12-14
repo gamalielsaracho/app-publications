@@ -13,6 +13,7 @@ exports.findByTableName = (tableName, callback) => {
 		WHERE
 			auditoria.id_personal = personal.id_personal AND
 			auditoria.tabla = ?
+			ORDER BY auditoria.fecha DESC
 	`
 	var options = {
 		sql: q, 
@@ -59,6 +60,7 @@ exports.findByTableNameAndIdTableFather = (tableName, idTableFather, callback) =
 			auditoria.id_personal = personal.id_personal AND
 			auditoria.tabla = ? AND
 			auditoria.idTablaPadre = ?
+			ORDER BY auditoria.fecha DESC
 	`
 	var options = {
 		sql: q, 

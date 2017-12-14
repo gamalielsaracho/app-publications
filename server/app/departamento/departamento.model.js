@@ -1,7 +1,7 @@
 import connection from '../../config/connection'
 
 exports.find = (callback) => {
-	return connection.query('SELECT * FROM departamentos', callback)
+	return connection.query('SELECT * FROM departamentos ORDER BY id_departamento DESC', callback)
 
 	connection.end()
 }

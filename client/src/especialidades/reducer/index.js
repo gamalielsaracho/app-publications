@@ -39,12 +39,12 @@ const INITIAL_STATE = {
 		iniciarValores: false,
 		error: '',
 		cargando: false,
-		especialidad: {}
+		especialidad: null
 	},
 	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { especialidades:[], cargando: false, error: '' },
 	eliminar: { cargando: false, mensaje: '', error: '' },
-	mostrar: { cargando: false, especialidad: {}, error: '', abierto: false },
+	mostrar: { cargando: false, especialidad: null, error: '', abierto: false },
 	editar: { cargando: false, mensaje: '', error: '' }
 }
 
@@ -58,10 +58,13 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					especialidad: {}
+					especialidad: null
 				},
-				mostrar: { abierto: false },
-				eliminar: INITIAL_STATE.eliminar
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar
+
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_ESPECIALIDAD_REQUEST:
@@ -72,10 +75,13 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: '',
 					cargando: true,
-					especialidad: {}
+					especialidad: null
 				},
-				mostrar: { abierto: false },
-				eliminar: INITIAL_STATE.eliminar
+
+				mostrar: INITIAL_STATE.mostrar,
+				eliminar: INITIAL_STATE.eliminar,
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar
 			})
 
 		case ABRIR_FORMULARIO_EDITAR_ESPECIALIDAD_EXITO:
@@ -99,7 +105,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: true,
 					error: action.payload,
 					cargando: false,
-					especialidad: {}
+					especialidad: null
 				},
 				mostrar: { abierto: false }
 			})
@@ -113,7 +119,7 @@ export default function (state = INITIAL_STATE, action) {
 					iniciarValores: false,
 					error: '',
 					cargando: false,
-					especialidad: {}
+					especialidad: null
 				}
 			})
 
@@ -164,7 +170,7 @@ export default function (state = INITIAL_STATE, action) {
 		case MOSTRAR_ESPECIALIDAD_REQUEST:
 			return Object.assign({}, state, {
 				mostrar: { cargando: true, abierto: true },
-				formulario: { abirtoEditar: false, abirtoCrear: false },
+				formulario: INITIAL_STATE.formulario,
 				eliminar: INITIAL_STATE.eliminar
 			})
 
@@ -175,25 +181,25 @@ export default function (state = INITIAL_STATE, action) {
 					especialidad: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case MOSTRAR_ESPECIALIDAD_FALLO:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					especialidad: {},
+					especialidad: null,
 					error: action.payload,
 					abierto: true
 				},
-				formulario: { abirtoEditar: false, abirtoCrear: false }
+				formulario: INITIAL_STATE.formulario
 			})
 
 		case CERRAR_MODAL_MOSTRAR_ESPECIALIDAD:
 			return Object.assign({}, state, {
 				mostrar: {
 					cargando: false,
-					especialidad: {},
+					especialidad: null,
 					error: '',
 					abierto: false
 				}
@@ -245,7 +251,7 @@ export default function (state = INITIAL_STATE, action) {
 				eliminar: {
 					cargando: false,
 					error: action.payload,
-					especialidad: {}
+					especialidad: null
 				}
 			})
 

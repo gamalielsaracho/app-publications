@@ -108,12 +108,13 @@ class Mostrar extends Component {
 	}
 
 	render() {
-		const { cargando, medicamentoEntregado, error } = this.props.mostrar
+		const { cargando, medicamentoEntregado } = this.props.mostrar
 	
+		let error = this.props.mostrar.error ? this.props.mostrar.error : 
+			this.props.eliminar.error
+
 		return <div>
-			<div className='row'>
-				<MensajeOerror error={error} mensaje={null}/>
-			</div>
+			<MensajeOerror error={error} mensaje={null}/>
 
 			{ this.renderMedicamentoEntregado(medicamentoEntregado, cargando) }
 		</div>

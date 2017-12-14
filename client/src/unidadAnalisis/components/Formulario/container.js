@@ -10,12 +10,14 @@ import {
 import Formulario from './Formulario'
 
 const validate = (values) => {
+ 	var patronTexto = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/
+
 	const errors = {}
 
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
 	}else if (values.descripcion.trim().length < 1) {
-   			errors.descripcion = 'Tienes que introducir una descripción.'
+   		errors.descripcion = 'Tienes que introducir una descripción.'
 	}
 
 	// if(!values.nombre) {
@@ -23,6 +25,15 @@ const validate = (values) => {
 	// }else if (values.nombre.trim().length < 1) {
  //   			errors.nombre = 'Tienes que introducir un nombre.'
 	// }
+
+	if(values.nombre) {
+		if(!patronTexto.test(values.nombre)) {
+	       	errors.nombre = 'Solo texto.'
+	    } else if (values.nombre.trim().length < 1){
+	   		errors.nombre = 'Tienes que introducir un nombre.'
+	    }
+	}
+
 
 	return errors
 }

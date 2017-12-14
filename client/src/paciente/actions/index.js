@@ -81,7 +81,6 @@ export function abrirFormularioEditarPaciente(idPaciente) {
 
 		socket.on('mostrar_paciente_editar', (data) => {
 
-
 			if(data.error) {
 				dispatch({ type: ABRIR_FORMULARIO_EDITAR_PACIENTE_FALLO, payload: data.error })
 			} else {

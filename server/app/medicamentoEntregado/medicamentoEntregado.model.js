@@ -6,7 +6,7 @@ exports.find = (callback) => {
 
 	let q = `
 		SELECT 
-			* 
+			*
 		FROM 
 			medicamentosEntregados medicamentoEntregado,
 
@@ -19,6 +19,7 @@ exports.find = (callback) => {
 			paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
 			medicamentoEntregado.id_personal = farmaceutico.id_personal AND
 			farmaceutico.id_tipoDocumento = tpDocFarmaceutico.id_tipoDocumento
+			ORDER BY medicamentoEntregado.fecha DESC
 	`
 
 	var options = {

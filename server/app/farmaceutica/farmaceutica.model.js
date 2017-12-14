@@ -3,7 +3,7 @@ import connection from '../../config/connection'
 exports.find = (callback) => {
 
 	let q = `
-		SELECT * FROM farmaceuticas
+		SELECT * FROM farmaceuticas ORDER BY id_farmaceutica DESC
 	`
 	var options = {
 		sql: q, 

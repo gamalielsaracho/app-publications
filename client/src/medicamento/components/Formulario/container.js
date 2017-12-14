@@ -33,7 +33,15 @@ import Formulario from './Formulario'
 // stockMinimo
 
 const validate = (values) => {
+  	var patronNumero = /^\d*$/; //Expresión regular para aceptar solo números enteros
+
 	const errors = {}
+
+	// id_farmaceutica
+	// id_nombreMedicamento
+	// id_presentacion
+	// cantidadXunidad
+	// observaciones
 
 	if(!values.id_nombreMedicamento) {
 		errors.id_nombreMedicamento = 'Tienes que introducir un nombre.'
@@ -43,28 +51,15 @@ const validate = (values) => {
 		errors.id_presentacion = 'Tienes que introducir una presentación.'
 	}
 
-	if(!values.id_tipoConsumo) {
-		errors.id_tipoConsumo = 'Tienes que introducir un tipo.'
-	}
 
 	if(!values.id_farmaceutica) {
 		errors.id_farmaceutica = 'Tienes que introducir una farmacéutica.'
 	}
 
-	if(!values.id_dosis) {
-		errors.id_dosis = 'Tienes que introducir una dosis.'
-	}
 
-	if(!values.id_unidadMedidaMedicamento) {
-		errors.id_unidadMedidaMedicamento = 'Tienes que introducir una medida.'
-	}
-
-
-	if(!values.stockMinimo) {
-		errors.stockMinimo = 'Stock Mínimo obligatorio.'
-	}else if (values.stockMinimo.trim().length < 1) {
-   			errors.stockMinimo = 'Stock Mínimo obligatorio..'
-	}
+	if(!patronNumero.test(values.cantidadXunidad)) {
+       errors.cantidadXunidad = 'Solo números positivos.'
+    }
 
 	return errors
 }

@@ -11,6 +11,7 @@ exports.find = (idConsulta, callback) => {
 		WHERE
 			consultaDiagnostico.id_diagnostico = diagnostico.id_diagnostico AND
 			consultaDiagnostico.id_consulta = ?
+		ORDER BY consultaDiagnostico.id_consultaDiagnostico DESC
 	`
 	var options = {
 		sql: q, 

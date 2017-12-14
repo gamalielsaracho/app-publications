@@ -55,7 +55,7 @@ export default (io) => {
 
 
 		socket.on('eliminar_nivel', (data) => {
-			referentialIntegritySimple('preconsultas', 'id_nivel', data.id_nivel, (err, enUso) => {
+			referentialIntegritySimple('consultas', 'id_nivel', data.id_nivel, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_nivel', { error: 'Ocurrió un error, intente más tarde.' })

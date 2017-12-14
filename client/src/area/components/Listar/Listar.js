@@ -34,7 +34,6 @@ class Listar extends Component {
 			{
 				areas.map((area) => {
 					return <tr key={area.id_area}>
-			            <td>{ area.id_area }</td>
 			            <td>{ area.descripcion }</td>
 			            <td>
 							<button type="button" onClick={() => { this.props.mostrarArea(area.id_area) }} className="btn btn-info btn-space">Mostrar</button>
@@ -76,7 +75,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th className='center'>Id</th>
 						        	<th className='center'>Nombre</th>
 						        	<th className='center'>Opciones</th>
 						    	</tr>

@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 
 import { Field, reduxForm } from 'redux-form'
 
+import Cargando from '../../../app/components/Cargando'
+
+import MensajeOerror from '../../../app/components/MensajeOerror'
+
+
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
     <div className='form-group'>
@@ -16,45 +21,22 @@ class Autenticar extends Component {
 	constructor(props) {
 		super(props)
 		this.enviarFormulario = this.enviarFormulario.bind(this)
-		this.renderCargando = this.renderCargando.bind(this)
-		this.renderError = this.renderError.bind(this)
+		this.renderFormulario = this.renderFormulario.bind(this)
 	}
 
 	enviarFormulario(formProps) {
 		this.props.autenticarPersonal(formProps)
 	}
 
-	renderCargando(cargando) {
+
+	renderFormulario(cargando) {
+		const { handleSubmit, pristine, reset, submitting } = this.props		
+
 		if(cargando) {
-			return <div>
-				<h5>Cargando...</h5>
-			</div>
+			return <Cargando/>
 		} else {
-			return <span></span>
-		}
-	}
-
-	renderError(error) {
-		if(error) {
-			return <div>
-				<h5>{ error }</h5>
-			</div>
-		} else {
-			return <span></span>
-		}
-	}
-
-	render() {
-		const { handleSubmit, pristine, reset, submitting } = this.props
-		const { cargando, mensaje, error } = this.props.autenticacion
-		
-		console.log(this.props.autenticacion)
-		return <div className='container'>
-			<br/>
-			<div className='row'>
+			return <div className='row'>
 				<div className='col-xs-12 col-sm-6 col-md-4 col-lg-4 col-centered'>
-					{ this.renderCargando(cargando) }
-					{ this.renderError(error) }
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>
 						<Field name="correo" type="email" component={renderField} label="Correo"/>
 						<Field name="contrasena" type="password" component={renderField} label="Contraseña"/>
@@ -67,7 +49,22 @@ class Autenticar extends Component {
 					</form>
 				</div>
 			</div>
+		}
+	}
+
+
+
+	render() {
+		const { cargando, error } = this.props.autenticacion
+		
+		// console.log(this.props.autenticacion)
+
+		return <div className='container'>
+
+			<MensajeOerror error={error} mensaje={null}/>
 			<br/>
+			{ this.renderFormulario(cargando) }
+			
 		</div>
 	}
 }

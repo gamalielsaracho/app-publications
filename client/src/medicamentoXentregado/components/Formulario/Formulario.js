@@ -191,7 +191,7 @@ class Formulario extends Component {
 	render() {
 		const customStyles = {
 		    content : {
-		  		height: '65vh',
+		  		height: '70vh',
 		  		position: 'none'
 		  	}
 		}

@@ -36,7 +36,6 @@ class Listar extends Component {
 			{
 				parametros.map((i) => {
 					return <tr key={i.parametro.id_parametroPreconsulta}>
-			            <td>{ i.parametro.id_parametroPreconsulta }</td>
 			            <td>{ i.parametro.descripcion }</td>
 			            <td>{ i.unidad.descripcion }</td>
 			            <td>{ i.parametro.valorNormal }</td>
@@ -83,7 +82,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
 						        	<th>Nombre</th>
 						        	<th>Unidad</th>
 						        	<th>Valor normal</th>

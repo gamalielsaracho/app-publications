@@ -35,7 +35,6 @@ class Listar extends Component {
 			{
 				diagnosticos.map((diagnostico) => {
 					return <tr key={diagnostico.id_diagnostico}>
-			            <td>{ diagnostico.id_diagnostico }</td>
 			            <td>{ diagnostico.descripcion }</td>
 			            <td>
 							<button type="button" onClick={() => { this.props.mostrarDiagnostico(diagnostico.id_diagnostico) }} className="btn btn-info btn-space">Mostrar</button>
@@ -77,7 +76,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
 						        	<th>Nombre</th>
 						        	<th>Opciones</th>
 						    	</tr>

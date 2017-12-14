@@ -50,8 +50,12 @@ class Formulario extends Component {
 		const { handleSubmit, pristine, reset, submitting } = this.props
 		
 		const { 
-			abirtoCrear, abirtoEditar, error, cargando, especialidad 
+			abirtoCrear, abirtoEditar, cargando, especialidad 
 		} = this.props.formulario
+
+		let error = this.props.formulario.error ? this.props.formulario.error 
+			: this.props.crear.error ? this.props.crear.error : this.props.editar.error 
+
 
 		let abierto = abirtoEditar ? abirtoEditar : abirtoCrear
 

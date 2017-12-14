@@ -107,7 +107,7 @@ exports.create = (data, callback) => {
 			VALUES (null, LOWER(?), ?, ?, ?);
 	`
 	return connection.query(q, [ data.descripcion.trim(),
-							 	 data.id_unidadAnalisis,
+							 	 data.id_unidadAnalisis || 1,
 							 	 data.id_tipoExamen,
 							 	 data.id_tipoAnalisis ], callback)
 

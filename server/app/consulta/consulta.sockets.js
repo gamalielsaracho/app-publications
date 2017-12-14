@@ -80,180 +80,99 @@ export default (io) => {
 
 		let listaDetalladaConsultas = []
 
+
+		
 		Consulta.findListaConsultasDetalladasReporte((err, consultas) => {
-			// console.log(consultas)
-			if(err) {
-				console.log(err)
-				socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-				return
-			}
+				// console.log(consultas)
+				if(err) {
+					console.log(err)
+					socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+					return
+				}
 
+			MedicamentoDroga.findAllList((err, drogasXmedi) => {
+				// console.log(consultas)
+				if(err) {
+					console.log(err)
+					socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
+					return
+				}
 
-			let longConsultas = consultas.length
+				let longConsultas = consultas.length
 
-			// consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-			let op
-			consultas.map((i) => {
+				// consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+				let op
+				consultas.map((i) => {
 
-				PreConsultaParametro.find(i.preConsulta.id_preconsulta, (err, resultadosPreconsulta) => {
-					if(err) {
-						console.log(err)	
-						socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-						return
-					}
-
-					i.resultadosPreconsulta = resultadosPreconsulta
-
-					ConsultaSintoma.find(i.consulta.id_consulta, (err, sintomas) => {
-						if(err) { 
+					PreConsultaParametro.find(i.preConsulta.id_preconsulta, (err, resultadosPreconsulta) => {
+						if(err) {
 							console.log(err)	
-							socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })				
+							socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
 							return
 						}
 
-						i.sintomas = sintomas
+						i.resultadosPreconsulta = resultadosPreconsulta
 
-						ConsultaDiagnostico.find(i.consulta.id_consulta, (err, diagnosticos) => {
-							if(err) {
+						ConsultaSintoma.find(i.consulta.id_consulta, (err, sintomas) => {
+							if(err) { 
 								console.log(err)	
 								socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })				
 								return
 							}
 
-							i.diagnosticos = diagnosticos
+							i.sintomas = sintomas
+
+							ConsultaDiagnostico.find(i.consulta.id_consulta, (err, diagnosticos) => {
+								if(err) {
+									console.log(err)	
+									socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })				
+									return
+								}
+
+								i.diagnosticos = diagnosticos
 
 
-							// if(i.consulta.id_tratamiento) {
-								MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
+								// if(i.consulta.id_tratamiento) {
+									MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
 
-									if(medicamentosTratamiento.length) {
-										i.tratamientos = medicamentosTratamiento
-										
-										if(i == consultas[longConsultas-1]) {
-											consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+										if(medicamentosTratamiento.length) {
+											i.tratamientos = medicamentosTratamiento
+											
+											medicamentosTratamiento.map((mt) => {
+												let idMmedicamento = mt.indicacion.id_medicamento
+												
+												mt.drogas = []
+												drogasXmedi.map((pp) => {
+													if(idMmedicamento == pp.medicamentoDroga.id_medicamento) {
+														mt.drogas.push(pp)
+													}
+												})
+
+												if(i == consultas[longConsultas-1]) {
+													consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+												} 
+												
+											})
+
+										} else {
+											i.tratamientos = medicamentosTratamiento
+											console.log(medicamentosTratamiento)
+											
+											if(i == consultas[longConsultas-1]) {
+												consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
+											}
 										}
 
-									} else {
-										i.tratamientos = medicamentosTratamiento
-										console.log(medicamentosTratamiento)
-										
-										if(i == consultas[longConsultas-1]) {
-											consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-										}
-									}
-
-								})
-								
-							// } else {
-
-							// 	i.tratamientos = []
-
-							// 	if(i == consultas[longConsultas-1]) {
-							// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-							// 	}
-							// }
-
-
-
-							// if(i.consulta.id_tratamiento) {
-							// 	MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
-							// 		if(err) {
-							// 			console.log(err)
-							// 			socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })					
-							// 			return
-							// 		}
-
-							// 		// console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-							// 		// console.log(medicamentosTratamiento)
-
-							// 		// let longMedicamentosTratamiento = medicamentosTratamiento.length
-
-							// 		// if(longMedicamentosTratamiento) {
-							// 			// medicamentosTratamiento.map((j) => {
-							// 			// 	let idMedicamento = j.indicacion.id_medicamento
-
-							// 			// 		MedicamentoDroga.find(idMedicamento , (err, drogas) => {
-							// 			// 			if(err) {
-							// 			// 				console.log(err)
-							// 			// 				socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-							// 			// 				return
-							// 			// 			}
-														
-							// 			// 			j.drogas = drogas
-
-													
-							// 			// 		})
-							// 			// })
-
-							// 			i.tratamientos = medicamentosTratamiento
-										
-							// 			if(i == consultas[longConsultas-1]) {
-							// 				consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-							// 			}
-							// 		// } 
-							// 		// else {
-							// 		// 	i.tratamientos = []
-
-							// 		// 	if(i == consultas[longConsultas-1]) {
-							// 		// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-							// 		// 	}
-							// 		// }
-
-							// 	})
-
-							// } else {
-							// 	i.tratamientos = []
-							// 	if(i == consultas[longConsultas-1]) {
-							// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-							// 	}
-							// }
-
-							// if(i.consulta.id_tratamiento) {
-							// 	// i.tratamientos = [{ hola: "dddd" }]
-							// 	console.log("------> "+i.consulta.id_tratamiento)
-							// 	MedicamentoTratamiento.findListByIdTratamientoReporteConsultas({ id_tratamiento:i.consulta.id_tratamiento }, (err, medicamentosTratamiento) => {
-									
-							// 		medicamentosTratamiento.map((j) => {
-							// 			let idMedicamento = j.indicacion.id_medicamento
-
-							// 			MedicamentoDroga.find(idMedicamento , (err, drogas) => {
-							// 				if(err) {
-							// 					console.log(err)
-							// 					socket.emit('reporte_listar_consultas', { error: 'Lo sentimos, acurrió un error. intente más tarde.' })
-							// 					return
-							// 				}
-														
-							// 				j.drogas = drogas
-
-													
-							// 			})
-							// 		})
-							// 		i.tratamientos = medicamentosTratamiento
-
-							// 		if(i == consultas[longConsultas-1]) {
-							// 			consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-							// 		}
-							// 	})
-
-							// } else {
-							// 	i.tratamientos = []
-
-							// 	if(i == consultas[longConsultas-1]) {
-							// 		consultaNsp.emit('reporte_listar_consultas', { consultas: consultas })
-							// 	}
-							// }
+									})
+							})
 						})
+
 					})
-
-
+					
 				})
 				
 			})
-
-
-			// consultaNsp.emit('reporte_listar_consultas', { consultas: listaDetalladaConsultas })			
 		})
-			console.log(listaDetalladaConsultas)
 
 
 

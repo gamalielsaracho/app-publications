@@ -194,7 +194,8 @@ export default function (state = INITIAL_STATE, action) {
 		case LISTAR_MEDICAMENTOS_ENTREGADOS_REQUEST:
 			return Object.assign({}, state, {
 				listar: { cargando: true, error: '' },
-				formularioFiltro: INITIAL_STATE.formularioFiltro
+				formularioFiltro: INITIAL_STATE.formularioFiltro,
+				eliminar: INITIAL_STATE.eliminar
 			})
 
 		case LISTAR_MEDICAMENTOS_ENTREGADOS_EXITO:

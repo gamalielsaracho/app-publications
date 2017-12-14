@@ -33,11 +33,10 @@ class Menu extends Component {
 
 	adminMenu() {
 		return <ul className="nav nav-sidebar">
-			<li><Link to='/estadisticas'>Estadísticas (Adm)</Link></li>
 			<li><Link to='/dashboard/modulos-auditados'>Auditoría (Adm)</Link></li>
 
 			
-			<li><Link to='/usuarios'>Usuarios (Adm) <span className="badge">14</span></Link></li>
+			<li><Link to='/dashboard/personales'>Usuarios (Adm) <span className="badge">14</span></Link></li>
 			<li><Link to='/roles'>Roles (Adm) <span className="badge">1</span></Link></li>
 			<li><Link to='/especialidades'>Especialidades (Adm) <span className="badge">0</span></Link></li>
 			<li><Link to='/dashboard/ciudades'>Ciudades (Adm) <span className="badge">8</span></Link></li>
@@ -46,6 +45,8 @@ class Menu extends Component {
 			<li><Link to='/dashboard/alergias'>Alergias (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/pacientes'>Pacientes (Adm) <span className="badge">8</span></Link></li>
 			<li><Link to='/dashboard/niveles'>Niveles (Adm) <span className="badge">8</span></Link></li>
+			<li><Link to='/dashboard/unidades-medidas'>Unidades Medidas (Adm) </Link></li>
+			
 			<li><Link to='/dashboard/parametros-preconsulta'>Parametros pre-consulta (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/diagnosticos'>Diagnosticos (Adm) <span className="badge">8</span></Link></li>			
 			<li><Link to='/dashboard/sintomas'>Síntomas (Adm) <span className="badge">8</span></Link></li>			
@@ -79,8 +80,7 @@ class Menu extends Component {
 
 			<h3>Laboratorio</h3>
 			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Adm) </Link></li>
-			<li><Link to='/dashboard/unidades-analisis'>Unidades Medidas (Adm) </Link></li>
-			<li><Link to='/dashboard/parametros-analisis'>Parametros (Adm) </Link></li>
+			<li><Link to='/dashboard/unidades-medidas'>Unidades Medidas (Adm) </Link></li>
 			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Adm) </Link></li>
 			
 			<li><Link to='/dashboard/solicitudes-laboratorio'>Solicitudes (Adm) </Link></li>
@@ -144,8 +144,7 @@ class Menu extends Component {
 	laboratorioMenu() {
 		return <ul className="nav nav-sidebar">
 			<li><Link to='/dashboard/tipos-examenes'>Tipos examenes (Lap)</Link></li>
-			<li><Link to='/dashboard/unidades-analisis'>Unidades Medidas (Lap)</Link></li>
-			<li><Link to='/dashboard/parametros-analisis'>Parametros (Lap)</Link></li>
+			<li><Link to='/dashboard/unidades-medidas'>Unidades Medidas (Lap)</Link></li>
 			<li><Link to='/dashboard/tipos-analisis'>Tipos análisis (Lap)</Link></li>
 			
 			<li><Link to='/dashboard/solicitudes-laboratorio'>Solicitudes (Lap)</Link></li>

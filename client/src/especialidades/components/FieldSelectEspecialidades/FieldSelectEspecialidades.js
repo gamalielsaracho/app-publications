@@ -7,11 +7,20 @@ class FieldSelectEspecialidades extends Component {
 		super(props);
 		this.renderBtnAdd = this.renderBtnAdd.bind(this)
 		// this.renderOption = this.renderOption.bind(this)
+		this.renderIndice = this.renderIndice.bind(this)
 	}
 
 	// renderOption() {
 
 	// }
+
+	renderIndice(especialidad) {
+		if(especialidad.id_especialidad != 1) {
+			return <option key={especialidad.id_especialidad} value={especialidad.id_especialidad}>
+				{ especialidad.id_especialidad+' '+especialidad.descripcion }
+			</option>
+		}
+	}
 
 	renderBtnAdd(showBtnAdd) {
 		if(showBtnAdd) {
@@ -52,9 +61,7 @@ class FieldSelectEspecialidades extends Component {
 						<option value=''>Seleccionar especialidad</option>
 						{
 							especialidades.map((especialidad) => {
-								return <option key={especialidad.id_especialidad} value={especialidad.id_especialidad}>
-									{ especialidad.descripcion }
-								</option>
+								return this.renderIndice(especialidad)
 							})
 						}
 						</select>

@@ -58,6 +58,7 @@ exports.findListaConsultasDetalladasReporte = (callback) => {
 				
 				consulta.id_paciente = paciente.id_paciente AND
 				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento
+				ORDER BY consulta.fecha DESC
 	`
 
 
@@ -224,6 +225,7 @@ exports.find = (callback) => {
 				
 				consulta.id_paciente = paciente.id_paciente AND
 				paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento
+			ORDER BY consulta.fecha DESC
 	`
 
 

@@ -13,6 +13,8 @@ exports.find = (callback) => {
 				medicamento.id_farmaceutica = farmaceutica.id_farmaceutica AND
 				medicamento.id_nombreMedicamento = nombreMedicamento.id_nombreMedicamento AND
 				medicamento.id_presentacion = presentacion.id_presentacion
+	
+				ORDER BY medicamento.id_medicamento DESC
 	`
 
 	var options = {

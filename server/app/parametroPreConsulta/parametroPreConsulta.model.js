@@ -7,7 +7,8 @@ exports.find = (callback) => {
 		unidadesanalisis unidad 
 
 		WHERE
-			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis 
+			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis
+		ORDER BY parametro.id_parametroPreconsulta DESC
 	`
 
 	var options = {
@@ -43,12 +44,29 @@ exports.verifyIfExist = (data, callback) => {
 	let q = `
 		SELECT * FROM parametrospreconsulta 
 			WHERE
-			descripcion = ?
+			descripcion = ? AND
+			id_unidadAnalisis = ?
 	`
-	return connection.query(q, [data.descripcion.trim()], callback)
+	return connection.query(q, [ data.descripcion.trim(),
+						         data.id_unidadAnalisis ], callback)
 
 	connection.end()
 }
+
+// exports.verifyIfExistToUpdate = (data, callback) => {
+// 	let q = `
+// 		SELECT * FROM parametrospreconsulta 
+// 			WHERE
+// 			descripcion = ?,
+// 			valorNormal = ?,
+// 			valorAlto = ?,
+// 			valorBajo = ?,
+// 			id_unidadAnalisis = ?
+// 	`
+// 	return connection.query(q, [data.descripcion.trim()], callback)
+
+// 	connection.end()
+// }
 
 exports.create = (data, callback) => {
 	let q = `
@@ -59,7 +77,7 @@ exports.create = (data, callback) => {
 	`
 	return connection.query(q, [data.descripcion.trim(), data.valorNormal.trim(),
 								data.valorAlto.trim(), data.valorBajo.trim(),
-								data.id_unidadAnalisis], callback)
+								data.id_unidadAnalisis || 1], callback)
 
 	connection.end()
 }

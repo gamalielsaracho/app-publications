@@ -13,24 +13,30 @@ import Formulario from './Formulario'
 // direccion
 // telefono
 const validate = (values) => {
+    var patronNumero = /^\d*$/; //Expresión regular para aceptar solo números enteros
+
 	const errors = {}
 
 	if(!values.nombre) {
 		errors.nombre = 'Tienes que introducir un nombre.'
 	}else if (values.nombre.trim().length < 5) {
-   			errors.nombre = 'Tiene que ser por lo menos 5 caracteres.'
+   		errors.nombre = 'Tiene que ser por lo menos 5 caracteres.'
 	}
 
 	if(!values.direccion) {
 		errors.direccion = 'Tienes que introducir una descripción.'
-	}else if (values.direccion.trim().length < 1) {
-   			errors.direccion = 'Tienes que introducir una descripción.'
+	}else if (values.direccion.trim().length < 5) {
+   			errors.direccion = 'Tiene que ser por lo menos 5 caracteres.'
 	}
 
 	if(!values.telefono) {
 		errors.telefono = 'Tienes que introducir un telefono.'
-	}else if (values.telefono.trim().length < 1) {
-   			errors.telefono = 'Tienes que introducir una telefono.'
+	}else {
+		if(!patronNumero.test(values.telefono)) {
+        	errors.telefono = 'Solo números positivos.'
+	    } else if(values.telefono.length < 9){
+	    	errors.telefono = 'Por lo menos 9 caracteres.'
+	    }
 	}
 
 	return errors

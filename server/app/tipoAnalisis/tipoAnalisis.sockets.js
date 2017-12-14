@@ -63,7 +63,7 @@ export default (io) => {
 			let d = {
 				table1: 'analisissolicitadostipos', 
 				table2: 'analisistipos',
-				table3: 'tiposanalisisparametros',
+				table3: null,
 				fieldPrimaryKey: 'id_tipoAnalisis',
 				primaryKey: data.id_tipoAnalisis
 			}
@@ -108,16 +108,17 @@ export default (io) => {
 
 							tiposAnalisis()
 
+
 							fieldsToEditData(data.id_tipoAnalisis, listaCampos, 'eliminación', 'tipos-analisis', data.idPersonal, null, (err, datos) => {
 								if(err) {
 									console.log(err)
 									socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
 									return 
 								}
-							
+								
 								// .. Ejecutar esto despues de eliminar el registro. 
 								// console.log(datos)
-								AuditoriaModulo1.create(data, (err) => {
+								AuditoriaModulo1.create(datos, (err) => {
 									if(err) {
 										console.log(err)
 										socket.emit('eliminar_tipoAnalisis', { error: 'Ocurrió un error en la auditoría de este módulo.' })
@@ -125,6 +126,8 @@ export default (io) => {
 									}
 								})
 							})
+
+
 
 							socket.emit('eliminar_tipoAnalisis', { mensaje: 'Se Eliminó exitósamente.' })
 							

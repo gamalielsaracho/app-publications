@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import jwtDecode from 'jwt-decode'
+
 import FormularioContainer from '../Formulario'
 import MostarContainer from '../Mostrar'
 
@@ -10,6 +12,8 @@ class Listar extends Component {
 	constructor(props) {
 		super(props)
 		this.renderRoles = this.renderRoles.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
+
 	}
 
 	componentWillMount() {
@@ -29,7 +33,11 @@ class Listar extends Component {
 		}
 	}	
 
+
+
 	renderRoles(roles) {
+		// <button type="button" onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} className="btn btn-warning btn-space">Editar</button>
+		// <button type="button" onClick={() => { this.props.eliminarRole(rol.id_rol) }} className="btn btn-danger btn-space">Eliminar</button>
 
 		return <tbody>
 			{
@@ -39,8 +47,6 @@ class Listar extends Component {
 			            <td>{ rol.descripcion }</td>
 			            <td>
 							<button type="button" onClick={() => { this.props.mostrarRol(rol.id_rol) }} className="btn btn-info btn-space">Mostrar</button>
-							<button type="button" onClick={() => { this.props.abrirFormularioEditarRol(rol.id_rol) }} className="btn btn-warning btn-space">Editar</button>
-							<button type="button" onClick={() => { this.props.eliminarRole(rol.id_rol) }} className="btn btn-danger btn-space">Eliminar</button>
 			            </td>
 			        </tr>		
 				})
@@ -66,12 +72,15 @@ class Listar extends Component {
 
 					<MensajeOerror error={error} mensaje={null}/>
 
-					<div className='row'>
-						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
-							<button onClick={ this.props.abrirFormularioCrearRol } className='btn btn-success'>Agregar</button>
+
+					{/*
+						<div className='row'>
+							<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+								<button onClick={ this.props.abrirFormularioCrearRol } className='btn btn-success'>Agregar</button>
+							</div>
 						</div>
-					</div>
-					<br/>
+						<br/>
+					*/}
 
 					<div className='table-responsive'>
 						<table className='table table-striped'>

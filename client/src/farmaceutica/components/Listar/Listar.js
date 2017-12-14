@@ -36,7 +36,6 @@ class Listar extends Component {
 			{
 				farmaceuticas.map((farmaceutica) => {
 					return <tr key={farmaceutica.id_farmaceutica}>
-			            <td>{ farmaceutica.id_farmaceutica }</td>
 			            <td>{ farmaceutica.nombre }</td>
 			            <td>{ farmaceutica.direccion }</td>
 			            <td>{ farmaceutica.telefono }</td>
@@ -80,7 +79,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
 						        	<th>Nombre</th>
 						        	<th>Dirección</th>
 						        	<th>Telefono</th>

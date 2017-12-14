@@ -98,14 +98,14 @@ export function crearEspecialidad(datosFormulario) {
 
 		socket.emit('crear_especialidad', datosFormulario)
 		socket.on('crear_especialidad', (data) => {
-			if(data.err) {
+			if(data.error) {
 				dispatch({ type: CREAR_ESPECIALIDAD_FALLO, payload: data.error })
 			} else {
 				dispatch({ type: CREAR_ESPECIALIDAD_EXITO , payload: data })
+				dispatch(reset('Formulario'))
 			}
 		})
 	
-		dispatch(reset('Formulario'))
 	}
 }
 

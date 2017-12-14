@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom'
 
 import Cargando from '../../../app/components/Cargando'
 
+import { Link } from 'react-router'
+
+import RegistrarPersonalContainer from '../Registrar'
+
 import FiltroContainer from '../Filtro'
 
 class Listar extends Component {
@@ -15,6 +19,19 @@ class Listar extends Component {
 	componentWillMount() {
 		this.props.listarPersonales()
 	}
+
+	// shouldComponentUpdate(nextProps) {
+	// 	let condition = (
+	// 		nextProps.niveles !== this.props.niveles ||
+	// 		nextProps.eliminar !== this.props.eliminar
+	// 	)
+		
+	// 	if(condition) {
+	// 		return true
+	// 	}else {
+	// 		return false
+	// 	}
+	// }
 
 	handleChange(e) {
 		let valoresInputActualizando = {
@@ -43,21 +60,30 @@ class Listar extends Component {
 			personales = this.props.filtrarPersonales(personales, con)
 		}
 
+		console.log(personales)
+
 		return <tbody>
 				{
-				  personales.map((dato) => {
-					return <tr key={dato.personal.id_personal}>
-			            <td>{ dato.personal.nombres }</td>
-			            <td>{ dato.personal.apellidos }</td>
-			            <td>{ dato.personal.correo }</td>
+				  personales.map((i) => {
+					return <tr key={i.personal.id_personal}>
+			            <td>{ i.personal.nombres+' '+i.personal.apellidos }</td>
+			            <td>{ i.personal.nroDocumento }</td>
+			            <td>{ i.tipoDocumento.descripcion }</td>
+			            <td>{ i.personal.correo }</td>
+
+			            <td>{ i.rol.descripcion }</td>
+
+			            <td>{ i.especialidad.descripcion }</td>
+
 			            <td>
-							<button type="button" className="btn btn-success">Editar</button>
-							<button type="button" className="btn btn-danger btn-space">Eliminar</button>
+			            	<Link to={`/dashboard/personales/${i.personal.id_personal}`}>
+								<button type="button" className="btn btn-info btn-space">Mostrar</button>
+							</Link>
+							<button type="button" onClick={() => { this.props.abrirFormularioEditarPersonal(i.personal.id_personal) }} className="btn btn-warning btn-space">Editar</button>
 			            </td>
 			          </tr>		
 				  })
 			    }
-
 		</tbody>
 	}
 
@@ -67,48 +93,62 @@ class Listar extends Component {
 		let filtro = this.props.filtro
 
 		console.log(this.props.listar)
-
 		console.log(this.props.filtro)
 		
+
+			// <div className='row'>
+			// 		<div className='col-lg-4'>
+			// 			<div className="input-group">
+			// 				<input className='form-control' type='text' placeholder='Nombre'
+			// 				value={filtro.nombres} ref='nombres'
+			// 				onChange={this.handleChange} />
+			// 				</div> 
+			// 			</div>
+			// 		<div className='col-lg-4'>
+			// 			<div className="input-group">
+			// 				<input className='form-control' type='text' placeholder='Apellido'
+			// 				value={filtro.apellidos} ref='apellidos'
+			// 				onChange={this.handleChange}/>
+			// 			</div>
+			// 		</div>
+			// 		<div className='col-lg-4'>
+			// 			<div className="input-group">
+			// 				<input className='form-control' type='text' placeholder='Correo'
+			// 				value={filtro.correo} ref='correo'
+			// 				onChange={this.handleChange}/>
+			// 			</div>
+			// 		</div>
+			// 	</div>
+
 
 		if(cargando) {
 			return <Cargando/>
 		}else {
 			return <div>
 				<h1 className='text-center'>Personales</h1>
-				<br/>
+
 				<div className='row'>
-					<div className='col-lg-4'>
-						<div className="input-group">
-							<input className='form-control' type='text' placeholder='Nombre'
-							value={filtro.nombres} ref='nombres'
-							onChange={this.handleChange} />
-							</div> 
-						</div>
-					<div className='col-lg-4'>
-						<div className="input-group">
-							<input className='form-control' type='text' placeholder='Apellido'
-							value={filtro.apellidos} ref='apellidos'
-							onChange={this.handleChange}/>
-						</div>
-					</div>
-					<div className='col-lg-4'>
-						<div className="input-group">
-							<input className='form-control' type='text' placeholder='Correo'
-							value={filtro.correo} ref='correo'
-							onChange={this.handleChange}/>
-						</div>
+					<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>
+						<button onClick={ this.props.abrirFormularioCrearPersonal } className='btn btn-success'>Agregar</button>
 					</div>
 				</div>
-
 				<br/>
+
+				<RegistrarPersonalContainer/>
+
 				<div className="table-responsive">
 					<table className='table table-striped'>
 						<thead>
 				          <tr>
 				              <th>Nombre</th>
-				              <th>Apellido</th>
+				              <th>Nro. Documento</th>
+				              <th>Tipo Documento</th>
 				              <th>Correo</th>
+
+				              <th>Rol</th>
+
+				              <th>Especialidad</th>
+
 				              <th>Opciones</th>
 				          </tr>
 				        </thead>

@@ -10,7 +10,9 @@ import Mostrar from './Mostrar'
 
 function mapStateToProps(state) {
 	return {
-		mostrar: state.medicamentoEntregado.mostrar
+		mostrar: state.medicamentoEntregado.mostrar,
+
+		eliminar: state.medicamentoEntregado.eliminar
 	}
 }
 

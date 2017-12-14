@@ -29,6 +29,7 @@ exports.find = (idPreconsulta, callback) => {
 			parametro.id_unidadAnalisis = unidad.id_unidadAnalisis AND
 			preconsultaParametro.id_preconsulta = ?
 
+		ORDER BY parametro.id_parametroPreconsulta DESC
 	`
 	
 	var options = {

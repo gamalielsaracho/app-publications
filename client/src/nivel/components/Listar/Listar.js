@@ -35,7 +35,6 @@ class Listar extends Component {
 			{
 				niveles.map((nivel) => {
 					return <tr key={nivel.id_nivel}>
-			            <td>{ nivel.id_nivel }</td>
 			            <td>{ nivel.descripcion }</td>
 			            <td>
 							<button type="button" onClick={() => { this.props.mostrarNivel(nivel.id_nivel) }} className="btn btn-info btn-space">Mostrar</button>
@@ -77,7 +76,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
 						        	<th>Nombre</th>
 						        	<th>Opciones</th>
 						    	</tr>

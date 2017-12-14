@@ -21,6 +21,7 @@ exports.find = (callback) => {
 			paciente.id_tipoDocumento = tpDocPaciente.id_tipoDocumento AND
 			preconsulta.id_personal = personal.id_personal AND
 			personal.id_tipoDocumento = tpDocEnfermera.id_tipoDocumento
+			ORDER BY preconsulta.fecha DESC
 	`
 	var options = {
 		sql: q, 

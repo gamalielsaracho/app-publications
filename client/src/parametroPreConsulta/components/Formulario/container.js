@@ -15,32 +15,49 @@ import {
 import Formulario from './Formulario'
 
 const validate = (values) => {
+  	var patronNumeroComaNegativo = /^([0-9])*[.]?[0-9]*$/
+
+  	// var patronTexto = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/
+
 	const errors = {}
 
 	if(!values.descripcion) {
 		errors.descripcion = 'Tienes que introducir una descripción.'
 	}else if (values.descripcion.trim().length < 3) {
-   			errors.descripcion = 'Tiene que ser por lo menos 3 characteres.'
+   		errors.descripcion = 'Tiene que ser por lo menos 3 caracteres.'
 	}
 
 	if(!values.valorNormal) {
 		errors.valorNormal = 'Debe contener un valor.'
-	} else if(!values.valorNormal.trim().length) {
-		errors.valorNormal = 'Debe contener un valor.'
+	} else {
+		if(!/^-([0-9])*[.]?[0-9]*$/.test(values.valorNormal) && !/^([0-9])*[.]?[0-9]*$/.test(values.valorNormal)) {
+        	errors.valorNormal = 'Solo números.'
+	    } else if(!values.valorNormal.trim().length){
+			errors.valorNormal = 'Debe contener un valor.'
+	    }
 	}
+
+	
 
 	if(!values.valorAlto) {
 		errors.valorAlto = 'Debe contener un valor.'
-	} else if(!values.valorAlto.trim().length) {
-		errors.valorAlto = 'Debe contener un valor.'
+	} else {
+		if(!/^-([0-9])*[.]?[0-9]*$/.test(values.valorAlto) && !/^([0-9])*[.]?[0-9]*$/.test(values.valorAlto)) {
+        	errors.valorAlto = 'Solo números.'
+	    } else if(!values.valorAlto.trim().length) {
+			errors.valorAlto = 'Debe contener un valor.'
+	    }
 	}
 
 	if(!values.valorBajo) {
 		errors.valorBajo = 'Debe contener un valor.'
-	} else if(!values.valorBajo.trim().length) {
-		errors.valorBajo = 'Debe contener un valor.'
+	} else {
+		if(!/^-([0-9])*[.]?[0-9]*$/.test(values.valorBajo) && !/^([0-9])*[.]?[0-9]*$/.test(values.valorBajo)) {
+        	errors.valorBajo = 'Solo números.'
+	    } else if(!values.valorBajo.trim().length) {
+			errors.valorBajo = 'Debe contener un valor.'
+	    }
 	}
-
 	return errors
 }
 

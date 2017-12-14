@@ -1,2 +1,2 @@
-import RegistrarContainer from './container'
-export default RegistrarContainer
+import RegistrarPersonalContainer from './container'
+export default RegistrarPersonalContainer

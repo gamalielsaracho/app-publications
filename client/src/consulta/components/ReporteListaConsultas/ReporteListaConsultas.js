@@ -186,17 +186,17 @@ class ReporteListaConsultas extends Component {
 	}
 
 
-	renderDetalleMedicamento(detalleMedicamento, medicamentoNoExistente) {
-		if(medicamentoNoExistente) {
+	renderDetalleMedicamento(i) {
+		if(i.indicacion.medicamentoNoExistente) {
 			return <div>
-				<h3 className=''>{ medicamentoNoExistente }</h3>
+				<h3 className=''>{ i.indicacion.medicamentoNoExistente }</h3>
 			</div>
-		} else if(detalleMedicamento){
+		} else {
 			return <div>
-				<h3 className=''>{ detalleMedicamento.nombreMedicamento.descripcion }</h3>
+				<h3 className=''>{ i.nombreMedicamento.descripcion }</h3>
 				<h4></h4>
 				{
-					detalleMedicamento.drogas.map((i) => {
+					i.drogas.map((i) => {
 						return <ul key={i.droga.id_droga}>
 							<li>{i.droga.descripcion+' '+i.medicamentoDroga.descripcionProporcion }</li>
 						</ul>
@@ -219,7 +219,7 @@ class ReporteListaConsultas extends Component {
 							return <div key={i.indicacion.id_medicamentoTratamiento}>
 								<div className='row'>
 									<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-										{ this.renderDetalleMedicamento(i.detalleMedicamento, i.indicacion.medicamentoNoExistente) }
+										{ this.renderDetalleMedicamento(i) }
 									</div>
 								</div>
 								<div className='row'>
@@ -300,28 +300,28 @@ class ReporteListaConsultas extends Component {
 	renderConsultas(consultas) {
 		console.log(consultas)
 		return <div>
+			{
+				consultas.map((i) => {
+					return <div key={i.consulta.id_consulta} className='pageBreakHere'>
+							<hr></hr>
+				            <CabeceraContainer
+								styleData={null}
+								fechaCreacion = { i.consulta.fecha }/>
+
+							{ this.renderDatosPaciente(i) }
+
+							{ this.renderDatosPreConsulta(i) }
+
+							{ this.renderDatosConsulta(i) }
+
+							<br/>
+							<br/>
+							<hr></hr>
+			        </div>		
+				})
+			}
 
 		</div>
-			// {
-			// 	consultas.map((i) => {
-			// 		return <div key={i.consulta.id_consulta} className='pageBreakHere'>
-			// 				<hr></hr>
-			// 	            <CabeceraContainer
-			// 					styleData={null}
-			// 					fechaCreacion = { i.consulta.fecha }/>
-
-			// 				{ this.renderDatosPaciente(i) }
-
-			// 				{ this.renderDatosPreConsulta(i) }
-
-			// 				{ this.renderDatosConsulta(i) }
-
-			// 				<br/>
-			// 				<br/>
-			// 				<hr></hr>
-			//         </div>		
-			// 	})
-			// }
 			
 	}
 

@@ -4,6 +4,8 @@ import { Link } from 'react-router'
 import Cargando from '../../../app/components/Cargando'
 import MensajeOerror from '../../../app/components/MensajeOerror'
 
+import jwtDecode from 'jwt-decode'
+
 import FormularioParametroAnalisisContainer from '../Formulario'
 
 class Listar extends Component {
@@ -11,6 +13,8 @@ class Listar extends Component {
 		super(props)
 		this.renderParametrosAnalisis = this.renderParametrosAnalisis.bind(this)
 		this.renderParametroAnalisisFormulario = this.renderParametroAnalisisFormulario.bind(this)
+		this.renderBtnAuditByRol = this.renderBtnAuditByRol.bind(this)
+		this.personalLocalSt = jwtDecode(localStorage.getItem('token'))
 	}
 
 	componentWillMount() {
@@ -40,6 +44,25 @@ class Listar extends Component {
 		}
 	}	
 
+
+	renderBtnAuditByRol() {
+		let idRol = this.personalLocalSt.id_rol
+		
+		if(idRol == 3) {
+			return <div className='row'>
+				<div className='col-xs-11 col-sm-11 col-md-11 col-lg-11 text-right'>
+					<br/>
+					<Link target="_blank" to={`/dashboard/modulos-auditados/${this.props.urls.idTipoAnalisis}/auditoria/parametros-analisis`}>
+						<button type="button" className="btn btn-primary btn-md">
+							<span className="glyphicon glyphicon-search" aria-hidden="true"></span> Auditoría
+						</button>
+					</Link>
+				</div>
+			</div>
+		} else {
+			return <span></span>
+		}
+	}
 
 	renderParametrosAnalisis(parametrosAnalisis) {
 		if(parametrosAnalisis) {
@@ -85,6 +108,8 @@ class Listar extends Component {
 					{ this.renderParametroAnalisisFormulario() }
 
 					<MensajeOerror error={error} mensaje={null}/>
+
+					{ this.renderBtnAuditByRol() }
 
 					<div className='row'>
 						<div className='col-xs-12 col-sm-8 col-md-6 col-lg-4'>

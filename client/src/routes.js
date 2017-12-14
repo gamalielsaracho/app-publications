@@ -36,6 +36,8 @@ import consultaRoutes from './consulta/routes'
 import tipoAnalisisRoutes from './tipoAnalisis/routes'
 
 
+import personalRoutes from './usuario/routes'
+
 
 import Estadistica1Container from './consulta/components/Estadistica1'
 
@@ -167,6 +169,8 @@ export default (
 			{ consultaRoutes }
 			{ tipoAnalisisRoutes }
 
+			{ personalRoutes }
+
 				{/* Módulo farmacia. */}
 			<Route path='/dashboard/nombres-medicamentos' component={ListarNombresMedicamentosPage}/>
 			<Route path='/dashboard/presentaciones' component={ListarPresentacionesPage}/>
@@ -188,7 +192,7 @@ export default (
 
 				{/* Módulo laboratorio. */}
 			<Route path='/dashboard/tipos-examenes' component={ListarTiposExamenesPage}/>
-			<Route path='/dashboard/unidades-analisis' component={ListarUnidadesAnalisisPage}/>
+			<Route path='/dashboard/unidades-medidas' component={ListarUnidadesAnalisisPage}/>
 			<Route path='/dashboard/parametros-analisis' component={ListarParametrosAnalisisPage}/>
 
 

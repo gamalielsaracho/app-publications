@@ -21,15 +21,27 @@ export default (socket, io) => {
 
 
 		socket.on('crear_especialidad', function(data) {
-			Especialidad.create(data, (err, especialidad) => {
+			Especialidad.verifyIfExist(data, (err, especialidadExistente) => {
 				if(err) {
 					socket.emit('crear_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('crear_especialidad', { mensaje: 'Se agregó exitósamente.' })
-			
-				especialidades()
+				if(especialidadExistente[0]) {
+					socket.emit('crear_especialidad', { error: 'Esta especialidad ya existe.' })
+					return
+				}
+
+				Especialidad.create(data, (err, especialidad) => {
+					if(err) {
+						socket.emit('crear_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('crear_especialidad', { mensaje: 'Se agregó exitósamente.' })
+				
+					especialidades()
+				})
 			})
 		})
 
@@ -76,15 +88,28 @@ export default (socket, io) => {
 
 		socket.on('editar_especialidad', (data) => {
 
-			Especialidad.update(data, (err) => {
+			Especialidad.verifyIfExist(data, (err, especialidadExistente) => {
 				if(err) {
 					socket.emit('editar_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('editar_especialidad', { mensaje: 'Se actualizó exitósamente.' })
-			
-				especialidades()
+				if(especialidadExistente[0]) {
+					socket.emit('editar_especialidad', { error: 'Esta especialidad ya existe.' })
+					return
+				}
+				
+				Especialidad.update(data, (err) => {
+					if(err) {
+						socket.emit('editar_especialidad', { error: 'Ocurrió un error, intente más tarde.' })
+						return
+					}
+
+					socket.emit('editar_especialidad', { mensaje: 'Se actualizó exitósamente.' })
+				
+					especialidades()
+				})
 			})
+
 		})
 }

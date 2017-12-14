@@ -24,6 +24,8 @@ import {
 import Formulario from './Formulario'
 
 const validate = (values) => {
+  	var patronNumero = /^\d*$/; //Expresión regular para aceptar solo números enteros
+
 	const errors = {}
 
 	if(!values.id_medicamento) {
@@ -32,15 +34,24 @@ const validate = (values) => {
 
 	if(!values.lote) {
 		errors.lote = 'Lote Obligatorio.'
-	} else if (values.lote.trim() < 3) {
-   		errors.lote = 'Introducir 3 caracteres.'
+	} else if (values.lote.trim() < 10) {
+   		errors.lote = 'Introducir 10 caracteres.'
 	}
 	
 	if(!values.cantidad) {
 		errors.cantidad = 'Cantidad Obligatorio.'
-	} else if (values.cantidad.toString().trim() == '' || values.cantidad.toString().trim() == '0') {
-   		errors.cantidad = 'Cantidad Obligatorio.'
-	}
+	} else {
+		if(!patronNumero.test(values.cantidad)) {
+        	errors.cantidad = 'Solo números positivos.'
+      	} else {
+			if (values.cantidad.toString().trim() == '' || values.cantidad.toString().trim() == '0') {
+		   		errors.cantidad = 'Cantidad Obligatorio.'
+			}
+      	}
+      	// if(values.cantidad.length < 4){
+       //  	errors.cantidad = 'Por lo menos 4 caracteres.'
+      	// }
+    }
 
 
 	return errors

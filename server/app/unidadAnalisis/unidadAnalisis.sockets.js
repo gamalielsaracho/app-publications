@@ -1,6 +1,9 @@
 import UnidadAnalisis from './unidadAnalisis.model'
 
-import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+// import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
+
+import verifyRef from './././../validations/verifyRef.js'
+
 
 export default (io) => {
 	var unidadAnalisisNsp = io.of('/unidadAnalisis');
@@ -57,14 +60,22 @@ export default (io) => {
 
 
 		socket.on('eliminar_unidadAnalisis', (data) => {
-			referentialIntegritySimple('parametrosanalisis', 'id_unidadAnalisis', data.id_unidadAnalisis, (err, enUso) => {
+			let d = {
+				table1: 'parametrosanalisis', 
+				table2: 'parametrospreconsulta', 
+				table3: null,
+				fieldPrimaryKey: 'id_unidadAnalisis',
+				primaryKey: data.id_unidadAnalisis
+			}
+
+			verifyRef(d, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_unidadAnalisis', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				if(enUso[0]) {
+				if(enUso) {
 					socket.emit('eliminar_unidadAnalisis', { error: 'Este dato está siendo usado por otros registros.' })
 				} else {
 					UnidadAnalisis.delete(data, (err) => {

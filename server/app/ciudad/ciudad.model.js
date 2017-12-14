@@ -9,6 +9,7 @@ exports.find = (callback) => {
 			departamentos departamento
 		WHERE
 			ciudad.id_departamento = departamento.id_departamento
+		ORDER BY id_ciudad DESC
 	`
 
 	var options = {

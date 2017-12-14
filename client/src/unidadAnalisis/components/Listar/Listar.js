@@ -35,7 +35,6 @@ class Listar extends Component {
 			{
 				unidadesAnalisis.map((unidad) => {
 					return <tr key={unidad.id_unidadAnalisis}>
-			            <td>{ unidad.id_unidadAnalisis }</td>
 			            <td>{ unidad.descripcion }</td>
 			            <td>{ unidad.nombre }</td>
 			            <td>
@@ -78,7 +77,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th>Id</th>
 						        	<th>Descripción</th>
 						        	<th>Nombre</th>
 

@@ -35,32 +35,43 @@ export default (socket, io) => {
 	socket.on('registrar_personal', (data) => {
 		// console.log(data.correo)
 
-		Personal.verifyEmailRegister(data.correo, (err, personalExistente) => {
+		Personal.verificarDocumentoYtipo(data, (err, personalExistente) => {
 			if(err) {
 				console.log(err)
 				socket.emit('registrar_personal', { error: 'Lo sentimos, acurrió un error. intente nuevamente.' })
 				return
 			}
 
-			// console.log(personalExistente)
+			if(personalExistente[0]) {
+				socket.emit('registrar_personal', { error: 'Este existe un personal con este Nro de documento y tipo.' })
+			} else {
+				Personal.verifyEmailRegister(data.correo, (err, personalCorreoExistente) => {
 
-			if(personalExistente.length != 0) {
-				socket.emit('registrar_personal', { error: 'Este correo ya está registrado.' })
-			}else {
-				Personal.create(data, (err, personal) => {
-					if(err) {
-						console.log(err)
-						socket.emit('registrar_personal', { error: 'Lo sentimos, ocurrió un error. intente nuevamente.' })
-						return
+					// console.log(personalCorreoExistente)
+
+					if(personalCorreoExistente[0]) {
+						socket.emit('registrar_personal', { error: 'Este correo ya está registrado.' })
+					}else {
+						Personal.create(data, (err, personal) => {
+							if(err) {
+								console.log(err)
+								socket.emit('registrar_personal', { error: 'Lo sentimos, ocurrió un error. intente nuevamente.' })
+								return
+							}
+
+							socket.emit('registrar_personal', { mensaje: 'El personal se creó exitosamente.' })
+							
+							personalesLista()
+						})
 					}
 
-					socket.emit('registrar_personal', { mensaje: 'El personal se creó exitosamente.' })
-					
-					personalesLista()
 				})
+				
 			}
 
 		})
+
+
 	})
 
 
@@ -77,7 +88,7 @@ export default (socket, io) => {
 			}
 
 			if(dato) {
-				console.log("contrasena server: "+dato.personal.contrasena)
+				// console.log("contrasena server: "+dato.personal.contrasena)
 
 				if(dato.personal.contrasena != data.contrasena) {
 					socket.emit('autenticar_personal', { error: 'La contraseña es incorrecta.' })
@@ -108,8 +119,37 @@ export default (socket, io) => {
 	})
 
 
+	socket.on('mostrar_personal_editar', (data) => {
+		Personal.findByIdToEdit(data.id_personal, (err, personal) => {
+			if(err) {
+				socket.emit('mostrar_personal_editar', { error: 'Ocurrió un error, intente nuevamente' })
+				return
+			}
+
+			socket.emit('mostrar_personal_editar', personal[0])
+		})
+	})
+	
+
+	socket.on('editar_personal', (data) => {
+		
+		Personal.update(data, (err, personal) => {
+			if(err) {
+				console.log(err)
+				socket.emit('editar_personal', { error: 'Lo sentimos, ocurrió un error. intente nuevamente.' })
+				return
+			}
+
+			socket.emit('editar_personal', { mensaje: 'El personal se actualizó exitosamente.' })
+								
+			personalesLista()	
+		})
+
+	})
+
+
 	socket.on('mostrar_personal', (data) => {
-		Personal.findById(data.id_usuario, (err, personal) => {
+		Personal.findById(data.id_personal, (err, personal) => {
 			if(err) {
 				socket.emit('mostrar_personal', { error: 'Ocurrió un error, intente nuevamente' })
 				return

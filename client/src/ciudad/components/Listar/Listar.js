@@ -40,7 +40,6 @@ class Listar extends Component {
 			{
 				ciudades.map((i) => {
 					return <tr key={i.ciudad.id_ciudad}>
-			            <td>{ i.ciudad.id_ciudad }</td>
 			            <td>{ i.ciudad.descripcion }</td>
 			            <td>{ i.departamento.descripcion }</td>
 			            <td>
@@ -84,7 +83,6 @@ class Listar extends Component {
 						<table className='table table-striped'>
 							<thead>
 						    	<tr>
-						        	<th className='center'>Id_ciudad</th>
 						        	<th className='center'>Nombre</th>
 						        	<th className='center'>Departamento</th>
 						        	<th className='center'>Opciones</th>

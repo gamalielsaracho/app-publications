@@ -1,4 +1,5 @@
 import MedicamentoEntregado from './medicamentoEntregado.model'
+import referentialIntegritySimple from './././../validations/referentialIntegritySimple.js'
 
 import MedicamentoXentregado from '../medicamentoXentregado/medicamentoXentregado.model'
 
@@ -45,16 +46,28 @@ export default (io) => {
 
 
 		socket.on('eliminar_medicamentoEntregado', (data) => {
-			MedicamentoEntregado.delete(data, (err) => {
+			referentialIntegritySimple('medicamentosxentregados', 'id_medicamentoEntregado', data.id_medicamentoEntregado, (err, enUso) => {
 				if(err) {
 					console.log(err)
 					socket.emit('eliminar_medicamentoEntregado', { error: 'Ocurrió un error, intente más tarde.' })
 					return
 				}
 
-				socket.emit('eliminar_medicamentoEntregado', { mensaje: 'Se Eliminó exitósamente.' })
+				if(enUso[0]) {
+					socket.emit('eliminar_medicamentoEntregado', { error: 'Este dato está siendo usado por otros registros.' })
+				} else {
+					MedicamentoEntregado.delete(data, (err) => {
+						if(err) {
+							console.log(err)
+							socket.emit('eliminar_medicamentoEntregado', { error: 'Ocurrió un error, intente más tarde.' })
+							return
+						}
 
-				medicamentosEntregados()
+						socket.emit('eliminar_medicamentoEntregado', { mensaje: 'Se Eliminó exitósamente.' })
+
+						medicamentosEntregados()
+					})
+				}
 			})
 		})
 

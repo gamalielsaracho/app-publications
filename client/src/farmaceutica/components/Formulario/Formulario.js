@@ -49,7 +49,7 @@ class Formulario extends Component {
 					<form onSubmit={handleSubmit(this.enviarFormulario)}>
 						<Field name='nombre' type='text' component={renderField} label='Nombre'/>
 						<Field name='direccion' type='text' component={renderField} label='Dirección'/>
-						<Field name='telefono' type='text' component={renderField} label='Telefono'/>
+						<Field name='telefono' type='number' component={renderField} label='Telefono'/>
 								
 
 						<button type="submit" className="btn btn-info btn-space" disabled={pristine || submitting}>Guardar</button>

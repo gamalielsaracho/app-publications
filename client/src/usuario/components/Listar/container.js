@@ -3,7 +3,10 @@ import { Field, reduxForm } from 'redux-form'
 
 import { 
 	listarPersonales,
-	actualizarFormularioFiltro
+	actualizarFormularioFiltro,
+
+	abrirFormularioCrearPersonal,
+	abrirFormularioEditarPersonal
 } from '../../actions'
 
 import Listar from './Listar'
@@ -19,6 +22,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+		abrirFormularioEditarPersonal: (idPersonal) => {
+			dispatch(abrirFormularioEditarPersonal(idPersonal))
+		},
+		abrirFormularioCrearPersonal: () => {
+			dispatch(abrirFormularioCrearPersonal())
+		},
 		listarPersonales: () => {
 			dispatch(listarPersonales())
 		},

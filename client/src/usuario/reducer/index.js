@@ -16,11 +16,25 @@ import {
 	LISTAR_PERSONALES_EXITO,
 	LISTAR_PERSONALES_FALLO,
 
-	LISTAR_MEDICOS_REQUEST,		
-	LISTAR_MEDICOS_EXITO,
-	LISTAR_MEDICOS_FALLO,
 
-	ACTUALIZAR_FORMULARIO_FILTRO
+	ACTUALIZAR_FORMULARIO_FILTRO,
+
+
+	ABRIR_FORMULARIO_EDITAR_PERSONAL_REQUEST,
+	ABRIR_FORMULARIO_EDITAR_PERSONAL_EXITO,
+	ABRIR_FORMULARIO_EDITAR_PERSONAL_FALLO,
+
+	EDITAR_PERSONAL_REQUEST,
+	EDITAR_PERSONAL_EXITO,
+	EDITAR_PERSONAL_FALLO,
+
+	ABRIR_FORMULARIO_CREAR_PERSONAL,
+
+	CERRAR_FORMULARIO_PERSONAL,
+
+	MOSTRAR_PERSONAL_REQUEST,
+	MOSTRAR_PERSONAL_EXITO,
+	MOSTRAR_PERSONAL_FALLO
 
 } from '../actions/types'
 
@@ -28,12 +42,29 @@ const INITIAL_STATE = {
 	filtro: { 
 		nombres: '', apellidos: '', correo: ''  
 	},
+
+	formulario: {
+		abirtoCrear: false,
+		abirtoEditar: false,
+		iniciarValores: false,
+		error: '',
+		cargando: false,
+		personal: null
+	},
+	crear: { mensaje: '', cargando: false, error:'' },
 	listar: { personales:[], cargando: false, error: '' },
-	listarMedicos: { personales:[], cargando: false, error: '' },
-	registro:{ mensaje:'', error:'', cargando:false },
-	autenticacion: { mensaje: '', error: '', cargando: false },
-	mostrar: { mensaje:'', error:'', cargando:false, personal: {} },
-	actualizar:{ mensaje:'', error:'', cargando:false },
+	eliminar: { cargando: false, mensaje: '', error: '' },
+	mostrar: { cargando: false, personal: null, error: '' },
+	editar: { cargando: false, mensaje: '', error: '' },
+
+
+	// listar: { personales:[], cargando: false, error: '' },
+	// listarMedicos: { personales:[], cargando: false, error: '' },
+	// registro:{ mensaje:'', error:'', cargando:false },
+	// mostrar: { mensaje:'', error:'', cargando:false, personal: {} },
+	// actualizar:{ mensaje:'', error:'', cargando:false },
+
+	autenticacion: { error: '', cargando: false },
 	usuarioEstado: {
 		// cargando: false,
 		error: '',
@@ -44,35 +75,117 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 	switch(action.type) {
+		case ABRIR_FORMULARIO_CREAR_PERSONAL:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: true,
+					abirtoEditar: false,
+					iniciarValores: false,
+					error: '',
+					cargando: false,
+					personal: null
+				},
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
+			})
+
+
+		case ABRIR_FORMULARIO_EDITAR_PERSONAL_REQUEST:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: true,
+					iniciarValores: true,
+					error: '',
+					cargando: true,
+					personal: null
+				},
+				crear: INITIAL_STATE.crear,
+				editar: INITIAL_STATE.editar,
+				eliminar: INITIAL_STATE.eliminar
+			})
+
+		case ABRIR_FORMULARIO_EDITAR_PERSONAL_EXITO:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: true,
+					iniciarValores: true,
+					error: '',
+					cargando: false,
+					personal: action.payload
+				}
+			})
+
+		case ABRIR_FORMULARIO_EDITAR_PERSONAL_FALLO:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: true,
+					iniciarValores: true,
+					error: action.payload,
+					cargando: false,
+					personal: null
+				}
+			})
+
+
+		case CERRAR_FORMULARIO_PERSONAL:
+			return Object.assign({}, state, {
+				formulario: {
+					abirtoCrear: false,
+					abirtoEditar: false,
+					iniciarValores: false,
+					error: '',
+					cargando: false,
+					personal: null
+				}
+			})
+
+
+
+
 		case REGISTRAR_PERSONAL_REQUEST:
-			return Object.assign({}, state, { registro: { cargando: true } }) 
+			return state = Object.assign({}, state, {
+				crear: { cargando: true }
+			})
 
 		case REGISTRAR_PERSONAL_EXITO:
-			return Object.assign({}, state, { 
-				registro: { cargando:false, error:'', mensaje: action.payload.mensaje } 
+			return Object.assign({}, state, {
+				crear: { 
+					mensaje: action.payload.mensaje,
+				},
+				formulario: { abirtoCrear: false }
+				// listar: { 
+				// 	niveles: [ ...state.listar.niveles, action.payload.datoInsertado ]
+				// }
 			})
 
 		case REGISTRAR_PERSONAL_FALLO:
-			return Object.assign({}, state, { 
-				registro:{ cargando:false, error: action.payload.error, mensaje:'' }
+			return state = Object.assign({}, state, {
+				crear: { error: action.payload }
 			})
 
+
 			// Autenticación de Usuario.
+		
+
 		case AUTENTICAR_PERSONAL_REQUEST:
 			return Object.assign({}, state, { 
 				autenticacion:{ cargando:true }
 			})
+
 		case AUTENTICAR_PERSONAL_EXITO:
 			return Object.assign({}, state, { 
 				autenticacion:{ 
 					cargando:false,
-					mensaje: action.payload.mensaje ? action.payload.mensaje : '',  
 					error: '' }
 			})
 
 		case AUTENTICAR_PERSONAL_FALLO:
 			return Object.assign({}, state, { 
-				autenticacion:{ cargando:false, error: action.payload.error, mensaje:'' }
+				autenticacion:{ cargando:false, error: action.payload }
 			})
 
 
@@ -96,6 +209,7 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
+
 		case SALIR_PERSONAL:
 			return Object.assign({}, state, { 
 				usuarioEstado:{ 
@@ -105,6 +219,7 @@ export default function (state = INITIAL_STATE, action) {
 					autenticado: false 
 				}
 			})
+
 
 		case LISTAR_PERSONALES_REQUEST:
 			return state = Object.assign({}, state, {
@@ -125,34 +240,13 @@ export default function (state = INITIAL_STATE, action) {
 				listar: {
 					personales: [],
 					cargando: false,
-					error: action.payload.error					
+					error: action.payload					
 				}
 			})
 
 
 			// Listar todos los Médicos.
-		case LISTAR_MEDICOS_REQUEST:
-			return state = Object.assign({}, state, {
-				listarMedicos: { cargando: true }
-			})
-			
-		case LISTAR_MEDICOS_EXITO:
-			return state = Object.assign({}, state, {
-				listarMedicos: {
-					personales: action.payload.personales, 
-					cargando:false, 
-					error: ''
-				}
-			})
-			
-		case LISTAR_MEDICOS_FALLO:
-			return state = Object.assign({}, state, {
-				listarMedicos: {
-					personales: [],
-					cargando: false,
-					error: action.payload.error					
-				}
-			})
+				
 			
 
 		case ACTUALIZAR_FORMULARIO_FILTRO:
@@ -166,6 +260,58 @@ export default function (state = INITIAL_STATE, action) {
 				}
 			})
 
+
+		// EDITAR.
+		case EDITAR_PERSONAL_REQUEST:
+			return Object.assign({}, state, {
+				editar: { cargando: true }
+			})
+
+		case EDITAR_PERSONAL_EXITO:
+			return Object.assign({}, state, {
+				editar: { 
+					cargando: false, 
+					mensaje: action.payload.mensaje
+				},
+				formulario: { abirtoEditar: false }
+			})
+
+		case EDITAR_PERSONAL_FALLO:
+			return Object.assign({}, state, {
+				editar: { 
+					cargando: false,
+					mensaje: '', 
+					error: action.payload
+				}
+			})
+
+
+		// MOSTRAR.
+		case MOSTRAR_PERSONAL_REQUEST:
+			return Object.assign({}, state, {
+				mostrar: { cargando: true },
+				formulario: { abirtoEditar: false, abirtoCrear: false },
+				eliminar: INITIAL_STATE.eliminar
+			})
+
+		case MOSTRAR_PERSONAL_EXITO:
+			return Object.assign({}, state, {
+				mostrar: {
+					cargando: false,
+					personal: action.payload
+				},
+				formulario: { abirtoEditar: false, abirtoCrear: false }
+			})
+
+		case MOSTRAR_PERSONAL_FALLO:
+			return Object.assign({}, state, {
+				mostrar: {
+					cargando: false,
+					personal: null,
+					error: action.payload
+				},
+				formulario: { abirtoEditar: false, abirtoCrear: false }
+			})
 		default:
 			return state
 	}
